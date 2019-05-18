@@ -1,4 +1,4 @@
-package com.example.lost.testing
+package com.example.lost.skillx
 
 import org.junit.Test
 

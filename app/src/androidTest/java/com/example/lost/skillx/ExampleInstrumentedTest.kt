@@ -1,4 +1,4 @@
-package com.example.lost.testing
+package com.example.lost.skillx
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4

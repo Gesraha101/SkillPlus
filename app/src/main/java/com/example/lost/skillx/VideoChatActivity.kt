@@ -1,4 +1,4 @@
-package com.example.lost.testing
+package com.example.lost.skillx
 
 import android.Manifest
 import android.support.v7.app.AppCompatActivity
@@ -17,15 +17,12 @@ import io.agora.rtc.IRtcEngineEventHandler
 import io.agora.rtc.RtcEngine
 import io.agora.rtc.video.VideoCanvas
 import io.agora.rtc.video.VideoEncoderConfiguration
-import io.agora.rtc.mediaio.AgoraBufferedCamera2
 
 
+class VideoChatActivity : AppCompatActivity() {
 
 
-class MainActivity : AppCompatActivity() {
-
-
-    private val LOG_TAG = MainActivity::class.java.simpleName
+    private val LOG_TAG = VideoChatActivity::class.java.simpleName
 
     private val PERMISSION_REQ_ID = 22
 
