@@ -6,4 +6,216 @@
     android:layout_height="match_parent"
     tools:context=".views.activities.SignUpActivity">
 
+    <EditText
+        android:id="@+id/NameEditText"
+        android:layout_width="163dp"
+        android:layout_height="68dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/edittext"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        app:layout_constraintBottom_toBottomOf="@+id/nameTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/nameTextView"
+        app:layout_constraintTop_toTopOf="@+id/nameTextView"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/nameTextView"
+        android:layout_width="173dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="47dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginRight="22dp"
+        android:layout_marginBottom="26dp"
+        android:text="Name"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toTopOf="@+id/mailTextView"
+        app:layout_constraintEnd_toStartOf="@+id/NameEditText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/phoneEditText"
+        android:layout_width="169dp"
+        android:layout_height="73dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/edittext"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="phone"
+        app:layout_constraintBottom_toBottomOf="@+id/PhonetextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/PhonetextView"
+        app:layout_constraintTop_toTopOf="@+id/PhonetextView"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/PhonetextView"
+        android:layout_width="165dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginRight="22dp"
+        android:layout_marginBottom="39dp"
+        android:text="phone"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toStartOf="@+id/phoneEditText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pass2TextView"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/passEditText"
+        android:layout_width="163dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="28dp"
+        android:background="@drawable/edittext"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="passwoed"
+        app:layout_constraintBottom_toTopOf="@+id/pass2EditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/passTextView"
+        app:layout_constraintTop_toBottomOf="@+id/mailTextView"
+        app:layout_constraintVertical_bias="0.142"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/passTextView"
+        android:layout_width="183dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginRight="22dp"
+        android:layout_marginBottom="28dp"
+        android:text="Password"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toTopOf="@+id/pass2TextView"
+        app:layout_constraintEnd_toStartOf="@+id/passEditText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mailTextView"
+        tools:ignore="MissingConstraints" />
+
+
+    <EditText
+        android:id="@+id/mailEditText"
+        android:layout_width="165dp"
+        android:layout_height="65dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/edittext"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Email"
+        app:layout_constraintBottom_toBottomOf="@+id/mailTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/mailTextView"
+        app:layout_constraintTop_toTopOf="@+id/mailTextView"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/mailTextView"
+        android:layout_width="179dp"
+        android:layout_height="71dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginRight="22dp"
+        android:layout_marginBottom="26dp"
+        android:text="Email"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toTopOf="@+id/passTextView"
+        app:layout_constraintEnd_toStartOf="@+id/mailEditText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameTextView"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/pass2TextView"
+        android:layout_width="184dp"
+        android:layout_height="63dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+
+        android:layout_marginEnd="22dp"
+        android:layout_marginRight="22dp"
+        android:layout_marginBottom="26dp"
+        android:text="password"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toTopOf="@+id/PhonetextView"
+        app:layout_constraintEnd_toStartOf="@+id/pass2EditText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passTextView"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/pass2EditText"
+        android:layout_width="171dp"
+        android:layout_height="66dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/edittext"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="password"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/pass2TextView"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="390dp"
+        android:layout_height="198dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginLeft="29dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginRight="29dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PhonetextView"
+        tools:ignore="MissingConstraints">
+
+        <Button
+
+            android:id="@+id/btn_sign_in"
+            android:layout_width="325dp"
+            android:layout_height="62dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/button"
+            android:text="Add prefered Category"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/btn_sign_up"
+            android:layout_width="323dp"
+            android:layout_height="65dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/button"
+            android:text="Register"
+            android:textSize="20dp" />
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

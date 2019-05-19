@@ -17,7 +17,7 @@
     <EditText
         android:id="@+id/emalEditText"
         android:layout_width="match_parent"
-        android:layout_height="62dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="42dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="42dp"
@@ -28,7 +28,7 @@
     <EditText
         android:id="@+id/passwordEditText"
         android:layout_width="match_parent"
-        android:layout_height="62dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="42dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="42dp"
@@ -36,28 +36,34 @@
         android:hint="Password"
         android:padding="8dp" />
 
-    <Button
-
-        android:id="@+id/btn_sign_in"
-        android:layout_width="331dp"
-        android:layout_height="62dp"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="366dp"
+        android:layout_height="238dp"
         android:layout_marginStart="42dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="42dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/button"
-        android:text="SignIn"
-        android:textSize="20dp" />
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/btn_sign_up"
-        android:layout_width="match_parent"
-        android:layout_height="62dp"
-        android:layout_marginStart="42dp"
-        android:layout_marginEnd="42dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/button"
-        android:text="SignUp"
-        android:textSize="20dp" />
+        <Button
+
+            android:id="@+id/btn_sign_in"
+            android:layout_width="150dp"
+            android:layout_height="62dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/button"
+            android:text="SignIn"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/btn_sign_up"
+            android:layout_width="150dp"
+            android:layout_height="62dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/button"
+            android:text="SignUp"
+            android:textSize="20dp" />
+    </LinearLayout>
 </LinearLayout>
