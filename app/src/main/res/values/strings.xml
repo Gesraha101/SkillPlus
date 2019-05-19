@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Testing Agora</string>
+    <string name="app_name">Skill X</string>
     <string name="agora_app_id">c594b983ecee4bb3959952281b77a036</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_home">Home</string>

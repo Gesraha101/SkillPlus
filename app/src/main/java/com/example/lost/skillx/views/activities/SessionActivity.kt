@@ -20,10 +20,10 @@ import io.agora.rtc.video.VideoCanvas
 import io.agora.rtc.video.VideoEncoderConfiguration
 
 
-class VideoChatActivity : AppCompatActivity() {
+class SessionActivity : AppCompatActivity() {
 
 
-    private val LOG_TAG = VideoChatActivity::class.java.simpleName
+    private val LOG_TAG = SessionActivity::class.java.simpleName
 
     private val PERMISSION_REQ_ID = 22
 
@@ -47,7 +47,7 @@ class VideoChatActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_session)
 
         if (checkSelfPermission(REQUESTED_PERMISSIONS[0], PERMISSION_REQ_ID) &&
                 checkSelfPermission(REQUESTED_PERMISSIONS[1], PERMISSION_REQ_ID) &&
