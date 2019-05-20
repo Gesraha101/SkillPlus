@@ -12,11 +12,11 @@ class HomeActivity : AppCompatActivity() {
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
-                textMessage.setText(R.string.title_home)
+                textMessage.text = "home"
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_dashboard -> {
-                textMessage.setText(R.string.title_dashboard)
+            R.id.navigation_inbox -> {
+                textMessage.text = "inbox"
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {

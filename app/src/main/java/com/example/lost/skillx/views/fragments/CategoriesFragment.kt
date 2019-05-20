@@ -1,34 +1,42 @@
 package com.example.lost.skillx.views.fragments
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.recyclerview.extensions.ListAdapter
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.Toast
 
 import com.example.lost.skillx.R
+import com.example.lost.skillx.models.adapters.CategoriesAdapter
+import com.example.lost.skillx.models.interfaces.CategoriesResponse
+import com.example.lost.skillx.models.podos.CategoriesList
+import com.example.lost.skillx.models.podos.Category
+import com.example.lost.skillx.views.activities.CategoryContentActivity
+import kotlinx.android.synthetic.main.fragment_categories.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [CategoriesFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [CategoriesFragment.newInstance] factory method to
- * create an instance of this fragment.
- *
- */
 class CategoriesFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
+    private val BASE_URL = "https://eve3xf4ee4.execute-api.us-east-2.amazonaws.com/"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +48,38 @@ class CategoriesFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
+        val retrofit = Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+        val response = retrofit.create(CategoriesResponse::class.java)
+        val call = response.categories
+        call.enqueue(object : Callback<CategoriesList> {
+            override fun onResponse(call: Call<CategoriesList>, response: Response<CategoriesList>) {
+                val list = response.body()!!.categoriesList as List<Category>
+
+                categories_recycler_view.apply {
+                    // set a LinearLayoutManager to handle Android
+                    // RecyclerView behavior
+                    layoutManager = LinearLayoutManager(activity)
+                    // set the custom adapter to the RecyclerView
+                    adapter = CategoriesAdapter(list)
+
+                    (adapter as CategoriesAdapter).onItemClick = { category ->
+
+                        val intent = Intent(activity, CategoryContentActivity::class.java)
+                        val bundle = Bundle()
+                        bundle.putSerializable("CATEGORY", category)
+                        intent.putExtras(bundle)
+                        startActivity(intent)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<CategoriesList>, t: Throwable) {
+                Toast.makeText(activity, t.message, Toast.LENGTH_SHORT).show()
+            }
+        })
         return inflater.inflate(R.layout.fragment_categories, container, false)
     }
 
@@ -63,32 +102,13 @@ class CategoriesFragment : Fragment() {
         listener = null
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CategoriesFragment.
-         */
-        // TODO: Rename and change types and number of parameters
+
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
                 CategoriesFragment().apply {
