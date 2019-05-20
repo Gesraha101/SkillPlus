@@ -14,8 +14,8 @@
 
     <FrameLayout
         android:id="@+id/local_video_view_container"
-        android:layout_width="143dp"
-        android:layout_height="81dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"

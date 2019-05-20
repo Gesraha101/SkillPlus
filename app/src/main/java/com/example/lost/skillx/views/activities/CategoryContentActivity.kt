@@ -16,7 +16,6 @@ import android.view.ViewGroup
 
 import com.example.lost.skillx.R
 import kotlinx.android.synthetic.main.activity_category_content.*
-import kotlinx.android.synthetic.main.fragment_category_content.view.*
 
 class CategoryContentActivity : AppCompatActivity() {
 
@@ -66,17 +65,12 @@ class CategoryContentActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-
-    /**
-     * A [FragmentPagerAdapter] that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
     inner class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
         override fun getItem(position: Int): Fragment {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1)
+            return PostsListFragment.newInstance(position + 1)
         }
 
         override fun getCount(): Int {
@@ -85,31 +79,25 @@ class CategoryContentActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    class PlaceholderFragment : Fragment() {
+    class PostsListFragment : Fragment() {
 
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                                   savedInstanceState: Bundle?): View? {
             val rootView = inflater.inflate(R.layout.fragment_category_content, container, false)
-            rootView.section_label.text = getString(R.string.section_format, arguments?.getInt(ARG_SECTION_NUMBER))
+            if (arguments?.getInt(ARG_SECTION_NUMBER) == 0) {
+
+            } else {
+
+            }
             return rootView
         }
 
         companion object {
-            /**
-             * The fragment argument representing the section number for this
-             * fragment.
-             */
+
             private const val ARG_SECTION_NUMBER = "section_number"
 
-            /**
-             * Returns a new instance of this fragment for the given section
-             * number.
-             */
-            fun newInstance(sectionNumber: Int): PlaceholderFragment {
-                val fragment = PlaceholderFragment()
+            fun newInstance(sectionNumber: Int): PostsListFragment {
+                val fragment = PostsListFragment()
                 val args = Bundle()
                 args.putInt(ARG_SECTION_NUMBER, sectionNumber)
                 fragment.arguments = args

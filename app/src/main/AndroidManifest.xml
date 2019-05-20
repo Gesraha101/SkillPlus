@@ -29,17 +29,14 @@
             android:label="@string/title_activity_home" />
         <activity android:name=".views.activities.SignUpActivity" />
         <activity android:name=".views.activities.LoginActivity" />
-        <activity android:name=".views.activities.SessionActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".views.activities.SessionActivity"></activity>
         <activity
             android:name=".views.activities.CategoryContentActivity"
             android:label="@string/title_activity_category_content"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".views.activities.MainActivity"
+            android:label="@string/title_activity_main" />
     </application>
 
 </manifest>

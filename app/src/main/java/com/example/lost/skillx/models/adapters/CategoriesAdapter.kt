@@ -46,9 +46,10 @@ class CategoriesAdapter(private val list: List<Category>): RecyclerView.Adapter<
 
         fun bind(cat: Category) {
             name?.text = cat.name
-            Glide.with(context!!)
+            /*Glide.with(context!!)
                     .load(cat.imgUrl)
                     .into(image!!)
+            */
             brief?.text = cat.brief
         }
     }
