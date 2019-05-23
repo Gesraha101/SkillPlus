@@ -17,26 +17,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".views.activities.SplashActivity">
+        <activity
+            android:name=".views.activities.NavigationDrawerActivity"
+            android:label="@string/title_activity_navigation_drawer"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".views.activities.SplashActivity">
+
+        </activity>
         <activity
             android:name=".views.activities.HomeActivity"
             android:label="@string/title_activity_home" />
         <activity android:name=".views.activities.SignUpActivity" />
         <activity android:name=".views.activities.LoginActivity" />
-        <activity android:name=".views.activities.SessionActivity"></activity>
+        <activity android:name=".views.activities.SessionActivity" />
         <activity
             android:name=".views.activities.CategoryContentActivity"
             android:label="@string/title_activity_category_content"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".views.activities.MainActivity"
-            android:label="@string/title_activity_main" />
     </application>
 
 </manifest>
