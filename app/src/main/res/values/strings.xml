@@ -24,4 +24,13 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="name">Name</string>
     <string name="title">Title</string>
+    <string name="about_us">About us</string>
+    <string name="settings">Settings</string>
+    <string name="active_jobs">Active Jobs</string>
+    <string name="needs"> My needs</string>
+    <string name="skills">My skills</string>
+    <string name="title_activity_add_teacher_skill">AddTeacherSkillActivity</string>
+    <string name="price">Price</string>
+    <string name="salary">Salary</string>
+    <string name="description">Description</string>
 </resources>

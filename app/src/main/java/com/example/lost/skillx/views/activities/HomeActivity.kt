@@ -15,7 +15,7 @@ import com.example.lost.skillx.views.fragments.InboxFragment
 import com.example.lost.skillx.views.fragments.NotificationsFragment
 import kotlinx.android.synthetic.main.activity_home.*
 
-class HomeActivity : AppCompatActivity(), CategoriesFragment.OnFragmentInteractionListener {
+class HomeActivity :NavigationDrawerActivity(), CategoriesFragment.OnFragmentInteractionListener {
 
     override fun onFragmentInteraction(uri: Uri) {
 
@@ -69,8 +69,8 @@ class HomeActivity : AppCompatActivity(), CategoriesFragment.OnFragmentInteracti
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        super.onCreate(savedInstanceState)
         replaceFragment(CategoriesFragment.newInstance(), R.id.fragment_container, null)
 
         nav_view.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)

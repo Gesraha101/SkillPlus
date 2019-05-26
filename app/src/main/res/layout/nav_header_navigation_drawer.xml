@@ -6,7 +6,7 @@
     android:background="@drawable/side_nav_bar"
     android:gravity="bottom"
     android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingTop="25dp"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
@@ -17,16 +17,22 @@
         android:layout_height="100dp"
         android:contentDescription="@string/nav_header_desc"
         android:layout_gravity="center"
-        app:srcCompat="@drawable/profile"
+        android:src="@drawable/profile"
         android:paddingRight="20dp"
+        android:layout_weight="0.2"
+
         />
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:orientation="vertical">
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_weight="0.6"
+
+        >
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
             android:text="@string/name"
@@ -36,23 +42,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/title" />
+
         <RatingBar
             android:id="@+id/ratingBar1"
+            style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="start"
             android:rating="3.5"
             android:stepSize="0.5"
-            android:scaleX="0.5"
-            android:scaleY="0.5"
-            android:layout_marginLeft="-60dp"/>
+ />
 
     </LinearLayout>
     <ImageView
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_gravity="center"
-        android:layout_marginLeft="50dp"
         app:srcCompat="@drawable/edit"
+        android:layout_weight="0.2"
         />
 
 </LinearLayout>

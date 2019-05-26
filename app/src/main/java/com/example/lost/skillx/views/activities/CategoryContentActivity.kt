@@ -17,7 +17,7 @@ import android.view.ViewGroup
 import com.example.lost.skillx.R
 import kotlinx.android.synthetic.main.activity_category_content.*
 
-class CategoryContentActivity : AppCompatActivity() {
+class CategoryContentActivity : NavigationDrawerActivity() {
 
     /**
      * The [android.support.v4.view.PagerAdapter] that will provide
@@ -30,8 +30,8 @@ class CategoryContentActivity : AppCompatActivity() {
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_category_content)
+        super.onCreate(savedInstanceState)
 
         setSupportActionBar(toolbar)
         // Create the adapter that will return a fragment for each of the three
