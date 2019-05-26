@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <TextView
-            android:id="@+id/category_txt_name"
+            android:id="@+id/category_name"
             android:layout_width="match_parent"
             android:layout_height="25dp"
             android:layout_marginTop="0dp"
@@ -24,7 +24,7 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/category_txt_brief"
+            android:id="@+id/category_brief"
             android:layout_width="match_parent"
             android:layout_height="95dp"
             android:gravity="center"
