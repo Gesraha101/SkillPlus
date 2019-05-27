@@ -36,7 +36,7 @@ class CategoriesAdapter(private val list: List<Category>): RecyclerView.Adapter<
         init {
             name = itemView.findViewById(R.id.category_name)
             image = itemView.findViewById(R.id.category_img)
-            brief = itemView.findViewById(R.id.category_brief)
+            brief = itemView.findViewById(R.id.poster_name)
             context = parent.context
             itemView.setOnClickListener {
                 onItemClick?.invoke(list[adapterPosition])

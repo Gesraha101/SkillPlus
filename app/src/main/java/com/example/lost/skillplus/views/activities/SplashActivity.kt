@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import com.example.lost.skillplus.R
 
-class SplashActivity : AppCompatActivity() {
+class SplashAcivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

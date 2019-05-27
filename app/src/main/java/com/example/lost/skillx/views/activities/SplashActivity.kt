@@ -1,10 +1,10 @@
-package com.example.lost.skillx.views.activities
+package com.example.lost.skillplus.views.activities
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import com.example.lost.skillx.R
+import com.example.lost.skillplus.R
 
 class SplashActivity : AppCompatActivity() {
     val SPLASH_TIME_OUT: Long = 5000

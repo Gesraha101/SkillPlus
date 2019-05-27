@@ -1,8 +1,8 @@
-package com.example.lost.skillx.views.Retrofit
+package com.example.lost.skillplus.views.Retrofit
 
-import com.example.lost.skillx.views.models.User
-import com.example.lost.skillx.views.models.UserResponse
-import com.example.lost.skillx.views.models.logUser
+import com.example.lost.skillplus.views.models.User
+import com.example.lost.skillplus.views.models.UserResponse
+import com.example.lost.skillplus.views.models.logUser
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*

@@ -1,4 +1,4 @@
-package com.example.lost.skillx.views.activities
+package com.example.lost.skillplus.views.activities
 
 import ServiceBuilder
 import android.os.Bundle
@@ -6,9 +6,9 @@ import android.support.v7.app.AppCompatActivity
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
-import com.example.lost.skillx.views.Retrofit.Nodejs
-import com.example.lost.skillx.views.models.User
-import com.example.lost.skillx.views.models.UserResponse
+import com.example.lost.skillplus.views.Retrofit.Nodejs
+import com.example.lost.skillplus.views.models.User
+import com.example.lost.skillplus.views.models.UserResponse
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import retrofit2.Call
@@ -20,8 +20,8 @@ class SignUpActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.lost.skillx.R.layout.activity_sign_up)
-        val shake = AnimationUtils.loadAnimation(this, com.example.lost.skillx.R.anim.animation) as Animation
+        setContentView(com.example.lost.skillplus.R.layout.activity_sign_up)
+        val shake = AnimationUtils.loadAnimation(this, com.example.lost.skillplus.R.anim.animation) as Animation
         btn_register.setOnClickListener {
             if (NameEditText?.text.toString() == "" || mailEditText?.text.toString() == "" || passwordEditText.text.toString() == "" || pass2EditText.text.toString() == "") {
 

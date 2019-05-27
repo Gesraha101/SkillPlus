@@ -1,4 +1,4 @@
-package com.example.lost.skillx.views.activities
+package com.example.lost.skillplus.views.activities
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
@@ -6,11 +6,11 @@ import android.os.Bundle
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
-import com.example.lost.skillx.R
-import com.example.lost.skillx.views.Retrofit.Nodejs
-import com.example.lost.skillx.views.models.User
-import com.example.lost.skillx.views.models.UserResponse
-import com.example.lost.skillx.views.models.logUser
+import com.example.lost.skillplus.R
+import com.example.lost.skillplus.views.Retrofit.Nodejs
+import com.example.lost.skillplus.views.models.User
+import com.example.lost.skillplus.views.models.UserResponse
+import com.example.lost.skillplus.views.models.logUser
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import retrofit2.Call
@@ -22,7 +22,7 @@ class LoginActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        val shake = AnimationUtils.loadAnimation(this, com.example.lost.skillx.R.anim.animation) as Animation
+        val shake = AnimationUtils.loadAnimation(this, com.example.lost.skillplus.R.anim.animation) as Animation
         btn_sign_in.setOnClickListener {
             val loguser = logUser(email = emailEditText?.text.toString(),
                     password = passEditText?.text.toString())
