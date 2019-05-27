@@ -1,4 +1,4 @@
-package com.example.lost.skillx.views.activities
+package com.example.lost.skillplus.views.activities
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -8,7 +8,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import com.example.lost.skillx.R
+import com.example.lost.skillplus.R
 import kotlinx.android.synthetic.main.activity_navigation_drawer.*
 import kotlinx.android.synthetic.main.app_bar_navigation_drawer.*
 

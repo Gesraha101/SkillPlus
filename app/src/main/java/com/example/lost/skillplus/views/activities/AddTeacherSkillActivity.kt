@@ -1,8 +1,8 @@
-package com.example.lost.skillx.views.activities
+package com.example.lost.skillplus.views.activities
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity;
-import com.example.lost.skillx.R
+import com.example.lost.skillplus.R
 
 import kotlinx.android.synthetic.main.activity_add_teacher_skill.*
 

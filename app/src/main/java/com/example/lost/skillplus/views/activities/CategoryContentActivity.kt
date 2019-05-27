@@ -61,8 +61,8 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_category_content)
+        super.onCreate(savedInstanceState)
 
         setSupportActionBar(toolbar)
         // Create the adapter that will return a fragment for each of the three
@@ -97,8 +97,10 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
     }
 
     override fun onBackPressed() {
-        if (frag!!.isVisible)
-            tabbed_view.visibility = View.VISIBLE
+        if (frag != null) {
+            if (frag!!.isVisible)
+                tabbed_view.visibility = View.VISIBLE
+        }
         super.onBackPressed()
     }
 
