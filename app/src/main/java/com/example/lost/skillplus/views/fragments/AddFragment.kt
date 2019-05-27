@@ -1,4 +1,4 @@
-package com.example.lost.skillx.views.fragments
+package com.example.lost.skillplus.views.fragments
 
 import android.content.Context
 import android.net.Uri
@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-import com.example.lost.skillx.R
+import com.example.lost.skillplus.R
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

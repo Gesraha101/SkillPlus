@@ -1,4 +1,4 @@
-package com.example.lost.skillx.views.activities
+package com.example.lost.skillplus.views.activities
 
 import android.Manifest
 import android.support.v7.app.AppCompatActivity
@@ -13,7 +13,7 @@ import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
-import com.example.lost.skillx.R
+import com.example.lost.skillplus.R
 import io.agora.rtc.IRtcEngineEventHandler
 import io.agora.rtc.RtcEngine
 import io.agora.rtc.video.VideoCanvas
