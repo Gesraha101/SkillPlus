@@ -33,6 +33,7 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
     private var frag : Fragment? = null
+
     inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
         val fragmentTransaction = beginTransaction()
         fragmentTransaction.func()
@@ -54,7 +55,9 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
         } else {
             RequestDetailsFragment.newInstance(paramPassed as Request)
         }
-        addFragment(fragment, R.id.post_fragment_container)
+        frag = fragment
+        replaceFragment(fragment, R.id.post_fragment_container)
+        tabbed_view.visibility = View.GONE
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -91,6 +94,12 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        if (frag!!.isVisible)
+            tabbed_view.visibility = View.VISIBLE
+        super.onBackPressed()
     }
 
     inner class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
