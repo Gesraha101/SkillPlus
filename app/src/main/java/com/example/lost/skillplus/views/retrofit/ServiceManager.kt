@@ -6,7 +6,7 @@ import com.example.lost.skillplus.models.podos.logUser
 import retrofit2.Call
 import retrofit2.http.*
 
-public interface Nodejs {
+public interface ServiceManager {
 
 
     @GET("/users/all")

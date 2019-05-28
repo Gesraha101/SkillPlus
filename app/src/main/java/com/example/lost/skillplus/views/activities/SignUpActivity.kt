@@ -1,12 +1,12 @@
 package com.example.lost.skillplus.views.activities
 
-import ServiceBuilder
+import RetrofitManager
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
-import com.example.lost.skillplus.views.retrofit.Nodejs
+import com.example.lost.skillplus.views.retrofit.ServiceManager
 import com.example.lost.skillplus.models.podos.User
 import com.example.lost.skillplus.models.podos.UserResponse
 import kotlinx.android.synthetic.main.activity_sign_up.*
@@ -55,7 +55,7 @@ class SignUpActivity : AppCompatActivity() {
                             email = mailEditText?.text.toString(),
                             password = passwordEditText?.text.toString()
                             , pic = "pic")
-                    val service = ServiceBuilder.retrofitInstance?.create(Nodejs::class.java)
+                    val service = RetrofitManager.getInstance()?.create(ServiceManager::class.java)
                     val call: Call<UserResponse>? = service?.addUser(user)
                     call?.enqueue(object : Callback<UserResponse> {
 

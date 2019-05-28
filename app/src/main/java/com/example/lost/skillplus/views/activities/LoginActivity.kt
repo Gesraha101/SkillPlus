@@ -7,7 +7,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.views.retrofit.Nodejs
+import com.example.lost.skillplus.views.retrofit.ServiceManager
 import com.example.lost.skillplus.models.podos.UserResponse
 import com.example.lost.skillplus.models.podos.logUser
 import kotlinx.android.synthetic.main.activity_login.*
@@ -42,7 +42,7 @@ class LoginActivity : AppCompatActivity(){
 
             }
             else{
-                val service = ServiceBuilder.retrofitInstance?.create(Nodejs::class.java)
+                val service = RetrofitManager.getInstance()?.create(ServiceManager::class.java)
                 val call: Call<UserResponse>? = service?.loginUser(loguser)
                 call?.enqueue(object : Callback<UserResponse> {
 

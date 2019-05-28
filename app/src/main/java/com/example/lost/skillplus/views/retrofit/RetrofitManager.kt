@@ -1,11 +1,10 @@
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object ServiceBuilder {
+object RetrofitManager {
     private var retrofit: Retrofit? = null
     private val BASE_URL = "http://10.0.2.2:2000/"
-
-    val retrofitInstance: Retrofit?
+    private val retrofitInstance: Retrofit?
         get() {
             if (retrofit == null) {
                 retrofit = retrofit2.Retrofit.Builder()
@@ -16,4 +15,8 @@ object ServiceBuilder {
 
             return retrofit
         }
+
+    fun getInstance() : Retrofit? {
+        return retrofitInstance
+    }
 }
