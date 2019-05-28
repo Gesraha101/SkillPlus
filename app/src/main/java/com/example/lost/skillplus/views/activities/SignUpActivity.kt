@@ -6,10 +6,9 @@ import android.support.v7.app.AppCompatActivity
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
-import com.example.lost.skillplus.views.Retrofit.Nodejs
-import com.example.lost.skillplus.views.models.User
-import com.example.lost.skillplus.views.models.UserResponse
-import kotlinx.android.synthetic.main.activity_login.*
+import com.example.lost.skillplus.views.retrofit.Nodejs
+import com.example.lost.skillplus.models.podos.User
+import com.example.lost.skillplus.models.podos.UserResponse
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import retrofit2.Call
 import retrofit2.Callback

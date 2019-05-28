@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Skill Plus</string>
     <string name="agora_app_id">c594b983ecee4bb3959952281b77a036</string>
+    <string name="title_activity_splash">SplashActivity</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_categories">Home</string>
     <string name="title_inbox">Inbox</string>

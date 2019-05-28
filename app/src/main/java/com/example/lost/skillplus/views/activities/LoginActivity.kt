@@ -7,12 +7,10 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.views.Retrofit.Nodejs
-import com.example.lost.skillplus.views.models.User
-import com.example.lost.skillplus.views.models.UserResponse
-import com.example.lost.skillplus.views.models.logUser
+import com.example.lost.skillplus.views.retrofit.Nodejs
+import com.example.lost.skillplus.models.podos.UserResponse
+import com.example.lost.skillplus.models.podos.logUser
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_sign_up.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -51,7 +49,7 @@ class LoginActivity : AppCompatActivity(){
                     override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                         if (response.isSuccessful) {
 
-                            if(response.body()?.status  == true) { Toast.makeText(this@LoginActivity, "Successfully loged in " + response.body(), Toast.LENGTH_LONG).show()}
+                            if(response.body()?.status  == true) { startActivity(Intent(this@LoginActivity, HomeActivity::class.java))}
                                 else{ Toast.makeText(this@LoginActivity, "la ya habiby " +response.body(), Toast.LENGTH_LONG).show()
                                 emailEditText.setError("Wrong email")
                                 emailEditText.startAnimation(shake)
