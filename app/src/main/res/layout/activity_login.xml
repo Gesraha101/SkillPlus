@@ -1,63 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".views.activities.LoginActivity"
-    android:background="#563">
+    android:background="#DDE4E2"
+    tools:context=".views.activities.LoginActivity">
+
     <ImageView
-        android:layout_width="200dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="100dp"
-        android:src="@drawable/btn_end_call"/>
+        android:id="@+id/imageView"
+        android:layout_width="249.46dp"
+        android:layout_height="66.2dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginLeft="55dp"
+        android:layout_marginTop="87dp"
+        android:layout_marginEnd="55dp"
+        android:layout_marginRight="55dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/emailEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@mipmap/logo" />
+
 
     <EditText
-        android:id="@+id/emalEditText"
-        android:layout_width="match_parent"
-        android:layout_height="62dp"
-        android:layout_marginStart="42dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="42dp"
-        android:background="@drawable/edittext"
+        android:id="@+id/emailEditText"
+        android:layout_width="248dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginLeft="56dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginRight="56dp"
+        android:background="@drawable/email"
         android:hint="Email"
-        android:padding="8dp" />
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:textColorHint="#004234"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        tools:ignore="MissingConstraints" />
+
 
     <EditText
-        android:id="@+id/passwordEditText"
-        android:layout_width="match_parent"
-        android:layout_height="62dp"
-        android:layout_marginStart="42dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="42dp"
-        android:background="@drawable/edittext"
+        android:id="@+id/passEditText"
+        android:layout_width="248dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginLeft="56dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginRight="56dp"
+        android:background="@drawable/password"
         android:hint="Password"
-        android:padding="8dp" />
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:textColorHint="#004234"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailEditText"
+        tools:ignore="MissingConstraints" />
 
     <Button
-
         android:id="@+id/btn_sign_in"
-        android:layout_width="331dp"
-        android:layout_height="62dp"
-        android:layout_marginStart="42dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="42dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="248dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginLeft="56dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginRight="56dp"
         android:background="@drawable/button"
-        android:text="SignIn"
-        android:textSize="20dp" />
+        android:text="Log in"
+        android:textColor="#F3D100"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passEditText"
+        tools:ignore="MissingConstraints" />
 
-    <Button
+
+    <TextView
         android:id="@+id/btn_sign_up"
-        android:layout_width="match_parent"
-        android:layout_height="62dp"
-        android:layout_marginStart="42dp"
-        android:layout_marginEnd="42dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/button"
-        android:text="SignUp"
-        android:textSize="20dp" />
-</LinearLayout>
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginLeft="56dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginRight="56dp"
+        android:background="#E2E9E7"
+        android:focusable="false"
+        android:text=" don't have account Sign up"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#004334"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_sign_in"
+        tools:ignore="MissingConstraints" />
+
+</android.support.constraint.ConstraintLayout>
