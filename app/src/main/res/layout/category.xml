@@ -17,17 +17,15 @@
         <TextView
             android:id="@+id/category_name"
             android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
             android:text=""
-            android:gravity="center"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/category_brief"
             android:layout_width="match_parent"
-            android:layout_height="95dp"
-            android:gravity="center"
+            android:layout_height="wrap_content"
             android:text=""/>
     </LinearLayout>
 </LinearLayout>
