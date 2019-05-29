@@ -44,14 +44,14 @@
             android:text="@string/title" />
 
         <RatingBar
-            android:id="@+id/ratingBar1"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:rating="3.5"
-            android:stepSize="0.5"
- />
+                android:id="@+id/ratingBar1"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:rating="3.5"
+                android:stepSize="0.5"
+        />
 
     </LinearLayout>
     <ImageView

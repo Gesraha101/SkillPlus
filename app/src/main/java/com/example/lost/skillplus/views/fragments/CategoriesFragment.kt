@@ -63,38 +63,7 @@ class CategoriesFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        /*val retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-        val response = retrofit.create(CategoriesResponse::class.java)
-        val call = response.categories
-        call.enqueue(object : Callback<CategoriesList> {
-            override fun onResponse(call: Call<CategoriesList>, response: Response<CategoriesList>) {
-                val list = response.body()!!.categoriesList as List<Category>
 
-                rv_categories.apply {
-                    // set a LinearLayoutManager to handle Android
-                    // RecyclerView behavior
-                    layoutManager = LinearLayoutManager(activity)
-                    // set the custom adapter to the RecyclerView
-                    adapter = CategoriesAdapter(list)
-
-                    (adapter as CategoriesAdapter).onItemClick = { category ->
-
-                        val intent = Intent(activity, CategoryContentActivity::class.java)
-                        val bundle = Bundle()
-                        bundle.putSerializable("CATEGORY", category)
-                        intent.putExtras(bundle)
-                        startActivity(intent)
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<CategoriesList>, t: Throwable) {
-                Toast.makeText(activity, t.message, Toast.LENGTH_SHORT).show()
-            }
-        })*/
         return inflater.inflate(R.layout.fragment_categories, container, false)
     }
 

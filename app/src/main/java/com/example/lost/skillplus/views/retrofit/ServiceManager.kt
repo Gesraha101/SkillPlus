@@ -8,11 +8,6 @@ import retrofit2.http.*
 
 public interface ServiceManager {
 
-
-    @GET("/users/all")
-    fun getAllUsers(): Call<User>
-
-
     @POST("/users/signup")
     fun addUser(@Body user: User): Call<UserResponse>
 
