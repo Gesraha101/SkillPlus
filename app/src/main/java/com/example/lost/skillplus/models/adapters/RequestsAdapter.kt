@@ -5,9 +5,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.podos.Request
+import com.example.lost.skillplus.models.podos.raw.Request
 
 
 class RequestsAdapter(private val list: List<Request>): RecyclerView.Adapter<RequestsAdapter.RequestViewHolder>() {
@@ -30,7 +31,7 @@ class RequestsAdapter(private val list: List<Request>): RecyclerView.Adapter<Req
         private var title: TextView? = null
         private var image: ImageView? = null
         private var posterName: TextView? = null
-        private var posterRate: TextView? = null
+        private var posterRate: RatingBar? = null
         private var context: Context? = null
 
         init {
@@ -45,13 +46,13 @@ class RequestsAdapter(private val list: List<Request>): RecyclerView.Adapter<Req
         }
 
         fun bind(request: Request) {
-            title?.text = request.title
+            title?.text = request.need_name
             /*Glide.with(context!!)
                     .load(cat.imgUrl)
                     .into(image!!)
             */
-            posterName?.text = request.posterName
-            posterRate?.text = request.posterRate
+            posterName?.text = StringBuilder().append("Created by: " + request.user_name)
+            posterRate?.rating = request.user_id.toFloat()
         }
     }
 }

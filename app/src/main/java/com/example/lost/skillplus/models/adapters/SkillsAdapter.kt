@@ -4,10 +4,12 @@ import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.podos.Skill
+import com.example.lost.skillplus.models.podos.raw.Skill
 
 
 class SkillsAdapter(private val list: List<Skill>): RecyclerView.Adapter<SkillsAdapter.SkillViewHolder>() {
@@ -29,29 +31,34 @@ class SkillsAdapter(private val list: List<Skill>): RecyclerView.Adapter<SkillsA
     inner class SkillViewHolder(inflater: LayoutInflater, parent: ViewGroup) : RecyclerView.ViewHolder(inflater.inflate(R.layout.post, parent, false)) {
         private var title: TextView? = null
         private var image: ImageView? = null
+        private var price: TextView? = null
         private var posterName: TextView? = null
-        private var posterRate: TextView? = null
+        private var posterRate: RatingBar? = null
+        private var isFavorite: Button? = null
         private var context: Context? = null
 
         init {
             title = itemView.findViewById(R.id.skill_name)
             image = itemView.findViewById(R.id.post_image)
+            price = itemView.findViewById(R.id.skill_price)
             posterName = itemView.findViewById(R.id.poster_name)
             posterRate = itemView.findViewById(R.id.poster_rate)
             context = parent.context
+            isFavorite = itemView.findViewById(R.id.is_favorite)
             itemView.setOnClickListener {
                 onItemClick?.invoke(list[adapterPosition])
             }
         }
 
         fun bind(skill: Skill) {
-            title?.text = skill.title
+            title?.text = skill.skill_name
             /*Glide.with(context!!)
                     .load(cat.imgUrl)
                     .into(image!!)
             */
-            posterName?.text = skill.posterName
-            posterRate?.text = skill.posterRate
+            posterName?.text = StringBuilder().append("Created by: " + skill.user_name)
+            price?.text = StringBuilder().append("Price: " + skill.skill_price)
+            posterRate?.rating = skill.rate
         }
     }
 }

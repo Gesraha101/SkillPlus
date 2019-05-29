@@ -15,16 +15,23 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.adapters.RequestsAdapter
 import com.example.lost.skillplus.models.adapters.SkillsAdapter
-import com.example.lost.skillplus.models.podos.Request
-import com.example.lost.skillplus.models.podos.Skill
+import com.example.lost.skillplus.models.podos.raw.Category
+import com.example.lost.skillplus.models.podos.raw.Request
+import com.example.lost.skillplus.models.podos.raw.Skill
+import com.example.lost.skillplus.models.podos.responses.PostsResponse
+import com.example.lost.skillplus.models.retrofit.ServiceManager
 import com.example.lost.skillplus.views.fragments.SkillDetailsFragment
 import com.example.lost.skillplus.views.fragments.RequestDetailsFragment
 import kotlinx.android.synthetic.main.activity_category_content.*
 import kotlinx.android.synthetic.main.fragment_category_content.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.Serializable
 
 class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFragmentInteractionListener, RequestDetailsFragment.OnFragmentInteractionListener {
@@ -33,6 +40,7 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
     private var frag : Fragment? = null
+    private var activatedCategory : Category? = null
 
     inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
         val fragmentTransaction = beginTransaction()
@@ -63,7 +71,7 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.activity_category_content)
         super.onCreate(savedInstanceState)
-
+        activatedCategory = intent.getSerializableExtra("CATEGORY") as Category
         setSupportActionBar(toolbar)
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -85,7 +93,7 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
+        // automatically handle clicks on the Home/Up button_layout, so long
         // as you specify a parent activity in AndroidManifest.xml.
         val id = item.itemId
 
@@ -109,7 +117,7 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
         override fun getItem(position: Int): Fragment {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PostsListFragment.newInstance(position)
+            return PostsListFragment.newInstance(position, activatedCategory)
         }
 
         override fun getCount(): Int {
@@ -120,6 +128,8 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
 
     class PostsListFragment : Fragment() {
 
+        private var activatedCategory: Category? = null
+
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                                   savedInstanceState: Bundle?): View? {
             return inflater.inflate(R.layout.fragment_category_content, container, false)
@@ -127,52 +137,59 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
-            val list : List<Any>
             var isSkill = false
+            activatedCategory = arguments?.getSerializable(ARG_ACTIVATED_CAT) as Category
             if (arguments?.getInt(ARG_SECTION_NUMBER) == 0) {
-                list = listOf(
-                        Skill("Guitar", "I am a top-notch musician with 5 years experience", null, 555.5F,"4.8", "Abd Elsame3")
-                        ,Skill("Piano", "I am a top-notch pianist with 5 years experience", null, 555.5F, "5", "Toka")
-                )
                 isSkill = true
-            } else {
-                list = listOf(
-                        Request("Carpentering", "Need a carpenter to fix my drawer", "2.5", "Gesraha")
-                        ,Request("Plumbing", "Need a plumber to fix my sink", "2", "Khaled")
-
-                )
             }
+            val service = RetrofitManager.getInstance()?.create(ServiceManager::class.java)
+            val call: Call<PostsResponse>? = service?.getCategoryPosts(activatedCategory!!.cat_id)
+            call?.enqueue(object : Callback<PostsResponse> {
 
-            rv_posts_list.apply {
-                // set a LinearLayoutManager to handle Android
-                // RecyclerView behavior
-                layoutManager = LinearLayoutManager(activity)
+                override fun onResponse(call: Call<PostsResponse>, response: Response<PostsResponse>) {
+                    if (response.isSuccessful) {
+                        if (response.body()?.status == true) {
+                            rv_posts_list.apply {
+                                // set a LinearLayoutManager to handle Android
+                                // RecyclerView behavior
+                                layoutManager = LinearLayoutManager(activity)
+                                adapter = if (isSkill)
+                                    SkillsAdapter(response.body()!!.skillsAndNeeds.skills)
+                                else
+                                    RequestsAdapter(response.body()!!.skillsAndNeeds.needs)
+                                if (isSkill) {
+                                    (adapter as SkillsAdapter).onItemClick = { post ->
+                                        (activity as CategoryContentActivity).loadFragment(isSkill, post)
+                                    }
+                                } else {
+                                    (adapter as RequestsAdapter).onItemClick = { post ->
+                                        (activity as CategoryContentActivity).loadFragment(isSkill, post)
+                                    }
+                                }
 
-                adapter = if (isSkill)
-                    SkillsAdapter(list as List<Skill>)
-                else
-                    RequestsAdapter(list as List<Request>)
-                if (isSkill) {
-                    (adapter as SkillsAdapter).onItemClick = { post ->
-                        (activity as CategoryContentActivity).loadFragment(isSkill, post)
-                    }
-                } else {
-                    (adapter as RequestsAdapter).onItemClick = { post ->
-                        (activity as CategoryContentActivity).loadFragment(isSkill, post)
+                            }
+                        } else {
+                            Toast.makeText(activity, "Error: " + response.body(), Toast.LENGTH_LONG).show()
+                        }
                     }
                 }
 
-            }
+                override fun onFailure(call: Call<PostsResponse>, t: Throwable) {
+                    Toast.makeText(activity, "Failed", Toast.LENGTH_LONG).show()
+                }
+            })
         }
 
         companion object {
 
             private const val ARG_SECTION_NUMBER = "section_number"
+            private const val ARG_ACTIVATED_CAT = "activated_cat"
 
-            fun newInstance(sectionNumber: Int): PostsListFragment {
+            fun newInstance(sectionNumber: Int, activatedCategory: Category?): PostsListFragment {
                 val fragment = PostsListFragment()
                 val args = Bundle()
                 args.putInt(ARG_SECTION_NUMBER, sectionNumber)
+                args.putSerializable(ARG_ACTIVATED_CAT, activatedCategory)
                 fragment.arguments = args
                 return fragment
             }

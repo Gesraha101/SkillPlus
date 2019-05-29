@@ -9,7 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.podos.Skill
+import com.example.lost.skillplus.models.podos.raw.Skill
+import kotlinx.android.synthetic.main.fragment_skill_details.*
+import java.lang.StringBuilder
+import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,8 +32,21 @@ class SkillDetailsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_skill_details, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        skill_name.text = skill!!.skill_name
+        skill_price.append("${skill!!.skill_price} EGP")
+        poster_name.append("Created by: " + skill!!.user_name)
+        description_value.text = skill!!.skill_desc
+        sessions_count_value.text = skill!!.session_no.toString()
+        session_duration_value.append("${skill!!.duration} hour(s)")
+        extra_session_value.append("+" + skill!!.extra_fees.toString() + " per session")
+        for (date: Long in skill!!.schedule!!)
+            schedule_values.append(Date(date).toString() + "\n")
+        poster_rate.rating = skill!!.rate
     }
 
     // TODO: Rename method, update argument and hook method into UI event

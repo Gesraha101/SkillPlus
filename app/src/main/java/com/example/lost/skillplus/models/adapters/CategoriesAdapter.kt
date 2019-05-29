@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.podos.Category
+import com.example.lost.skillplus.models.podos.raw.Category
 
 
 
@@ -36,7 +36,7 @@ class CategoriesAdapter(private val list: List<Category>): RecyclerView.Adapter<
         init {
             name = itemView.findViewById(R.id.category_name)
             image = itemView.findViewById(R.id.category_img)
-            brief = itemView.findViewById(R.id.poster_name)
+            brief = itemView.findViewById(R.id.category_brief)
             context = parent.context
             itemView.setOnClickListener {
                 onItemClick?.invoke(list[adapterPosition])
@@ -44,12 +44,12 @@ class CategoriesAdapter(private val list: List<Category>): RecyclerView.Adapter<
         }
 
         fun bind(cat: Category) {
-            name?.text = cat.name
+            name?.text = cat.cat_name
             /*Glide.with(context!!)
-                    .load(cat.imgUrl)
+                    .load(cat.cat_photo)
                     .into(image!!)
             */
-            brief?.text = cat.brief
+            brief?.text = cat.cat_description
         }
     }
 }
