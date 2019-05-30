@@ -3,12 +3,13 @@ package com.example.lost.skillplus.models.adapters
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.RatingBar
 import android.widget.TextView
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.podos.raw.Request
+import com.iarcuschin.simpleratingbar.SimpleRatingBar
 
 
 class RequestsAdapter(private val list: List<Request>): RecyclerView.Adapter<RequestsAdapter.RequestViewHolder>() {
@@ -30,8 +31,9 @@ class RequestsAdapter(private val list: List<Request>): RecyclerView.Adapter<Req
     inner class RequestViewHolder(inflater: LayoutInflater, parent: ViewGroup) : RecyclerView.ViewHolder(inflater.inflate(R.layout.post, parent, false)) {
         private var title: TextView? = null
         private var image: ImageView? = null
+        private var price: TextView? = null
         private var posterName: TextView? = null
-        private var posterRate: RatingBar? = null
+        private var posterRate: SimpleRatingBar? = null
         private var context: Context? = null
 
         init {
@@ -39,6 +41,7 @@ class RequestsAdapter(private val list: List<Request>): RecyclerView.Adapter<Req
             image = itemView.findViewById(R.id.post_image)
             posterName = itemView.findViewById(R.id.poster_name)
             posterRate = itemView.findViewById(R.id.poster_rate)
+            price = itemView.findViewById(R.id.skill_price)
             context = parent.context
             itemView.setOnClickListener {
                 onItemClick?.invoke(list[adapterPosition])
@@ -51,8 +54,10 @@ class RequestsAdapter(private val list: List<Request>): RecyclerView.Adapter<Req
                     .load(cat.imgUrl)
                     .into(image!!)
             */
+            posterRate?.visibility = View.GONE
+            price?.visibility = View.GONE
             posterName?.text = StringBuilder().append("Created by: " + request.user_name)
-            posterRate?.rating = request.user_id.toFloat()
+
         }
     }
 }
