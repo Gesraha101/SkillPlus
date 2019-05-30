@@ -23,13 +23,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
-
-
 class SignUpActivity : AppCompatActivity() {
     val PICK_PHOTO_REQUEST: Int = 1
     var downloadUri: Uri? = null
     private var filePath: Uri? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,13 +99,14 @@ class SignUpActivity : AppCompatActivity() {
 
                             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                                 if (response.isSuccessful) {
-
-
                                     Toast.makeText(this@SignUpActivity, "Successfully Added ", Toast.LENGTH_LONG).show()
+                                    val i = Intent(this@SignUpActivity, LoginActivity::class.java)
+                                    startActivity(i)
                                 } else {
                                     Toast.makeText(this@SignUpActivity, "Failed to add item one", Toast.LENGTH_SHORT).show()
                                 }
                             }
+
                             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                                 Toast.makeText(this@SignUpActivity, "Failed to add item two", Toast.LENGTH_SHORT).show()
                             }
@@ -119,11 +117,8 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-
     private fun pickPhotoFromGallery() {
-        val pickImageIntent = Intent(Intent.ACTION_PICK,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-
+        val pickImageIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(pickImageIntent, PICK_PHOTO_REQUEST)
     }
 
