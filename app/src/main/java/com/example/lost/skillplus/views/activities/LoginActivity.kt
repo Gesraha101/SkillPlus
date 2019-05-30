@@ -7,9 +7,9 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.views.retrofit.ServiceManager
-import com.example.lost.skillplus.models.podos.UserResponse
-import com.example.lost.skillplus.models.podos.logUser
+import com.example.lost.skillplus.models.podos.raw.User
+import com.example.lost.skillplus.models.retrofit.ServiceManager
+import com.example.lost.skillplus.models.podos.responses.UserResponse
 import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,9 +20,9 @@ class LoginActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        val shake = AnimationUtils.loadAnimation(this, com.example.lost.skillplus.R.anim.animation) as Animation
+        val shake = AnimationUtils.loadAnimation(this, R.anim.animation) as Animation
         btn_sign_in.setOnClickListener {
-            val loguser = logUser(email = emailEditText?.text.toString(),
+            val loguser = User(email = emailEditText?.text.toString(),
                     password = passEditText?.text.toString())
 
             if (passEditText.text.toString().isEmpty() && emailEditText.text.toString().isEmpty()) {
@@ -77,7 +77,7 @@ class LoginActivity : AppCompatActivity(){
             }
         }
         btn_sign_up.setOnClickListener {
-            // your code to perform when the user clicks on the button
+            // your code to perform when the user clicks on the button_layout
             val i = Intent(this@LoginActivity, SignUpActivity::class.java)
             startActivity(i)
         }

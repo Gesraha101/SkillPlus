@@ -9,7 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.podos.Request
+import com.example.lost.skillplus.models.podos.raw.Request
+import kotlinx.android.synthetic.main.fragment_request_details.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,6 +37,14 @@ class RequestDetailsFragment : Fragment() {
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        request_name.text = request!!.need_name
+        poster_name.append("Created by: " + request!!.user_name)
+        description_value.text = request!!.need_desc
     }
 
     override fun onAttach(context: Context) {

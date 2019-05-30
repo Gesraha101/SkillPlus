@@ -11,6 +11,7 @@ import android.view.MenuItem
 import android.widget.TextView
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.views.fragments.CategoriesFragment
+import com.example.lost.skillplus.views.fragments.FavoritesFragment
 import com.example.lost.skillplus.views.fragments.NotificationsFragment
 import kotlinx.android.synthetic.main.activity_home.*
 
@@ -38,6 +39,9 @@ class HomeActivity : NavigationDrawerActivity(), CategoriesFragment.OnFragmentIn
         val fragment = supportFragmentManager.findFragmentByTag(tag) ?: when (item.itemId) {
             R.id.navigation_home -> {
                 CategoriesFragment.newInstance()
+            }
+            R.id.navigation_favorites-> {
+                FavoritesFragment.newInstance()
             }
             R.id.navigation_notifications -> {
                 NotificationsFragment.newInstance()
