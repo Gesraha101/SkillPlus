@@ -36,10 +36,6 @@ class LoginActivity : AppCompatActivity(){
                     passEditText.startAnimation(shake)
                     passEditText.requestFocus()
                 }
-
-
-
-
             }
             else{
                 val service = RetrofitManager.getInstance()?.create(ServiceManager::class.java)
@@ -48,7 +44,6 @@ class LoginActivity : AppCompatActivity(){
 
                     override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                         if (response.isSuccessful) {
-
                             if(response.body()?.status  == true) { startActivity(Intent(this@LoginActivity, HomeActivity::class.java))}
                                 else{ Toast.makeText(this@LoginActivity, "la ya habiby " +response.body(), Toast.LENGTH_LONG).show()
                                 emailEditText.setError("Wrong email")
