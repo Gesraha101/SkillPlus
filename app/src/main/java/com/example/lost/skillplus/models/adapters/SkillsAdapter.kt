@@ -10,6 +10,7 @@ import android.widget.RatingBar
 import android.widget.TextView
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.podos.raw.Skill
+import com.iarcuschin.simpleratingbar.SimpleRatingBar
 
 
 class SkillsAdapter(private val list: List<Skill>): RecyclerView.Adapter<SkillsAdapter.SkillViewHolder>() {
@@ -33,7 +34,7 @@ class SkillsAdapter(private val list: List<Skill>): RecyclerView.Adapter<SkillsA
         private var image: ImageView? = null
         private var price: TextView? = null
         private var posterName: TextView? = null
-        private var posterRate: RatingBar? = null
+        private var posterRate: SimpleRatingBar? = null
         private var isFavorite: Button? = null
         private var context: Context? = null
 
@@ -57,7 +58,7 @@ class SkillsAdapter(private val list: List<Skill>): RecyclerView.Adapter<SkillsA
                     .into(image!!)
             */
             posterName?.text = StringBuilder().append("Created by: " + skill.user_name)
-            price?.text = StringBuilder().append("Price: " + skill.skill_price)
+            price?.append(" ${skill.skill_price} EGP")
             posterRate?.rating = skill.rate
         }
     }
