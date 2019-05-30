@@ -10,9 +10,9 @@ import android.support.v7.app.AppCompatActivity
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
-import com.example.lost.skillplus.models.podos.User
-import com.example.lost.skillplus.models.podos.UserResponse
-import com.example.lost.skillplus.views.retrofit.ServiceManager
+import com.example.lost.skillplus.models.podos.raw.User
+import com.example.lost.skillplus.models.podos.responses.UserResponse
+import com.example.lost.skillplus.models.retrofit.ServiceManager
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.storage.FirebaseStorage
@@ -86,9 +86,9 @@ class SignUpActivity : AppCompatActivity() {
                         }).addOnCompleteListener { task ->
                             if (task.isSuccessful) {
                                 downloadUri = task.result
-                                Toast.makeText(this@SignUpActivity, "Uri is   ...   " + downloadUri.toString(), Toast.LENGTH_LONG)
+                                Toast.makeText(this@SignUpActivity, "Uri is   ...   " + downloadUri.toString(), Toast.LENGTH_LONG).show()
                             } else {
-                                Toast.makeText(this@SignUpActivity, "Uri is  Faild ...   ", Toast.LENGTH_LONG)
+                                Toast.makeText(this@SignUpActivity, "Uri is  Faild ...   ", Toast.LENGTH_LONG).show()
                             }
                         }
 
@@ -102,15 +102,13 @@ class SignUpActivity : AppCompatActivity() {
 
                             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                                 if (response.isSuccessful) {
-
-
                                     Toast.makeText(this@SignUpActivity, "Successfully Added ", Toast.LENGTH_LONG).show()
                                 } else {
                                     Toast.makeText(this@SignUpActivity, "Failed to add item one", Toast.LENGTH_SHORT).show()
                                 }
                             }
                             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                                Toast.makeText(this@SignUpActivity, "Failed to add item two", Toast.LENGTH_SHORT).show()
+//                                Toast.makeText(this@SignUpActivity, "Failed to add item two", Toast.LENGTH_SHORT).show()
                             }
                         })
                     }

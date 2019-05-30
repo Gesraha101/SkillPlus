@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "324425683234-8ae1espgsc0hsd3fdfqgk7vibadak294.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.lost.skillplus",
+            "certificate_hash": "dacae6b8efc935c1c39842baa774c3a4b1f89413"
+          }
+        },
+        {
           "client_id": "324425683234-cp5a4gd5hqjt7vnfisusv7e0mblhfqdh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
