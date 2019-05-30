@@ -9,59 +9,61 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.adapters.CategoriesAdapter
-import com.example.lost.skillplus.models.podos.raw.Category
-import com.example.lost.skillplus.models.podos.responses.CategoriesResponse
-import com.example.lost.skillplus.models.retrofit.ServiceManager
+import com.example.lost.skillplus.models.podos.Category
 import com.example.lost.skillplus.views.activities.CategoryContentActivity
 import kotlinx.android.synthetic.main.fragment_categories.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+
+// TODO: Rename parameter arguments, choose names that match
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM2 = "param2"
 
 class CategoriesFragment : Fragment() {
-
+    // TODO: Rename and change types of parameters
+    private var param1: String? = null
+    private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
+    private val BASE_URL = "https://eve3xf4ee4.execute-api.us-east-2.amazonaws.com/"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val service = RetrofitManager.getInstance()?.create(ServiceManager::class.java)
-        val call: Call<CategoriesResponse>? = service?.getCategories()
-        call?.enqueue(object : Callback<CategoriesResponse> {
 
-            override fun onResponse(call: Call<CategoriesResponse>, response: Response<CategoriesResponse>) {
-                if (response.isSuccessful) {
-                    if (response.body()?.status == true) {
-                        rv_categories.apply {
-                            // set a LinearLayoutManager to handle Android
-                            // RecyclerView behavior
-                            layoutManager = LinearLayoutManager(activity)
-                            // set the custom adapter to the RecyclerView
-                            adapter = CategoriesAdapter(response.body()!!.categories)
+        val list = listOf(
+                Category("Raising Arizona", "", "idk"),
+                Category("Raising Arizona1", "", "idk1"),
+                Category("Raising Arizona2", "", "idk2"),
+                Category("Raising Arizona3", "", "idk3"),
+                Category("Raising Arizona4", "", "idk4"),
+                Category("Raising Arizona5", "", "idk5"),
+                Category("Raising Arizona6", "", "idk6"),
+                Category("Raising Arizona7", "", "idk7"),
+                Category("Raising Arizona8", "", "idk8"),
+                Category("Raising Arizona9", "", "idk9")
+        )
+        rv_categories.apply {
+            // set a LinearLayoutManager to handle Android
+            // RecyclerView behavior
+            layoutManager = LinearLayoutManager(activity)
+            // set the custom adapter to the RecyclerView
+            adapter = CategoriesAdapter(list)
 
-                            (adapter as CategoriesAdapter).onItemClick = { category ->
+            (adapter as CategoriesAdapter).onItemClick = { category ->
 
-                                val intent = Intent(activity, CategoryContentActivity::class.java)
-                                intent.putExtra("CATEGORY", category)
-                                startActivity(intent)
-                            }
-                        }
-                    } else {
-                        Toast.makeText(activity, "Error: " + response.body(), Toast.LENGTH_LONG).show()
-                    }
-                }
+                val intent = Intent(activity, CategoryContentActivity::class.java)
+                val bundle = Bundle()
+                bundle.putSerializable("CATEGORY", category)
+                intent.putExtras(bundle)
+                startActivity(intent)
             }
-
-            override fun onFailure(call: Call<CategoriesResponse>, t: Throwable) {
-                Toast.makeText(activity, "Failed", Toast.LENGTH_LONG).show()
-            }
-        })
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+
         return inflater.inflate(R.layout.fragment_categories, container, false)
     }
 
