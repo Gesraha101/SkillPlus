@@ -7,13 +7,13 @@ import android.widget.Button
 import android.widget.ListView
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.adapters.CustomAdapter
-import com.example.lost.skillplus.models.podos.raw.Schadual
+import com.example.lost.skillplus.models.podos.raw.Schedule
 import com.example.lost.skillplus.models.podos.raw.Skill
 import java.util.*
 
-class schadual : AppCompatActivity() {
+class ScheduleActivity : AppCompatActivity() {
     private var lv: ListView? = null
-    private var modelArrayList: ArrayList<Schadual>? = null
+    private var modelArrayList: ArrayList<Schedule>? = null
     private var customAdapter: CustomAdapter? = null
     private var btnselect: Button? = null
     private var btndeselect: Button? = null
@@ -24,29 +24,29 @@ class schadual : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_schadual)
+        setContentView(R.layout.activity_schedule)
         skillFromDetailsFragment = intent.getSerializableExtra("Skill") as Skill
         schadualDatail = skillFromDetailsFragment!!.schedule
 
-        lv = findViewById(R.id.lv) as ListView
-        btnnext = findViewById(R.id.next) as Button
+        lv = findViewById(R.id.lv)
+        btnnext = findViewById(R.id.next)
 
         modelArrayList = getModel(false)
         customAdapter = CustomAdapter(this, modelArrayList!!)
         lv!!.adapter = customAdapter
 
         btnnext!!.setOnClickListener {
-            val intent = Intent(this@schadual, PaymentActivity::class.java)
+            val intent = Intent(this@ScheduleActivity, PaymentActivity::class.java)
             intent.putExtra("CategoryId", skillFromDetailsFragment?.cat_id)
             startActivity(intent)
         }
     }
 
-    private fun getModel(isSelect: Boolean): ArrayList<Schadual> {
-        val list = ArrayList<Schadual>()
-        for (i in 0..((schadualDatail?.size ?: 2) - 1)) {
+    private fun getModel(isSelect: Boolean): ArrayList<Schedule> {
+        val list = ArrayList<Schedule>()
+        for (i in 0 until (schadualDatail?.size ?: 2)) {
 
-            val model = Schadual()
+            val model = Schedule()
             model.setSelecteds(isSelect)
             schadualDatail?.get(i)?.let { model.setAnimals(it.toString()) }
             list.add(model)

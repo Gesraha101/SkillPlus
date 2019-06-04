@@ -1,16 +1,15 @@
 package com.example.lost.skillplus.models.adapters
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.podos.raw.Schadual
-class CustomAdapter(private val context: Context, modelArrayList: java.util.ArrayList<Schadual>) : BaseAdapter() {
+import com.example.lost.skillplus.models.podos.raw.Schedule
+class CustomAdapter(private val context: Context, modelArrayList: java.util.ArrayList<Schedule>) : BaseAdapter() {
 
-    private var modelArrayList: java.util.ArrayList<Schadual>
+    private var modelArrayList: java.util.ArrayList<Schedule>
 
     init {
         this.modelArrayList = modelArrayList
@@ -89,7 +88,7 @@ class CustomAdapter(private val context: Context, modelArrayList: java.util.Arra
     }
 
     companion object {
-        lateinit var public_modelArrayList: java.util.ArrayList<Schadual>
+        lateinit var public_modelArrayList: java.util.ArrayList<Schedule>
     }
 
 }

@@ -1,6 +1,5 @@
 package com.example.lost.skillplus.views.activities
 
-import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -12,7 +11,7 @@ import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.podos.raw.User
 import com.example.lost.skillplus.models.managers.BackendServiceManager
 import com.example.lost.skillplus.models.podos.responses.UserResponse
-import com.example.lost.skillplus.models.podos.shared
+import com.example.lost.skillplus.models.managers.PreferencesManager
 import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -51,7 +50,7 @@ class LoginActivity : AppCompatActivity(){
                         if (response.isSuccessful) {
                             if(response.body()?.status  == true){
                                 if (response.body()?.user?.id != null) {
-                                    val share = shared(this@LoginActivity)
+                                    val share = PreferencesManager(this@LoginActivity)
                                     response.body()?.user?.id?.let { it1 -> share.setId(it1) }
                                     share.setName(response.body()?.user?.id.toString())
                                 }

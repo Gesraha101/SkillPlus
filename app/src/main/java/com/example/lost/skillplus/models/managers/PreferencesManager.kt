@@ -1,10 +1,10 @@
-package com.example.lost.skillplus.models.podos
+package com.example.lost.skillplus.models.managers
 
 import android.content.Context
 
-class shared(context: Context) {
-    val myPreferences = "myPrefs"
-    val sharedPreferences = context.getSharedPreferences(myPreferences, Context.MODE_PRIVATE)
+class PreferencesManager(context: Context) {
+    private val myPreferences = "myPrefs"
+    private val sharedPreferences = context.getSharedPreferences(myPreferences, Context.MODE_PRIVATE)!!
 
     fun getId(): Int {
         return sharedPreferences.getInt("id", 0)

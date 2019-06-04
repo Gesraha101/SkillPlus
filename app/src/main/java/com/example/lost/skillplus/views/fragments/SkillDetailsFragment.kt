@@ -11,13 +11,11 @@ import android.view.ViewGroup
 
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.podos.raw.Skill
-import com.example.lost.skillplus.views.activities.schadual
-import kotlinx.android.synthetic.main.fragment_request_details.*
+import com.example.lost.skillplus.views.activities.ScheduleActivity
 import kotlinx.android.synthetic.main.fragment_skill_details.*
 import kotlinx.android.synthetic.main.fragment_skill_details.btn_apply
 import kotlinx.android.synthetic.main.fragment_skill_details.description_value
 import kotlinx.android.synthetic.main.fragment_skill_details.poster_name
-import java.lang.StringBuilder
 import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -56,7 +54,7 @@ class SkillDetailsFragment : Fragment() {
 
 
                 btn_apply.setOnClickListener{
-            val intent = Intent(activity , schadual::class.java)
+            val intent = Intent(activity , ScheduleActivity::class.java)
                     intent.putExtra("Skill", skill)
             startActivity(intent)
         }

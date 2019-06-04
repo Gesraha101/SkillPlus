@@ -1,6 +1,6 @@
 package com.example.lost.skillplus.models.podos.raw
 
-class Schadual {
+class Schedule {
 
     var isSelected: Boolean = false
     var animal: String? = null
