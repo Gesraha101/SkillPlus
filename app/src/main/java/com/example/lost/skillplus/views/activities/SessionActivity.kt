@@ -14,6 +14,7 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import com.example.lost.skillplus.R
+import com.example.lost.skillplus.models.enums.Keys
 import io.agora.rtc.IRtcEngineEventHandler
 import io.agora.rtc.RtcEngine
 import io.agora.rtc.video.VideoCanvas
@@ -22,6 +23,8 @@ import io.agora.rtc.video.VideoEncoderConfiguration
 
 class SessionActivity : AppCompatActivity() {
 
+
+    private lateinit var KEY : String
 
     private val LOG_TAG = SessionActivity::class.java.simpleName
 
@@ -48,19 +51,19 @@ class SessionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_session)
-
+        KEY = intent!!.getStringExtra(Keys.FIRE_DATE.key)
         if (checkSelfPermission(REQUESTED_PERMISSIONS[0], PERMISSION_REQ_ID) &&
                 checkSelfPermission(REQUESTED_PERMISSIONS[1], PERMISSION_REQ_ID) &&
                 checkSelfPermission(REQUESTED_PERMISSIONS[2], PERMISSION_REQ_ID)) {
-            initAgoraEngineAndJoinChannel()
+            initAgoraEngineAndJoinChannel(KEY)
         }
     }
 
-    private fun initAgoraEngineAndJoinChannel() {
+    private fun initAgoraEngineAndJoinChannel(channelId: String) {
         initializeAgoraEngine()
         setupVideoProfile()
         setupLocalVideo()
-        joinChannel()
+        joinChannel(channelId)
     }
 
     fun checkSelfPermission(permission: String, requestCode: Int): Boolean {
@@ -87,7 +90,7 @@ class SessionActivity : AppCompatActivity() {
                     finish()
                 }
 
-                initAgoraEngineAndJoinChannel()
+                initAgoraEngineAndJoinChannel(KEY)
             }
         }
     }
@@ -172,8 +175,8 @@ class SessionActivity : AppCompatActivity() {
         mRtcEngine!!.setupLocalVideo(VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_FIT, 0))
     }
 
-    private fun joinChannel() {
-        mRtcEngine!!.joinChannel(null, "demoChannel1", "Extra Optional Data", 0) // if you do not specify the uid, we will generate the uid for you
+    private fun joinChannel(channelId: String) {
+        mRtcEngine!!.joinChannel(null, channelId, "Extra Optional Data", 0) // if you do not specify the uid, we will generate the uid for you
     }
 
     private fun setupRemoteVideo(uid: Int) {

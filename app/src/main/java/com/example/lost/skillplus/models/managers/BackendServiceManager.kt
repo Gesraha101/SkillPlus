@@ -1,6 +1,6 @@
-package com.example.lost.skillplus.models.retrofit
+package com.example.lost.skillplus.models.managers
 
-import com.example.lost.skillplus.models.podos.raw.Category
+import com.example.lost.skillplus.models.podos.raw.Notification
 import com.example.lost.skillplus.models.podos.raw.Skill
 import com.example.lost.skillplus.models.podos.raw.User
 import com.example.lost.skillplus.models.podos.responses.CategoriesResponse
@@ -9,7 +9,7 @@ import com.example.lost.skillplus.models.podos.responses.UserResponse
 import retrofit2.Call
 import retrofit2.http.*
 
-interface ServiceManager {
+interface BackendServiceManager {
 
     @GET("/users/all")
     fun getAllUsers(): Call<User>
@@ -31,4 +31,7 @@ interface ServiceManager {
 
     @GET(" /category/add/skill")
     fun addSkill(@Body user: User): Call<Skill>
+
+    @GET(" /notifications/")
+    fun getNotifications(@Query("user_id") id: Int): Call<Notification>
 }

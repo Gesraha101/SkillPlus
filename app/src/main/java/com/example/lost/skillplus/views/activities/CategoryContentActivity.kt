@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.os.Bundle
-import android.support.v4.app.FragmentTransaction
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.Menu
@@ -24,7 +23,8 @@ import com.example.lost.skillplus.models.podos.raw.Category
 import com.example.lost.skillplus.models.podos.raw.Request
 import com.example.lost.skillplus.models.podos.raw.Skill
 import com.example.lost.skillplus.models.podos.responses.PostsResponse
-import com.example.lost.skillplus.models.retrofit.ServiceManager
+import com.example.lost.skillplus.models.managers.BackendServiceManager
+import com.example.lost.skillplus.models.managers.FragmentsManager
 import com.example.lost.skillplus.views.fragments.SkillDetailsFragment
 import com.example.lost.skillplus.views.fragments.RequestDetailsFragment
 import kotlinx.android.synthetic.main.activity_category_content.*
@@ -42,21 +42,6 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
     private var frag : Fragment? = null
     private var activatedCategory : Category? = null
 
-    inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
-        val fragmentTransaction = beginTransaction()
-        fragmentTransaction.func()
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
-    }
-
-    fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int) {
-        supportFragmentManager.inTransaction{ replace(frameId, fragment) }
-    }
-
-    fun AppCompatActivity.addFragment(fragment: Fragment, frameId: Int) {
-        supportFragmentManager.inTransaction{ add(frameId, fragment) }
-    }
-
     fun loadFragment(isSkill: Boolean, paramPassed: Serializable) {
         val fragment : Fragment = if (isSkill) {
             SkillDetailsFragment.newInstance(paramPassed as Skill)
@@ -64,7 +49,7 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
             RequestDetailsFragment.newInstance(paramPassed as Request)
         }
         frag = fragment
-        replaceFragment(fragment, R.id.post_fragment_container)
+        FragmentsManager.replaceFragment(supportFragmentManager, fragment, R.id.post_fragment_container, null, true)
         tabbed_view.visibility = View.GONE
     }
 
@@ -143,7 +128,7 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
             if (arguments?.getInt(ARG_SECTION_NUMBER) == 0) {
                 isSkill = true
             }
-            val service = RetrofitManager.getInstance()?.create(ServiceManager::class.java)
+            val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
             val call: Call<PostsResponse>? = service?.getCategoryPosts(activatedCategory!!.cat_id)
             call?.enqueue(object : Callback<PostsResponse> {
 

@@ -12,9 +12,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.adapters.CategoriesAdapter
-import com.example.lost.skillplus.models.podos.raw.Category
 import com.example.lost.skillplus.models.podos.responses.CategoriesResponse
-import com.example.lost.skillplus.models.retrofit.ServiceManager
+import com.example.lost.skillplus.models.managers.BackendServiceManager
 import com.example.lost.skillplus.views.activities.CategoryContentActivity
 import kotlinx.android.synthetic.main.fragment_categories.*
 import retrofit2.Call
@@ -27,7 +26,7 @@ class CategoriesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val service = RetrofitManager.getInstance()?.create(ServiceManager::class.java)
+        val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
         val call: Call<CategoriesResponse>? = service?.getCategories()
         call?.enqueue(object : Callback<CategoriesResponse> {
 

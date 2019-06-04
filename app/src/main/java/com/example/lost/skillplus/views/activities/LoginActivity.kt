@@ -8,7 +8,7 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.podos.raw.User
-import com.example.lost.skillplus.models.retrofit.ServiceManager
+import com.example.lost.skillplus.models.managers.BackendServiceManager
 import com.example.lost.skillplus.models.podos.responses.UserResponse
 import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
@@ -38,7 +38,7 @@ class LoginActivity : AppCompatActivity(){
                 }
             }
             else{
-                val service = RetrofitManager.getInstance()?.create(ServiceManager::class.java)
+                val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
                 val call: Call<UserResponse>? = service?.loginUser(loguser)
                 call?.enqueue(object : Callback<UserResponse> {
 
@@ -66,7 +66,7 @@ class LoginActivity : AppCompatActivity(){
                     }
 
                     override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                        Toast.makeText(this@LoginActivity, "Failed", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@LoginActivity, "Failed" + t.localizedMessage, Toast.LENGTH_LONG).show()
                     }
                 })
             }

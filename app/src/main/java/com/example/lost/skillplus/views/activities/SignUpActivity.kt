@@ -12,7 +12,7 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import com.example.lost.skillplus.models.podos.raw.User
 import com.example.lost.skillplus.models.podos.responses.UserResponse
-import com.example.lost.skillplus.models.retrofit.ServiceManager
+import com.example.lost.skillplus.models.managers.BackendServiceManager
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.storage.FirebaseStorage
@@ -96,7 +96,7 @@ class SignUpActivity : AppCompatActivity() {
                                 email = mailEditText?.text.toString(),
                                 password = passwordEditText?.text.toString()
                                 , pic = downloadUri.toString())
-                        val service = RetrofitManager.getInstance()?.create(ServiceManager::class.java)
+                        val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
                         val call: Call<UserResponse>? = service?.addUser(user)
                         call?.enqueue(object : Callback<UserResponse> {
 
