@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
+import android.util.Patterns
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
@@ -18,6 +19,9 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
+import com.wajahatkarim3.easyvalidation.core.view_ktx.validEmail
+import com.wajahatkarim3.easyvalidation.core.view_ktx.validator
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -41,7 +45,13 @@ class SignUpActivity : AppCompatActivity() {
             pickPhotoFromGallery()
         }
         btn_register.setOnClickListener {
-            if (NameEditText?.text.toString() == "" || mailEditText?.text.toString() == "" || passwordEditText.text.toString() == "" || pass2EditText.text.toString() == "") {
+            if (NameEditText?.text.toString() == "" || mailEditText.text.toString()== "" || passwordEditText.text.toString() == "" || pass2EditText.text.toString() == "") {
+
+//                passwordEditText.validator().nonEmpty()
+//                        .atleastOneNumber()
+//                        .atleastOneSpecialCharacters()
+//                        .atleastOneUpperCase()
+//                        .addErrorCallback{ passwordEditText.error = it }.check()
 
                 if (NameEditText?.text.toString() == "") {
                     NameEditText.setError("Required field")
@@ -65,14 +75,14 @@ class SignUpActivity : AppCompatActivity() {
                 }
             } else {
                 if (passwordEditText.text.toString() != pass2EditText.text.toString()) {
+                    mailEditText.setError("wrong pattern")
+                    mailEditText.startAnimation(shake)
                     pass2EditText.setError("password incorrect")
                     pass2EditText.startAnimation(shake)
-                    pass2EditText.requestFocus()
+
                 } else {
                     val file = filePath
-
                     val riversRef = mStorageRef.child("images/" + UUID.randomUUID().toString())
-
                     if (file != null) {
                         var uploadTask = riversRef.putFile(file)
 
@@ -137,6 +147,4 @@ class SignUpActivity : AppCompatActivity() {
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
-
-
 }

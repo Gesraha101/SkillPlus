@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:background="@color/colorBackground"
+                                             android:layout_height="match_parent" android:id="@+id/relativeLayout">
+
+    <TextView
+            android:text="Schadual "
+            android:textColor="@color/colorHeader"
+            android:textSize="25dp"
+            android:layout_width="153dp"
+            android:layout_height="36dp"
+            android:id="@+id/textViewff"
+            android:layout_marginTop="32dp"
+            app:layout_constraintTop_toBottomOf="@+id/totalPriceTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="152dp" android:layout_marginRight="152dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="106dp"
+            android:layout_marginStart="106dp"/>
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:textSize="20sp"
+            android:text="@string/schedule"
+            android:id="@+id/tv"
+            tools:layout_conversion_wrapWidth="218"
+            tools:layout_conversion_wrapHeight="70"
+            tools:ignore="MissingConstraints" android:layout_marginTop="27dp"
+            app:layout_constraintTop_toBottomOf="@+id/textViewff" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+    <TextView
+            android:text="Service title"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+
+            android:id="@+id/textView2"
+            android:textSize="25dp"
+            android:textColor="@color/colorHeader"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="251dp"
+            android:layout_marginRight="251dp"/>
+    <TextView
+            android:text="indoor Gardening"
+            android:textColor="@color/colorDark"
+            android:textSize="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:id="@+id/serviceTitleTextView"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="16dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp" app:layout_constraintStart_toEndOf="@+id/textView2"
+            android:layout_marginLeft="45dp" android:layout_marginStart="45dp"/>
+    <TextView
+            android:text="Total price"
+            android:textColor="@color/colorHeader"
+            android:textSize="25dp"
+            android:layout_width="153dp"
+            android:layout_height="36dp"
+            android:id="@+id/textView4" android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/serviceTitleTextView" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="27dp" android:layout_marginStart="27dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="247dp" android:layout_marginRight="247dp"
+            app:layout_constraintHorizontal_bias="0.0"/>
+    <TextView
+            android:text="@string/price"
+            android:layout_width="124dp"
+            android:layout_height="29dp"
+            android:id="@+id/totalPriceTextView"
+            android:layout_marginTop="27dp"
+            app:layout_constraintTop_toBottomOf="@+id/serviceTitleTextView" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="50dp" android:layout_marginRight="50dp"
+            app:layout_constraintStart_toEndOf="@+id/textView4" android:layout_marginLeft="57dp"
+            android:layout_marginStart="57dp"/>
+    <TextView
+            android:text="Payment By Fawry"
+            android:textColor="@color/colorHeader"
+            android:textSize="25dp"
+            android:layout_width="280dp"
+            android:layout_height="38dp"
+            android:id="@+id/textView6"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="112dp" android:layout_marginRight="112dp"
+            android:layout_marginTop="22dp" app:layout_constraintTop_toBottomOf="@+id/tv"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="19dp"
+            android:layout_marginStart="19dp"/>
+    <EditText
+            android:layout_width="271dp"
+            android:layout_height="57dp"
+            android:inputType="textPersonName"
+            android:background="@drawable/email"
+            android:ems="10"
+            android:id="@+id/emailPaymentEditText" android:layout_marginTop="34dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="27dp" android:layout_marginStart="27dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="113dp" android:layout_marginRight="113dp"/>
+    <EditText
+            android:background="@drawable/phone_number"
+            android:layout_width="275dp"
+            android:layout_height="57dp"
+            android:inputType="textPersonName"
+
+            android:ems="10"
+            android:id="@+id/phonePaymentEditText" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="24dp" android:layout_marginStart="24dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="112dp" android:layout_marginRight="112dp" android:layout_marginTop="30dp"
+            app:layout_constraintTop_toBottomOf="@+id/emailPaymentEditText"/>
+    <Button
+            android:text="pay"
+            android:textColor="@color/colorAccent"
+            android:background="@drawable/button_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button" tools:ignore="MissingConstraints"
+            android:layout_marginTop="26dp" app:layout_constraintTop_toBottomOf="@+id/phonePaymentEditText"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="69dp"
+            android:layout_marginStart="69dp"
+    />
+    <Button
+            android:text="cancle"
+            android:textColor="@color/colorAccent"
+            android:background="@drawable/button_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/payButton" tools:ignore="MissingConstraints"
+            android:layout_marginTop="26dp" app:layout_constraintTop_toBottomOf="@+id/phonePaymentEditText"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="87dp"
+            android:layout_marginRight="87dp" app:layout_constraintStart_toEndOf="@+id/button"
+            android:layout_marginLeft="80dp" android:layout_marginStart="80dp"/>
+
+</android.support.constraint.ConstraintLayout>

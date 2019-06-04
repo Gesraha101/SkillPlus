@@ -1,9 +1,7 @@
 package com.example.lost.skillplus.views.activities
-
 import android.net.Uri
 import android.support.design.widget.TabLayout
 import android.support.v7.app.AppCompatActivity
-
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
@@ -15,7 +13,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.adapters.RequestsAdapter
 import com.example.lost.skillplus.models.adapters.SkillsAdapter
@@ -57,6 +54,7 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
         setContentView(R.layout.activity_category_content)
         super.onCreate(savedInstanceState)
         activatedCategory = intent.getSerializableExtra("CATEGORY") as Category
+
         setSupportActionBar(toolbar)
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.

@@ -3,7 +3,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitManager {
     private var retrofit: Retrofit? = null
-    private val BASE_URL = "http://172.16.5.232:2000/"
+    private val BASE_URL = "http://10.1.41.86:2000/"
     private val retrofitInstance: Retrofit?
         get() {
             if (retrofit == null) {
