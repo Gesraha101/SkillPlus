@@ -1,8 +1,10 @@
 package com.example.lost.skillplus.views.activities
 
+import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Patterns
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
@@ -10,6 +12,7 @@ import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.podos.raw.User
 import com.example.lost.skillplus.models.retrofit.ServiceManager
 import com.example.lost.skillplus.models.podos.responses.UserResponse
+import com.example.lost.skillplus.models.podos.shared
 import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,12 +23,14 @@ class LoginActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
         val shake = AnimationUtils.loadAnimation(this, R.anim.animation) as Animation
         btn_sign_in.setOnClickListener {
             val loguser = User(email = emailEditText?.text.toString(),
                     password = passEditText?.text.toString())
 
-            if (passEditText.text.toString().isEmpty() && emailEditText.text.toString().isEmpty()) {
+            if (passEditText.text.toString().isEmpty() && emailEditText.text.toString().isEmpty()
+                    && Patterns.EMAIL_ADDRESS.matcher(emailEditText.text.toString()).matches() == false) {
                 if (emailEditText?.text.toString() == "") {
                     emailEditText.setError("Required field")
                     emailEditText.startAnimation(shake)
@@ -44,7 +49,13 @@ class LoginActivity : AppCompatActivity(){
 
                     override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                         if (response.isSuccessful) {
-                            if(response.body()?.status  == true) { startActivity(Intent(this@LoginActivity, HomeActivity::class.java))}
+                            if(response.body()?.status  == true){
+                                if (response.body()?.user?.id != null) {
+                                    val share = shared(this@LoginActivity)
+                                    response.body()?.user?.id?.let { it1 -> share.setId(it1) }
+                                    share.setName(response.body()?.user?.id.toString())
+                                }
+                                startActivity(Intent(this@LoginActivity, HomeActivity::class.java))}
                                 else{ Toast.makeText(this@LoginActivity, "la ya habiby " +response.body(), Toast.LENGTH_LONG).show()
                                 emailEditText.setError("Wrong email")
                                 emailEditText.startAnimation(shake)
@@ -54,10 +65,6 @@ class LoginActivity : AppCompatActivity(){
                                 passEditText.requestFocus()
                             }
 
-
-
-//                            val i = Intent(this@LoginActivity, SessionActivity::class.java)
-//                            startActivity(i)
                         } else {
                             Toast.makeText(this@LoginActivity, "Failed to log in", Toast.LENGTH_LONG).show()
 
@@ -78,4 +85,9 @@ class LoginActivity : AppCompatActivity(){
         }
 
     }
-}
+
+    fun String.isValidEmail(): Boolean
+            = this.isNotEmpty() &&
+            Patterns.EMAIL_ADDRESS.matcher(this).matches()
+   }
+

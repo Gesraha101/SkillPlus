@@ -40,6 +40,7 @@
     <string name="session_duration">Session Duration:</string>
     <string name="sessions_count">Number of Sessions:</string>
     <string name="skill_price">Total:</string>
+    <string name="schadual_time">Time:</string>
     <string name="btn_apply">Apply</string>
     <string name="btn_bid">Bid</string>
     <string name="sign_up">Sign up</string>

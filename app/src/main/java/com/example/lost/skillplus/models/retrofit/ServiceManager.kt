@@ -1,11 +1,14 @@
 package com.example.lost.skillplus.models.retrofit
 
+import com.example.lost.skillplus.models.podos.raw.ApplySkill
 import com.example.lost.skillplus.models.podos.raw.Category
 import com.example.lost.skillplus.models.podos.raw.Skill
 import com.example.lost.skillplus.models.podos.raw.User
+import com.example.lost.skillplus.models.podos.responses.ApplySkillResponse
 import com.example.lost.skillplus.models.podos.responses.CategoriesResponse
 import com.example.lost.skillplus.models.podos.responses.PostsResponse
 import com.example.lost.skillplus.models.podos.responses.UserResponse
+import org.androidannotations.annotations.rest.Post
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -31,4 +34,7 @@ interface ServiceManager {
 
     @GET(" /category/add/skill")
     fun addSkill(@Body user: User): Call<Skill>
+
+    @POST("/skill/apply")
+    fun applySkill(@Body applySkill : ApplySkill) : Call<ApplySkillResponse>
 }

@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#017459</color>
     <color name="colorPrimaryDark">#004434</color>
-    <color name="colorAccent">#F5DC40</color>
+        <color name="colorAccent">#F5DC40</color>
     <color name="colorText">#F5DC40</color>
     <color name="colorNavItem">#EEEAB7</color>
     <color name="colorNavItemActive">#F5DC40</color>
@@ -10,4 +10,6 @@
     <color name="colorBackground">#FFE3EAE8</color>
     <color name="colorTabBarBackground">#e3eae8</color>
     <color name="colorCardBackground">#fff8a4</color>
+    <color name="colorDark">#111111</color>
+
 </resources>
