@@ -25,25 +25,24 @@ class LoginActivity : AppCompatActivity(){
 
         val shake = AnimationUtils.loadAnimation(this, R.anim.animation) as Animation
         btn_sign_in.setOnClickListener {
-            val loguser = User(email = emailEditText?.text.toString(),
+            val logUser = User(email = emailEditText?.text.toString(),
                     password = passEditText?.text.toString())
 
-            if (passEditText.text.toString().isEmpty() && emailEditText.text.toString().isEmpty()
-                    && Patterns.EMAIL_ADDRESS.matcher(emailEditText.text.toString()).matches() == false) {
+            if (passEditText.text.toString().isEmpty() && emailEditText.text.toString().isEmpty() && !Patterns.EMAIL_ADDRESS.matcher(emailEditText.text.toString()).matches()) {
                 if (emailEditText?.text.toString() == "") {
-                    emailEditText.setError("Required field")
+                    emailEditText.error = "Required field"
                     emailEditText.startAnimation(shake)
                     emailEditText.requestFocus()
                 }
                 if (passEditText?.text.toString() == "") {
-                    passEditText.setError("Required field")
+                    passEditText.error = "Required field"
                     passEditText.startAnimation(shake)
                     passEditText.requestFocus()
                 }
             }
             else{
                 val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
-                val call: Call<UserResponse>? = service?.loginUser(loguser)
+                val call: Call<UserResponse>? = service?.loginUser(logUser)
                 call?.enqueue(object : Callback<UserResponse> {
 
                     override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
@@ -56,10 +55,10 @@ class LoginActivity : AppCompatActivity(){
                                 }
                                 startActivity(Intent(this@LoginActivity, HomeActivity::class.java))}
                                 else{ Toast.makeText(this@LoginActivity, "la ya habiby " +response.body(), Toast.LENGTH_LONG).show()
-                                emailEditText.setError("Wrong email")
+                                emailEditText.error = "Wrong email"
                                 emailEditText.startAnimation(shake)
                                 emailEditText.requestFocus()
-                                passEditText.setError("wrong password")
+                                passEditText.error = "wrong password"
                                 passEditText.startAnimation(shake)
                                 passEditText.requestFocus()
                             }

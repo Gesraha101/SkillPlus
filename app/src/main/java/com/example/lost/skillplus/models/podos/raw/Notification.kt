@@ -1,4 +1,3 @@
 package com.example.lost.skillplus.models.podos.raw
 
-class Notification {
-}
+data class Notification(val name: String /*TODO CONTINUE PARAMS*/)

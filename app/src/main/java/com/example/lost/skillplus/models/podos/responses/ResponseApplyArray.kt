@@ -1,4 +1,4 @@
-package com.example.lost.skillplus.models.podos.raw
+package com.example.lost.skillplus.models.podos.responses
 
 
 data class ResponseApplyArray(

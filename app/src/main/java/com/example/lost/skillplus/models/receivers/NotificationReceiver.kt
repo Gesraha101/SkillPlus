@@ -6,8 +6,7 @@ import android.content.Intent
 import com.example.lost.skillplus.models.services.NotificationService
 import android.net.ConnectivityManager
 import com.example.lost.skillplus.models.managers.BackendServiceManager
-import com.example.lost.skillplus.models.podos.raw.Notification
-import com.example.lost.skillplus.models.podos.responses.PostsResponse
+import com.example.lost.skillplus.models.podos.lists.Notifications
 import retrofit2.Call
 
 
@@ -16,7 +15,7 @@ class NotificationReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (isOnline(context)) {
             val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
-            val call: Call<Notification>? = service?.getNotifications(1)
+            val call: Call<Notifications>? = service?.getNotifications(1)
             NotificationService.enqueueTask(context, intent)
         }
     }
