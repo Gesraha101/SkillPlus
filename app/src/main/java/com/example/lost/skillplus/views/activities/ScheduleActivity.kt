@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -26,9 +27,9 @@ import java.util.*
 
 class ScheduleActivity : AppCompatActivity() {
     private lateinit var mAdapter: ScheduleAdapter
-    var dayPicked: String? = null
-    var dT =DayTime("Monday",3,3)
-    var dayTimeList= arrayListOf<DayTime>(dT) //Todo:Intialize schedule recycler view with no data
+    var dayPicked: Int? = null
+    var dayTimeList :ArrayList<DayTime> = arrayListOf()
+    var dayTimeArray= arrayListOf<Array<Int?>>()
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,42 +38,6 @@ class ScheduleActivity : AppCompatActivity() {
         setSupportActionBar(toolbar_schedule)
 
         tF_Title.text=intent.getStringExtra("skillName")
-
-        val skillRequest = Skill(
-                skill_name =intent.getStringExtra("skillName")
-                ,skill_desc=intent.getStringExtra("skillDesc")
-                ,session_no=intent.getIntExtra("sessionNumber",0)
-                ,duration=intent.getFloatExtra("sessionDuration",0f)
-                ,skill_price=intent.getFloatExtra("skillPrice",0f)
-                ,extra_fees=intent.getFloatExtra("extraFees",0f)
-                ,user_id=1 //Todo: get user_id from shared preferences
-                ,cat_id=1 //Todo: get cat_id from ...?
-                ,schedule = listOf( System.currentTimeMillis() )//Todo: Get schedule from Gesraha's ultimate equation
-
-            ,user_name = null
-            ,adding_date = null
-            ,rate = null
-            ,skill_id = null
-        )
-        val service = RetrofitManager.getInstance()?.create(ServiceManager::class.java)
-        val call: Call<SkillsResponse>? = service?.addSkill(skillRequest)
-        call?.enqueue(object : Callback<SkillsResponse> {
-            override fun onResponse(call: Call<SkillsResponse>, response: Response<SkillsResponse>) {
-                if (response.isSuccessful) {
-                    if(response.body()?.status  == true) { startActivity(Intent(this@ScheduleActivity, HomeActivity::class.java))}//Todo: not sure where should it go after, instead of HomeActivity
-                    else{
-                            //Error adding
-                    }
-                } else {
-                            //No response from retrofit
-                     }
-            }
-
-            override fun onFailure(call: Call<SkillsResponse>, t: Throwable) {
-                //Failure sending request
-            }
-
-        })
 
         rV_Schedule.apply {
             layoutManager = LinearLayoutManager(this@ScheduleActivity)
@@ -91,7 +56,7 @@ class ScheduleActivity : AppCompatActivity() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                dayPicked = spinner.selectedItem.toString()
+                dayPicked = position+1
 
                 val c = Calendar.getInstance()
                 val hour = c.get(Calendar.HOUR)
@@ -99,14 +64,51 @@ class ScheduleActivity : AppCompatActivity() {
 
                 val tpd = TimePickerDialog(this@ScheduleActivity, com.example.lost.skillplus.R.style.TimePickerTheme,
                         TimePickerDialog.OnTimeSetListener(function = { view, h, m ->
-                            dayTimeList.add(DayTime(dayPicked,h,m))
+                            dayTimeList.add(DayTime(spinner.selectedItem.toString(),h,m))
                             mAdapter.notifyDataSetChanged()
+                            dayTimeArray.add(arrayOf(dayPicked,h,m))
                         }), hour, minute, false)
                 tpd.show()
             }
 
         }
+        btn_add_skill.setOnClickListener {
+            val skillRequest = Skill(
+                    skill_name =intent.getStringExtra("skillName")
+                    ,skill_desc=intent.getStringExtra("skillDesc")
+                    ,session_no=intent.getIntExtra("sessionNumber",0)
+                    ,duration=intent.getFloatExtra("sessionDuration",0f)
+                    ,skill_price=intent.getFloatExtra("skillPrice",0f)
+                    ,extra_fees=intent.getFloatExtra("extraFees",0f)
+                    ,user_id=1 //Todo: get user_id from shared preferences
+                    ,cat_id=1 //Todo: get cat_id from ...?
+                    ,schedule = listOf( System.currentTimeMillis() )//Todo: Get schedule from Gesraha's ultimate equation
 
+                    ,user_name = null
+                    ,adding_date = null
+                    ,rate = null
+                    ,skill_id = null
+            )
+            val service = RetrofitManager.getInstance()?.create(ServiceManager::class.java)
+            val call: Call<SkillsResponse>? = service?.addSkill(skillRequest)
+            call?.enqueue(object : Callback<SkillsResponse> {
+                override fun onResponse(call: Call<SkillsResponse>, response: Response<SkillsResponse>) {
+                    if (response.isSuccessful) {
+                        if(response.body()?.status  == true) { startActivity(Intent(this@ScheduleActivity, HomeActivity::class.java))}//Todo: not sure where should it go after, instead of HomeActivity
+                        else{
+                            //Error adding
+                        }
+                    } else {
+                        //No response from retrofit
+                    }
+                }
 
+                override fun onFailure(call: Call<SkillsResponse>, t: Throwable) {
+                    //Failure sending request
+                }
+
+            })
+
+        }
     }
 }
