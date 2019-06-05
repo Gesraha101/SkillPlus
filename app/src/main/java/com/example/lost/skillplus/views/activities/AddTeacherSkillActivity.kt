@@ -2,19 +2,10 @@ package com.example.lost.skillplus.views.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast
+import android.support.v7.app.AppCompatActivity
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.podos.raw.Skill
-import com.example.lost.skillplus.models.podos.responses.SkillsResponse
-import com.example.lost.skillplus.models.podos.responses.UserResponse
-import com.example.lost.skillplus.models.retrofit.ServiceManager
 
 import kotlinx.android.synthetic.main.activity_add_teacher_skill.*
-import kotlinx.android.synthetic.main.activity_login.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class AddTeacherSkillActivity : AppCompatActivity() {
 

@@ -1,6 +1,7 @@
 package com.example.lost.skillplus.models.managers
 
 import android.content.Context
+import com.example.lost.skillplus.models.enums.Keys
 
 class PreferencesManager(context: Context) {
     private val myPreferences = "myPrefs"
@@ -25,5 +26,9 @@ class PreferencesManager(context: Context) {
         val editor = sharedPreferences.edit()
         editor.putString("name", name)
         editor.apply()
+    }
+
+    fun getSchedule(): MutableSet<String>? {
+        return sharedPreferences.getStringSet(Keys.TIMESTAMPS.key, null)
     }
 }

@@ -12,11 +12,10 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.example.lost.skillplus.models.adapters.ScheduleAdapter
+import com.example.lost.skillplus.models.managers.BackendServiceManager
 import com.example.lost.skillplus.models.podos.raw.DayTime
 import com.example.lost.skillplus.models.podos.raw.Skill
 import com.example.lost.skillplus.models.podos.responses.SkillsResponse
-import com.example.lost.skillplus.models.retrofit.ServiceManager
-import kotlinx.android.synthetic.main.activity_add_teacher_skill.*
 import kotlinx.android.synthetic.main.activity_schedule.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -54,7 +53,7 @@ class ScheduleActivity : AppCompatActivity() {
             ,rate = null
             ,skill_id = null
         )
-        val service = RetrofitManager.getInstance()?.create(ServiceManager::class.java)
+        val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
         val call: Call<SkillsResponse>? = service?.addSkill(skillRequest)
         call?.enqueue(object : Callback<SkillsResponse> {
             override fun onResponse(call: Call<SkillsResponse>, response: Response<SkillsResponse>) {
@@ -98,7 +97,7 @@ class ScheduleActivity : AppCompatActivity() {
                 val minute = c.get(Calendar.MINUTE)
 
                 val tpd = TimePickerDialog(this@ScheduleActivity, com.example.lost.skillplus.R.style.TimePickerTheme,
-                        TimePickerDialog.OnTimeSetListener(function = { view, h, m ->
+                        TimePickerDialog.OnTimeSetListener(function = { _, h, m ->
                             dayTimeList.add(DayTime(dayPicked,h,m))
                             mAdapter.notifyDataSetChanged()
                         }), hour, minute, false)

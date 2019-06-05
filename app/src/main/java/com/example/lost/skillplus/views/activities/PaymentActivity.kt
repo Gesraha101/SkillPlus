@@ -38,7 +38,7 @@ class PaymentActivity : AppCompatActivity() {
 
         for (i in 0 until CustomAdapter.public_modelArrayList.size) {
             if (CustomAdapter.public_modelArrayList[i].getSelecteds()) {
-                tv!!.text = tv!!.text.toString() + " , " + CustomAdapter.public_modelArrayList!!.get(i).getAnimals()
+                tv!!.text = tv!!.text.toString() + " , " + CustomAdapter.public_modelArrayList[i].getAnimals()
                 scheduleList.add(CustomAdapter.public_modelArrayList[i].getAnimals().toLong())
             }
         }
