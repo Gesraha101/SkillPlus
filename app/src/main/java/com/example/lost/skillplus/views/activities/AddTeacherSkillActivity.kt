@@ -22,42 +22,20 @@ class AddTeacherSkillActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_teacher_skill)
         setSupportActionBar(toolbar)
-        val skillRequest = Skill(
-                 skill_name =eT_Title?.text.toString()
-                ,skill_desc=eT_Description?.text.toString()
-                ,session_no=eT_NumberOfSessions?.text.toString().toInt()
-                ,duration=eT_SessionDuration?.text.toString().toFloat()
-                ,skill_price=eT_Price?.text.toString().toFloat() //skill_price instead of price in backend
-                ,extra_fees=eT_ExtraFees?.text.toString().toFloat()
-                ,user_id=1
-                ,cat_id=1
-                ,schedule = listOf( System.currentTimeMillis() )
 
-        ,user_name = null
-        ,adding_date = null
-        ,rate = null
-        ,skill_id = null
-        )
 
-        val service = RetrofitManager.getInstance()?.create(ServiceManager::class.java)
-        val call: Call<SkillsResponse>? = service?.addSkill(skillRequest)
-        call?.enqueue(object : Callback<SkillsResponse> {
-            override fun onResponse(call: Call<SkillsResponse>, response: Response<SkillsResponse>) {
-                if (response.isSuccessful) {
-                    if(response.body()?.status  == true) { startActivity(Intent(this@AddTeacherSkillActivity, HomeActivity::class.java))}
-                            else{
-                                Toast.makeText(this@AddTeacherSkillActivity,response.body().toString(), Toast.LENGTH_LONG).show()
-                                 }
-                    } else {
-                        Toast.makeText(this@AddTeacherSkillActivity, "Failed ", Toast.LENGTH_LONG).show()
-                    }
-            }
+        btn_add_skill.setOnClickListener {
+            val intent = Intent(this@AddTeacherSkillActivity,ScheduleActivity::class.java)
+            intent.putExtra("skillName",eT_Title?.text.toString())
+            intent.putExtra("skillDesc",eT_Description?.text.toString())
+            intent.putExtra("numberOfSessions",eT_NumberOfSessions.text.toString().toInt())
+            intent.putExtra("sessionDuration",eT_SessionDuration?.text.toString().toFloat())
+            intent.putExtra("skillPrice",eT_Price?.text.toString().toFloat()) //Todo: skill_price instead of price in backend
+            intent.putExtra("extraFees",eT_ExtraFees?.text.toString().toFloat())//Todo: update extra_fees UI
 
-            override fun onFailure(call: Call<SkillsResponse>, t: Throwable) {
-                Toast.makeText(this@AddTeacherSkillActivity, "Failed ", Toast.LENGTH_LONG).show()
-            }
+            startActivity(intent)
+        }
 
-        })
     }
 
 }

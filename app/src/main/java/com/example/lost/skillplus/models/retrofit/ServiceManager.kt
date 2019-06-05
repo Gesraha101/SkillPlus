@@ -30,6 +30,6 @@ interface ServiceManager {
     @GET(" /category/name")
     fun getCategoryNames(): Call<List<String>>
 
-    @GET(" /category/add/skill")
+    @POST(" /category/add/skill")
     fun addSkill(@Body skill: Skill): Call<SkillsResponse>
 }
