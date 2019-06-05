@@ -17,7 +17,7 @@ class PreferencesManager(context: Context) {
     }
 
 
-    fun getName(): String {
+    fun getName(): String? {
         return sharedPreferences.getString("name", "")
     }
 

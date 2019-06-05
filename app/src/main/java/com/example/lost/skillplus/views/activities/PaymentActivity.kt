@@ -48,7 +48,7 @@ class PaymentActivity : AppCompatActivity() {
 //        val userId = share.getId()
         val stringName = share.getName()
 
-        appliedRequest.learner = stringName.toInt()
+        appliedRequest.learner = stringName!!.toInt()
      //   Toast.makeText(this@PaymentActivity ,steingName.toInt(), Toast.LENGTH_LONG)
         appliedRequest.skill = categoryId 
         appliedRequest.schedule = scheduleList
