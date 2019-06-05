@@ -46,7 +46,7 @@ class SkillDetailsFragment : Fragment() {
         extra_session_value.append("+" + skill!!.extra_fees.toString() + " per session")
         for (date: Long in skill!!.schedule!!)
             schedule_values.append(Date(date).toString() + "\n")
-        poster_rate.rating = skill!!.rate
+        poster_rate.rating = skill!!.rate!!
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -5,6 +5,7 @@ import com.example.lost.skillplus.models.podos.raw.Skill
 import com.example.lost.skillplus.models.podos.raw.User
 import com.example.lost.skillplus.models.podos.responses.CategoriesResponse
 import com.example.lost.skillplus.models.podos.responses.PostsResponse
+import com.example.lost.skillplus.models.podos.responses.SkillsResponse
 import com.example.lost.skillplus.models.podos.responses.UserResponse
 import retrofit2.Call
 import retrofit2.http.*
@@ -30,5 +31,5 @@ interface ServiceManager {
     fun getCategoryNames(): Call<List<String>>
 
     @GET(" /category/add/skill")
-    fun addSkill(@Body user: User): Call<Skill>
+    fun addSkill(@Body skill: Skill): Call<SkillsResponse>
 }
