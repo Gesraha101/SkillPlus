@@ -59,7 +59,7 @@ class SkillsAdapter(private val list: List<Skill>): RecyclerView.Adapter<SkillsA
             */
             posterName?.text = StringBuilder().append("Created by: " + skill.user_name)
             price?.append(" ${skill.skill_price} EGP")
-            posterRate?.rating = skill.rate
+            posterRate?.rating = skill.rate!!
         }
     }
 }
