@@ -1,7 +1,7 @@
 package com.example.lost.skillplus.models.managers
 
 import com.example.lost.skillplus.models.podos.raw.ApplySkill
-import com.example.lost.skillplus.models.podos.lists.Notifications
+import com.example.lost.skillplus.models.podos.responses.NotificationsResponse
 import com.example.lost.skillplus.models.podos.raw.Skill
 import com.example.lost.skillplus.models.podos.raw.User
 import com.example.lost.skillplus.models.podos.responses.ApplySkillResponse
@@ -39,5 +39,5 @@ interface BackendServiceManager {
     fun applySkill(@Body applySkill : ApplySkill) : Call<ApplySkillResponse>
 
     @GET(" /notifications/")
-    fun getNotifications(@Query("user_id") id: Int): Call<Notifications>
+    fun getNotifications(@Query("user_id") id: Int, @Query("last_updated") lastUpdated: Long): Call<NotificationsResponse>
 }

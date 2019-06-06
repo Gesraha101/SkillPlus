@@ -8,11 +8,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.enums.NotificationTypes
-import com.example.lost.skillplus.models.podos.lists.Notifications
+import com.example.lost.skillplus.models.podos.responses.NotificationsResponse
 
-class NotificationsAdapter(private val list: List<Notifications>, private val type: Int): RecyclerView.Adapter<NotificationsAdapter.NotificationViewHolder>() {
+class NotificationsAdapter(private val list: List<NotificationsResponse>, private val type: Int): RecyclerView.Adapter<NotificationsAdapter.NotificationViewHolder>() {
 
-    var onItemClick: ((Notifications) -> Unit)? = null
+    var onItemClick: ((NotificationsResponse) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -20,7 +20,7 @@ class NotificationsAdapter(private val list: List<Notifications>, private val ty
     }
 
     override fun onBindViewHolder(holder: NotificationViewHolder, position: Int) {
-        val notification: Notifications = list[position]
+        val notification: NotificationsResponse = list[position]
         holder.bind(notification)
     }
 
@@ -42,7 +42,7 @@ class NotificationsAdapter(private val list: List<Notifications>, private val ty
             }
         }
 
-        fun bind(notifications: Notifications) {
+        fun bind(notificationsResponse: NotificationsResponse) {
 //            name?.text = notification.cat_name
 //            /*Glide.with(context!!)
 //                    .load(cat.cat_photo)

@@ -1,5 +1,6 @@
 package com.example.lost.skillplus.models.services
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -8,37 +9,64 @@ import android.content.Intent
 import android.os.Build
 import android.support.v4.app.JobIntentService
 import android.support.v4.app.NotificationCompat
+import android.widget.Toast
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.enums.Actions
 import com.example.lost.skillplus.models.enums.Ids
 import com.example.lost.skillplus.models.enums.Keys
-import com.example.lost.skillplus.views.activities.NotificationActivity
-import com.example.lost.skillplus.views.activities.SessionActivity
+import com.example.lost.skillplus.models.managers.BackendServiceManager
+import com.example.lost.skillplus.models.podos.responses.NotificationsResponse
+import com.example.lost.skillplus.views.activities.NotificationAlarmActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class NotificationService : JobIntentService() {
 
+
     override fun onHandleWork(intent: Intent) {
-        if (intent.action == Actions.NOTIFY.action) {
-            val date = intent.getLongExtra(Keys.FIRE_DATE.key, 0)
-            val manager = this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            val builder: NotificationCompat.Builder
+        when {
+            intent.action == Actions.NOTIFY.action -> {
+                val date = intent.getLongExtra(Keys.FIRE_DATE.key, 0)
+                val manager = this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val channel = NotificationChannel(Ids.NOTIFICATION_CHANNEL.id, Ids.VISIBLE.id, NotificationManager.IMPORTANCE_DEFAULT)
-                channel.description = "Displays reminders for upcoming sessions"
-                manager.createNotificationChannel(channel)
-                builder = NotificationCompat.Builder(this, Ids.NOTIFICATION_CHANNEL.id)
-            } else
-                builder = NotificationCompat.Builder(this)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    val channel = NotificationChannel(Ids.NOTIFICATION_CHANNEL.id, Ids.VISIBLE.id, NotificationManager.IMPORTANCE_DEFAULT)
+                    channel.description = "Displays reminders for upcoming sessions"
+                    manager.createNotificationChannel(channel)
+                }
 
-            builder.setContentTitle("Session Reminder")
-                    .setContentText("You have an upcoming session now")
-                    .setAutoCancel(false)
-                    .setSmallIcon(R.drawable.ic_today_notification)
-                    .setContentIntent(PendingIntent.getActivity(this, notificationID, Intent(this, SessionActivity::class.java).putExtra(Keys.FIRE_DATE.key, date).setAction(Actions.SHOW.action).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK), PendingIntent.FLAG_UPDATE_CURRENT))
+                val builder = NotificationCompat.Builder(this, Ids.NOTIFICATION_CHANNEL.id)
+                        .setContentTitle("Session Reminder")
+                        .setContentText("You have an upcoming session in 30 minutes")
+                        .setDefaults(Notification.DEFAULT_LIGHTS or Notification.DEFAULT_SOUND)
+                        .setAutoCancel(false)
+                        .setSmallIcon(R.drawable.ic_launcher_background)
 
-            manager.notify(notificationID++, builder.build())
+                manager.notify(notificationID++, builder.build())
 
+            }
+            intent.action == Actions.ALERT.action -> startActivity(Intent(this, NotificationAlarmActivity::class.java))
+            intent.action == Actions.CHECK.action -> {
+                val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
+                val call: Call<NotificationsResponse>? = service?.getNotifications(1, System.currentTimeMillis())
+                call?.enqueue(object : Callback<NotificationsResponse> {
+
+                    override fun onResponse(call: Call<NotificationsResponse>, response: Response<NotificationsResponse>) {
+                        if (response.isSuccessful) {
+                            if(response.body()?.status  == true) {
+
+                            }
+                        } else {
+
+                        }
+                    }
+
+                    override fun onFailure(call: Call<NotificationsResponse>, t: Throwable) {
+                        Toast.makeText(this@NotificationService, "Failed" + t.localizedMessage, Toast.LENGTH_LONG).show()
+                    }
+                })
+            }
         }
     }
 
