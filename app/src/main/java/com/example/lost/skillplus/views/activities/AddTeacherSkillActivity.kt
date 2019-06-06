@@ -15,7 +15,7 @@ class AddTeacherSkillActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
 
-        btn_add_skill.setOnClickListener {
+        btn_proceed.setOnClickListener {
             val intent = Intent(this@AddTeacherSkillActivity,ScheduleActivity::class.java)
             intent.putExtra("skillName",eT_Title?.text.toString())
             intent.putExtra("skillDesc",eT_Description?.text.toString())
