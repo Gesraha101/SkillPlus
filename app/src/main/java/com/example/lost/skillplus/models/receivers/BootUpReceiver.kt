@@ -1,7 +1,6 @@
 package com.example.lost.skillplus.models.receivers
 
 import android.app.AlarmManager
-import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -17,7 +16,7 @@ class BootUpReceiver : BroadcastReceiver() {
             val timestamps = PreferenceManager.getDefaultSharedPreferences(context).getStringSet(Keys.TIMESTAMPS.key, null)
             if (timestamps != null)
                 for (timestamp in timestamps)
-                    NotificationAlarmManager.initAlarm(context, timestamp.toLong())
+                    NotificationAlarmManager.initAlarm(context, timestamp.toLong() - AlarmManager.INTERVAL_FIFTEEN_MINUTES * 2, timestamp.toLong())
         }
     }
 

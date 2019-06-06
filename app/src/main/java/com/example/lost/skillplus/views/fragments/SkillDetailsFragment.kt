@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.example.lost.skillplus.R
+import com.example.lost.skillplus.models.enums.Keys
 import com.example.lost.skillplus.models.podos.raw.Skill
 import com.example.lost.skillplus.views.activities.ScheduleActivity
 import kotlinx.android.synthetic.main.fragment_skill_details.*
@@ -51,11 +52,8 @@ class SkillDetailsFragment : Fragment() {
             schedule_values.append(Date(date).toString() + "\n")
         poster_rate.rating = skill!!.rate!!
 
-
-
-                btn_apply.setOnClickListener{
-            val intent = Intent(activity , ScheduleActivity::class.java)
-                    intent.putExtra("Skill", skill)
+        btn_apply.setOnClickListener{
+            val intent = Intent(activity , ScheduleActivity::class.java).putExtra(Keys.SKILL.key, skill)
             startActivity(intent)
         }
     }

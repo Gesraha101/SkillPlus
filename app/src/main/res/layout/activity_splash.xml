@@ -13,16 +13,16 @@
         app:layout_constraintBottom_toTopOf="@id/spinner"
     />
 
-    <Spinner
+    <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/spinner"
+        android:paddingVertical="30dp"
         app:layout_constraintBottom_toTopOf="@id/bg"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:paddingVertical="10dp">
+        app:layout_constraintStart_toStartOf="parent">
 
-    </Spinner>
+    </ProgressBar>
 
     <ImageView
         android:id="@+id/bg"

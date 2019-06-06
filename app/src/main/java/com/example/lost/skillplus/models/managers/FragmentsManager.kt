@@ -24,5 +24,9 @@ class FragmentsManager {
                 manager.inTransaction({ replace(frameId, fragment, tag) }, addToBackStack)
         }
 
+        fun removeFragment(manager: FragmentManager, fragment: Fragment, addToBackStack: Boolean) {
+            manager.inTransaction({ remove(fragment)}, addToBackStack)
+        }
+
     }
 }
