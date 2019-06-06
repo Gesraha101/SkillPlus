@@ -39,5 +39,5 @@ interface BackendServiceManager {
     fun applySkill(@Body applySkill : ApplySkill) : Call<ApplySkillResponse>
 
     @GET(" /notifications/")
-    fun getNotifications(@Query("user_id") id: Int, @Query("last_updated") lastUpdated: Long): Call<NotificationsResponse>
+    fun getNotifications(@Query("user_id") user_id: Int, @Query("last_updated") lastUpdated: Long): Call<NotificationsResponse>
 }

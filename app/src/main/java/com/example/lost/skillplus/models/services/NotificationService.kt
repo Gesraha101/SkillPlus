@@ -14,6 +14,7 @@ import com.example.lost.skillplus.models.enums.Actions
 import com.example.lost.skillplus.models.enums.Ids
 import com.example.lost.skillplus.models.enums.Keys
 import com.example.lost.skillplus.models.managers.BackendServiceManager
+import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.responses.NotificationsResponse
 import com.example.lost.skillplus.views.activities.NotificationAlarmActivity
 import retrofit2.Call
@@ -26,7 +27,6 @@ class NotificationService : JobIntentService() {
     override fun onHandleWork(intent: Intent) {
         when {
             intent.action == Actions.NOTIFY.action -> {
-                val date = intent.getLongExtra(Keys.FIRE_DATE.key, 0)
                 val manager = this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -48,7 +48,7 @@ class NotificationService : JobIntentService() {
             intent.action == Actions.ALERT.action -> startActivity(Intent(this, NotificationAlarmActivity::class.java))
             intent.action == Actions.CHECK.action -> {
                 val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
-                val call: Call<NotificationsResponse>? = service?.getNotifications(1, System.currentTimeMillis())
+                val call: Call<NotificationsResponse>? = service?.getNotifications(PreferencesManager(this).getId(), System.currentTimeMillis())
                 call?.enqueue(object : Callback<NotificationsResponse> {
 
                     override fun onResponse(call: Call<NotificationsResponse>, response: Response<NotificationsResponse>) {
