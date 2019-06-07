@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.util.Patterns
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -42,7 +43,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     val PICK_PHOTO_REQUEST: Int = 1
-    var downloadUri: Uri? = null
+    var downloadUri: Uri? =null
     private var filePath: Uri? = null
 
 
@@ -108,34 +109,41 @@ class SignUpActivity : AppCompatActivity() {
                         }).addOnCompleteListener { task ->
                             if (task.isSuccessful) {
                                 downloadUri = task.result
+
                                 Toast.makeText(this@SignUpActivity, "Uri is   ...   " + downloadUri.toString(), Toast.LENGTH_LONG).show()
+
+                                val user = User(name = NameEditText?.text.toString(),
+                                        email = mailEditText?.text.toString(),
+                                        password = passwordEditText?.text.toString()
+                                        , pic = downloadUri.toString())
+                                Log.d("riversRef    " , riversRef.toString())
+                                Log.d("downloadUri   " , downloadUri.toString())
+
+                                val service = RetrofitManager.getInstance()?.create(ServiceManager::class.java)
+                                val call: Call<UserResponse>? = user?.let { it1 -> service?.addUser(it1) }
+                                call?.enqueue(object : Callback<UserResponse> {
+
+                                    override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
+                                        if (response.isSuccessful) {
+                                            Toast.makeText(this@SignUpActivity, "Successfully Added ", Toast.LENGTH_LONG).show()
+                                            val i = Intent(this@SignUpActivity, LoginActivity::class.java)
+                                            startActivity(i)
+                                        } else {
+                                            Toast.makeText(this@SignUpActivity, "Failed to add item one", Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
+
+                                    override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+//                                Toast.makeText(this@SignUpActivity, "Failed to add item two", Toast.LENGTH_SHORT).show()
+                                    }
+                                })
+
+
                             } else {
                                 Toast.makeText(this@SignUpActivity, "Uri is  Faild ...   ", Toast.LENGTH_LONG).show()
                             }
                         }
 
-                        val user = User(name = NameEditText?.text.toString(),
-                                email = mailEditText?.text.toString(),
-                                password = passwordEditText?.text.toString()
-                                , pic = downloadUri.toString())
-                        val service = RetrofitManager.getInstance()?.create(ServiceManager::class.java)
-                        val call: Call<UserResponse>? = service?.addUser(user)
-                        call?.enqueue(object : Callback<UserResponse> {
-
-                            override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
-                                if (response.isSuccessful) {
-                                    Toast.makeText(this@SignUpActivity, "Successfully Added ", Toast.LENGTH_LONG).show()
-                                    val i = Intent(this@SignUpActivity, LoginActivity::class.java)
-                                    startActivity(i)
-                                } else {
-                                    Toast.makeText(this@SignUpActivity, "Failed to add item one", Toast.LENGTH_SHORT).show()
-                                }
-                            }
-
-                            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-//                                Toast.makeText(this@SignUpActivity, "Failed to add item two", Toast.LENGTH_SHORT).show()
-                            }
-                        })
                     }
                 }
             }
