@@ -58,7 +58,7 @@
         android:layout_marginRight="56dp"
         android:background="@drawable/password"
         android:hint="Password"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         android:textAlignment="center"
         android:textColorHint="#004234"
         android:textSize="18dp"

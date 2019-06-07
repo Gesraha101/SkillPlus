@@ -30,6 +30,17 @@ import java.util.*
 
 
 class SignUpActivity : AppCompatActivity() {
+
+    companion object {
+        @JvmStatic
+        val EMAIL_REGEX = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})";
+
+        fun isEmailValid(email: String): Boolean {
+            return EMAIL_REGEX.toRegex().matches(email);
+        }
+        //isEmailValid
+    }
+
     val PICK_PHOTO_REQUEST: Int = 1
     var downloadUri: Uri? = null
     private var filePath: Uri? = null
@@ -45,13 +56,7 @@ class SignUpActivity : AppCompatActivity() {
             pickPhotoFromGallery()
         }
         btn_register.setOnClickListener {
-            if (NameEditText?.text.toString() == "" || mailEditText.text.toString()== "" || passwordEditText.text.toString() == "" || pass2EditText.text.toString() == "") {
-
-//                passwordEditText.validator().nonEmpty()
-//                        .atleastOneNumber()
-//                        .atleastOneSpecialCharacters()
-//                        .atleastOneUpperCase()
-//                        .addErrorCallback{ passwordEditText.error = it }.check()
+            if (NameEditText?.text.toString() == "" || mailEditText.text.toString() == ""  || passwordEditText.text.toString() == "" || pass2EditText.text.toString() == "") {
 
                 if (NameEditText?.text.toString() == "") {
                     NameEditText.setError("Required field")
@@ -73,7 +78,14 @@ class SignUpActivity : AppCompatActivity() {
                     pass2EditText.startAnimation(shake)
                     pass2EditText.requestFocus()
                 }
-            } else {
+            }else if(!isEmailValid(mailEditText.text.toString())){
+
+                mailEditText.setError("Wrong Email")
+                mailEditText.startAnimation(shake)
+                mailEditText.requestFocus()
+
+
+            }else {
                 if (passwordEditText.text.toString() != pass2EditText.text.toString()) {
                     mailEditText.setError("wrong pattern")
                     mailEditText.startAnimation(shake)
@@ -113,10 +125,13 @@ class SignUpActivity : AppCompatActivity() {
                             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                                 if (response.isSuccessful) {
                                     Toast.makeText(this@SignUpActivity, "Successfully Added ", Toast.LENGTH_LONG).show()
+                                    val i = Intent(this@SignUpActivity, LoginActivity::class.java)
+                                    startActivity(i)
                                 } else {
                                     Toast.makeText(this@SignUpActivity, "Failed to add item one", Toast.LENGTH_SHORT).show()
                                 }
                             }
+
                             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
 //                                Toast.makeText(this@SignUpActivity, "Failed to add item two", Toast.LENGTH_SHORT).show()
                             }
@@ -126,7 +141,6 @@ class SignUpActivity : AppCompatActivity() {
             }
         }
     }
-
 
     private fun pickPhotoFromGallery() {
         val pickImageIntent = Intent(Intent.ACTION_PICK,

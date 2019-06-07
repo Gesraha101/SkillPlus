@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -18,7 +19,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class LoginActivity : AppCompatActivity(){
+class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,22 +42,23 @@ class LoginActivity : AppCompatActivity(){
                     passEditText.startAnimation(shake)
                     passEditText.requestFocus()
                 }
-            }
-            else{
+            } else {
                 val service = RetrofitManager.getInstance()?.create(ServiceManager::class.java)
                 val call: Call<UserResponse>? = service?.loginUser(loguser)
                 call?.enqueue(object : Callback<UserResponse> {
 
                     override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                         if (response.isSuccessful) {
-                            if(response.body()?.status  == true){
-                                if (response.body()?.user?.id != null) {
+                            if (response.body()?.status == true) {
+                                Log.d("schadual","id is "+ response.body()!!.userlogined.id.toString())
                                     val share = shared(this@LoginActivity)
-                                    response.body()?.user?.id?.let { it1 -> share.setId(it1) }
-                                    share.setName(response.body()?.user?.id.toString())
-                                }
-                                startActivity(Intent(this@LoginActivity, HomeActivity::class.java))}
-                                else{ Toast.makeText(this@LoginActivity, "la ya habiby " +response.body(), Toast.LENGTH_LONG).show()
+                                    share.setId(response.body()!!.userlogined.id.toString())
+                                    share.setName(response.body()?.userlogined?.id!!.toString())
+                                 //   Log.d("schadual","id in is "+ response.body()!!.user.id.toString())
+
+                                startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+                            } else {
+                                Toast.makeText(this@LoginActivity, "la ya habiby " + response.body(), Toast.LENGTH_LONG).show()
                                 emailEditText.setError("Wrong email")
                                 emailEditText.startAnimation(shake)
                                 emailEditText.requestFocus()
@@ -86,8 +88,7 @@ class LoginActivity : AppCompatActivity(){
 
     }
 
-    fun String.isValidEmail(): Boolean
-            = this.isNotEmpty() &&
+    fun String.isValidEmail(): Boolean = this.isNotEmpty() &&
             Patterns.EMAIL_ADDRESS.matcher(this).matches()
-   }
+}
 

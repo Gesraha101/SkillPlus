@@ -6,13 +6,13 @@ class shared(context: Context) {
     val myPreferences = "myPrefs"
     val sharedPreferences = context.getSharedPreferences(myPreferences, Context.MODE_PRIVATE)
 
-    fun getId(): Int {
-        return sharedPreferences.getInt("id", 0)
+    fun getId(): String {
+        return sharedPreferences.getString("id", "0")
     }
 
-    fun setId(id: Int) {
+    fun setId(id: String) {
         val editor = sharedPreferences.edit()
-        editor.putInt("id", id)
+        editor.putString("id", id)
         editor.apply()
     }
 
