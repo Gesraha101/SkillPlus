@@ -21,16 +21,14 @@ interface ServiceManager {
     fun getCategories(): Call<CategoriesResponse>
 
     @GET(" /category")
-    fun getCategoryPosts(@Query("id") id: Int): Call<PostsResponse>
+    fun getcategoryPosts(@Query("id") id: Int): Call<PostsResponse>
 
     @GET(" /category/name")
-    fun getCategoryNames(): Call<List<String>>
+    fun getcategoryNames(): Call<List<String>>
 
     @GET(" /category/add/skill")
     fun addSkill(@Body user: User): Call<Skill>
 
-//TODO
-// test it in request
     @POST("/category/add/need")
     fun addNeed(@Body addNeed : AddNeed): Call<AddNeedResponce>
 

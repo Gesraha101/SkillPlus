@@ -1,4 +1,5 @@
 package com.example.lost.skillplus.views.activities
+
 import android.net.Uri
 import android.support.design.widget.TabLayout
 import android.support.v7.app.AppCompatActivity
@@ -36,8 +37,8 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
     }
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
-    private var frag : Fragment? = null
-    private var activatedCategory : Category? = null
+    private var frag: Fragment? = null
+    private var activatedCategory: Category? = null
 
     inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
         val fragmentTransaction = beginTransaction()
@@ -47,15 +48,15 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
     }
 
     fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int) {
-        supportFragmentManager.inTransaction{ replace(frameId, fragment) }
+        supportFragmentManager.inTransaction { replace(frameId, fragment) }
     }
 
     fun AppCompatActivity.addFragment(fragment: Fragment, frameId: Int) {
-        supportFragmentManager.inTransaction{ add(frameId, fragment) }
+        supportFragmentManager.inTransaction { add(frameId, fragment) }
     }
 
     fun loadFragment(isSkill: Boolean, paramPassed: Serializable) {
-        val fragment : Fragment = if (isSkill) {
+        val fragment: Fragment = if (isSkill) {
             SkillDetailsFragment.newInstance(paramPassed as Skill)
         } else {
             RequestDetailsFragment.newInstance(paramPassed as Request)
@@ -142,7 +143,7 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
                 isSkill = true
             }
             val service = RetrofitManager.getInstance()?.create(ServiceManager::class.java)
-            val call: Call<PostsResponse>? = service?.getCategoryPosts(activatedCategory!!.cat_id)
+            val call: Call<PostsResponse>? = service?.getcategoryPosts(activatedCategory!!.cat_id)
             call?.enqueue(object : Callback<PostsResponse> {
 
                 override fun onResponse(call: Call<PostsResponse>, response: Response<PostsResponse>) {

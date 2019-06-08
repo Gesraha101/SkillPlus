@@ -2,6 +2,7 @@ package com.example.lost.skillplus.views.activities
 
 import RetrofitManager
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -57,7 +58,9 @@ class PaymentActivity : AppCompatActivity() {
             appliedRequest.schedule = schadualList
         }
 
-
+        cancleButton.setOnClickListener{
+            startActivity(Intent(this@PaymentActivity , AddNeedActivity::class.java))
+        }
 
         Toast.makeText(this@PaymentActivity, schadualList.size.toString(), Toast.LENGTH_SHORT).show()
         payButton.setOnClickListener {
@@ -68,7 +71,6 @@ class PaymentActivity : AppCompatActivity() {
                 Log.d("schadual", " SkillId is"+SkillId.toString())
                 appliedRequest.schedule = schadualList
             }
-
 
             Log.d("schadual", "learner"+appliedRequest.learner.toString())
             Log.d("schadual", "skill"+appliedRequest.skill.toString())
