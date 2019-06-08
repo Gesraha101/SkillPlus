@@ -57,6 +57,7 @@ open class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavi
         when (item.itemId) {
             R.id.nav_skills-> {
 
+
             }
             R.id.nav_needs-> {
 
