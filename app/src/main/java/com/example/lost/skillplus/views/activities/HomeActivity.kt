@@ -66,7 +66,7 @@ class HomeActivity : NavigationDrawerActivity(), CategoriesFragment.OnFragmentIn
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.activity_home)
         super.onCreate(savedInstanceState)
-        replaceFragment(CategoriesFragment.newInstance(), R.id.fragment_container, null)
+            replaceFragment(CategoriesFragment.newInstance(), R.id.fragment_container, null)
 
         nav_view.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
     }
