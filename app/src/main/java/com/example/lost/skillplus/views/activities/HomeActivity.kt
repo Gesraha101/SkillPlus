@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.widget.TextView
 import com.example.lost.skillplus.R
+import com.example.lost.skillplus.models.managers.FragmentsManager
 import com.example.lost.skillplus.views.fragments.CategoriesFragment
 import com.example.lost.skillplus.views.fragments.FavoritesFragment
 import com.example.lost.skillplus.views.fragments.NotificationsFragment
@@ -19,19 +20,6 @@ class HomeActivity : NavigationDrawerActivity(), CategoriesFragment.OnFragmentIn
 
     override fun onFragmentInteraction(uri: Uri) {
 
-    }
-
-    inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
-        val fragmentTransaction = beginTransaction()
-        fragmentTransaction.func()
-        fragmentTransaction.commit()
-    }
-
-    fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int, tag: String?) {
-        if (tag.isNullOrBlank())
-            supportFragmentManager.inTransaction{ replace(frameId, fragment, tag) }
-        else
-            supportFragmentManager.inTransaction{ replace(frameId, fragment) }
     }
 
     fun loadFragment(item: MenuItem) {
@@ -53,7 +41,7 @@ class HomeActivity : NavigationDrawerActivity(), CategoriesFragment.OnFragmentIn
 
         // replace fragment
         if (fragment != null) {
-            replaceFragment(fragment, R.id.fragment_container, tag)
+            FragmentsManager.replaceFragment(supportFragmentManager, fragment, R.id.fragment_container, tag, false)
         }
     }
 
@@ -66,7 +54,7 @@ class HomeActivity : NavigationDrawerActivity(), CategoriesFragment.OnFragmentIn
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.activity_home)
         super.onCreate(savedInstanceState)
-        replaceFragment(CategoriesFragment.newInstance(), R.id.fragment_container, null)
+        FragmentsManager.replaceFragment(supportFragmentManager, CategoriesFragment.newInstance(), R.id.fragment_container, null, false)
 
         nav_view.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
     }

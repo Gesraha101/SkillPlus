@@ -1,6 +1,7 @@
 package com.example.lost.skillplus.views.fragments
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -9,9 +10,13 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.example.lost.skillplus.R
+import com.example.lost.skillplus.models.enums.Keys
 import com.example.lost.skillplus.models.podos.raw.Skill
+import com.example.lost.skillplus.views.activities.ScheduleActivity
 import kotlinx.android.synthetic.main.fragment_skill_details.*
-import java.lang.StringBuilder
+import kotlinx.android.synthetic.main.fragment_skill_details.btn_apply
+import kotlinx.android.synthetic.main.fragment_skill_details.description_value
+import kotlinx.android.synthetic.main.fragment_skill_details.poster_name
 import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -28,13 +33,12 @@ class SkillDetailsFragment : Fragment() {
         arguments?.let {
             skill = it.getSerializable(ARG_SENT_KEY) as Skill
         }
-    }
 
+    }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_skill_details, container, false)
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         skill_name.text = skill!!.skill_name
@@ -47,6 +51,11 @@ class SkillDetailsFragment : Fragment() {
         for (date: Long in skill!!.schedule!!)
             schedule_values.append(Date(date).toString() + "\n")
         poster_rate.rating = skill!!.rate!!
+
+        btn_apply.setOnClickListener{
+            val intent = Intent(activity , ScheduleActivity::class.java).putExtra(Keys.SKILL.key, skill)
+            startActivity(intent)
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -68,17 +77,6 @@ class SkillDetailsFragment : Fragment() {
         listener = null
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)

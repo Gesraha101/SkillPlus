@@ -1,16 +1,12 @@
 package com.example.lost.skillplus.models.adapters
 
-import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.podos.raw.DayTime
 import com.example.lost.skillplus.models.podos.raw.Skill
-import com.iarcuschin.simpleratingbar.SimpleRatingBar
 
 
 class ScheduleAdapter(private val list: List<DayTime>): RecyclerView.Adapter<ScheduleAdapter.ScheduleViewHolder>() {

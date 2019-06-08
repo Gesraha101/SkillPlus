@@ -8,16 +8,16 @@ import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.example.lost.skillplus.models.adapters.ScheduleAdapter
+import com.example.lost.skillplus.models.enums.Keys
+import com.example.lost.skillplus.models.managers.BackendServiceManager
+import com.example.lost.skillplus.models.managers.NotificationAlarmManager
 import com.example.lost.skillplus.models.podos.raw.DayTime
 import com.example.lost.skillplus.models.podos.raw.Skill
 import com.example.lost.skillplus.models.podos.responses.SkillsResponse
-import com.example.lost.skillplus.models.retrofit.ServiceManager
-import kotlinx.android.synthetic.main.activity_add_teacher_skill.*
 import kotlinx.android.synthetic.main.activity_schedule.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,9 +27,11 @@ import java.util.*
 
 class ScheduleActivity : AppCompatActivity() {
     private lateinit var mAdapter: ScheduleAdapter
+
     var dayPicked: Int? = null
     var dayTimeList :ArrayList<DayTime> = arrayListOf()
     var dayTimeArray= arrayListOf<Array<Int?>>()
+    private lateinit var skill: Skill
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +39,7 @@ class ScheduleActivity : AppCompatActivity() {
         setContentView(com.example.lost.skillplus.R.layout.activity_schedule)
         setSupportActionBar(toolbar_schedule)
 
-        tF_Title.text=intent.getStringExtra("skillName")
+        skill = intent.getSerializableExtra(Keys.SKILL.key) as Skill
 
         rV_Schedule.apply {
             layoutManager = LinearLayoutManager(this@ScheduleActivity)
@@ -63,7 +65,7 @@ class ScheduleActivity : AppCompatActivity() {
                 val minute = c.get(Calendar.MINUTE)
 
                 val tpd = TimePickerDialog(this@ScheduleActivity, com.example.lost.skillplus.R.style.TimePickerTheme,
-                        TimePickerDialog.OnTimeSetListener(function = { view, h, m ->
+                        TimePickerDialog.OnTimeSetListener(function = { _, h, m ->
                             dayTimeList.add(DayTime(spinner.selectedItem.toString(),h,m))
                             mAdapter.notifyDataSetChanged()
                             dayTimeArray.add(arrayOf(dayPicked,h,m))
@@ -73,28 +75,16 @@ class ScheduleActivity : AppCompatActivity() {
 
         }
         btn_add_skill.setOnClickListener {
-            val skillRequest = Skill(
-                    skill_name =intent.getStringExtra("skillName")
-                    ,skill_desc=intent.getStringExtra("skillDesc")
-                    ,session_no=intent.getIntExtra("sessionNumber",0)
-                    ,duration=intent.getFloatExtra("sessionDuration",0f)
-                    ,skill_price=intent.getFloatExtra("skillPrice",0f)
-                    ,extra_fees=intent.getFloatExtra("extraFees",0f)
-                    ,user_id=1 //Todo: get user_id from shared preferences
-                    ,cat_id=1 //Todo: get cat_id from ...?
-                    ,schedule = listOf( System.currentTimeMillis() )//Todo: Get schedule from Gesraha's ultimate equation
-
-                    ,user_name = null
-                    ,adding_date = null
-                    ,rate = null
-                    ,skill_id = null
-            )
-            val service = RetrofitManager.getInstance()?.create(ServiceManager::class.java)
-            val call: Call<SkillsResponse>? = service?.addSkill(skillRequest)
+            skill.schedule = NotificationAlarmManager.convertToLong(dayTimeArray)
+            val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
+            val call: Call<SkillsResponse>? = service?.addSkill(skill)
             call?.enqueue(object : Callback<SkillsResponse> {
                 override fun onResponse(call: Call<SkillsResponse>, response: Response<SkillsResponse>) {
                     if (response.isSuccessful) {
-                        if(response.body()?.status  == true) { startActivity(Intent(this@ScheduleActivity, HomeActivity::class.java))}//Todo: not sure where should it go after, instead of HomeActivity
+                        if(response.body()?.status  == true) {
+                            //TODO COMPLETE OTHER TASK IF ANY
+                            finish()
+                        }
                         else{
                             //Error adding
                         }
