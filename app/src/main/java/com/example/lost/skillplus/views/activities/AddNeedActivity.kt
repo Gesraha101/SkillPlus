@@ -10,10 +10,10 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
 import com.example.lost.skillplus.R
+import com.example.lost.skillplus.models.managers.BackendServiceManager
+import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.AddNeed
-import com.example.lost.skillplus.models.podos.responses.AddNeedResponce
-import com.example.lost.skillplus.models.podos.shared
-import com.example.lost.skillplus.models.retrofit.ServiceManager
+import com.example.lost.skillplus.models.podos.responses.AddNeedResponse
 import kotlinx.android.synthetic.main.activity_add_need.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -51,18 +51,18 @@ class AddNeedActivity : AppCompatActivity() {
                 }
             }
         }
-        val share = shared(this@AddNeedActivity)
+        val share = PreferencesManager(this@AddNeedActivity)
         val userId: Int = share.getId().toInt()
 
             btn_add_need.setOnClickListener {
 
-                val service = RetrofitManager.getInstance()?.create(ServiceManager::class.java)
-                val call: Call<AddNeedResponce>? = service?.addNeed(addneed)
-                call?.enqueue(object : Callback<AddNeedResponce> {
-                    override fun onFailure(call: Call<AddNeedResponce>, t: Throwable) {
+                val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
+                val call: Call<AddNeedResponse>? = service?.addNeed(addneed)
+                call?.enqueue(object : Callback<AddNeedResponse> {
+                    override fun onFailure(call: Call<AddNeedResponse>, t: Throwable) {
                         Toast.makeText(this@AddNeedActivity, "Failed " + t.cause, Toast.LENGTH_LONG).show()
                     }
-                    override fun onResponse(call: Call<AddNeedResponce>, response: Response<AddNeedResponce>) {
+                    override fun onResponse(call: Call<AddNeedResponse>, response: Response<AddNeedResponse>) {
 
                         Toast.makeText(this@AddNeedActivity, "Done ", Toast.LENGTH_LONG).show()
 

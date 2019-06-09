@@ -1,7 +1,6 @@
 package com.example.lost.skillplus.views.activities
 
 import RetrofitManager
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -45,43 +44,43 @@ class PaymentActivity : AppCompatActivity() {
             }
         }
 
-        val share = shared(this@PaymentActivity)
+        val share = PreferencesManager(this@PaymentActivity)
         val userId :Int = share.getId().toInt()
-        val steingName = share.getName()
+        val stringName = share.getName()
 
         if (userId != 0 && SkillId != 0) {
             appliedRequest.learner = userId
-            Toast.makeText(this@PaymentActivity, "cat id is " + SkillId, Toast.LENGTH_LONG)
+            Toast.makeText(this@PaymentActivity, "cat id is " + SkillId, Toast.LENGTH_LONG).show()
             appliedRequest.skill = SkillId
-            appliedRequest.schedule = schadualList
+            appliedRequest.schedule = scheduleList
         }
 
         cancleButton.setOnClickListener{
             startActivity(Intent(this@PaymentActivity , AddNeedActivity::class.java))
         }
 
-        Toast.makeText(this@PaymentActivity, schadualList.size.toString(), Toast.LENGTH_SHORT).show()
+        Toast.makeText(this@PaymentActivity, scheduleList.size.toString(), Toast.LENGTH_SHORT).show()
         payButton.setOnClickListener {
-            if (steingName != "" && SkillId != 0) {
-                appliedRequest.learner = steingName.toInt()
-                Log.d("schadual", " id is " + userId)
+            if (stringName != "" && SkillId != 0) {
+                appliedRequest.learner = stringName!!.toInt()
+                Log.d("SchaduleActivity", " id is " + userId)
                 appliedRequest.skill = SkillId
-                Log.d("schadual", " SkillId is"+SkillId.toString())
-                appliedRequest.schedule = schadualList
+                Log.d("SchaduleActivity", " SkillId is"+SkillId.toString())
+                appliedRequest.schedule = scheduleList
             }
 
-            Log.d("schadual", "learner"+appliedRequest.learner.toString())
-            Log.d("schadual", "skill"+appliedRequest.skill.toString())
-            Log.d("schadual" , "schadual # "+ appliedRequest.schedule?.get(0))
-            val service = RetrofitManager.getInstance()?.create(ServiceManager::class.java)
+            Log.d("SchaduleActivity", "learner"+appliedRequest.learner.toString())
+            Log.d("SchaduleActivity", "skill"+appliedRequest.skill.toString())
+            Log.d("SchaduleActivity" , "SchaduleActivity # "+ appliedRequest.schedule?.get(0))
+            val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
             val call: Call<ApplySkillResponse>? = service?.applySkill(applySkill = appliedRequest)
             call?.enqueue(object : Callback<ApplySkillResponse> {
                 override fun onFailure(call: Call<ApplySkillResponse>, t: Throwable) {
-                   Toast.makeText(this@PaymentActivity ,"you just registerd in this course "   , Toast.LENGTH_SHORT).show()
+                   Toast.makeText(this@PaymentActivity ,"you just registered in this course "   , Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onResponse(call: Call<ApplySkillResponse>, response: Response<ApplySkillResponse>) {
-                    Toast.makeText(this@PaymentActivity, "learnerID = " + steingName.toIntOrNull() + ", SkillId  " + SkillId + " status " + response.body()?.status, Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@PaymentActivity, "learnerID = " + stringName!!.toIntOrNull() + ", SkillId  " + SkillId + " status " + response.body()?.status, Toast.LENGTH_LONG).show()
                 }
             })
         }

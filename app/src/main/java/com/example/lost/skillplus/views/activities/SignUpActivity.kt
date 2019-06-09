@@ -7,8 +7,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
-import android.util.Patterns
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
@@ -111,11 +109,9 @@ class SignUpActivity : AppCompatActivity() {
                                         email = mailEditText?.text.toString(),
                                         password = passwordEditText?.text.toString()
                                         , pic = downloadUri.toString())
-                                Log.d("riversRef    " , riversRef.toString())
-                                Log.d("downloadUri   " , downloadUri.toString())
 
-                                val service = RetrofitManager.getInstance()?.create(ServiceManager::class.java)
-                                val call: Call<UserResponse>? = user?.let { it1 -> service?.addUser(it1) }
+                                val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
+                                val call: Call<UserResponse>? = user.let { it1 -> service?.addUser(it1) }
                                 call?.enqueue(object : Callback<UserResponse> {
 
                                     override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {

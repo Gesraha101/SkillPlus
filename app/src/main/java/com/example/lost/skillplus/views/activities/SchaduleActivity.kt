@@ -6,53 +6,49 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Button
 import android.widget.ListView
-import android.widget.Toast
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.adapters.CustomAdapter
-import com.example.lost.skillplus.models.podos.raw.Schadual
+import com.example.lost.skillplus.models.podos.raw.Schedule
 import com.example.lost.skillplus.models.podos.raw.Skill
 import java.util.*
 
-class schadual : AppCompatActivity() {
+class SchaduleActivity : AppCompatActivity() {
     private var lv: ListView? = null
-    private var modelArrayList: ArrayList<Schadual>? = null
+    private var modelArrayList: ArrayList<Schedule>? = null
     private var customAdapter: CustomAdapter? = null
-    private var btnselect: Button? = null
-    private var btndeselect: Button? = null
     private var btnnext: Button? = null
     private var skillFromDetailsFragment : Skill? = null
     private var schadualDatail : List<Long>? = null
-    private val animallist = arrayOf("Lion", "Tiger", "Leopard", "Cat", "dog", "3asfora")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_schadual)
+        setContentView(R.layout.activity_schadule)
         skillFromDetailsFragment = intent.getSerializableExtra("Skill") as Skill
         schadualDatail = skillFromDetailsFragment!!.schedule
 
-        lv = findViewById(R.id.lv)
-        btnnext = findViewById(R.id.next) as Button
+        lv = this.findViewById(R.id.lv)
+        btnnext = findViewById(R.id.next)
 
         modelArrayList = getModel(false)
         customAdapter = CustomAdapter(this, modelArrayList!!)
         lv!!.adapter = customAdapter
 
         btnnext!!.setOnClickListener {
-            val intent = Intent(this@schadual, PaymentActivity::class.java)
+            val intent = Intent(this@SchaduleActivity, PaymentActivity::class.java)
             if(skillFromDetailsFragment?.skill_id != null) {
-                Log.d("schadual", skillFromDetailsFragment?.skill_id.toString())
-                //       Toast.makeText(this@schadual, skillFromDetailsFragment!!.cat_id , Toast.LENGTH_LONG)
+                Log.d("SchaduleActivity", skillFromDetailsFragment?.skill_id.toString())
+                //       Toast.makeText(this@SchaduleActivity, skillFromDetailsFragment!!.cat_id , Toast.LENGTH_LONG)
                 intent.putExtra("SkillId", skillFromDetailsFragment!!.skill_id)
                 startActivity(intent)
             }
         }
     }
 
-    private fun getModel(isSelect: Boolean): ArrayList<Schadual> {
-        val list = ArrayList<Schadual>()
-        for (i in 0..((schadualDatail?.size ?: 2) - 1)) {
+    private fun getModel(isSelect: Boolean): ArrayList<Schedule> {
+        val list = ArrayList<Schedule>()
+        for (i in 0 until (schadualDatail?.size ?: 2)) {
 
-            val model = Schadual()
+            val model = Schedule()
             model.setSelecteds(isSelect)
             schadualDatail?.get(i)?.let { model.setAnimals(it.toString()) }
             list.add(model)

@@ -1,6 +1,5 @@
 package com.example.lost.skillplus.models.podos.responses
 
-import com.example.lost.skillplus.models.podos.raw.ResponseApplyArray
 import java.io.Serializable
 
 

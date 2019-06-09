@@ -5,7 +5,7 @@ class Schedule {
     var isSelected: Boolean = false
     var animal: String? = null
     fun getAnimals(): String {
-        return this!!.animal.toString()
+        return this.animal.toString()
     }
 
     fun setAnimals(animal: String) {

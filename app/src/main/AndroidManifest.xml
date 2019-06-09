@@ -53,6 +53,8 @@
         <activity android:name=".views.activities.LoginActivity" />
         <activity android:name=".views.activities.SessionActivity" />
         <activity android:name=".views.activities.PaymentActivity" />
+        <activity android:name=".views.activities.AddNeedActivity" />
+        <activity android:name=".views.activities.SchaduleActivity" />
         <activity
             android:name=".views.activities.CategoryContentActivity"
             android:label="@string/title_activity_category_content"

@@ -3,17 +3,13 @@ package com.example.lost.skillplus.views.activities
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
-import android.support.v4.view.ViewPager
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.bumptech.glide.Glide
-import android.view.View
-import android.widget.FrameLayout
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.User
-import com.example.lost.skillplus.views.fragments.MySkillsFragment
 import kotlinx.android.synthetic.main.activity_navigation_drawer.*
 import kotlinx.android.synthetic.main.app_bar_navigation_drawer.*
 import kotlinx.android.synthetic.main.nav_header_navigation_drawer.view.*
