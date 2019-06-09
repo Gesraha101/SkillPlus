@@ -52,13 +52,13 @@ class SkillsAdapter(private val list: List<Skill>): RecyclerView.Adapter<SkillsA
         }
 
         fun bind(skill: Skill) {
-            title?.text = skill.name
+            title?.text = skill.skill_name
             /*Glide.with(context!!)
                     .load(cat.imgUrl)
                     .into(image!!)
             */
             posterName?.text = StringBuilder().append("Created by: " + skill.user_name)
-            price?.append(" ${skill.price} EGP")
+            price?.append(" ${skill.skill_price} EGP")
             posterRate?.rating = skill.rate!!
         }
     }

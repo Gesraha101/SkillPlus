@@ -82,7 +82,7 @@
                         android:id="@+id/textView3" android:layout_marginStart="24dp"
                         app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="24dp"
                         android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/tF_Title"/>
-                <TextView
+                <ImageView
                         android:id="@+id/tV_Days"
                         android:layout_width="325dp"
                         android:layout_height="60dp"
@@ -105,7 +105,6 @@
                         android:background="@drawable/path_100"
                         android:ems="10"
                         android:textAlignment="center"
-
                         android:inputType="text"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

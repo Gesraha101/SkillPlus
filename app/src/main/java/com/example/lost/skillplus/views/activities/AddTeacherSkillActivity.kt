@@ -3,11 +3,12 @@ package com.example.lost.skillplus.views.activities
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Patterns
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import com.example.lost.skillplus.R
+import com.example.lost.skillplus.models.enums.Keys
+import com.example.lost.skillplus.models.podos.raw.Skill
 
 import kotlinx.android.synthetic.main.activity_add_teacher_skill.*
 
@@ -18,6 +19,9 @@ class AddTeacherSkillActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_teacher_skill)
         setSupportActionBar(toolbar)
 
+        lL_AddImage.setOnClickListener {
+            //Todo: Implement getting a photo
+        }
         val shake = AnimationUtils.loadAnimation(this, R.anim.animation) as Animation
         var badEntry:Boolean
         btn_proceed.setOnClickListener {
@@ -50,15 +54,22 @@ class AddTeacherSkillActivity : AppCompatActivity() {
                     badEntry=true
                 }
                 if(!badEntry) {
-
-                    val intent = Intent(this@AddTeacherSkillActivity, ScheduleActivity::class.java)
-                    intent.putExtra("skillName", eT_Title?.text.toString())
-                    intent.putExtra("skillDesc", eT_Description?.text.toString())
-                    intent.putExtra("numberOfSessions", eT_NumberOfSessions.text.toString().toInt())
-                    intent.putExtra("sessionDuration", eT_SessionDuration?.text.toString().toFloat())
-                    intent.putExtra("skillPrice", eT_Price?.text.toString().toFloat()) //Todo: skill_price instead of price in backend
-                    intent.putExtra("extraFees", eT_ExtraFees?.text.toString().toFloat())//Todo: update extra_fees UI
-
+                    var skill =Skill(
+                            1,//Todo: autoincrement?
+                            eT_Title?.text.toString(),
+                            eT_Description?.text.toString(),
+                            eT_NumberOfSessions.text.toString().toInt(),
+                            eT_Price?.text.toString().toFloat(),
+                            eT_SessionDuration?.text.toString().toFloat(),
+                            eT_ExtraFees?.text.toString().toFloat(),//Todo: update extra_fees UI
+                            null,//Todo: get photo
+                            1,//Todo: get user_id from shared preferences
+                            1,//Todo: get cat_id from ...?
+                            null,
+                             null,
+                            null,
+                           listOf())
+                    val intent = Intent(this@AddTeacherSkillActivity, ScheduleActivity::class.java).putExtra(Keys.SKILL.key, skill)
                     startActivity(intent)
                 }
             }

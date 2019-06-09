@@ -39,7 +39,7 @@ class ScheduleActivity : AppCompatActivity() {
     var isEmpty: Boolean? = true
     var dayTimeList :ArrayList<DayTime> = arrayListOf()
     var dayTimeArray= arrayListOf<Array<Int?>>()
-   // private lateinit var skill: Skill
+    private lateinit var skillRequest: Skill
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,24 +47,8 @@ class ScheduleActivity : AppCompatActivity() {
         setContentView(com.example.lost.skillplus.R.layout.activity_schedule)
         setSupportActionBar(toolbar_schedule)
 
-       //skill = intent.getSerializableExtra(Keys.SKILL.key) as Skill
-        val skillRequest = Skill(
-                name =intent.getStringExtra("skillName")
-                ,desc=intent.getStringExtra("skillDesc")
-                ,session_no=intent.getIntExtra("sessionNumber",0)
-                ,duration=intent.getFloatExtra("sessionDuration",0f)
-                ,price=intent.getFloatExtra("skillPrice",0f)
-                ,extra=intent.getFloatExtra("extraFees",0f)
-                ,user_id=1 //Todo: get user_id from shared preferences
-                ,cat_id=1 //Todo: get cat_id from ...?
-                ,pic = "Test" //Todo: get photo
-                ,schedule = listOf( System.currentTimeMillis() )//Todo: Get schedule from Gesraha's ultimate equation
+    skillRequest = intent.getSerializableExtra(Keys.SKILL.key) as Skill
 
-                ,user_name = null
-                ,adding_date = null
-                ,rate = null
-                ,skill_id = null
-        )
         rV_Schedule.apply {
             layoutManager = LinearLayoutManager(this@ScheduleActivity)
             mAdapter = ScheduleAdapter(dayTimeList)
@@ -75,7 +59,7 @@ class ScheduleActivity : AppCompatActivity() {
 
         spinner.adapter = adapter
         spinner.setSelection(3, false)
-
+        dayPicked=spinner.selectedItemPosition+1
         spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
@@ -118,26 +102,32 @@ class ScheduleActivity : AppCompatActivity() {
             }
         }
         btn_add_skill.setOnClickListener {
-//            skill.schedule = NotificationAlarmManager.convertToLong(dayTimeArray)
+          skillRequest.schedule = NotificationAlarmManager.convertToLong(dayTimeArray)
             val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
             val call: Call<SkillsResponse>? = service?.addSkill(skillRequest)
             call?.enqueue(object : Callback<SkillsResponse> {
                 override fun onResponse(call: Call<SkillsResponse>, response: Response<SkillsResponse>) {
                     if (response.isSuccessful) {
                         if(response.body()?.status  == true) { //Received response from server
+                            Toast.makeText(this@ScheduleActivity,"Added Successfully",Toast.LENGTH_LONG).show()
                             //TODO COMPLETE OTHER TASK IF ANY
                             finish()
                         }
                         else{
+                            Toast.makeText(this@ScheduleActivity,"Failed",Toast.LENGTH_LONG).show()
+
                             //Error adding in database
                         }
                     } else {
+                        Toast.makeText(this@ScheduleActivity,"Failed",Toast.LENGTH_LONG).show()
+
                         //Error receiving response from server
                     }
                 }
 
                 override fun onFailure(call: Call<SkillsResponse>, t: Throwable) {
-                      //Failure sending request (Internal error)
+                    Toast.makeText(this@ScheduleActivity,"Failed",Toast.LENGTH_LONG).show()
+                    //Failure sending request (Internal error)
                 }
 
             })

@@ -41,10 +41,10 @@ class SkillDetailsFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        skill_name.text = skill!!.name
-        skill_price.append("Total:  ${skill!!.price} EGP")
+        skill_name.text = skill!!.skill_name
+        skill_price.append("Total:  ${skill!!.skill_price} EGP")
         poster_name.append("Created by: " + skill!!.user_name)
-        description_value.text = skill!!.desc
+        description_value.text = skill!!.skill_desc
         sessions_count_value.text = skill!!.session_no.toString()
         session_duration_value.append("${skill!!.duration} hour(s)")
         extra_session_value.append("+" + skill!!.extra.toString() + " per session")

@@ -20,10 +20,14 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
-                android:name=".views.activities.AddNeedActivity"
+                android:name=".views.activities.AddFormActivity"
                 android:label="@string/title_activity_add_need"
                 android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity
                 android:name=".views.activities.ScheduleActivity"
@@ -35,6 +39,7 @@
                 android:name=".views.activities.AddTeacherSkillActivity"
                 android:label="@string/title_activity_add_teacher_skill"
                 android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
         <activity
                 android:name=".views.activities.NavigationDrawerActivity"
@@ -44,11 +49,7 @@
         <activity
                 android:name=".views.activities.SplashActivity"
                 android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
                 android:name=".views.activities.HomeActivity"

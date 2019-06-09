@@ -1,16 +1,15 @@
 package com.example.lost.skillplus.models.managers
 
 import com.example.lost.skillplus.models.podos.raw.ApplySkill
-import com.example.lost.skillplus.models.podos.responses.NotificationsResponse
+import com.example.lost.skillplus.models.podos.raw.Form
 import com.example.lost.skillplus.models.podos.raw.Skill
 import com.example.lost.skillplus.models.podos.raw.User
-import com.example.lost.skillplus.models.podos.responses.ApplySkillResponse
-import com.example.lost.skillplus.models.podos.responses.CategoriesResponse
-import com.example.lost.skillplus.models.podos.responses.PostsResponse
-import com.example.lost.skillplus.models.podos.responses.SkillsResponse
-import com.example.lost.skillplus.models.podos.responses.UserResponse
+import com.example.lost.skillplus.models.podos.responses.*
 import retrofit2.Call
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface BackendServiceManager {
 
@@ -34,6 +33,9 @@ interface BackendServiceManager {
 
     @POST(" /category/add/skill")
     fun addSkill(@Body skill: Skill): Call<SkillsResponse>
+
+    @POST(" /need/form/add")
+    fun addForm(@Body need: Form): Call<FormResponse>
 
     @POST("/skill/apply")
     fun applySkill(@Body applySkill : ApplySkill) : Call<ApplySkillResponse>
