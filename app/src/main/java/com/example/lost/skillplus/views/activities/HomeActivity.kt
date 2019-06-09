@@ -7,12 +7,10 @@ import android.view.MenuItem
 import android.widget.TextView
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.managers.FragmentsManager
-import com.example.lost.skillplus.views.fragments.CategoriesFragment
-import com.example.lost.skillplus.views.fragments.FavoritesFragment
-import com.example.lost.skillplus.views.fragments.NotificationsFragment
+import com.example.lost.skillplus.views.fragments.*
 import kotlinx.android.synthetic.main.activity_home.*
 
-class HomeActivity : NavigationDrawerActivity(), CategoriesFragment.OnFragmentInteractionListener, NotificationsFragment.OnFragmentInteractionListener {
+class HomeActivity : NavigationDrawerActivity(), MyNeedsFragment.OnFragmentInteractionListener, MySkillsFragment.OnFragmentInteractionListener, CategoriesFragment.OnFragmentInteractionListener, NotificationsFragment.OnFragmentInteractionListener {
 
     override fun onFragmentInteraction(uri: Uri) {
 
