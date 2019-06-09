@@ -45,7 +45,7 @@ class CustomAdapter(private val context: Context, private var modelArrayList: ja
             convertView = inflater.inflate(R.layout.lv_item, null, true)
 
             holder.checkBox = convertView!!.findViewById(R.id.cb) as CheckBox
-            holder.tvAnimal = convertView.findViewById(R.id.animal) as TextView
+            holder.tvDate = convertView.findViewById(R.id.date) as TextView
 
             convertView.tag = holder
         } else {
@@ -54,15 +54,15 @@ class CustomAdapter(private val context: Context, private var modelArrayList: ja
         }
 
 
-        holder.tvAnimal!!.text = modelArrayList[position].getAnimals()
+        holder.tvDate!!.setText(modelArrayList[position].getAnimals())
 
         holder.checkBox!!.isChecked = modelArrayList[position].getSelecteds()
 
         holder.checkBox!!.setTag(R.integer.btnplusview, convertView)
         holder.checkBox!!.tag = position
         holder.checkBox!!.setOnClickListener {
-            val tempView = holder.checkBox!!.getTag(R.integer.btnplusview) as View
-            val tv = tempView.findViewById(R.id.animal) as TextView
+            val tempview = holder.checkBox!!.getTag(R.integer.btnplusview) as View
+            val tv = tempview.findViewById(R.id.date) as TextView
             val pos = holder.checkBox!!.tag as Int
             Toast.makeText(context, "Checkbox $pos clicked!", Toast.LENGTH_SHORT).show()
 
@@ -81,7 +81,7 @@ class CustomAdapter(private val context: Context, private var modelArrayList: ja
     private inner class ViewHolder {
 
         var checkBox: CheckBox? = null
-        var tvAnimal: TextView? = null
+        var tvDate: TextView? = null
 
     }
 

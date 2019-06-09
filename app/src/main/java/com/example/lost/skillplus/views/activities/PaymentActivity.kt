@@ -1,8 +1,11 @@
 package com.example.lost.skillplus.views.activities
 
 import RetrofitManager
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import com.example.lost.skillplus.R
@@ -21,17 +24,17 @@ class PaymentActivity : AppCompatActivity() {
     private var tv: TextView? = null
     private var scheduleList = arrayListOf<Long>()
 
-    private  var categoryId : Int = 0
+    private var SkillId: Int = 0
 
 //    private var userId :Int = 2
 
-    private var appliedRequest  = ApplySkill(2, categoryId,scheduleList)
+    private var appliedRequest = ApplySkill(2, SkillId, scheduleList)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment)
 
-        categoryId = intent.getSerializableExtra("CategoryId") as Int
+        SkillId = intent.getIntExtra("SkillId", 0)
 
         tv = findViewById(R.id.tv)
 
@@ -42,37 +45,45 @@ class PaymentActivity : AppCompatActivity() {
             }
         }
 
+        val share = shared(this@PaymentActivity)
+        val userId :Int = share.getId().toInt()
+        val steingName = share.getName()
 
-        val share = PreferencesManager(this@PaymentActivity)
-//        val userId = share.getId()
-        val stringName = share.getName()
+        if (userId != 0 && SkillId != 0) {
+            appliedRequest.learner = userId
+            Toast.makeText(this@PaymentActivity, "cat id is " + SkillId, Toast.LENGTH_LONG)
+            appliedRequest.skill = SkillId
+            appliedRequest.schedule = schadualList
+        }
 
-        appliedRequest.learner = stringName!!.toInt()
-     //   Toast.makeText(this@PaymentActivity ,steingName.toInt(), Toast.LENGTH_LONG)
-        appliedRequest.skill = categoryId 
-        appliedRequest.schedule = scheduleList
+        cancleButton.setOnClickListener{
+            startActivity(Intent(this@PaymentActivity , AddNeedActivity::class.java))
+        }
 
+        Toast.makeText(this@PaymentActivity, schadualList.size.toString(), Toast.LENGTH_SHORT).show()
+        payButton.setOnClickListener {
+            if (steingName != "" && SkillId != 0) {
+                appliedRequest.learner = steingName.toInt()
+                Log.d("schadual", " id is " + userId)
+                appliedRequest.skill = SkillId
+                Log.d("schadual", " SkillId is"+SkillId.toString())
+                appliedRequest.schedule = schadualList
+            }
 
-
-        Toast.makeText(this@PaymentActivity ,scheduleList.size.toString() , Toast.LENGTH_SHORT).show()
-        payButton.setOnClickListener{
-            val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
+            Log.d("schadual", "learner"+appliedRequest.learner.toString())
+            Log.d("schadual", "skill"+appliedRequest.skill.toString())
+            Log.d("schadual" , "schadual # "+ appliedRequest.schedule?.get(0))
+            val service = RetrofitManager.getInstance()?.create(ServiceManager::class.java)
             val call: Call<ApplySkillResponse>? = service?.applySkill(applySkill = appliedRequest)
             call?.enqueue(object : Callback<ApplySkillResponse> {
                 override fun onFailure(call: Call<ApplySkillResponse>, t: Throwable) {
-                    Toast.makeText(this@PaymentActivity ,"Failed   ya hamada " + t.message  , Toast.LENGTH_SHORT).show()
+                   Toast.makeText(this@PaymentActivity ,"you just registerd in this course "   , Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onResponse(call: Call<ApplySkillResponse>, response: Response<ApplySkillResponse>) {
-//                    Toast.makeText(this@PaymentActivity ,""+ response.body()?.status , Toast.LENGTH_SHORT).show()
-                   Toast.makeText(this@PaymentActivity ,"learnerID = "  +stringName.toIntOrNull()+  ", categoryId  " +categoryId + " status " + response.body()?.status, Toast.LENGTH_LONG).show()
-
-
+                    Toast.makeText(this@PaymentActivity, "learnerID = " + steingName.toIntOrNull() + ", SkillId  " + SkillId + " status " + response.body()?.status, Toast.LENGTH_LONG).show()
                 }
             })
-
-
-
         }
     }
 }

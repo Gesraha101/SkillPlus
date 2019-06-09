@@ -17,7 +17,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/cb"/>
         <TextView
-                android:id="@+id/animal"
+                android:id="@+id/date"
                 android:layout_width="364dp"
                 android:layout_height="wrap_content"
                 android:text="@string/schadual_time"

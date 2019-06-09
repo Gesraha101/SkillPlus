@@ -11,26 +11,28 @@
             android:text="Schadual "
             android:textColor="@color/colorHeader"
             android:textSize="25dp"
-            android:layout_width="153dp"
-            android:layout_height="36dp"
+            android:layout_width="123dp"
+            android:layout_height="33dp"
             android:id="@+id/textViewff"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="20dp"
             app:layout_constraintTop_toBottomOf="@+id/totalPriceTextView"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="152dp" android:layout_marginRight="152dp"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="106dp"
-            android:layout_marginStart="106dp"/>
+            android:layout_marginEnd="216dp" android:layout_marginRight="216dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="72dp"
+            android:layout_marginStart="72dp"/>
     <TextView
-            android:layout_width="match_parent"
+            android:layout_width="280dp"
             android:layout_height="55dp"
             android:textSize="20sp"
             android:text="@string/schedule"
             android:id="@+id/tv"
             tools:layout_conversion_wrapWidth="218"
             tools:layout_conversion_wrapHeight="70"
-            tools:ignore="MissingConstraints" android:layout_marginTop="27dp"
+            tools:ignore="MissingConstraints" android:layout_marginTop="20dp"
             app:layout_constraintTop_toBottomOf="@+id/textViewff" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp" android:layout_marginRight="20dp" android:layout_marginEnd="20dp"
+            app:layout_constraintHorizontal_bias="0.571"/>
     <TextView
             android:text="Service title"
             android:layout_width="wrap_content"
@@ -83,24 +85,26 @@
             android:text="Payment By Fawry"
             android:textColor="@color/colorHeader"
             android:textSize="25dp"
-            android:layout_width="280dp"
+            android:layout_width="258dp"
             android:layout_height="38dp"
             android:id="@+id/textView6"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="112dp" android:layout_marginRight="112dp"
-            android:layout_marginTop="22dp" app:layout_constraintTop_toBottomOf="@+id/tv"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="19dp"
-            android:layout_marginStart="19dp"/>
+            android:layout_marginEnd="72dp" android:layout_marginRight="72dp"
+            android:layout_marginTop="20dp" app:layout_constraintTop_toBottomOf="@+id/tv"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="59dp"
+            android:layout_marginStart="59dp" app:layout_constraintHorizontal_bias="1.0"/>
     <EditText
             android:layout_width="271dp"
             android:layout_height="57dp"
             android:inputType="textPersonName"
             android:background="@drawable/email"
             android:ems="10"
-            android:id="@+id/emailPaymentEditText" android:layout_marginTop="34dp"
-            app:layout_constraintTop_toBottomOf="@+id/textView6" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginLeft="27dp" android:layout_marginStart="27dp" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="113dp" android:layout_marginRight="113dp"/>
+            android:id="@+id/emailPaymentEditText" android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView6"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="64dp" android:layout_marginRight="64dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="77dp"
+            android:layout_marginStart="77dp"/>
     <EditText
             android:background="@drawable/phone_number"
             android:layout_width="275dp"
@@ -108,17 +112,20 @@
             android:inputType="textPersonName"
 
             android:ems="10"
-            android:id="@+id/phonePaymentEditText" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginLeft="24dp" android:layout_marginStart="24dp" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="112dp" android:layout_marginRight="112dp" android:layout_marginTop="30dp"
-            app:layout_constraintTop_toBottomOf="@+id/emailPaymentEditText"/>
+            android:id="@+id/phonePaymentEditText"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="64dp" android:layout_marginRight="64dp" android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/emailPaymentEditText"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="72dp"
+            android:layout_marginStart="72dp"/>
     <Button
             android:text="pay"
             android:textColor="@color/colorAccent"
             android:background="@drawable/button_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button" tools:ignore="MissingConstraints"
+            android:id="@+id/payButton"
+            tools:ignore="MissingConstraints"
             android:layout_marginTop="26dp" app:layout_constraintTop_toBottomOf="@+id/phonePaymentEditText"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="69dp"
             android:layout_marginStart="69dp"
@@ -129,10 +136,10 @@
             android:background="@drawable/button_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/payButton" tools:ignore="MissingConstraints"
+            android:id="@+id/cancleButton" tools:ignore="MissingConstraints"
             android:layout_marginTop="26dp" app:layout_constraintTop_toBottomOf="@+id/phonePaymentEditText"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="87dp"
-            android:layout_marginRight="87dp" app:layout_constraintStart_toEndOf="@+id/button"
+            android:layout_marginRight="87dp"
             android:layout_marginLeft="80dp" android:layout_marginStart="80dp"/>
 
 </android.support.constraint.ConstraintLayout>

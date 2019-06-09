@@ -4,6 +4,7 @@ import RetrofitManager
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.util.Patterns
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -18,7 +19,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class LoginActivity : AppCompatActivity(){
+class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +41,7 @@ class LoginActivity : AppCompatActivity(){
                     passEditText.startAnimation(shake)
                     passEditText.requestFocus()
                 }
-            }
-            else{
+            } else {
                 val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
                 val call: Call<UserResponse>? = service?.loginUser(logUser)
                 call?.enqueue(object : Callback<UserResponse> {
@@ -85,8 +85,7 @@ class LoginActivity : AppCompatActivity(){
 
     }
 
-    fun String.isValidEmail(): Boolean
-            = this.isNotEmpty() &&
+    fun String.isValidEmail(): Boolean = this.isNotEmpty() &&
             Patterns.EMAIL_ADDRESS.matcher(this).matches()
-   }
+}
 

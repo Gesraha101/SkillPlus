@@ -1,4 +1,5 @@
 package com.example.lost.skillplus.views.activities
+
 import RetrofitManager
 import android.net.Uri
 import android.os.Bundle
@@ -34,8 +35,8 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
     }
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
-    private var frag : Fragment? = null
-    private var activatedCategory : Category? = null
+    private var frag: Fragment? = null
+    private var activatedCategory: Category? = null
 
     fun loadFragment(isSkill: Boolean?, paramPassed: Serializable) {
         val fragment : Fragment = if (isSkill!!) {
