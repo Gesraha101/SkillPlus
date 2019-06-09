@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools" package="com.example.lost.skillplus">
+          package="com.example.lost.skillplus">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
-        android:allowBackup="true"
-        android:icon="@mipmap/logo"
-        android:usesCleartextTraffic="true"
-        android:label="@string/app_name"
-        android:networkSecurityConfig="@xml/network_security_config"
-        android:roundIcon="@mipmap/logo"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+            android:allowBackup="true"
+            android:icon="@mipmap/logo"
+            android:label="@string/app_name"
+            android:networkSecurityConfig="@xml/network_security_config"
+            android:roundIcon="@mipmap/logo"
+            android:supportsRtl="true"
+            android:theme="@style/AppTheme">
+        <activity
+                android:name=".views.activities.AddFormActivity"
+                android:label="@string/title_activity_add_need"
+                android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
                 android:name=".views.activities.ScheduleActivity"
                 android:theme="@style/AppTheme.NoActionBar">
@@ -30,13 +34,13 @@
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".views.activities.NavigationDrawerActivity"
-            android:label="@string/title_activity_navigation_drawer"
-            android:theme="@style/AppTheme.NoActionBar">
-
+                android:name=".views.activities.NavigationDrawerActivity"
+                android:label="@string/title_activity_navigation_drawer"
+                android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".views.activities.SplashActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+        <activity
+                android:name=".views.activities.SplashActivity"
+                android:theme="@style/AppTheme.NoActionBar">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,9 +49,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".views.activities.HomeActivity"
-            android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar" />
+                android:name=".views.activities.HomeActivity"
+                android:label="@string/title_activity_home"
+                android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".views.activities.SignUpActivity" />
         <activity android:name=".views.activities.LoginActivity" />
         <activity android:name=".views.activities.SessionActivity" />
@@ -56,33 +60,36 @@
         <activity android:name=".views.activities.ChooseSchaduleActivity" />
 
         <activity
-            android:name=".views.activities.CategoryContentActivity"
-            android:label="@string/title_activity_category_content"
-            android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name=".views.activities.NotificationActivity" />
-        <activity android:name=".views.activities.NotificationAlarmActivity"
-            android:launchMode="singleInstance"
-            android:taskAffinity=""
-            android:excludeFromRecents="true"
-            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"></activity>
+                android:name=".views.activities.CategoryContentActivity"
+                android:label="@string/title_activity_category_content"
+                android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".views.activities.NotificationActivity"/>
+        <activity
+                android:name=".views.activities.NotificationAlarmActivity"
+                android:excludeFromRecents="true"
+                android:launchMode="singleInstance"
+                android:taskAffinity=""
+                android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"/>
 
         <receiver
-            android:name=".models.receivers.BootUpReceiver"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="" />
+                android:name=".models.receivers.BootUpReceiver"
+                android:enabled="true"
+                android:exported="true"
+                android:permission=""/>
         <receiver
             android:name=".models.receivers.NotificationReceiver"
             android:enabled="true"
             android:exported="true"
-            android:permission="" />
+            android:permission="">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
 
         <service
-            android:name=".models.services.NotificationService"
-            android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-
+                android:name=".models.services.NotificationService"
+                android:exported="false"
+                android:permission="android.permission.BIND_JOB_SERVICE"/>
     </application>
 
 </manifest>

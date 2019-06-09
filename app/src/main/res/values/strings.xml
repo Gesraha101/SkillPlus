@@ -55,4 +55,5 @@
         <item>Sunday</item>
 
     </string-array>
+    <string name="title_activity_add_need">New skill form</string>
 </resources>

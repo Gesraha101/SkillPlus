@@ -107,10 +107,7 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
 
     inner class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
-        var isSkill: Boolean = false
-
         override fun getItem(position: Int): Fragment {
-            isSkill = position == 0
             return PostsListFragment.newInstance(position, activatedCategory)
         }
 

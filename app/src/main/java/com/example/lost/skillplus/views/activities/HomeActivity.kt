@@ -6,17 +6,21 @@ import android.support.design.widget.BottomNavigationView
 import android.view.MenuItem
 import android.widget.TextView
 import com.example.lost.skillplus.R
+import com.example.lost.skillplus.models.enums.Keys
 import com.example.lost.skillplus.models.managers.FragmentsManager
 import com.example.lost.skillplus.views.fragments.*
+import com.example.lost.skillplus.models.podos.raw.Notification
+import com.example.lost.skillplus.views.fragments.CategoriesFragment
+import com.example.lost.skillplus.views.fragments.FavoritesFragment
+import com.example.lost.skillplus.views.fragments.NotificationsFragment
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : NavigationDrawerActivity(), CategoriesFragment.OnFragmentInteractionListener, MySkillsFragment.OnFragmentInteractionListener, MyNeedsFragment.OnFragmentInteractionListener, NotificationsFragment.OnFragmentInteractionListener {
 
     override fun onFragmentInteraction(uri: Uri) {
+class HomeActivity : NavigationDrawerActivity() {
 
-    }
-
-    fun loadFragment(item: MenuItem) {
+    private fun loadFragment(item: MenuItem) {
         val tag = item.itemId.toString()
         val fragment = supportFragmentManager.findFragmentByTag(tag) ?: when (item.itemId) {
             R.id.navigation_home -> {
@@ -26,7 +30,7 @@ class HomeActivity : NavigationDrawerActivity(), CategoriesFragment.OnFragmentIn
                 FavoritesFragment.newInstance()
             }
             R.id.navigation_notifications -> {
-                NotificationsFragment.newInstance()
+                NotificationsFragment.newInstance(null)
             }
             else -> {
                 null

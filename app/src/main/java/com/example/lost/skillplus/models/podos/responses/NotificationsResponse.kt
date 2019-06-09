@@ -5,5 +5,5 @@ import java.io.Serializable
 
 data class NotificationsResponse(
         var status : Boolean,
-        val notifications: List<Notification>,
-        var message : String) : Serializable
+        val notifications: ArrayList<Notification>,
+        var message : String): Serializable

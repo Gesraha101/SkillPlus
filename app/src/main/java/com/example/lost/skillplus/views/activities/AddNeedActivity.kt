@@ -28,7 +28,6 @@ class AddNeedActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_need)
         val personNames = arrayOf("entertainment", "arts", "food")
-        val spinner = findViewById<Spinner>(R.id.categorySpinner)
         if (spinner != null) {
             val arrayAdapter = ArrayAdapter(this, R.layout.spiner_layout, personNames)
             spinner.adapter = arrayAdapter

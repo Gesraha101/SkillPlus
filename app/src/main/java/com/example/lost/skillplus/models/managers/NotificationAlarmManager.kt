@@ -26,16 +26,17 @@ class NotificationAlarmManager {
             return arr.toList()
         }
 
-        fun initAlarm(context: Context, notifyAt: Long, fireAt: Long) {
+        fun initAlarm(context: Context, fireAt: Long) {
             val am = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                am.setExact(AlarmManager.RTC_WAKEUP, notifyAt, PendingIntent.getBroadcast(context, 1, Intent(context, AlarmReceiver::class.java).setAction(Actions.NOTIFY.action).putExtra(Keys.FIRE_DATE.key, notifyAt).addCategory("" + notifyAt), PendingIntent.FLAG_UPDATE_CURRENT))
-                am.setExact(AlarmManager.RTC_WAKEUP, fireAt, PendingIntent.getBroadcast(context, 1, Intent(context, AlarmReceiver::class.java).setAction(Actions.ALERT.action).putExtra(Keys.FIRE_DATE.key, fireAt).addCategory("" + fireAt), PendingIntent.FLAG_UPDATE_CURRENT))
+                val notifyAt = fireAt - AlarmManager.INTERVAL_FIFTEEN_MINUTES / 15
+                am.setExact(AlarmManager.RTC_WAKEUP, notifyAt, PendingIntent.getBroadcast(context, Keys.REQUEST_CODE.ordinal, Intent(context, AlarmReceiver::class.java).setAction(Actions.NOTIFY.action).putExtra(Keys.FIRE_DATE.key, notifyAt).addCategory("" + notifyAt), PendingIntent.FLAG_UPDATE_CURRENT))
+                am.setExact(AlarmManager.RTC_WAKEUP, fireAt, PendingIntent.getBroadcast(context, Keys.REQUEST_CODE.ordinal, Intent(context, AlarmReceiver::class.java).setAction(Actions.ALERT.action).putExtra(Keys.FIRE_DATE.key, fireAt).addCategory("" + fireAt), PendingIntent.FLAG_UPDATE_CURRENT))
             }
         }
 
         fun cancelAlarm(context: Context, timeStamp: Long) {
-            val pendingIntent = PendingIntent.getBroadcast(context, 1, Intent(context, AlarmReceiver::class.java).setAction(Actions.NOTIFY.name).addCategory("" + timeStamp), PendingIntent.FLAG_UPDATE_CURRENT)
+            val pendingIntent = PendingIntent.getBroadcast(context, Keys.REQUEST_CODE.ordinal, Intent(context, AlarmReceiver::class.java).setAction(Actions.NOTIFY.name).addCategory("" + timeStamp), PendingIntent.FLAG_UPDATE_CURRENT)
             val am = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             am.cancel(pendingIntent)
             pendingIntent.cancel()

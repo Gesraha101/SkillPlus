@@ -29,10 +29,10 @@ class SignUpActivity : AppCompatActivity() {
 
     companion object {
         @JvmStatic
-        val EMAIL_REGEX = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})";
+        val EMAIL_REGEX = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})"
 
         fun isEmailValid(email: String): Boolean {
-            return EMAIL_REGEX.toRegex().matches(email);
+            return EMAIL_REGEX.toRegex().matches(email)
         }
         //isEmailValid
     }
@@ -53,37 +53,37 @@ class SignUpActivity : AppCompatActivity() {
             if (NameEditText?.text.toString() == "" || mailEditText.text.toString() == ""  || passwordEditText.text.toString() == "" || pass2EditText.text.toString() == "") {
 
                 if (NameEditText?.text.toString() == "") {
-                    NameEditText.setError("Required field")
+                    NameEditText.error = "Required field"
                     NameEditText.startAnimation(shake)
                     NameEditText.requestFocus()
                 }
                 if (mailEditText?.text.toString() == "") {
-                    mailEditText.setError("Required field")
+                    mailEditText.error = "Required field"
                     mailEditText.startAnimation(shake)
                     mailEditText.requestFocus()
                 }
                 if (passwordEditText?.text.toString() == "") {
-                    passwordEditText.setError("Required field")
+                    passwordEditText.error = "Required field"
                     passwordEditText.startAnimation(shake)
                     passwordEditText.requestFocus()
                 }
                 if (pass2EditText?.text.toString() == "") {
-                    pass2EditText.setError("Required field")
+                    pass2EditText.error = "Required field"
                     pass2EditText.startAnimation(shake)
                     pass2EditText.requestFocus()
                 }
             }else if(!isEmailValid(mailEditText.text.toString())){
 
-                mailEditText.setError("Wrong Email")
+                mailEditText.error = "Wrong Email"
                 mailEditText.startAnimation(shake)
                 mailEditText.requestFocus()
 
 
             }else {
                 if (passwordEditText.text.toString() != pass2EditText.text.toString()) {
-                    mailEditText.setError("wrong pattern")
+                    mailEditText.error = "wrong pattern"
                     mailEditText.startAnimation(shake)
-                    pass2EditText.setError("password incorrect")
+                    pass2EditText.error = "password incorrect"
                     pass2EditText.startAnimation(shake)
 
                 } else {

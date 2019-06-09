@@ -26,9 +26,7 @@ class PaymentActivity : AppCompatActivity() {
 
     private var skillId: Int = 0
 
-//    private var userId :Int = 2
-
-    private var appliedRequest = ApplySkill(2, skillId, scheduleList)
+    private var appliedRequest = ApplySkill(PreferencesManager(this).getId(), skillId, scheduleList)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +44,7 @@ class PaymentActivity : AppCompatActivity() {
         }
 
         val share = PreferencesManager(this@PaymentActivity)
-        val userId :Int = share.getId().toInt()
+        val userId :Int = share.getId()
         val stringName = share.getName()
 
         if (userId != 0 && skillId != 0) {
@@ -76,15 +74,17 @@ class PaymentActivity : AppCompatActivity() {
             val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
             val call: Call<ApplySkillResponse>? = service?.applySkill(applySkill = appliedRequest)
             call?.enqueue(object : Callback<ApplySkillResponse> {
-                override fun onFailure(call: Call<ApplySkillResponse>, t: Throwable) {
-                   Toast.makeText(this@PaymentActivity ,"you just registered in this course "   , Toast.LENGTH_SHORT).show()
-                }
-
                 override fun onResponse(call: Call<ApplySkillResponse>, response: Response<ApplySkillResponse>) {
                     if (response.isSuccessful) {
-                        //NotificationAlarmManager.initAlarm(this@PaymentActivity,)
+                        Toast.makeText(this@PaymentActivity ,"you just registered in this course", Toast.LENGTH_SHORT).show()
+                        for (fireAt in scheduleList)
+                            NotificationAlarmManager.initAlarm(this@PaymentActivity, fireAt)
                     }
                     Toast.makeText(this@PaymentActivity, "learnerID = " + stringName!!.toIntOrNull() + ", skillId  " + skillId + " status " + response.body()?.status, Toast.LENGTH_LONG).show()
+                }
+
+                override fun onFailure(call: Call<ApplySkillResponse>, t: Throwable) {
+                    Toast.makeText(this@PaymentActivity ,"error", Toast.LENGTH_SHORT).show()
                 }
             })
         }

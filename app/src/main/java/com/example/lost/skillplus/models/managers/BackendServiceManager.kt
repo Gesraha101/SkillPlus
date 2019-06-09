@@ -2,11 +2,15 @@ package com.example.lost.skillplus.models.managers
 
 import com.example.lost.skillplus.models.podos.raw.*
 import com.example.lost.skillplus.models.podos.responses.*
+import com.example.lost.skillplus.models.podos.raw.ApplySkill
+import com.example.lost.skillplus.models.podos.raw.Form
+import com.example.lost.skillplus.models.podos.raw.Skill
+import com.example.lost.skillplus.models.podos.raw.User
+import com.example.lost.skillplus.models.podos.responses.*
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
-import retrofit2.http.Query
 
 interface BackendServiceManager {
 
@@ -31,12 +35,15 @@ interface BackendServiceManager {
     @POST(" /category/add/skill")
     fun addSkill(@Body skill: Skill): Call<SkillsResponse>
 
+    @POST(" /need/form/add")
+    fun addForm(@Body need: Form): Call<FormResponse>
+
     @POST("/category/add/need")
     fun addNeed(@Body addNeed : AddNeed): Call<AddNeedResponse>
 
     @POST("/skill/apply")
     fun applySkill(@Body applySkill : ApplySkill) : Call<ApplySkillResponse>
 
-    @GET(" /notifications/")
-    fun getNotifications(@Query("user_id") user_id: Int, @Query("last_updated") lastUpdated: Long): Call<NotificationsResponse>
+    @POST(" /notifications/")
+    fun getNotifications(@Body request: NotificationsRequest): Call<NotificationsResponse>
 }

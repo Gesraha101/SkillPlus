@@ -1,87 +1,89 @@
 package com.example.lost.skillplus.views.fragments
 
-import android.content.Context
-import android.net.Uri
+import RetrofitManager
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.lost.skillplus.R
+import com.example.lost.skillplus.models.adapters.NotificationsAdapter
+import com.example.lost.skillplus.models.enums.Keys
+import com.example.lost.skillplus.models.managers.BackendServiceManager
+import com.example.lost.skillplus.models.managers.PreferencesManager
+import com.example.lost.skillplus.models.podos.raw.Notification
+import com.example.lost.skillplus.models.podos.raw.NotificationsRequest
+import com.example.lost.skillplus.models.podos.responses.NotificationsResponse
+import kotlinx.android.synthetic.main.fragment_notifications.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [NotificationsFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [NotificationsFragment.newInstance] factory method to
- * create an instance of this fragment.
- *
- */
 class NotificationsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    private var listener: OnFragmentInteractionListener? = null
+
+    private var notifications: ArrayList<Notification>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            notifications = it.getSerializable(Keys.NOTIFICATIONS.key) as ArrayList<Notification>
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_notifications, container, false)
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
-    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        if (notifications == null) {
+            val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
+            val call: Call<NotificationsResponse>? = service?.getNotifications(NotificationsRequest(PreferencesManager(context!!).getId(), PreferencesManager(context!!).getLastUpdated()))
+            call?.enqueue(object : Callback<NotificationsResponse> {
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
+                override fun onResponse(call: Call<NotificationsResponse>, response: Response<NotificationsResponse>) {
+                    if (response.isSuccessful) {
+                        if (response.body()?.status  == true) {
+
+                        }
+                    } else {
+
+                    }
+                }
+
+                override fun onFailure(call: Call<NotificationsResponse>, t: Throwable) {
+                    Toast.makeText(context, "Failed" + t.localizedMessage, Toast.LENGTH_LONG).show()
+                }
+            })
         } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+            rv_notifications.apply {
+                // set a LinearLayoutManager to handle Android
+                // RecyclerView behavior
+                layoutManager = LinearLayoutManager(activity)
+                // set the custom adapter to the RecyclerView
+                adapter = NotificationsAdapter(notifications!!)
+
+                (adapter as NotificationsAdapter).onItemClick = { notification ->
+//                    if (notification.skill_name != null)
+//                    val intent = Intent(activity, CategoryContentActivity::class.java)
+//                    intent.putExtra("CATEGORY", category)
+//                    startActivity(intent)
+                }
+            }
         }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
-    interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
     }
 
     companion object {
         @JvmStatic
-        fun newInstance() =
-                NotificationsFragment()
+        fun newInstance(notifications: ArrayList<Notification>?) =
+            NotificationsFragment().apply {
+                arguments = Bundle().apply {
+                    putSerializable(Keys.NOTIFICATIONS.key, notifications)
+                }
+            }
     }
 }
