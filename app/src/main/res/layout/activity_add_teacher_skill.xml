@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".views.activities.AddTeacherSkillActivity">
+                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 xmlns:tools="http://schemas.android.com/tools"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent"
+                                                 tools:context=".views.activities.AddTeacherSkillActivity">
 
     <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:title="Add instructor skill"
-            app:titleTextColor="#F6DD40"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:title="Add instructor skill"
+                app:titleTextColor="#F6DD40"
+                app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
     </android.support.design.widget.AppBarLayout>
 
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-                                                 android:layout_height="match_parent"
-                                                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                                                 tools:context=".views.activities.AddTeacherSkillActivity"
-                                                 tools:showIn="@layout/activity_add_teacher_skill"
-                                                 android:background="#DDE4E2">
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:context=".views.activities.AddTeacherSkillActivity"
+            tools:showIn="@layout/activity_add_teacher_skill"
+            android:background="#DDE4E2">
 
 
         <ScrollView
@@ -74,7 +74,7 @@
 
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/eT_Description" />
+                        app:layout_constraintTop_toBottomOf="@+id/eT_Description"/>
 
                 <EditText
                         android:id="@+id/eT_Title"
@@ -108,7 +108,7 @@
                         android:inputType="textPersonName"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/eT_NumberOfSessions" />
+                        app:layout_constraintTop_toBottomOf="@+id/eT_NumberOfSessions"/>
 
                 <EditText
                         android:id="@+id/eT_Price"
@@ -125,7 +125,7 @@
                         android:inputType="textPersonName"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/eT_SessionDuration" />
+                        app:layout_constraintTop_toBottomOf="@+id/eT_SessionDuration"/>
 
 
                 <EditText
