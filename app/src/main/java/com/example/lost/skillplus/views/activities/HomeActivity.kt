@@ -1,10 +1,8 @@
 package com.example.lost.skillplus.views.activities
 
-import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.view.MenuItem
-import android.widget.TextView
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.enums.Keys
 import com.example.lost.skillplus.models.managers.FragmentsManager

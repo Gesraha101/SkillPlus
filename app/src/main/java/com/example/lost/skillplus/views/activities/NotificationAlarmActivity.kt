@@ -1,6 +1,5 @@
 package com.example.lost.skillplus.views.activities
 
-import android.app.NotificationManager
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle

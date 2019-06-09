@@ -46,11 +46,11 @@ class ChooseSchaduleActivity : AppCompatActivity() {
 
     private fun getModel(isSelect: Boolean): ArrayList<Schedule> {
         val list = ArrayList<Schedule>()
-        for (i in 0 until (schadualDatail?.size ?: 2)) {
+        for (i in 0 until schadualDatail.size) {
 
             val model = Schedule()
             model.setSelecteds(isSelect)
-            schadualDatail?.get(i)?.let { model.setAnimals(it.toString()) }
+            schadualDatail.get(i).let { model.setAnimals(it.toString()) }
             list.add(model)
         }
         return list
