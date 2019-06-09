@@ -1,6 +1,7 @@
 package com.example.lost.skillplus.views.activities
 
 import RetrofitManager
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.TabLayout
@@ -38,11 +39,21 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
     private var frag: Fragment? = null
     private var activatedCategory: Category? = null
 
-    fun loadFragment(isSkill: Boolean?, paramPassed: Serializable) {
-        val fragment : Fragment = if (isSkill!!) {
+    fun loadFragment(paramPassed: Serializable) {
+        val fragment : Fragment = if (PostsListFragment.isSkill!!) {
             SkillDetailsFragment.newInstance(paramPassed as Skill)
         } else {
             RequestDetailsFragment.newInstance(paramPassed as Request)
+        }
+
+        btn_add.setOnClickListener {
+            if (PostsListFragment.isSkill == true) {
+                startActivity(Intent(this@CategoryContentActivity, AddTeacherSkillActivity::class.java))
+                //TODO
+            } else {
+                startActivity(Intent(this@CategoryContentActivity, AddNeedActivity::class.java))
+                //TODO
+            }
         }
         frag = fragment
         FragmentsManager.replaceFragment(supportFragmentManager, fragment, R.id.post_fragment_container, null, true)
@@ -120,7 +131,6 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
-            var isSkill: Boolean? = false
             activatedCategory = arguments?.getSerializable(ARG_ACTIVATED_CAT) as Category
             if (arguments?.getInt(ARG_SECTION_NUMBER) == 0) {
                 isSkill = true
@@ -139,12 +149,12 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
                                 if (isSkill!! && response.body()?.skillsAndNeeds?.skills!!.isNotEmpty()) {
                                     adapter = SkillsAdapter(response.body()!!.skillsAndNeeds.skills)
                                     (adapter as SkillsAdapter).onItemClick = { post ->
-                                        (activity as CategoryContentActivity).loadFragment(isSkill, post)
+                                        (activity as CategoryContentActivity).loadFragment(post)
                                     }
                                 } else if (!isSkill!! && response.body()?.skillsAndNeeds?.needs!!.isNotEmpty()){
                                     adapter = RequestsAdapter(response.body()!!.skillsAndNeeds.needs)
                                     (adapter as RequestsAdapter).onItemClick = { post ->
-                                        (activity as CategoryContentActivity).loadFragment(isSkill, post)
+                                        (activity as CategoryContentActivity).loadFragment(post)
                                     }
                                 } else
                                     isSkill = null
@@ -165,6 +175,7 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
 
             private const val ARG_SECTION_NUMBER = "section_number"
             private const val ARG_ACTIVATED_CAT = "activated_cat"
+            var isSkill: Boolean? = false
 
             fun newInstance(sectionNumber: Int, activatedCategory: Category?): PostsListFragment {
                 val fragment = PostsListFragment()
