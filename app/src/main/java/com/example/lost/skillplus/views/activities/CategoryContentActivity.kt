@@ -65,6 +65,15 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
 
         container.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
+        btn_add.setOnClickListener {
+            if (tabs.selectedTabPosition == 0) {
+                //TODO
+                startActivity(Intent(this, AddTeacherSkillActivity::class.java))
+            } else {
+                //TODO
+                startActivity(Intent(this, AddNeedActivity::class.java))
+            }
+        }
 
     }
 
@@ -98,9 +107,10 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
 
     inner class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
+        var isSkill: Boolean = false
+
         override fun getItem(position: Int): Fragment {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
+            isSkill = position == 0
             return PostsListFragment.newInstance(position, activatedCategory)
         }
 
@@ -112,6 +122,7 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
 
     class PostsListFragment : Fragment() {
 
+        var isSkill: Boolean? = false
         private var activatedCategory: Category? = null
 
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -121,17 +132,9 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
-            var isSkill: Boolean? = false
             activatedCategory = arguments?.getSerializable(ARG_ACTIVATED_CAT) as Category
             if (arguments?.getInt(ARG_SECTION_NUMBER) == 0) {
                 isSkill = true
-            }
-            btn_add.setOnClickListener {
-                if (isSkill == true) {
-                    startActivity(Intent(activity, AddTeacherSkillActivity::class.java))
-                } else {
-                    startActivity(Intent(activity, AddNeedActivity::class.java))
-                }
             }
             val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
             val call: Call<PostsResponse>? = service?.getCategoryPosts(ActivatedCategory(activatedCategory!!.cat_id))
@@ -184,4 +187,5 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
             }
         }
     }
+
 }
