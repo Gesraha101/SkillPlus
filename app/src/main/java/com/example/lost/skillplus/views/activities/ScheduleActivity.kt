@@ -40,7 +40,7 @@ class ScheduleActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.lost.skillplus.R.layout.activity_schedule)
+        setContentView(R.layout.activity_schedule)
         setSupportActionBar(toolbar_schedule)
 
     skillRequest = intent.getSerializableExtra(Keys.SKILL.key) as Skill
@@ -50,7 +50,7 @@ class ScheduleActivity : AppCompatActivity() {
             mAdapter = ScheduleAdapter(dayTimeList)
             rV_Schedule.adapter = mAdapter
         }
-        val adapter = ArrayAdapter.createFromResource(this, com.example.lost.skillplus.R.array.week_list, android.R.layout.simple_spinner_item)
+        val adapter = ArrayAdapter.createFromResource(this, R.array.week_list, android.R.layout.simple_spinner_item)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         spinner.adapter = adapter
@@ -64,6 +64,7 @@ class ScheduleActivity : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 dayPicked = position + 1
 
+            }
         }
         val hours = findViewById<TextView>(R.id.eT_Hours)
         hours.setOnClickListener {
@@ -71,7 +72,7 @@ class ScheduleActivity : AppCompatActivity() {
             val hour = c.get(Calendar.HOUR)
             val minute = c.get(Calendar.MINUTE)
 
-            val tpd = TimePickerDialog(this@ScheduleActivity, com.example.lost.skillplus.R.style.TimePickerTheme,
+            val tpd = TimePickerDialog(this@ScheduleActivity, R.style.TimePickerTheme,
                     TimePickerDialog.OnTimeSetListener(function = { _, h, m ->
                         hours.text=h.toString()+":"+m.toString()
                         hourPicked=h
@@ -120,7 +121,7 @@ class ScheduleActivity : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<SkillsResponse>, t: Throwable) {
-                    Toast.makeText(this@ScheduleActivity,"Failed",Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@ScheduleActivity,"Failed " + t.localizedMessage,Toast.LENGTH_LONG).show()
                     //Failure sending request (Internal error)
                 }
 
