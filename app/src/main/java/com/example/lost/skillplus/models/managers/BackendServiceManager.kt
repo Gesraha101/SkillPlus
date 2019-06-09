@@ -37,6 +37,6 @@ interface BackendServiceManager {
     @POST("/skill/apply")
     fun applySkill(@Body applySkill : ApplySkill) : Call<ApplySkillResponse>
 
-    @GET(" /notifications/")
-    fun getNotifications(@Query("user_id") user_id: Int, @Query("last_updated") lastUpdated: Long): Call<NotificationsResponse>
+    @POST(" /notifications/")
+    fun getNotifications(@Body request: NotificationsRequest): Call<NotificationsResponse>
 }

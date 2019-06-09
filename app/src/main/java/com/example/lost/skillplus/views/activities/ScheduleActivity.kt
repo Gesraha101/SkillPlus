@@ -2,9 +2,7 @@ package com.example.lost.skillplus.views.activities
 
 import RetrofitManager
 import android.app.TimePickerDialog
-import android.os.Build
 import android.os.Bundle
-import android.support.annotation.RequiresApi
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
@@ -28,11 +26,10 @@ class ScheduleActivity : AppCompatActivity() {
     private lateinit var mAdapter: ScheduleAdapter
 
     var dayPicked: Int? = null
-    var dayTimeList :ArrayList<DayTime> = arrayListOf()
-    var dayTimeArray= arrayListOf<Array<Int?>>()
+    var dayTimeList: ArrayList<DayTime> = arrayListOf()
+    var dayTimeArray = arrayListOf<Array<Int?>>()
     private lateinit var skill: Skill
 
-    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.example.lost.skillplus.R.layout.activity_schedule)
@@ -43,7 +40,7 @@ class ScheduleActivity : AppCompatActivity() {
         rV_Schedule.apply {
             layoutManager = LinearLayoutManager(this@ScheduleActivity)
             mAdapter = ScheduleAdapter(dayTimeList)
-            rV_Schedule.adapter=mAdapter
+            rV_Schedule.adapter = mAdapter
         }
         val adapter = ArrayAdapter.createFromResource(this, com.example.lost.skillplus.R.array.week_list, android.R.layout.simple_spinner_item)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -57,7 +54,7 @@ class ScheduleActivity : AppCompatActivity() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                dayPicked = position+1
+                dayPicked = position + 1
 
                 val c = Calendar.getInstance()
                 val hour = c.get(Calendar.HOUR)
@@ -65,9 +62,9 @@ class ScheduleActivity : AppCompatActivity() {
 
                 val tpd = TimePickerDialog(this@ScheduleActivity, com.example.lost.skillplus.R.style.TimePickerTheme,
                         TimePickerDialog.OnTimeSetListener(function = { _, h, m ->
-                            dayTimeList.add(DayTime(spinner.selectedItem.toString(),h,m))
+                            dayTimeList.add(DayTime(spinner.selectedItem.toString(), h, m))
                             mAdapter.notifyDataSetChanged()
-                            dayTimeArray.add(arrayOf(dayPicked,h,m))
+                            dayTimeArray.add(arrayOf(dayPicked, h, m))
                         }), hour, minute, false)
                 tpd.show()
             }
@@ -80,11 +77,10 @@ class ScheduleActivity : AppCompatActivity() {
             call?.enqueue(object : Callback<SkillsResponse> {
                 override fun onResponse(call: Call<SkillsResponse>, response: Response<SkillsResponse>) {
                     if (response.isSuccessful) {
-                        if(response.body()?.status  == true) {
+                        if (response.body()?.status == true) {
                             //TODO COMPLETE OTHER TASK IF ANY
                             finish()
-                        }
-                        else{
+                        } else {
                             //Error adding
                         }
                     } else {

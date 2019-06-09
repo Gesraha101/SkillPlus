@@ -76,7 +76,11 @@
             android:name=".models.receivers.NotificationReceiver"
             android:enabled="true"
             android:exported="true"
-            android:permission="" />
+            android:permission="">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
 
         <service
             android:name=".models.services.NotificationService"

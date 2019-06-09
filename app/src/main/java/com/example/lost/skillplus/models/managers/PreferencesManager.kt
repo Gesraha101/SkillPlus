@@ -11,6 +11,16 @@ class PreferencesManager(context: Context) {
     private val myPreferences = "myPrefs"
     private val sharedPreferences = context.getSharedPreferences(myPreferences, Context.MODE_PRIVATE)!!
 
+    fun getLastUpdated(): Long {
+        return sharedPreferences.getLong(Keys.LAST_UPDATED.key, 0)
+    }
+
+    fun setLastUpdated(lastUpdated: Long) {
+        val editor = sharedPreferences.edit()
+        editor.putLong(Keys.LAST_UPDATED.key, lastUpdated)
+        editor.apply()
+    }
+
     fun getUser(): User {
         val json = sharedPreferences.getString(Keys.ACTIVE_USER.key, null)!!
         return Gson().fromJson<User>(json, User::class.java)
