@@ -46,7 +46,7 @@ class SkillDetailsFragment : Fragment() {
         description_value.text = skill!!.skill_desc
         sessions_count_value.text = skill!!.session_no.toString()
         session_duration_value.append("${skill!!.duration} hour(s)")
-        extra_session_value.append("+" + skill!!.extra_fees.toString() + " per session")
+        extra_session_value.append("+" + skill!!.extra.toString() + " per session")
         for (date: Long in skill!!.schedule!!)
             schedule_values.append(Date(date).toString() + "\n")
         poster_rate.rating = skill!!.rate!!

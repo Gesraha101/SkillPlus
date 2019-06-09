@@ -10,31 +10,9 @@
         tools:openDrawer="start">
 
     <include
-            layout="@layout/app_bar_navigation_drawer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    <!--<FrameLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:id="@+id/framecategory"-->
-            <!--android:visibility="visible">-->
-        <!--<fragment xmlns:android="http://schemas.android.com/apk/res/android"-->
-                  <!--xmlns:tools="http://schemas.android.com/tools"-->
-                  <!--android:layout_width="match_parent"-->
-                  <!--android:layout_height="match_parent"-->
-                  <!--android:id="@+id/category"-->
-                  <!--tools:context=".views.activities.HomeActivity"/>-->
-
-
-    <!--</FrameLayout>-->
-
-    <!--<FrameLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:id="@+id/frameID"-->
-            <!--android:visibility="gone"/>-->
-
+        layout="@layout/app_bar_navigation_drawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <android.support.design.widget.NavigationView
             android:id="@+id/nav_view"

@@ -5,9 +5,14 @@ import android.app.TimePickerDialog
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.text.Editable
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.TextView
+import android.widget.Toast
+import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.adapters.ScheduleAdapter
 import com.example.lost.skillplus.models.enums.Keys
 import com.example.lost.skillplus.models.managers.BackendServiceManager
@@ -26,16 +31,19 @@ class ScheduleActivity : AppCompatActivity() {
     private lateinit var mAdapter: ScheduleAdapter
 
     var dayPicked: Int? = null
-    var dayTimeList: ArrayList<DayTime> = arrayListOf()
-    var dayTimeArray = arrayListOf<Array<Int?>>()
-    private lateinit var skill: Skill
+    var hourPicked: Int? = null
+    var minutePicked: Int? = null
+    var isEmpty: Boolean? = true
+    var dayTimeList :ArrayList<DayTime> = arrayListOf()
+    var dayTimeArray= arrayListOf<Array<Int?>>()
+    private lateinit var skillRequest: Skill
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.example.lost.skillplus.R.layout.activity_schedule)
         setSupportActionBar(toolbar_schedule)
 
-        skill = intent.getSerializableExtra(Keys.SKILL.key) as Skill
+    skillRequest = intent.getSerializableExtra(Keys.SKILL.key) as Skill
 
         rV_Schedule.apply {
             layoutManager = LinearLayoutManager(this@ScheduleActivity)
@@ -47,7 +55,7 @@ class ScheduleActivity : AppCompatActivity() {
 
         spinner.adapter = adapter
         spinner.setSelection(3, false)
-
+        dayPicked=spinner.selectedItemPosition+1
         spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
@@ -56,40 +64,64 @@ class ScheduleActivity : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 dayPicked = position + 1
 
-                val c = Calendar.getInstance()
-                val hour = c.get(Calendar.HOUR)
-                val minute = c.get(Calendar.MINUTE)
+        }
+        val hours = findViewById<TextView>(R.id.eT_Hours)
+        hours.setOnClickListener {
+            val c = Calendar.getInstance()
+            val hour = c.get(Calendar.HOUR)
+            val minute = c.get(Calendar.MINUTE)
 
-                val tpd = TimePickerDialog(this@ScheduleActivity, com.example.lost.skillplus.R.style.TimePickerTheme,
-                        TimePickerDialog.OnTimeSetListener(function = { _, h, m ->
-                            dayTimeList.add(DayTime(spinner.selectedItem.toString(), h, m))
-                            mAdapter.notifyDataSetChanged()
-                            dayTimeArray.add(arrayOf(dayPicked, h, m))
-                        }), hour, minute, false)
-                tpd.show()
-            }
+            val tpd = TimePickerDialog(this@ScheduleActivity, com.example.lost.skillplus.R.style.TimePickerTheme,
+                    TimePickerDialog.OnTimeSetListener(function = { _, h, m ->
+                        hours.text=h.toString()+":"+m.toString()
+                        hourPicked=h
+                        minutePicked=m
+                    }), hour, minute, true)
+            tpd.show()
 
         }
+        btn_add_to_schedule.setOnClickListener {
+            if(hourPicked==null||minutePicked==null)
+            {
+                Toast.makeText(this, "Please set a time first!", Toast.LENGTH_LONG).show()
+            }
+            else {
+                if(isEmpty==true) {
+                    btn_add_skill.visibility = View.VISIBLE
+                    isEmpty=false
+                }
+                dayTimeList.add(DayTime(spinner.selectedItem.toString(), hourPicked, minutePicked))
+                mAdapter.notifyDataSetChanged()
+                dayTimeArray.add(arrayOf(dayPicked, hourPicked, minutePicked))
+
+            }
+        }
         btn_add_skill.setOnClickListener {
-            skill.schedule = NotificationAlarmManager.convertToLong(dayTimeArray)
+          skillRequest.schedule = NotificationAlarmManager.convertToLong(dayTimeArray)
             val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
-            val call: Call<SkillsResponse>? = service?.addSkill(skill)
+            val call: Call<SkillsResponse>? = service?.addSkill(skillRequest)
             call?.enqueue(object : Callback<SkillsResponse> {
                 override fun onResponse(call: Call<SkillsResponse>, response: Response<SkillsResponse>) {
                     if (response.isSuccessful) {
                         if (response.body()?.status == true) {
                             //TODO COMPLETE OTHER TASK IF ANY
                             finish()
-                        } else {
-                            //Error adding
+                        }
+                        else{
+                            Toast.makeText(this@ScheduleActivity,"Failed",Toast.LENGTH_LONG).show()
+
+                            //Error adding in database
                         }
                     } else {
-                        //No response from retrofit
+                        Toast.makeText(this@ScheduleActivity,"Failed",Toast.LENGTH_LONG).show()
+
+                        //Error receiving response from server
                     }
                 }
 
                 override fun onFailure(call: Call<SkillsResponse>, t: Throwable) {
-                    //Failure sending request
+                    Toast.makeText(this@ScheduleActivity,"Failed",Toast.LENGTH_LONG).show()
+                    //Failure sending request (Internal error)
                 }
 
             })
