@@ -10,6 +10,7 @@ import android.widget.Toast
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.adapters.CustomAdapter
 import com.example.lost.skillplus.models.managers.BackendServiceManager
+import com.example.lost.skillplus.models.managers.NotificationAlarmManager
 import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.ApplySkill
 import com.example.lost.skillplus.models.podos.responses.ApplySkillResponse
@@ -23,17 +24,17 @@ class PaymentActivity : AppCompatActivity() {
     private var tv: TextView? = null
     private var scheduleList = arrayListOf<Long>()
 
-    private var SkillId: Int = 0
+    private var skillId: Int = 0
 
 //    private var userId :Int = 2
 
-    private var appliedRequest = ApplySkill(2, SkillId, scheduleList)
+    private var appliedRequest = ApplySkill(2, skillId, scheduleList)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment)
 
-        SkillId = intent.getIntExtra("SkillId", 0)
+        skillId = intent.getIntExtra("skillId", 0)
 
         tv = findViewById(R.id.tv)
 
@@ -48,10 +49,10 @@ class PaymentActivity : AppCompatActivity() {
         val userId :Int = share.getId().toInt()
         val stringName = share.getName()
 
-        if (userId != 0 && SkillId != 0) {
+        if (userId != 0 && skillId != 0) {
             appliedRequest.learner = userId
-            Toast.makeText(this@PaymentActivity, "cat id is " + SkillId, Toast.LENGTH_LONG).show()
-            appliedRequest.skill = SkillId
+            Toast.makeText(this@PaymentActivity, "cat id is " + skillId, Toast.LENGTH_LONG).show()
+            appliedRequest.skill = skillId
             appliedRequest.schedule = scheduleList
         }
 
@@ -61,11 +62,11 @@ class PaymentActivity : AppCompatActivity() {
 
         Toast.makeText(this@PaymentActivity, scheduleList.size.toString(), Toast.LENGTH_SHORT).show()
         payButton.setOnClickListener {
-            if (stringName != "" && SkillId != 0) {
+            if (stringName != "" && skillId != 0) {
                 appliedRequest.learner = stringName!!.toInt()
                 Log.d("SchaduleActivity", " id is " + userId)
-                appliedRequest.skill = SkillId
-                Log.d("SchaduleActivity", " SkillId is"+SkillId.toString())
+                appliedRequest.skill = skillId
+                Log.d("SchaduleActivity", " skillId is"+skillId.toString())
                 appliedRequest.schedule = scheduleList
             }
 
@@ -80,7 +81,10 @@ class PaymentActivity : AppCompatActivity() {
                 }
 
                 override fun onResponse(call: Call<ApplySkillResponse>, response: Response<ApplySkillResponse>) {
-                    Toast.makeText(this@PaymentActivity, "learnerID = " + stringName!!.toIntOrNull() + ", SkillId  " + SkillId + " status " + response.body()?.status, Toast.LENGTH_LONG).show()
+                    if (response.isSuccessful) {
+                        //NotificationAlarmManager.initAlarm(this@PaymentActivity,)
+                    }
+                    Toast.makeText(this@PaymentActivity, "learnerID = " + stringName!!.toIntOrNull() + ", skillId  " + skillId + " status " + response.body()?.status, Toast.LENGTH_LONG).show()
                 }
             })
         }
