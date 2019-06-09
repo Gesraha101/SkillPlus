@@ -3,9 +3,9 @@ package com.example.lost.skillplus.models.receivers
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.example.lost.skillplus.models.services.NotificationService
 import android.net.ConnectivityManager
 import com.example.lost.skillplus.models.enums.Actions
+import com.example.lost.skillplus.models.services.NotificationService
 
 
 class NotificationReceiver : BroadcastReceiver() {

@@ -7,21 +7,17 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
-import android.util.Patterns
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import com.example.lost.skillplus.models.managers.BackendServiceManager
 import com.example.lost.skillplus.models.podos.raw.User
 import com.example.lost.skillplus.models.podos.responses.UserResponse
-import com.example.lost.skillplus.models.managers.BackendServiceManager
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
-import com.wajahatkarim3.easyvalidation.core.view_ktx.validEmail
-import com.wajahatkarim3.easyvalidation.core.view_ktx.validator
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -38,8 +34,6 @@ class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.example.lost.skillplus.R.layout.activity_sign_up)
-        var mStorageRef: StorageReference
-        mStorageRef = FirebaseStorage.getInstance().getReference()
         val shake = AnimationUtils.loadAnimation(this, com.example.lost.skillplus.R.anim.animation) as Animation
         buttonPick.setOnClickListener {
             pickPhotoFromGallery()
@@ -82,9 +76,10 @@ class SignUpActivity : AppCompatActivity() {
 
                 } else {
                     val file = filePath
+                    val mStorageRef: StorageReference = FirebaseStorage.getInstance().reference
                     val riversRef = mStorageRef.child("images/" + UUID.randomUUID().toString())
                     if (file != null) {
-                        var uploadTask = riversRef.putFile(file)
+                        val uploadTask = riversRef.putFile(file)
 
                         uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
                             if (!task.isSuccessful) {
@@ -126,7 +121,6 @@ class SignUpActivity : AppCompatActivity() {
             }
         }
     }
-
 
     private fun pickPhotoFromGallery() {
         val pickImageIntent = Intent(Intent.ACTION_PICK,

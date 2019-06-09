@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import com.example.lost.skillplus.models.enums.Keys
 import com.example.lost.skillplus.models.services.NotificationService
-import com.example.lost.skillplus.views.activities.SessionActivity
 
 class AlarmReceiver : BroadcastReceiver() {
 

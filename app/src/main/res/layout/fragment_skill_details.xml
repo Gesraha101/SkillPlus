@@ -1,5 +1,4 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -239,7 +238,7 @@
                         card_view:srb_fillColor="@color/colorPrimary"
                         card_view:srb_numberOfStars="5"
                         card_view:srb_starBorderWidth="2"
-                        card_view:srb_starCornerRadius="0.9"
+                        card_view:srb_starCornerRadius="20"
                         card_view:srb_isIndicator="true"
                         card_view:srb_starSize="30dp"
                         card_view:srb_stepSize="0.1" />

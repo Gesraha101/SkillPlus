@@ -4,5 +4,6 @@ enum class Keys(val key: String) {
     TIMESTAMPS("timestamps"),
     FIRE_DATE("fire_date"),
     REQUEST_CODE("request_code"),
-    SKILL("skill")
+    SKILL("skill"),
+    ACTIVE_USER("active_user")
 }

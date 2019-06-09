@@ -1,9 +1,9 @@
 package com.example.lost.skillplus.views.activities
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.support.v7.app.AppCompatActivity
 import com.example.lost.skillplus.R
 
 class SplashActivity : AppCompatActivity() {

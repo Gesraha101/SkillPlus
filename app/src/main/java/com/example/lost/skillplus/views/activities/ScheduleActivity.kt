@@ -2,7 +2,6 @@ package com.example.lost.skillplus.views.activities
 
 import RetrofitManager
 import android.app.TimePickerDialog
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi

@@ -8,15 +8,12 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import com.bumptech.glide.Glide
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.enums.Keys
 import com.example.lost.skillplus.models.podos.raw.Skill
 import com.example.lost.skillplus.views.activities.ScheduleActivity
 import kotlinx.android.synthetic.main.fragment_skill_details.*
-import kotlinx.android.synthetic.main.fragment_skill_details.btn_apply
-import kotlinx.android.synthetic.main.fragment_skill_details.description_value
-import kotlinx.android.synthetic.main.fragment_skill_details.poster_name
 import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -41,6 +38,9 @@ class SkillDetailsFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Glide.with(this)
+                .load(skill!!.photo_path)
+                .into(post_image)
         skill_name.text = skill!!.skill_name
         skill_price.append("Total:  ${skill!!.skill_price} EGP")
         poster_name.append("Created by: " + skill!!.user_name)

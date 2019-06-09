@@ -12,6 +12,7 @@ data class Skill(val skill_id: Int?,
                  val user_id: Int,
                  val cat_id: Int,
                  val adding_date: String?,
+                 val photo_path: String?,
                  val rate: Float?,
                  val user_name: String?,
                  var schedule: List<Long>?): Serializable

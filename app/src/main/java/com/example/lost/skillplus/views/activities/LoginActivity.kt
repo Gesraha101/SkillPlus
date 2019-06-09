@@ -1,17 +1,18 @@
 package com.example.lost.skillplus.views.activities
 
+import RetrofitManager
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.util.Patterns
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.podos.raw.User
 import com.example.lost.skillplus.models.managers.BackendServiceManager
-import com.example.lost.skillplus.models.podos.responses.UserResponse
 import com.example.lost.skillplus.models.managers.PreferencesManager
+import com.example.lost.skillplus.models.podos.raw.User
+import com.example.lost.skillplus.models.podos.responses.UserResponse
 import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -48,13 +49,16 @@ class LoginActivity : AppCompatActivity(){
                     override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                         if (response.isSuccessful) {
                             if(response.body()?.status  == true){
-                                if (response.body()?.user?.id != null) {
+                                if (response.body()?.userlogined?.id != null) {
                                     val share = PreferencesManager(this@LoginActivity)
-                                    response.body()?.user?.id?.let { it1 -> share.setId(it1) }
-                                    share.setName(response.body()?.user?.id.toString())
+                                    share.setUser(response.body()?.userlogined!!)
+                                    share.setId(response.body()?.userlogined?.id!!)
+                                    share.setName(response.body()?.userlogined?.name!!)
                                 }
-                                startActivity(Intent(this@LoginActivity, HomeActivity::class.java))}
-                                else{ Toast.makeText(this@LoginActivity, "la ya habiby " +response.body(), Toast.LENGTH_LONG).show()
+                                startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+                                finish()
+                            } else {
+                                Toast.makeText(this@LoginActivity, "la ya habiby " +response.body(), Toast.LENGTH_LONG).show()
                                 emailEditText.error = "Wrong email"
                                 emailEditText.startAnimation(shake)
                                 emailEditText.requestFocus()
@@ -62,11 +66,8 @@ class LoginActivity : AppCompatActivity(){
                                 passEditText.startAnimation(shake)
                                 passEditText.requestFocus()
                             }
-
                         } else {
                             Toast.makeText(this@LoginActivity, "Failed to log in", Toast.LENGTH_LONG).show()
-
-
                         }
                     }
 

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.podos.raw.Category
 
@@ -45,10 +46,10 @@ class CategoriesAdapter(private val list: List<Category>): RecyclerView.Adapter<
 
         fun bind(cat: Category) {
             name?.text = cat.cat_name
-            /*Glide.with(context!!)
+
+            Glide.with(context!!)
                     .load(cat.cat_photo)
                     .into(image!!)
-            */
             brief?.text = cat.cat_description
         }
     }

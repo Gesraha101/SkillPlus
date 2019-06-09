@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.podos.raw.Request
 import com.iarcuschin.simpleratingbar.SimpleRatingBar
@@ -50,10 +51,10 @@ class RequestsAdapter(private val list: List<Request>): RecyclerView.Adapter<Req
 
         fun bind(request: Request) {
             title?.text = request.need_name
-            /*Glide.with(context!!)
-                    .load(cat.imgUrl)
+            Glide.with(context!!)
+                    .load(request.need_photo)
                     .into(image!!)
-            */
+
             posterRate?.visibility = View.GONE
             price?.visibility = View.GONE
             posterName?.text = StringBuilder().append("Created by: " + request.user_name)

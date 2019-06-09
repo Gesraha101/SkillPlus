@@ -1,16 +1,15 @@
 package com.example.lost.skillplus.models.managers
 
+import com.example.lost.skillplus.models.podos.raw.ActivatedCategory
 import com.example.lost.skillplus.models.podos.raw.ApplySkill
-import com.example.lost.skillplus.models.podos.responses.NotificationsResponse
 import com.example.lost.skillplus.models.podos.raw.Skill
 import com.example.lost.skillplus.models.podos.raw.User
-import com.example.lost.skillplus.models.podos.responses.ApplySkillResponse
-import com.example.lost.skillplus.models.podos.responses.CategoriesResponse
-import com.example.lost.skillplus.models.podos.responses.PostsResponse
-import com.example.lost.skillplus.models.podos.responses.SkillsResponse
-import com.example.lost.skillplus.models.podos.responses.UserResponse
+import com.example.lost.skillplus.models.podos.responses.*
 import retrofit2.Call
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface BackendServiceManager {
 
@@ -26,8 +25,8 @@ interface BackendServiceManager {
     @GET(" /category/all")
     fun getCategories(): Call<CategoriesResponse>
 
-    @GET(" /category")
-    fun getCategoryPosts(@Query("id") id: Int): Call<PostsResponse>
+    @POST(" /category")
+    fun getCategoryPosts(@Body id: ActivatedCategory): Call<PostsResponse>
 
     @GET(" /category/name")
     fun getCategoryNames(): Call<List<String>>

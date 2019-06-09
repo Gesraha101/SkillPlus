@@ -8,10 +8,9 @@ import android.widget.Toast
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.adapters.CustomAdapter
 import com.example.lost.skillplus.models.managers.BackendServiceManager
-import com.example.lost.skillplus.models.podos.raw.ApplySkill
-
-import com.example.lost.skillplus.models.podos.responses.ApplySkillResponse
 import com.example.lost.skillplus.models.managers.PreferencesManager
+import com.example.lost.skillplus.models.podos.raw.ApplySkill
+import com.example.lost.skillplus.models.podos.responses.ApplySkillResponse
 import kotlinx.android.synthetic.main.activity_payment.*
 import retrofit2.Call
 import retrofit2.Callback

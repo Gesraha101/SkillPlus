@@ -1,12 +1,11 @@
 package com.example.lost.skillplus.views.activities
 
 import android.app.NotificationManager
-import android.content.DialogInterface
 import android.content.Intent
 import android.media.MediaPlayer
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
+import android.support.v7.app.AppCompatActivity
 import com.example.lost.skillplus.R
 
 class NotificationAlarmActivity : AppCompatActivity() {

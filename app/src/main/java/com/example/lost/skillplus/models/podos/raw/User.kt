@@ -5,4 +5,4 @@ data class User(var id: Int = 0,
                 var email: String? = null,
                 var password: String? = null,
                 var pic : String? = null ,
-                var rate : Int? = 0)
+                var rate : Float? = 0F)

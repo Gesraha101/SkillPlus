@@ -1,5 +1,6 @@
 package com.example.lost.skillplus.models.services
 
+import RetrofitManager
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -12,7 +13,6 @@ import android.widget.Toast
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.enums.Actions
 import com.example.lost.skillplus.models.enums.Ids
-import com.example.lost.skillplus.models.enums.Keys
 import com.example.lost.skillplus.models.managers.BackendServiceManager
 import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.responses.NotificationsResponse

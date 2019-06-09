@@ -3,10 +3,6 @@ package com.example.lost.skillplus.views.activities
 import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentTransaction
-import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.widget.TextView
 import com.example.lost.skillplus.R
@@ -56,6 +52,6 @@ class HomeActivity : NavigationDrawerActivity(), CategoriesFragment.OnFragmentIn
         super.onCreate(savedInstanceState)
         FragmentsManager.replaceFragment(supportFragmentManager, CategoriesFragment.newInstance(), R.id.fragment_container, null, false)
 
-        nav_view.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+        nav_view2.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
     }
 }

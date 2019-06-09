@@ -1,7 +1,7 @@
 package com.example.lost.skillplus.views.activities
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import com.example.lost.skillplus.R
 
 class NotificationActivity : AppCompatActivity() {

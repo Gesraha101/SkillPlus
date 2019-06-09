@@ -1,5 +1,6 @@
 package com.example.lost.skillplus.views.fragments
 
+import RetrofitManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -12,8 +13,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.adapters.CategoriesAdapter
-import com.example.lost.skillplus.models.podos.responses.CategoriesResponse
 import com.example.lost.skillplus.models.managers.BackendServiceManager
+import com.example.lost.skillplus.models.podos.responses.CategoriesResponse
 import com.example.lost.skillplus.views.activities.CategoryContentActivity
 import kotlinx.android.synthetic.main.fragment_categories.*
 import retrofit2.Call
@@ -92,6 +93,6 @@ class CategoriesFragment : Fragment() {
 
         @JvmStatic
         fun newInstance() =
-            CategoriesFragment()
+                CategoriesFragment()
     }
 }

@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.RatingBar
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.podos.raw.Skill
 import com.iarcuschin.simpleratingbar.SimpleRatingBar
@@ -53,10 +53,10 @@ class SkillsAdapter(private val list: List<Skill>): RecyclerView.Adapter<SkillsA
 
         fun bind(skill: Skill) {
             title?.text = skill.skill_name
-            /*Glide.with(context!!)
-                    .load(cat.imgUrl)
+            Glide.with(context!!)
+                    .load(skill.photo_path)
                     .into(image!!)
-            */
+
             posterName?.text = StringBuilder().append("Created by: " + skill.user_name)
             price?.append(" ${skill.skill_price} EGP")
             posterRate?.rating = skill.rate!!

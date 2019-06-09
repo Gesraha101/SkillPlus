@@ -1,29 +1,27 @@
 package com.example.lost.skillplus.views.activities
+import RetrofitManager
 import android.net.Uri
+import android.os.Bundle
 import android.support.design.widget.TabLayout
-import android.support.v7.app.AppCompatActivity
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.adapters.RequestsAdapter
 import com.example.lost.skillplus.models.adapters.SkillsAdapter
+import com.example.lost.skillplus.models.managers.BackendServiceManager
+import com.example.lost.skillplus.models.managers.FragmentsManager
+import com.example.lost.skillplus.models.podos.raw.ActivatedCategory
 import com.example.lost.skillplus.models.podos.raw.Category
 import com.example.lost.skillplus.models.podos.raw.Request
 import com.example.lost.skillplus.models.podos.raw.Skill
 import com.example.lost.skillplus.models.podos.responses.PostsResponse
-import com.example.lost.skillplus.models.managers.BackendServiceManager
-import com.example.lost.skillplus.models.managers.FragmentsManager
-import com.example.lost.skillplus.views.fragments.SkillDetailsFragment
 import com.example.lost.skillplus.views.fragments.RequestDetailsFragment
+import com.example.lost.skillplus.views.fragments.SkillDetailsFragment
 import kotlinx.android.synthetic.main.activity_category_content.*
 import kotlinx.android.synthetic.main.fragment_category_content.*
 import retrofit2.Call
@@ -39,8 +37,8 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
     private var frag : Fragment? = null
     private var activatedCategory : Category? = null
 
-    fun loadFragment(isSkill: Boolean, paramPassed: Serializable) {
-        val fragment : Fragment = if (isSkill) {
+    fun loadFragment(isSkill: Boolean?, paramPassed: Serializable) {
+        val fragment : Fragment = if (isSkill!!) {
             SkillDetailsFragment.newInstance(paramPassed as Skill)
         } else {
             RequestDetailsFragment.newInstance(paramPassed as Request)
@@ -121,13 +119,13 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
-            var isSkill = false
+            var isSkill: Boolean? = false
             activatedCategory = arguments?.getSerializable(ARG_ACTIVATED_CAT) as Category
             if (arguments?.getInt(ARG_SECTION_NUMBER) == 0) {
                 isSkill = true
             }
             val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
-            val call: Call<PostsResponse>? = service?.getCategoryPosts(activatedCategory!!.cat_id)
+            val call: Call<PostsResponse>? = service?.getCategoryPosts(ActivatedCategory(activatedCategory!!.cat_id))
             call?.enqueue(object : Callback<PostsResponse> {
 
                 override fun onResponse(call: Call<PostsResponse>, response: Response<PostsResponse>) {
@@ -137,20 +135,18 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
                                 // set a LinearLayoutManager to handle Android
                                 // RecyclerView behavior
                                 layoutManager = LinearLayoutManager(activity)
-                                adapter = if (isSkill)
-                                    SkillsAdapter(response.body()!!.skillsAndNeeds.skills)
-                                else
-                                    RequestsAdapter(response.body()!!.skillsAndNeeds.needs)
-                                if (isSkill) {
+                                if (isSkill!! && response.body()?.skillsAndNeeds?.skills!!.isNotEmpty()) {
+                                    adapter = SkillsAdapter(response.body()!!.skillsAndNeeds.skills)
                                     (adapter as SkillsAdapter).onItemClick = { post ->
                                         (activity as CategoryContentActivity).loadFragment(isSkill, post)
                                     }
-                                } else {
+                                } else if (!isSkill!! && response.body()?.skillsAndNeeds?.needs!!.isNotEmpty()){
+                                    adapter = RequestsAdapter(response.body()!!.skillsAndNeeds.needs)
                                     (adapter as RequestsAdapter).onItemClick = { post ->
                                         (activity as CategoryContentActivity).loadFragment(isSkill, post)
                                     }
-                                }
-
+                                } else
+                                    isSkill = null
                             }
                         } else {
                             Toast.makeText(activity, "Error: " + response.body(), Toast.LENGTH_LONG).show()
