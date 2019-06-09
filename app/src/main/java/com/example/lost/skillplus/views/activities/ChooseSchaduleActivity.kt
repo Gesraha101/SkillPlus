@@ -12,19 +12,19 @@ import com.example.lost.skillplus.models.podos.raw.Schedule
 import com.example.lost.skillplus.models.podos.raw.Skill
 import java.util.*
 
-class SchaduleActivity : AppCompatActivity() {
+class ChooseSchaduleActivity : AppCompatActivity() {
     private var lv: ListView? = null
     private var modelArrayList: ArrayList<Schedule>? = null
     private var customAdapter: CustomAdapter? = null
     private var btnnext: Button? = null
     private var skillFromDetailsFragment : Skill? = null
-    private var schadualDatail : List<Long>? = null
+    private lateinit var schadualDatail : List<Long>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_schadule)
+        setContentView(R.layout.activity_choose_schadule)
         skillFromDetailsFragment = intent.getSerializableExtra("Skill") as Skill
-        schadualDatail = skillFromDetailsFragment!!.schedule
+        schadualDatail = skillFromDetailsFragment!!.schedule!!
 
         lv = this.findViewById(R.id.lv)
         btnnext = findViewById(R.id.next)
@@ -34,7 +34,7 @@ class SchaduleActivity : AppCompatActivity() {
         lv!!.adapter = customAdapter
 
         btnnext!!.setOnClickListener {
-            val intent = Intent(this@SchaduleActivity, PaymentActivity::class.java)
+            val intent = Intent(this@ChooseSchaduleActivity, PaymentActivity::class.java)
             if(skillFromDetailsFragment?.skill_id != null) {
                 Log.d("SchaduleActivity", skillFromDetailsFragment?.skill_id.toString())
                 //       Toast.makeText(this@SchaduleActivity, skillFromDetailsFragment!!.cat_id , Toast.LENGTH_LONG)

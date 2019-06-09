@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.enums.Keys
 import com.example.lost.skillplus.models.podos.raw.Skill
-import com.example.lost.skillplus.views.activities.ScheduleActivity
+import com.example.lost.skillplus.views.activities.ChooseSchaduleActivity
 import kotlinx.android.synthetic.main.fragment_skill_details.*
 import java.util.*
 
@@ -53,7 +53,8 @@ class SkillDetailsFragment : Fragment() {
         poster_rate.rating = skill!!.rate!!
 
         btn_apply.setOnClickListener{
-            val intent = Intent(activity , ScheduleActivity::class.java).putExtra(Keys.SKILL.key, skill)
+            val intent = Intent(activity , ChooseSchaduleActivity::class.java)
+                    intent.putExtra("Skill", skill)
             startActivity(intent)
         }
     }

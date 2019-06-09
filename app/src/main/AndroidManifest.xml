@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.lost.skillplus">
+          xmlns:tools="http://schemas.android.com/tools" package="com.example.lost.skillplus">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -22,7 +22,6 @@
         android:theme="@style/AppTheme">
         <activity
                 android:name=".views.activities.ScheduleActivity"
-                android:label="@string/title_activity_schedule"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
@@ -54,7 +53,8 @@
         <activity android:name=".views.activities.SessionActivity" />
         <activity android:name=".views.activities.PaymentActivity" />
         <activity android:name=".views.activities.AddNeedActivity" />
-        <activity android:name=".views.activities.SchaduleActivity" />
+        <activity android:name=".views.activities.ChooseSchaduleActivity" />
+
         <activity
             android:name=".views.activities.CategoryContentActivity"
             android:label="@string/title_activity_category_content"
