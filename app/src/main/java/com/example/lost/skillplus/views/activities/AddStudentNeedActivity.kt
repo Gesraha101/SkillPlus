@@ -11,10 +11,9 @@ import android.widget.Spinner
 import android.widget.Toast
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.managers.BackendServiceManager
-import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.AddNeed
 import com.example.lost.skillplus.models.podos.responses.AddNeedResponse
-import kotlinx.android.synthetic.main.activity_add_need.*
+import kotlinx.android.synthetic.main.activity_add_student_need.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,6 +22,8 @@ class AddStudentNeedActivity : AppCompatActivity() {
 
     var category: Int = 0
     var addneed = AddNeed("", "", "", 0, 0)
+    //    val share = PreferencesManager(this@AddStudentNeedActivity)
+//    val userId: Int = share.getId().toInt()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_student_need)
@@ -37,11 +38,11 @@ class AddStudentNeedActivity : AppCompatActivity() {
                     Toast.makeText(this@AddStudentNeedActivity, " position is " + (position + 1) + " " + personNames[position], Toast.LENGTH_SHORT).show()
                     category = position + 1
                     Log.d("need", "category is " + category.toString())
-                    addneed = AddNeed(need_name = "b3mel molokhia",
-                            need_desc = "basheak sharkah el shief el shepeny",
+                    addneed = AddNeed(need_name = titleEditText.text.toString(),
+                            need_desc = descEditText.text.toString(),
                             need_photo = "mesh batkeshef 3la banat",
                             cat_id = category,
-                            user_id = 5)
+                            user_id = 10)
                     Log.d("need", "addneed.cat_id is " + addneed.cat_id.toString())
                 }
 
@@ -50,8 +51,7 @@ class AddStudentNeedActivity : AppCompatActivity() {
                 }
             }
         }
-        val share = PreferencesManager(this@AddStudentNeedActivity)
-        val userId: Int = share.getId().toInt()
+
 
         btn_add_need.setOnClickListener {
 

@@ -70,7 +70,6 @@ class AddNeedActivity : AppCompatActivity() {
             }
         }
     }
-
 //TODO
 //add pic  and conect it to need fragment
 

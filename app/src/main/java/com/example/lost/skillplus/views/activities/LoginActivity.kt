@@ -47,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
 
                     override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                         if (response.isSuccessful) {
-                            if(response.body()?.status  == true){
+                            if (response.body()?.status == true) {
                                 if (response.body()?.userlogined?.id != null) {
                                     val share = PreferencesManager(this@LoginActivity)
                                     share.setUser(response.body()?.userlogined!!)
@@ -56,14 +56,18 @@ class LoginActivity : AppCompatActivity() {
                                 }
                                 startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
                                 finish()
-                            } else {
-                                Toast.makeText(this@LoginActivity, "la ya habiby " +response.body(), Toast.LENGTH_LONG).show()
-                                emailEditText.error = "Wrong email"
-                                emailEditText.startAnimation(shake)
-                                emailEditText.requestFocus()
-                                passEditText.error = "wrong password"
-                                passEditText.startAnimation(shake)
-                                passEditText.requestFocus()
+                            } else if (response.body()?.status == false) {
+                                if (response.body()?.message.equals("wrong password")) {
+                                    passEditText.error = "wrong password"
+                                    passEditText.startAnimation(shake)
+                                    passEditText.requestFocus()
+
+                                } else if (response.body()?.message.equals("wrong email")) {
+                                    emailEditText.error = "Wrong email"
+                                    emailEditText.startAnimation(shake)
+                                    emailEditText.requestFocus()
+
+                                }
                             }
                         } else {
                             Toast.makeText(this@LoginActivity, "Failed to log in", Toast.LENGTH_LONG).show()
@@ -71,7 +75,7 @@ class LoginActivity : AppCompatActivity() {
                     }
 
                     override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                        Toast.makeText(this@LoginActivity, "Failed" + t.localizedMessage, Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@LoginActivity, "Failed to connect to server ", Toast.LENGTH_LONG).show()
                     }
                 })
             }
@@ -83,7 +87,6 @@ class LoginActivity : AppCompatActivity() {
         }
 
     }
-
     fun String.isValidEmail(): Boolean = this.isNotEmpty() &&
             Patterns.EMAIL_ADDRESS.matcher(this).matches()
 }

@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.User
+import com.example.lost.skillplus.views.fragments.CategoriesFragment
 import com.example.lost.skillplus.views.fragments.MyNeedsFragment
 import com.example.lost.skillplus.views.fragments.MySkillsFragment
 import kotlinx.android.synthetic.main.activity_navigation_drawer.*
@@ -82,12 +83,12 @@ open class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavi
 
             }
             R.id.nav_settings -> {
-                findViewById<FrameLayout>(R.id.fragment_container).visibility = View.GONE
-//                supportFragmentManager.beginTransaction().replace(
-//                        R.id.fragment_container,
-//                        CategoriesFragment()).commit()
-//                nav_view.setCheckedItem(R.id.nav_needs)
-//                Log.d("test", "nav_needs")
+                findViewById<FrameLayout>(R.id.fragment_container).visibility = View.VISIBLE
+                supportFragmentManager.beginTransaction().replace(
+                        R.id.fragment_container,
+                        CategoriesFragment()).commit()
+                nav_view.setCheckedItem(R.id.nav_needs)
+                Log.d("test", "nav_needs")
 
 
 

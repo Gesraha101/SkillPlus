@@ -163,7 +163,6 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
                         }
                     }
                 }
-
                 override fun onFailure(call: Call<PostsResponse>, t: Throwable) {
                     Toast.makeText(activity, "Failed  cause is " + t.cause, Toast.LENGTH_LONG).show()
                 }
