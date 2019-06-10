@@ -15,6 +15,7 @@ import android.widget.Toast
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.adapters.RequestsAdapter
 import com.example.lost.skillplus.models.adapters.SkillsAdapter
+import com.example.lost.skillplus.models.enums.Keys
 import com.example.lost.skillplus.models.managers.BackendServiceManager
 import com.example.lost.skillplus.models.managers.FragmentsManager
 import com.example.lost.skillplus.models.podos.raw.ActivatedCategory
@@ -53,7 +54,7 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.activity_category_content)
         super.onCreate(savedInstanceState)
-        activatedCategory = intent.getSerializableExtra("CATEGORY") as Category
+        activatedCategory = intent.getSerializableExtra(Keys.CATEGORY.key) as Category
 
         setSupportActionBar(toolbar)
         // Create the adapter that will return a fragment for each of the three
@@ -67,8 +68,8 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
         btn_add.setOnClickListener {
             if (tabs.selectedTabPosition == 0) {
-                //TODO
-                startActivity(Intent(this, AddTeacherSkillActivity::class.java))
+
+                startActivity(Intent(this, AddTeacherSkillActivity::class.java).putExtra(Keys.CATEGORY.key, activatedCategory))
             } else {
                 //TODO
                 startActivity(Intent(this, AddNeedActivity::class.java))

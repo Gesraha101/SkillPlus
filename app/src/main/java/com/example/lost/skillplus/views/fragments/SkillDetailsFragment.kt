@@ -52,8 +52,7 @@ class SkillDetailsFragment : Fragment() {
         poster_rate.rating = skill!!.rate!!
 
         btn_apply.setOnClickListener{
-            val intent = Intent(activity , ChooseSchaduleActivity::class.java)
-                    intent.putExtra("Skill", skill)
+            val intent = Intent(activity, ChooseSchaduleActivity::class.java).putExtra("Skill", skill)
             startActivity(intent)
         }
     }

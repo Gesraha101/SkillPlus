@@ -2,11 +2,12 @@ package com.example.lost.skillplus.views.activities
 
 import RetrofitManager
 import android.app.TimePickerDialog
+import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.text.Editable
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -43,7 +44,7 @@ class ScheduleActivity : AppCompatActivity() {
         setContentView(R.layout.activity_schedule)
         setSupportActionBar(toolbar_schedule)
 
-    skillRequest = intent.getSerializableExtra(Keys.SKILL.key) as Skill
+        skillRequest = intent.getSerializableExtra(Keys.SKILL.key) as Skill
 
         rV_Schedule.apply {
             layoutManager = LinearLayoutManager(this@ScheduleActivity)
@@ -74,7 +75,7 @@ class ScheduleActivity : AppCompatActivity() {
 
             val tpd = TimePickerDialog(this@ScheduleActivity, R.style.TimePickerTheme,
                     TimePickerDialog.OnTimeSetListener(function = { _, h, m ->
-                        hours.text=h.toString()+":"+m.toString()
+                        hours.text = "$h:$m"
                         hourPicked=h
                         minutePicked=m
                     }), hour, minute, true)
@@ -105,7 +106,11 @@ class ScheduleActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<SkillsResponse>, response: Response<SkillsResponse>) {
                     if (response.isSuccessful) {
                         if (response.body()?.status == true) {
-                            //TODO COMPLETE OTHER TASK IF ANY
+                            for (date in skillRequest.schedule!!)
+                                NotificationAlarmManager.initAlarm(this@ScheduleActivity, date)
+                            val i = Intent(this@ScheduleActivity, HomeActivity::class.java)
+                            i.flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(i)
                             finish()
                         }
                         else{

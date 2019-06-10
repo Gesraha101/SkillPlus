@@ -17,6 +17,7 @@ class NotificationAlarmManager {
 
         fun convertToLong(dateList: ArrayList<Array<Int?>>): ArrayList<Long> {
             val arr: ArrayList<Long> = ArrayList()
+            var time1 = System.currentTimeMillis()
             for (date in dateList) {
                 var time = System.currentTimeMillis() - TimeZone.getDefault().getOffset(System.currentTimeMillis()) - System.currentTimeMillis() % AlarmManager.INTERVAL_DAY + (date[0]!! - DateTime().dayOfWeek) * AlarmManager.INTERVAL_DAY + date[1]!! * AlarmManager.INTERVAL_HOUR + date[2]!! * (AlarmManager.INTERVAL_FIFTEEN_MINUTES / 15) + 1
                 if (date[0]!! < DateTime().dayOfWeek) {
