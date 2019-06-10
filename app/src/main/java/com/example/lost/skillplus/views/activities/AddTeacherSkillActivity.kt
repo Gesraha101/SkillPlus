@@ -3,6 +3,8 @@ package com.example.lost.skillplus.views.activities
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
@@ -11,6 +13,7 @@ import com.example.lost.skillplus.models.enums.Keys
 import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.Category
 import com.example.lost.skillplus.models.podos.raw.Skill
+
 
 import kotlinx.android.synthetic.main.activity_add_teacher_skill.*
 
@@ -24,7 +27,7 @@ class AddTeacherSkillActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         activatedCategory = intent.getSerializableExtra(Keys.CATEGORY.key) as Category
-        lL_AddImage.setOnClickListener {
+        btn_add_image.setOnClickListener {
             //Todo: Implement getting a photo
         }
         val shake = AnimationUtils.loadAnimation(this, R.anim.animation) as Animation

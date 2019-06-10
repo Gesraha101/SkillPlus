@@ -1,9 +1,7 @@
 package com.example.lost.skillplus.models.podos.responses
 
-import com.example.lost.skillplus.models.podos.raw.Category
-
 data class SkillsResponse(
         var status : Boolean,
-        var categoriesName: Any?,
+        var categoriesName: Any?,//Todo : What kind of object is this?
         var message : String
 )

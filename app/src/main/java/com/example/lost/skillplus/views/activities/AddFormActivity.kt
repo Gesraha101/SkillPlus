@@ -2,9 +2,12 @@ package com.example.lost.skillplus.views.activities
 
 import RetrofitManager
 import android.app.TimePickerDialog
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.support.annotation.RequiresApi
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
@@ -54,17 +57,15 @@ class AddFormActivity : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         spinner.adapter = adapter
-        spinner.setSelection(3, false)
-        dayPicked = spinner.selectedItemPosition + 1
         spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-
+                eT_Days.hint="Click to select a day"
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 dayPicked = position + 1
+                eT_Days.hint=""
             }
-
         }
         val hours = findViewById<TextView>(R.id.eT_Hours)
         hours.setOnClickListener {
@@ -83,8 +84,8 @@ class AddFormActivity : AppCompatActivity() {
         }
 
         btn_add_to_schedule.setOnClickListener {
-            if (hourPicked == null || minutePicked == null) {
-                Toast.makeText(this, "Please set a time first!", Toast.LENGTH_LONG).show()
+            if (dayPicked==null||hourPicked == null || minutePicked == null) {
+                Toast.makeText(this, "Please set a date first!", Toast.LENGTH_LONG).show()
             } else {
                 if (isEmpty == true) {
                     btn_add_need.visibility = View.VISIBLE
@@ -142,20 +143,27 @@ class AddFormActivity : AppCompatActivity() {
                     val call: Call<FormResponse>? = service?.addForm(form)
                     call?.enqueue(object : Callback<FormResponse> {
                         override fun onResponse(call: Call<FormResponse>, response: Response<FormResponse>) {
-                            if (response.isSuccessful) {
-                                if (response.body()?.status == true) { //Received response from server
-                                    Toast.makeText(this@AddFormActivity, "Added Successfully", Toast.LENGTH_LONG).show()
-                                    //TODO COMPLETE OTHER TASK IF ANY
-                                    finish()
-                                } else {
-                                    Toast.makeText(this@AddFormActivity, response.message(), Toast.LENGTH_LONG).show()
+                             if (response.isSuccessful) {
+                                if (response.body()?.status == true) {
+                                    for (date in form.schedule!!)
+                                        NotificationAlarmManager.initAlarm(this@AddFormActivity, date)
+                                    val i = Intent(this@AddFormActivity, HomeActivity::class.java)
+                                    i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                    Snackbar.make(it,"Added Successfully !", Snackbar.LENGTH_INDEFINITE).show()
+                                    Handler().postDelayed({
+                                        startActivity(i)
+                                        finish()
+                                    }, 3500)
 
-                                    //Error adding in database
+                                }
+                                else{
+                                    Toast.makeText(this@AddFormActivity,"Failed1",Toast.LENGTH_LONG).show()
+
                                 }
                             } else {
-                                Toast.makeText(this@AddFormActivity, response.message(), Toast.LENGTH_LONG).show()
+                                Toast.makeText(this@AddFormActivity,"Failed2",Toast.LENGTH_LONG).show()
 
-                                //Error receiving response from server
+                                //Received response but not "OK" response i.e error in the request sent (Server can't handle this request)
                             }
                         }
 
