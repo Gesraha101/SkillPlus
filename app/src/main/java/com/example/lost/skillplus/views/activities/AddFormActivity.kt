@@ -130,13 +130,12 @@ class AddFormActivity : AppCompatActivity() {
                 }
                 if (!badEntry) {
                     var form = Form(
-                            eT_NumberOfSessions.text.toString())
-//                            eT_SessionDuration.text.toString().toFloat(),
-//                            eT_Price.text.toString().toFloat(),
-//                            eT_ExtraFees.text.toString().toFloat(),
-//                            1,//Todo: Autoincrement?
-//                            NotificationAlarmManager.convertToLong(dayTimeArray),
-//                            1)//Todo: get user_id from shared preferences
+                            eT_NumberOfSessions.text.toString().toInt(),
+                            eT_SessionDuration.text.toString().toFloat(),
+                            eT_Price.text.toString().toFloat(),
+                            eT_ExtraFees.text.toString().toFloat(),
+                            NotificationAlarmManager.convertToLong(dayTimeArray),
+                            1)//Todo: get user_id from shared preferences
 
                     val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
                     val call: Call<FormResponse>? = service?.addForm(form)

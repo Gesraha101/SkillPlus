@@ -3,6 +3,7 @@ package com.example.lost.skillplus.views.activities
 import RetrofitManager
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
@@ -44,6 +45,7 @@ class ScheduleActivity : AppCompatActivity() {
         setSupportActionBar(toolbar_schedule)
 
     skillRequest = intent.getSerializableExtra(Keys.SKILL.key) as Skill
+    tF_Title.text=skillRequest.skill_name
 
         rV_Schedule.apply {
             layoutManager = LinearLayoutManager(this@ScheduleActivity)
@@ -105,24 +107,24 @@ class ScheduleActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<SkillsResponse>, response: Response<SkillsResponse>) {
                     if (response.isSuccessful) {
                         if (response.body()?.status == true) {
+                            Snackbar.make(it,"Added Successfully !",Snackbar.LENGTH_LONG).show()
                             //TODO COMPLETE OTHER TASK IF ANY
                             finish()
                         }
                         else{
                             Toast.makeText(this@ScheduleActivity,"Failed",Toast.LENGTH_LONG).show()
 
-                            //Error adding in database
                         }
                     } else {
                         Toast.makeText(this@ScheduleActivity,"Failed",Toast.LENGTH_LONG).show()
 
-                        //Error receiving response from server
+                        //Received response but not "OK" response i.e error in the request sent (Server can't handle the request)
                     }
                 }
 
                 override fun onFailure(call: Call<SkillsResponse>, t: Throwable) {
-                    Toast.makeText(this@ScheduleActivity,"Failed " + t.localizedMessage,Toast.LENGTH_LONG).show()
-                    //Failure sending request (Internal error)
+                    Toast.makeText(this@ScheduleActivity,"Failed",Toast.LENGTH_LONG).show()
+                    //Error receiving response from server
                 }
 
             })
