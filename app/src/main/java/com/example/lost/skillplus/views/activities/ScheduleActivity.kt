@@ -114,8 +114,9 @@ class ScheduleActivity : AppCompatActivity() {
                                 NotificationAlarmManager.initAlarm(this@ScheduleActivity, date)
                             val i = Intent(this@ScheduleActivity, HomeActivity::class.java)
                             i.flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
+                            Snackbar.make(it.rootView,"Added Successfully !",Snackbar.LENGTH_LONG).show()
+
                             startActivity(i)
-                            Snackbar.make(it,"Added Successfully !",Snackbar.LENGTH_LONG).show()
                             //TODO COMPLETE OTHER TASK IF ANY
                             finish()
                         }

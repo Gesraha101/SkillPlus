@@ -14,7 +14,8 @@ import com.example.lost.skillplus.models.managers.BackendServiceManager
 import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.AddNeed
 import com.example.lost.skillplus.models.podos.responses.AddNeedResponse
-import kotlinx.android.synthetic.main.activity_add_need.*
+import kotlinx.android.synthetic.main.activity_add_student_need.*
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
