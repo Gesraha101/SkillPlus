@@ -10,20 +10,21 @@ import com.example.lost.skillplus.models.enums.Keys
 import com.example.lost.skillplus.models.receivers.AlarmReceiver
 import org.joda.time.DateTime
 import java.util.*
+import kotlin.collections.ArrayList
 
 class NotificationAlarmManager {
     companion object {
 
-        fun convertToLong(dateList: ArrayList<Array<Int?>>): List<Long> {
-            val arr : Array<Long> = emptyArray()
+        fun convertToLong(dateList: ArrayList<Array<Int?>>): ArrayList<Long> {
+            val arr: ArrayList<Long> = ArrayList()
             for (date in dateList) {
                 var time = System.currentTimeMillis() - TimeZone.getDefault().getOffset(System.currentTimeMillis()) - System.currentTimeMillis() % AlarmManager.INTERVAL_DAY + (date[0]!! - DateTime().dayOfWeek) * AlarmManager.INTERVAL_DAY + date[1]!! * AlarmManager.INTERVAL_HOUR + date[2]!! * (AlarmManager.INTERVAL_FIFTEEN_MINUTES / 15) + 1
                 if (date[0]!! < DateTime().dayOfWeek) {
                     time += 7 * AlarmManager.INTERVAL_DAY
                 }
-                arr.plus(time)
+                arr += time
             }
-            return arr.toList()
+            return arr
         }
 
         fun initAlarm(context: Context, fireAt: Long) {

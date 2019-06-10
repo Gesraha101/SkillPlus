@@ -55,14 +55,14 @@ class AddTeacherSkillActivity : AppCompatActivity() {
                 }
                 if(!badEntry) {
                     var skill =Skill(
-                            1,//Todo: autoincrement?
+                            null,
                             eT_Title?.text.toString(),
                             eT_Description?.text.toString(),
                             eT_NumberOfSessions.text.toString().toInt(),
                             eT_Price?.text.toString().toFloat(),
                             eT_SessionDuration?.text.toString().toFloat(),
                             eT_ExtraFees?.text.toString().toFloat(),//Todo: update extra_fees UI
-                            null,//Todo: get photo
+                            "a7a",//Todo: get photo
                             1,//Todo: get user_id from shared preferences
                             1,//Todo: get cat_id from ...?
                             null,
