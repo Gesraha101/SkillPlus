@@ -8,17 +8,22 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.enums.Keys
+import com.example.lost.skillplus.models.managers.PreferencesManager
+import com.example.lost.skillplus.models.podos.raw.Category
 import com.example.lost.skillplus.models.podos.raw.Skill
 
 import kotlinx.android.synthetic.main.activity_add_teacher_skill.*
 
 class AddTeacherSkillActivity : AppCompatActivity() {
 
+    lateinit var activatedCategory: Category
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_teacher_skill)
         setSupportActionBar(toolbar)
 
+        activatedCategory = intent.getSerializableExtra(Keys.CATEGORY.key) as Category
         lL_AddImage.setOnClickListener {
             //Todo: Implement getting a photo
         }

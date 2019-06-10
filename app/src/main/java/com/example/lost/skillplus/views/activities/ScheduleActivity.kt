@@ -2,6 +2,9 @@ package com.example.lost.skillplus.views.activities
 
 import RetrofitManager
 import android.app.TimePickerDialog
+import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
@@ -76,7 +79,7 @@ class ScheduleActivity : AppCompatActivity() {
 
             val tpd = TimePickerDialog(this@ScheduleActivity, R.style.TimePickerTheme,
                     TimePickerDialog.OnTimeSetListener(function = { _, h, m ->
-                        hours.text=h.toString()+":"+m.toString()
+                        hours.text = "$h:$m"
                         hourPicked=h
                         minutePicked=m
                     }), hour, minute, true)
@@ -107,6 +110,11 @@ class ScheduleActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<SkillsResponse>, response: Response<SkillsResponse>) {
                     if (response.isSuccessful) {
                         if (response.body()?.status == true) {
+                            for (date in skillRequest.schedule!!)
+                                NotificationAlarmManager.initAlarm(this@ScheduleActivity, date)
+                            val i = Intent(this@ScheduleActivity, HomeActivity::class.java)
+                            i.flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(i)
                             Snackbar.make(it,"Added Successfully !",Snackbar.LENGTH_LONG).show()
                             //TODO COMPLETE OTHER TASK IF ANY
                             finish()
