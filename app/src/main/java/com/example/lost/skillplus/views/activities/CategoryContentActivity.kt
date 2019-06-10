@@ -71,7 +71,7 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
                 startActivity(Intent(this, AddTeacherSkillActivity::class.java))
             } else {
                 //TODO
-                startActivity(Intent(this, AddNeedActivity::class.java))
+                startActivity(Intent(this, AddStudentNeedActivity::class.java))
             }
         }
 
@@ -164,11 +164,10 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
                 }
 
                 override fun onFailure(call: Call<PostsResponse>, t: Throwable) {
-                    Toast.makeText(activity, "Failed", Toast.LENGTH_LONG).show()
+                    Toast.makeText(activity, "Failed  cause is " + t.cause, Toast.LENGTH_LONG).show()
                 }
             })
         }
-
         companion object {
 
             private const val ARG_SECTION_NUMBER = "section_number"
