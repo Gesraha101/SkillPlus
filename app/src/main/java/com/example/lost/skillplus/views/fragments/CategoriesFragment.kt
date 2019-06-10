@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.adapters.CategoriesAdapter
+import com.example.lost.skillplus.models.enums.Keys
 import com.example.lost.skillplus.models.managers.BackendServiceManager
 import com.example.lost.skillplus.models.podos.responses.CategoriesResponse
 import com.example.lost.skillplus.views.activities.CategoryContentActivity
@@ -45,7 +46,7 @@ class CategoriesFragment : Fragment() {
                             (adapter as CategoriesAdapter).onItemClick = { category ->
 
                                 val intent = Intent(activity, CategoryContentActivity::class.java)
-                                intent.putExtra("CATEGORY", category)
+                                intent.putExtra(Keys.CATEGORY.key, category)
                                 startActivity(intent)
                             }
                         }
