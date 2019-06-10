@@ -7,14 +7,13 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import android.widget.Toast
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.managers.BackendServiceManager
 import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.AddNeed
 import com.example.lost.skillplus.models.podos.responses.AddNeedResponse
-import kotlinx.android.synthetic.main.activity_add_need.*
+import kotlinx.android.synthetic.main.activity_add_form.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,7 +25,7 @@ class AddNeedActivity : AppCompatActivity() {
 
             override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_need)
+        setContentView(R.layout.activity_add_form)
         val personNames = arrayOf("entertainment", "arts", "food")
         if (spinner != null) {
             val arrayAdapter = ArrayAdapter(this, R.layout.spiner_layout, personNames)

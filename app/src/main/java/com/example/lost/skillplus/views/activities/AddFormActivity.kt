@@ -18,10 +18,11 @@ import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.adapters.ScheduleAdapter
 import com.example.lost.skillplus.models.managers.BackendServiceManager
 import com.example.lost.skillplus.models.managers.NotificationAlarmManager
+import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.DayTime
 import com.example.lost.skillplus.models.podos.raw.Form
 import com.example.lost.skillplus.models.podos.responses.FormResponse
-import kotlinx.android.synthetic.main.activity_add_need.*
+import kotlinx.android.synthetic.main.activity_add_form.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -41,7 +42,7 @@ class AddFormActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_need)
+        setContentView(R.layout.activity_add_form)
         setSupportActionBar(toolbar)
 
         rV_Schedule.apply {
@@ -135,7 +136,7 @@ class AddFormActivity : AppCompatActivity() {
                             eT_Price.text.toString().toFloat(),
                             eT_ExtraFees.text.toString().toFloat(),
                             NotificationAlarmManager.convertToLong(dayTimeArray),
-                            1)//Todo: get user_id from shared preferences
+                            PreferencesManager(this@AddFormActivity).getId())
 
                     val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
                     val call: Call<FormResponse>? = service?.addForm(form)

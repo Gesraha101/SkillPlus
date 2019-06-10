@@ -68,8 +68,8 @@ class AddTeacherSkillActivity : AppCompatActivity() {
                             eT_SessionDuration?.text.toString().toFloat(),
                             eT_ExtraFees?.text.toString().toFloat(),//Todo: update extra_fees UI
                             "Test",//Todo: get photo
-                            1,//Todo: get user_id from shared preferences
-                            1,//Todo: get cat_id from ...?
+                            PreferencesManager(this@AddTeacherSkillActivity).getId(),
+                            activatedCategory.cat_id,
                             null,
                              null,
                             null,

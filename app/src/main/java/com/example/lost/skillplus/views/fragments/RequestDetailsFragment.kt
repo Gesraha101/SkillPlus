@@ -1,6 +1,7 @@
 package com.example.lost.skillplus.views.fragments
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.podos.raw.Request
+import com.example.lost.skillplus.views.activities.AddFormActivity
 import kotlinx.android.synthetic.main.fragment_request_details.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -45,6 +47,10 @@ class RequestDetailsFragment : Fragment() {
         request_name.text = request!!.need_name
         poster_name.append("Created by: " + request!!.user_name)
         description_value.text = request!!.need_desc
+        btn_apply.setOnClickListener {
+            var intent = Intent(this@RequestDetailsFragment.context,AddFormActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onAttach(context: Context) {
