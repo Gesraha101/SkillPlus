@@ -55,9 +55,8 @@ class CategoriesFragment : Fragment() {
                     }
                 }
             }
-
             override fun onFailure(call: Call<CategoriesResponse>, t: Throwable) {
-                Toast.makeText(activity, "Failed", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, "Failed  cause is " + t.cause + " message is " + t.message, Toast.LENGTH_LONG).show()
             }
         })
     }

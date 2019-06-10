@@ -19,6 +19,8 @@
             android:roundIcon="@mipmap/logo"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".views.activities.AddStudentNeedActivity">
+        </activity>
         <activity
                 android:name=".views.activities.AddFormActivity"
                 android:label="@string/title_activity_add_need"
@@ -41,24 +43,22 @@
         <activity
                 android:name=".views.activities.SplashActivity"
                 android:theme="@style/AppTheme.NoActionBar">
-
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
                 android:name=".views.activities.HomeActivity"
                 android:label="@string/title_activity_home"
-                android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".views.activities.SignUpActivity" />
-        <activity android:name=".views.activities.LoginActivity" />
-        <activity android:name=".views.activities.SessionActivity" />
-        <activity android:name=".views.activities.PaymentActivity" />
-        <activity android:name=".views.activities.AddNeedActivity" />
-        <activity android:name=".views.activities.ChooseSchaduleActivity" />
-
+                android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".views.activities.SignUpActivity"/>
+        <activity android:name=".views.activities.LoginActivity"/>
+        <activity android:name=".views.activities.SessionActivity"/>
+        <activity android:name=".views.activities.PaymentActivity"/>
+        <activity android:name=".views.activities.AddNeedActivity"/>
+        <activity android:name=".views.activities.ChooseSchaduleActivity"/>
         <activity
                 android:name=".views.activities.CategoryContentActivity"
                 android:label="@string/title_activity_category_content"
@@ -77,12 +77,12 @@
                 android:exported="true"
                 android:permission=""/>
         <receiver
-            android:name=".models.receivers.NotificationReceiver"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="">
+                android:name=".models.receivers.NotificationReceiver"
+                android:enabled="true"
+                android:exported="true"
+                android:permission="">
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             </intent-filter>
         </receiver>
 
