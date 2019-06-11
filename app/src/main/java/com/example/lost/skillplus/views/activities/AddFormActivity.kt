@@ -31,6 +31,10 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 import android.view.View.FOCUS_DOWN
+import android.widget.ScrollView
+
+
+
 
 
 
@@ -98,11 +102,11 @@ class AddFormActivity : AppCompatActivity() {
                 dayTimeList.add(DayTime(spinner.selectedItem.toString(), hourPicked, minutePicked))
                 mAdapter.notifyDataSetChanged()
                 dayTimeArray.add(arrayOf(dayPicked, hourPicked, minutePicked))
-                mScrollView.post { mScrollView.scrollTo(0, mScrollView.getBottom())}
+                mScrollView.post { mScrollView.fullScroll(ScrollView.FOCUS_DOWN) }
             }
         }
 
-        val shake = AnimationUtils.loadAnimation(this, R.anim.animation) as Animation
+        val shake = AnimationUtils.loadAnimation(this, com.example.lost.skillplus.R.anim.animation) as Animation
         var badEntry: Boolean
 
         btn_add_need.setOnClickListener {
