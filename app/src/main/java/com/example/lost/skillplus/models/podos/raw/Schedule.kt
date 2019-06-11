@@ -4,11 +4,11 @@ class Schedule {
 
     var isSelected: Boolean = false
     var animal: String? = null
-    fun getAnimals(): String {
+    fun getSchedule(): String {
         return this.animal.toString()
     }
 
-    fun setAnimals(animal: String) {
+    fun setSchedule(animal: String) {
         this.animal = animal
     }
 
