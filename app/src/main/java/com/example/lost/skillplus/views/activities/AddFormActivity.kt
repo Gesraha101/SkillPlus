@@ -30,6 +30,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
+import android.view.View.FOCUS_DOWN
+
+
+
 
 class AddFormActivity : AppCompatActivity() {
     private lateinit var mAdapter: ScheduleAdapter
@@ -94,7 +98,7 @@ class AddFormActivity : AppCompatActivity() {
                 dayTimeList.add(DayTime(spinner.selectedItem.toString(), hourPicked, minutePicked))
                 mAdapter.notifyDataSetChanged()
                 dayTimeArray.add(arrayOf(dayPicked, hourPicked, minutePicked))
-
+                mScrollView.post { mScrollView.scrollTo(0, mScrollView.getBottom())}
             }
         }
 
@@ -136,6 +140,7 @@ class AddFormActivity : AppCompatActivity() {
                             eT_SessionDuration.text.toString().toFloat(),
                             eT_Price.text.toString().toFloat(),
                             eT_ExtraFees.text.toString().toFloat(),
+                            intent.getIntExtra("need_id",0),
                             NotificationAlarmManager.convertToLong(dayTimeArray),
                             PreferencesManager(this@AddFormActivity).getId())
 
