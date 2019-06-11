@@ -10,6 +10,7 @@ import android.widget.Spinner
 import android.widget.Toast
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.managers.BackendServiceManager
+import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.AddNeed
 import com.example.lost.skillplus.models.podos.responses.AddNeedResponse
 import kotlinx.android.synthetic.main.activity_add_student_need.*
@@ -63,7 +64,7 @@ class AddStudentNeedActivity : AppCompatActivity() {
                         need_desc = descEditText.text.toString(),
                         need_photo = "mesh batkeshef 3la banat",
                         cat_id = category,
-                        user_id = 10)
+                        user_id = PreferencesManager(this@AddStudentNeedActivity).getId())
             }
 //            else{
 //                addneed = AddNeed(need_name = titleEditText.text.toString(),
