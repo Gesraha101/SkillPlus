@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import com.example.lost.skillplus.R
+import com.example.lost.skillplus.models.enums.Keys
 
 class NotificationAlarmActivity : AppCompatActivity() {
 
@@ -16,7 +17,7 @@ class NotificationAlarmActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notification_alarm)
         setFinishOnTouchOutside(false)
-
+        val fireDate = intent.getLongExtra(Keys.FIRE_DATE.key, 0)
         player = MediaPlayer.create(this, R.raw.alarm)
         player.isLooping = true // Set looping
         player.setVolume(100f, 100f)
@@ -27,7 +28,7 @@ class NotificationAlarmActivity : AppCompatActivity() {
                 .setPositiveButton("Start") { _, _ ->
                     player.stop()
                     player.release()
-                    startActivity(Intent(this@NotificationAlarmActivity, SessionActivity::class.java))
+                    startActivity(Intent(this@NotificationAlarmActivity, SessionActivity::class.java).putExtra(Keys.FIRE_DATE.key, fireDate.toString()))
                     finish()
                 }
                 .setNegativeButton("Cancel") { _, _ ->
@@ -35,7 +36,7 @@ class NotificationAlarmActivity : AppCompatActivity() {
                     player.release()
                     finish()
                 }
-                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setIcon(R.drawable.alarm_icon)
                 .setCancelable(false)
                 .show()
     }

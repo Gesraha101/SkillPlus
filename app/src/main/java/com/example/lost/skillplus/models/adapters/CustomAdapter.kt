@@ -54,7 +54,7 @@ class CustomAdapter(private val context: Context, private var modelArrayList: ja
         }
 
 
-        holder.tvDate!!.text = modelArrayList[position].getAnimals()
+        holder.tvDate!!.text = modelArrayList[position].getSchedule()
 
         holder.checkBox!!.isChecked = modelArrayList[position].getSelecteds()
 

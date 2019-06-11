@@ -50,11 +50,16 @@ class SkillDetailsFragment : Fragment() {
         for (date: Long in skill!!.schedule!!)
             schedule_values.append(Date(date).toString() + "\n")
         poster_rate.rating = skill!!.rate!!
-
-        btn_apply.setOnClickListener{
-            val intent = Intent(activity, ChooseSchaduleActivity::class.java).putExtra("Skill", skill)
-            startActivity(intent)
+        if (skill!!.schedule!!.size != 0) {
+            btn_apply.setOnClickListener {
+                val intent = Intent(activity, ChooseSchaduleActivity::class.java).putExtra("Skill", skill)
+                startActivity(intent)
+            }
+        } else {
+            btn_apply.setBackgroundColor(resources.getColor(R.color.material_grey_800))
+            btn_apply.text = "Full schedule"
         }
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

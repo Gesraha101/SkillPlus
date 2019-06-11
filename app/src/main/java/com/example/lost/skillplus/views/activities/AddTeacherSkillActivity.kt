@@ -1,10 +1,9 @@
 package com.example.lost.skillplus.views.activities
 
+
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
@@ -13,8 +12,6 @@ import com.example.lost.skillplus.models.enums.Keys
 import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.Category
 import com.example.lost.skillplus.models.podos.raw.Skill
-
-
 import kotlinx.android.synthetic.main.activity_add_teacher_skill.*
 
 class AddTeacherSkillActivity : AppCompatActivity() {
@@ -76,7 +73,7 @@ class AddTeacherSkillActivity : AppCompatActivity() {
                             null,
                              null,
                             null,
-                           listOf())
+                            arrayListOf())
                     val intent = Intent(this@AddTeacherSkillActivity, ScheduleActivity::class.java).putExtra(Keys.SKILL.key, skill)
                     startActivity(intent)
                 }

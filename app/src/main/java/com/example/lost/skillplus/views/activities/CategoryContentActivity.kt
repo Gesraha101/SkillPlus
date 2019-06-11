@@ -18,6 +18,7 @@ import com.example.lost.skillplus.models.adapters.SkillsAdapter
 import com.example.lost.skillplus.models.enums.Keys
 import com.example.lost.skillplus.models.managers.BackendServiceManager
 import com.example.lost.skillplus.models.managers.FragmentsManager
+import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.ActivatedCategory
 import com.example.lost.skillplus.models.podos.raw.Category
 import com.example.lost.skillplus.models.podos.raw.Request
@@ -68,11 +69,9 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
         btn_add.setOnClickListener {
             if (tabs.selectedTabPosition == 0) {
-
                 startActivity(Intent(this, AddTeacherSkillActivity::class.java).putExtra(Keys.CATEGORY.key, activatedCategory))
             } else {
-                //TODO
-                startActivity(Intent(this, AddStudentNeedActivity::class.java))
+                startActivity(Intent(this, AddStudentNeedActivity::class.java).putExtra(Keys.CATEGORY.key, activatedCategory!!.cat_id))
             }
         }
 
@@ -135,7 +134,7 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
                 isSkill = true
             }
             val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
-            val call: Call<PostsResponse>? = service?.getCategoryPosts(ActivatedCategory(activatedCategory!!.cat_id))
+            val call: Call<PostsResponse>? = service?.getCategoryPosts(ActivatedCategory(activatedCategory!!.cat_id, PreferencesManager(context!!).getId()))
             call?.enqueue(object : Callback<PostsResponse> {
 
                 override fun onResponse(call: Call<PostsResponse>, response: Response<PostsResponse>) {
@@ -163,7 +162,6 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
                         }
                     }
                 }
-
                 override fun onFailure(call: Call<PostsResponse>, t: Throwable) {
                     Toast.makeText(activity, "Failed  cause is " + t.cause, Toast.LENGTH_LONG).show()
                 }

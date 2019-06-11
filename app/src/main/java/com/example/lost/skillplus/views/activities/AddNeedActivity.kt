@@ -28,7 +28,7 @@ class AddNeedActivity : AppCompatActivity() {
 
             override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_student_need)
+                setContentView(R.layout.activity_add_student_need)
         val personNames = arrayOf("entertainment", "arts", "food")
         if (spinner != null) {
             val arrayAdapter = ArrayAdapter(this, R.layout.spiner_layout, personNames)
@@ -67,7 +67,7 @@ class AddNeedActivity : AppCompatActivity() {
 
                         val i = Intent(this@AddNeedActivity, HomeActivity::class.java)
                         i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        Snackbar.make(it.rootView.rootView.rootView,"Added Successfully !", Snackbar.LENGTH_INDEFINITE).show()
+                        Snackbar.make(it.rootView.rootView.rootView, "Added Successfully !", Snackbar.LENGTH_INDEFINITE).show()
                         Handler().postDelayed({
                             startActivity(i)
                             finish()
@@ -80,7 +80,6 @@ class AddNeedActivity : AppCompatActivity() {
             }
         }
     }
-
 //TODO
 //add pic  and conect it to need fragment
 

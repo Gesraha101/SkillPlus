@@ -67,12 +67,12 @@ class AddFormActivity : AppCompatActivity() {
         spinner.adapter = adapter
         spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                eT_Days.hint="Click to select a day"
+                eT_Days.hint = "Click to select a day"
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 dayPicked = position + 1
-                eT_Days.hint=""
+                eT_Days.hint = ""
             }
         }
         val hours = findViewById<TextView>(R.id.eT_Hours)
@@ -92,7 +92,7 @@ class AddFormActivity : AppCompatActivity() {
         }
 
         btn_add_to_schedule.setOnClickListener {
-            if (dayPicked==null||hourPicked == null || minutePicked == null) {
+            if (dayPicked == null || hourPicked == null || minutePicked == null) {
                 Toast.makeText(this, "Please set a date first!", Toast.LENGTH_LONG).show()
             } else {
                 if (isEmpty == true) {
@@ -152,25 +152,24 @@ class AddFormActivity : AppCompatActivity() {
                     val call: Call<FormResponse>? = service?.addForm(form)
                     call?.enqueue(object : Callback<FormResponse> {
                         override fun onResponse(call: Call<FormResponse>, response: Response<FormResponse>) {
-                             if (response.isSuccessful) {
+                            if (response.isSuccessful) {
                                 if (response.body()?.status == true) {
                                     for (date in form.schedule!!)
                                         NotificationAlarmManager.initAlarm(this@AddFormActivity, date)
                                     val i = Intent(this@AddFormActivity, HomeActivity::class.java)
                                     i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                    Snackbar.make(it,"Added Successfully !", Snackbar.LENGTH_INDEFINITE).show()
+                                    Snackbar.make(it, "Added Successfully !", Snackbar.LENGTH_INDEFINITE).show()
                                     Handler().postDelayed({
                                         startActivity(i)
                                         finish()
                                     }, 3500)
 
-                                }
-                                else{
-                                    Toast.makeText(this@AddFormActivity,"Failed1",Toast.LENGTH_LONG).show()
+                                } else {
+                                    Toast.makeText(this@AddFormActivity, "Failed1", Toast.LENGTH_LONG).show()
 
                                 }
                             } else {
-                                Toast.makeText(this@AddFormActivity,"Failed2",Toast.LENGTH_LONG).show()
+                                Toast.makeText(this@AddFormActivity, "Failed2", Toast.LENGTH_LONG).show()
 
                                 //Received response but not "OK" response i.e error in the request sent (Server can't handle this request)
                             }

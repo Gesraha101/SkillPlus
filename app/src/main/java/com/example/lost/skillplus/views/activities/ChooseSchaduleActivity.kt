@@ -26,7 +26,7 @@ class ChooseSchaduleActivity : AppCompatActivity() {
         skillFromDetailsFragment = intent.getSerializableExtra("Skill") as Skill
         schadualDatail = skillFromDetailsFragment!!.schedule!!
 
-        lv = this.findViewById(R.id.lv)
+        lv = findViewById(R.id.lv)
         btnnext = findViewById(R.id.next)
 
         modelArrayList = getModel(false)
@@ -38,7 +38,8 @@ class ChooseSchaduleActivity : AppCompatActivity() {
             if(skillFromDetailsFragment?.skill_id != null) {
                 Log.d("SchaduleActivity", skillFromDetailsFragment?.skill_id.toString())
                 //       Toast.makeText(this@SchaduleActivity, skillFromDetailsFragment!!.cat_id , Toast.LENGTH_LONG)
-                intent.putExtra("SkillId", skillFromDetailsFragment!!.skill_id)
+                intent.putExtra("skillId", skillFromDetailsFragment!!.skill_id)
+                Log.d("SchaduleActivity", "skill from intent put extra " + skillFromDetailsFragment!!.skill_id.toString())
                 startActivity(intent)
             }
         }
@@ -50,7 +51,7 @@ class ChooseSchaduleActivity : AppCompatActivity() {
 
             val model = Schedule()
             model.setSelecteds(isSelect)
-            schadualDatail.get(i).let { model.setAnimals(it.toString()) }
+            schadualDatail.get(i).let { model.setSchedule(it.toString()) }
             list.add(model)
         }
         return list

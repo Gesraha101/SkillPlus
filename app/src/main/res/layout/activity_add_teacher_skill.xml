@@ -74,7 +74,7 @@
                         android:ems="10"
                         android:paddingStart="20dp"
                         android:paddingTop="10dp"
-                        android:inputType="textPersonName"
+                        android:inputType="number"
 
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -129,7 +129,7 @@
                         android:paddingStart="20dp"
                         android:paddingTop="10dp"
                         android:hint="Price in EGP"
-                        android:inputType="textPersonName"
+                        android:inputType="number"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/eT_SessionDuration"/>
@@ -146,7 +146,7 @@
                         android:paddingStart="20dp"
                         android:paddingTop="10dp"
                         android:hint="Price in EGP"
-                        android:inputType="textPersonName"
+                        android:inputType="number"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/eT_Price" android:layout_marginTop="24dp"/>
@@ -189,33 +189,29 @@
                         android:layout_marginStart="60dp" app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginEnd="60dp"
                         app:layout_constraintHorizontal_bias="0.482"/>
-                        app:layout_constraintTop_toBottomOf="@+id/eT_Price"
-                        android:id="@+id/lL_AddImage" app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginStart="25dp" android:layout_marginTop="28dp"
-                        app:layout_constraintHorizontal_bias="0.0">
+
 
                 <!--<LinearLayout-->
-                        <!--android:orientation="horizontal"-->
-                        <!--android:layout_width="0dp"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:focusable="false"-->
-                        <!--android:clickable="true"-->
-                        <!--app:layout_constraintTop_toBottomOf="@+id/eT_Price"-->
-                        <!--android:id="@+id/lL_AddImage" app:layout_constraintEnd_toEndOf="parent"-->
-                        <!--android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"-->
-                        <!--android:layout_marginStart="25dp" android:layout_marginTop="28dp"-->
-                        <!--app:layout_constraintHorizontal_bias="0.0">-->
-                    <!--<ImageView-->
-                            <!--android:layout_width="150dp"-->
-                            <!--android:layout_height="match_parent" app:srcCompat="@drawable/add_image"-->
-                            <!--android:id="@+id/imageView3"-->
-                            <!--tools:layout_editor_absoluteY="485dp" tools:layout_editor_absoluteX="35dp"/>-->
-                    <!--<ImageView-->
-                            <!--android:layout_width="150dp"-->
-                            <!--android:layout_height="match_parent" app:srcCompat="@drawable/camera_icon"-->
-                            <!--android:id="@+id/imageView4"-->
-                            <!--tools:layout_editor_absoluteY="488dp" tools:layout_editor_absoluteX="255dp"/>-->
+                <!--android:orientation="horizontal"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:focusable="false"-->
+                <!--android:clickable="true"-->
+                <!--app:layout_constraintTop_toBottomOf="@+id/eT_Price"-->
+                <!--android:id="@+id/lL_AddImage" app:layout_constraintEnd_toEndOf="parent"-->
+                <!--android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"-->
+                <!--android:layout_marginStart="25dp" android:layout_marginTop="28dp"-->
+                <!--app:layout_constraintHorizontal_bias="0.0">-->
+                <!--<ImageView-->
+                <!--android:layout_width="150dp"-->
+                <!--android:layout_height="match_parent" app:srcCompat="@drawable/add_image"-->
+                <!--android:id="@+id/imageView3"-->
+                <!--tools:layout_editor_absoluteY="485dp" tools:layout_editor_absoluteX="35dp"/>-->
+                <!--<ImageView-->
+                <!--android:layout_width="150dp"-->
+                <!--android:layout_height="match_parent" app:srcCompat="@drawable/camera_icon"-->
+                <!--android:id="@+id/imageView4"-->
+                <!--tools:layout_editor_absoluteY="488dp" tools:layout_editor_absoluteX="255dp"/>-->
                 <!--</LinearLayout>-->
             </android.support.constraint.ConstraintLayout>
         </ScrollView>

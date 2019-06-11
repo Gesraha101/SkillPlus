@@ -13,13 +13,13 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class NotificationAlarmManager {
+
     companion object {
 
         fun convertToLong(dateList: ArrayList<Array<Int?>>): ArrayList<Long> {
             val arr: ArrayList<Long> = ArrayList()
-            var time1 = System.currentTimeMillis()
             for (date in dateList) {
-                var time = System.currentTimeMillis() - TimeZone.getDefault().getOffset(System.currentTimeMillis()) - System.currentTimeMillis() % AlarmManager.INTERVAL_DAY + (date[0]!! - DateTime().dayOfWeek) * AlarmManager.INTERVAL_DAY + date[1]!! * AlarmManager.INTERVAL_HOUR + date[2]!! * (AlarmManager.INTERVAL_FIFTEEN_MINUTES / 15) + 1
+                var time = System.currentTimeMillis() - TimeZone.getDefault().getOffset(System.currentTimeMillis()) - System.currentTimeMillis() % AlarmManager.INTERVAL_DAY + (date[0]!! - DateTime().dayOfWeek) * AlarmManager.INTERVAL_DAY + date[1]!! * AlarmManager.INTERVAL_HOUR + date[2]!! * (AlarmManager.INTERVAL_FIFTEEN_MINUTES / 15)
                 if (date[0]!! < DateTime().dayOfWeek) {
                     time += 7 * AlarmManager.INTERVAL_DAY
                 }
@@ -31,8 +31,8 @@ class NotificationAlarmManager {
         fun initAlarm(context: Context, fireAt: Long) {
             val am = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                val notifyAt = fireAt - AlarmManager.INTERVAL_FIFTEEN_MINUTES / 15
-                am.setExact(AlarmManager.RTC_WAKEUP, notifyAt, PendingIntent.getBroadcast(context, Keys.REQUEST_CODE.ordinal, Intent(context, AlarmReceiver::class.java).setAction(Actions.NOTIFY.action).putExtra(Keys.FIRE_DATE.key, notifyAt).addCategory("" + notifyAt), PendingIntent.FLAG_UPDATE_CURRENT))
+                val notifyAt = fireAt - AlarmManager.INTERVAL_FIFTEEN_MINUTES * 2
+                am.setExact(AlarmManager.RTC_WAKEUP, notifyAt, PendingIntent.getBroadcast(context, Keys.REQUEST_CODE.ordinal, Intent(context, AlarmReceiver::class.java).setAction(Actions.NOTIFY.action).addCategory("" + notifyAt), PendingIntent.FLAG_UPDATE_CURRENT))
                 am.setExact(AlarmManager.RTC_WAKEUP, fireAt, PendingIntent.getBroadcast(context, Keys.REQUEST_CODE.ordinal, Intent(context, AlarmReceiver::class.java).setAction(Actions.ALERT.action).putExtra(Keys.FIRE_DATE.key, fireAt).addCategory("" + fireAt), PendingIntent.FLAG_UPDATE_CURRENT))
             }
         }

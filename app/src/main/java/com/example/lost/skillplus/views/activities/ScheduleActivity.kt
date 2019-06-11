@@ -10,8 +10,6 @@ import android.os.Handler
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.text.Editable
-import android.util.Log
 import android.view.View
 import android.widget.*
 import com.example.lost.skillplus.R
@@ -60,12 +58,12 @@ class ScheduleActivity : AppCompatActivity() {
         spinner.setSelection(-1)
         spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                eT_Days.hint="Click to select a day"
+                eT_Days.hint = "Click to select a day"
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 dayPicked = position + 1
-                eT_Days.hint=""
+                eT_Days.hint = ""
             }
         }
         val hours = findViewById<TextView>(R.id.eT_Hours)
@@ -76,7 +74,7 @@ class ScheduleActivity : AppCompatActivity() {
 
             val tpd = TimePickerDialog(this@ScheduleActivity, R.style.TimePickerTheme,
                     TimePickerDialog.OnTimeSetListener(function = { _, h, m ->
-                        hours.text = "$h:$m"
+                        hours.text = "$h:" + if (m < 10) "0$m" else "$m"
                         hourPicked=h
                         minutePicked=m
                     }), hour, minute, true)
@@ -84,7 +82,7 @@ class ScheduleActivity : AppCompatActivity() {
 
         }
         btn_add_to_schedule.setOnClickListener {
-            if(dayPicked==null||hourPicked==null||minutePicked==null)
+            if (dayPicked == null || hourPicked == null || minutePicked == null)
             {
                 Toast.makeText(this, "Please set a date first!", Toast.LENGTH_LONG).show()
             }
@@ -107,11 +105,9 @@ class ScheduleActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<SkillsResponse>, response: Response<SkillsResponse>) {
                     if (response.isSuccessful) {
                         if (response.body()?.status == true) {
-                            for (date in skillRequest.schedule!!)
-                                NotificationAlarmManager.initAlarm(this@ScheduleActivity, date)
                             val i = Intent(this@ScheduleActivity, HomeActivity::class.java)
                             i.flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
-                            Snackbar.make(it,"Added Successfully !",Snackbar.LENGTH_INDEFINITE).show()
+                            Snackbar.make(it, "Added Successfully !", Snackbar.LENGTH_INDEFINITE).show()
                             Handler().postDelayed({
                                 startActivity(i)
                                 finish()

@@ -21,9 +21,10 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/category_brief"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text=""/>
+                android:id="@+id/category_brief"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_marginTop="16dp"/>
     </LinearLayout>
 </LinearLayout>

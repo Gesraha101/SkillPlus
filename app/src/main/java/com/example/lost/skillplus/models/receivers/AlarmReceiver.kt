@@ -12,7 +12,7 @@ class AlarmReceiver : BroadcastReceiver() {
 
         val i = Intent(context, NotificationService::class.java)
         i.action = intent!!.action
-        i.putExtra(Keys.FIRE_DATE.key, intent.getIntExtra(Keys.FIRE_DATE.key, 0))
+        i.putExtra(Keys.FIRE_DATE.key, intent.getLongExtra(Keys.FIRE_DATE.key, 0))
         NotificationService.enqueueTask(context!!, i)
     }
 }

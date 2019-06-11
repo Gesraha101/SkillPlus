@@ -5,6 +5,6 @@ import java.io.Serializable
 
 data class ApplySkillResponse(
         var status : Boolean,
-        var data :Array<ResponseApplyArray>,
+        var sqlresponse: ResponseApplyArray?,
         var message : String
 ): Serializable
