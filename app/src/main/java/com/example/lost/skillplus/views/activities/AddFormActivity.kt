@@ -110,10 +110,7 @@ class AddFormActivity : AppCompatActivity() {
         var badEntry: Boolean
 
         btn_add_need.setOnClickListener {
-            if (eT_NumberOfSessions.text.toString().isEmpty() || eT_SessionDuration.text.toString().isEmpty() || eT_Price.text.toString().isEmpty() || eT_ExtraFees.text.toString().isEmpty()) {
-                Toast.makeText(this@AddFormActivity, "Please complete all of the entries !", Toast.LENGTH_LONG).show()
-            } else {
-                badEntry = false
+                 badEntry = false
                 if (eT_NumberOfSessions.text.toString().toIntOrNull() == null) {
                     eT_NumberOfSessions.error = "A number is required"
                     eT_NumberOfSessions.startAnimation(shake)
@@ -126,13 +123,13 @@ class AddFormActivity : AppCompatActivity() {
                     eT_SessionDuration.requestFocus()
                     badEntry = true
                 }
-                if (eT_Price.text.toString().toIntOrNull() == null) {
+                if (eT_Price.text.toString().toFloatOrNull() == null) {
                     eT_Price.error = "A number is required"
                     eT_Price.startAnimation(shake)
                     eT_Price.requestFocus()
                     badEntry = true
                 }
-                if (eT_ExtraFees.text.toString().toIntOrNull() == null) {
+                if (eT_ExtraFees.text.toString().toFloatOrNull() == null) {
                     eT_ExtraFees.error = "A number is required"
                     eT_ExtraFees.startAnimation(shake)
                     eT_ExtraFees.requestFocus()
@@ -162,7 +159,7 @@ class AddFormActivity : AppCompatActivity() {
                                     Handler().postDelayed({
                                         startActivity(i)
                                         finish()
-                                    }, 3500)
+                                    }, 2500)
 
                                 } else {
                                     Toast.makeText(this@AddFormActivity, "Failed1", Toast.LENGTH_LONG).show()
@@ -186,4 +183,4 @@ class AddFormActivity : AppCompatActivity() {
             }
         }
     }
-}
+

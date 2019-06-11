@@ -36,12 +36,10 @@ class SignUpActivity : AppCompatActivity() {
                  */
         val EMAIL_REGEX = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})"
         /*
-            At least 1 uppercase letter
-            At least 1 number
-            Only alphanumeric characters (no special characters)
+           Only alphanumeric characters (no special characters)
             At least 8 characters long
         */
-        val PASS_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}"
+        val PASS_REGEX = "^[a-zA-Z\\d]{8,}"
         /*
             Only alphanumeric characters
         */
@@ -109,7 +107,7 @@ class SignUpActivity : AppCompatActivity() {
 
             } else if (!isPassValid(passwordEditText.text.toString())) {
 
-                passwordEditText.error = "Wrong Password"
+                passwordEditText.error = "Your password must be at least 8 characters/numbers"
                 passwordEditText.startAnimation(shake)
                 passwordEditText.requestFocus()
 
@@ -169,13 +167,13 @@ class SignUpActivity : AppCompatActivity() {
                                         }
 
                                         override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                                            Toast.makeText(this@SignUpActivity, " user email already exist " + t.cause, Toast.LENGTH_LONG).show()
+                                            Toast.makeText(this@SignUpActivity, " user email already exists " + t.cause, Toast.LENGTH_LONG).show()
                                         }
                                     })
 
 
                                 } else {
-                                    Toast.makeText(this@SignUpActivity, "Uri is  Faild ...   ", Toast.LENGTH_LONG).show()
+                                    Toast.makeText(this@SignUpActivity, "Uri Failed ...   ", Toast.LENGTH_LONG).show()
                                 }
                             }
 
@@ -192,17 +190,22 @@ class SignUpActivity : AppCompatActivity() {
 
                             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                                 if (response.isSuccessful) {
-                                    Toast.makeText(this@SignUpActivity, "Successfully Added ", Toast.LENGTH_LONG).show()
-                                    val i = Intent(this@SignUpActivity, LoginActivity::class.java)
-                                    startActivity(i)
-                                    finish()
+                                    if(response.body()!!.status==true) {
+                                        Toast.makeText(this@SignUpActivity, "Successfully Added ", Toast.LENGTH_LONG).show()
+                                        val i = Intent(this@SignUpActivity, LoginActivity::class.java)
+                                        startActivity(i)
+                                        finish()
+                                    }
+                                    else
+                                    {Toast.makeText(this@SignUpActivity, "Email already exists!", Toast.LENGTH_LONG).show()
+                                    }
                                 } else {
                                     Toast.makeText(this@SignUpActivity, "Failed to add item one", Toast.LENGTH_SHORT).show()
                                 }
                             }
 
                             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                                Toast.makeText(this@SignUpActivity, " user email already exist " + t.cause, Toast.LENGTH_LONG).show()
+                                Toast.makeText(this@SignUpActivity, " user email already exists " + t.cause, Toast.LENGTH_LONG).show()
                             }
                         })
 

@@ -2,10 +2,12 @@ package com.example.lost.skillplus.views.activities
 
 import RetrofitManager
 import android.content.Intent
+import android.opengl.Visibility
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.util.Patterns
+import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
@@ -27,6 +29,7 @@ class LoginActivity : AppCompatActivity() {
 
         val shake = AnimationUtils.loadAnimation(this, R.anim.animation) as Animation
         btn_sign_in.setOnClickListener {
+            mProgressBar.visibility= View.VISIBLE
             val logUser = User(email = emailEditText?.text.toString(),
                     password = passEditText?.text.toString())
 
@@ -47,6 +50,7 @@ class LoginActivity : AppCompatActivity() {
                 call?.enqueue(object : Callback<UserResponse> {
 
                     override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
+                        mProgressBar.visibility= View.GONE
                         if (response.isSuccessful) {
                             if (response.body()?.status == true) {
                                 if (response.body()?.userlogined?.id != null) {
@@ -79,6 +83,7 @@ class LoginActivity : AppCompatActivity() {
                     }
 
                     override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                        mProgressBar.visibility= View.GONE
                         Toast.makeText(this@LoginActivity, "Failed to connect to server ", Toast.LENGTH_LONG).show()
                     }
                 })

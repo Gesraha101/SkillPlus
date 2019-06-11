@@ -1,7 +1,7 @@
 package com.example.lost.skillplus.models.podos.responses
 
 
-data class ResponseApplyArray(
+data class SQLResponse(
 val fieldCount: Int  ,
 val affectedRows : Int  ,
 val insertId : Int ,
