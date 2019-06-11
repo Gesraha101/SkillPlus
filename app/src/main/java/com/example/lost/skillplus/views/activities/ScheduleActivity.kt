@@ -6,11 +6,10 @@ import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
+import android.os.Handler
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.text.Editable
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -59,16 +58,15 @@ class ScheduleActivity : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         spinner.adapter = adapter
-        spinner.setSelection(3, false)
-        dayPicked=spinner.selectedItemPosition+1
+        spinner.setSelection(-1)
         spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-
+                eT_Days.hint = "Click to select a day"
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 dayPicked = position + 1
-
+                eT_Days.hint = ""
             }
         }
         val hours = findViewById<TextView>(R.id.eT_Hours)
@@ -87,9 +85,9 @@ class ScheduleActivity : AppCompatActivity() {
 
         }
         btn_add_to_schedule.setOnClickListener {
-            if(hourPicked==null||minutePicked==null)
+            if (dayPicked == null || hourPicked == null || minutePicked == null)
             {
-                Toast.makeText(this, "Please set a time first!", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Please set a date first!", Toast.LENGTH_LONG).show()
             }
             else {
                 if(isEmpty==true) {
@@ -114,10 +112,12 @@ class ScheduleActivity : AppCompatActivity() {
                                 NotificationAlarmManager.initAlarm(this@ScheduleActivity, date)
                             val i = Intent(this@ScheduleActivity, HomeActivity::class.java)
                             i.flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
-                            startActivity(i)
-                            Snackbar.make(it,"Added Successfully !",Snackbar.LENGTH_LONG).show()
-                            //TODO COMPLETE OTHER TASK IF ANY
-                            finish()
+                            Snackbar.make(it, "Added Successfully !", Snackbar.LENGTH_INDEFINITE).show()
+                            Handler().postDelayed({
+                                startActivity(i)
+                                finish()
+                            }, 3500)
+
                         }
                         else{
                             Toast.makeText(this@ScheduleActivity,"Failed",Toast.LENGTH_LONG).show()
@@ -126,13 +126,13 @@ class ScheduleActivity : AppCompatActivity() {
                     } else {
                         Toast.makeText(this@ScheduleActivity,"Failed",Toast.LENGTH_LONG).show()
 
-                        //Received response but not "OK" response i.e error in the request sent (Server can't handle the request)
+                        //Received response but not "OK" response i.e error in the request sent (Server can't handle this request)
                     }
                 }
 
                 override fun onFailure(call: Call<SkillsResponse>, t: Throwable) {
                     Toast.makeText(this@ScheduleActivity,"Failed",Toast.LENGTH_LONG).show()
-                    //Error receiving response from server
+                    //Error receiving response from server i.e error in podo received (Retrofit can't handle this response)
                 }
 
             })
