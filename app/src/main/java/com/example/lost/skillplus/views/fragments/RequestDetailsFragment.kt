@@ -49,6 +49,7 @@ class RequestDetailsFragment : Fragment() {
         description_value.text = request!!.need_desc
         btn_apply.setOnClickListener {
             var intent = Intent(this@RequestDetailsFragment.context,AddFormActivity::class.java)
+            intent.putExtra("need_id",request!!.need_id)
             startActivity(intent)
         }
     }

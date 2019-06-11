@@ -8,5 +8,6 @@ data class Form(
                 val duration: Float,
                 val price: Float,
                 val extra: Float,
+                val need_id: Int,
                 var schedule: List<Long>?,
-                val user_id:Int): Serializable
+                val user:Int): Serializable

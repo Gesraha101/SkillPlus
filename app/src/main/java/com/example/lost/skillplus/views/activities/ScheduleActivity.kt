@@ -11,10 +11,7 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.adapters.ScheduleAdapter
 import com.example.lost.skillplus.models.enums.Keys
@@ -97,7 +94,7 @@ class ScheduleActivity : AppCompatActivity() {
                 dayTimeList.add(DayTime(spinner.selectedItem.toString(), hourPicked, minutePicked))
                 mAdapter.notifyDataSetChanged()
                 dayTimeArray.add(arrayOf(dayPicked, hourPicked, minutePicked))
-
+                mScrollView.post { mScrollView.fullScroll(ScrollView.FOCUS_DOWN) }
             }
         }
         btn_add_skill.setOnClickListener {
