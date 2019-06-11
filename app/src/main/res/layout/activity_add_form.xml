@@ -86,7 +86,7 @@
                         android:id="@+id/eT_ExtraFees"
                         android:layout_width="322dp"
                         android:layout_height="50dp"
-                        android:background="@drawable/service"
+                        android:background="@drawable/fees_for_extra_session"
                         android:ems="10"
                         android:paddingStart="20dp"
                         android:paddingTop="10dp"

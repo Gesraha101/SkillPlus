@@ -138,10 +138,10 @@
                 <EditText
                         android:id="@+id/eT_ExtraFees"
                         android:layout_width="325dp"
-                        android:layout_height="57dp"
+                        android:layout_height="56dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
-                        android:background="@drawable/service"
+                        android:background="@drawable/fees_for_extra_session"
                         android:ems="10"
                         android:paddingStart="20dp"
                         android:paddingTop="10dp"
