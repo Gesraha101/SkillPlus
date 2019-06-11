@@ -108,7 +108,7 @@ class SignUpActivity : AppCompatActivity() {
                                 val user = User(name = NameEditText?.text.toString(),
                                         email = mailEditText?.text.toString(),
                                         password = passwordEditText?.text.toString()
-                                        , pic = downloadUri.toString())
+                                        , pic = if (downloadUri != null) downloadUri.toString() else "https://firebasestorage.googleapis.com/v0/b/skillplus-6d8b3.appspot.com/o/images%2Fuser-5.png?alt=media&token=b2d4da3e-d672-4f44-94f9-bb469158317c")
 
                                 val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
                                 val call: Call<UserResponse>? = user.let { it1 -> service?.addUser(it1) }

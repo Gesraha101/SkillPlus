@@ -45,6 +45,7 @@ class RequestDetailsFragment : Fragment() {
         request_name.text = request!!.need_name
         poster_name.append("Created by: " + request!!.user_name)
         description_value.text = request!!.need_desc
+
     }
 
     override fun onAttach(context: Context) {

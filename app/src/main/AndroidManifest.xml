@@ -64,32 +64,32 @@
                 android:label="@string/title_activity_category_content"
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".views.activities.NotificationActivity"/>
-        <activity
-                android:name=".views.activities.NotificationAlarmActivity"
-                android:excludeFromRecents="true"
-                android:launchMode="singleInstance"
-                android:taskAffinity=""
-                android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"/>
+
+        <service
+            android:name=".models.services.NotificationService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
 
         <receiver
-                android:name=".models.receivers.BootUpReceiver"
-                android:enabled="true"
-                android:exported="true"
-                android:permission=""/>
+            android:name=".models.receivers.AlarmReceiver"
+            android:enabled="true"
+            android:exported="true"/>
+
         <receiver
-                android:name=".models.receivers.NotificationReceiver"
-                android:enabled="true"
-                android:exported="true"
-                android:permission="">
+            android:name=".models.receivers.NotificationReceiver"
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             </intent-filter>
         </receiver>
 
-        <service
-                android:name=".models.services.NotificationService"
-                android:exported="false"
-                android:permission="android.permission.BIND_JOB_SERVICE"/>
+        <activity android:name=".views.activities.NotificationAlarmActivity"
+                  android:launchMode="singleInstance"
+                  android:taskAffinity=""
+                  android:excludeFromRecents="true"
+                  android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"></activity>
     </application>
 
 </manifest>

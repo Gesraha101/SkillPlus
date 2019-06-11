@@ -75,7 +75,7 @@ class ScheduleActivity : AppCompatActivity() {
 
             val tpd = TimePickerDialog(this@ScheduleActivity, R.style.TimePickerTheme,
                     TimePickerDialog.OnTimeSetListener(function = { _, h, m ->
-                        hours.text = "$h:$m"
+                        hours.text = "$h:" + if (m < 10) "0$m" else "$m"
                         hourPicked=h
                         minutePicked=m
                     }), hour, minute, true)
@@ -106,8 +106,6 @@ class ScheduleActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<SkillsResponse>, response: Response<SkillsResponse>) {
                     if (response.isSuccessful) {
                         if (response.body()?.status == true) {
-                            for (date in skillRequest.schedule!!)
-                                NotificationAlarmManager.initAlarm(this@ScheduleActivity, date)
                             val i = Intent(this@ScheduleActivity, HomeActivity::class.java)
                             i.flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(i)
