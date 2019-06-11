@@ -24,7 +24,7 @@ import io.agora.rtc.video.VideoEncoderConfiguration
 class SessionActivity : AppCompatActivity() {
 
 
-    private lateinit var KEY : String
+    private lateinit var key: String
 
     private val LOG_TAG = SessionActivity::class.java.simpleName
 
@@ -51,11 +51,11 @@ class SessionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_session)
-        KEY = intent!!.getStringExtra(Keys.FIRE_DATE.key)
+        key = intent!!.getStringExtra(Keys.FIRE_DATE.key)
         if (checkSelfPermission(REQUESTED_PERMISSIONS[0], PERMISSION_REQ_ID) &&
                 checkSelfPermission(REQUESTED_PERMISSIONS[1], PERMISSION_REQ_ID) &&
                 checkSelfPermission(REQUESTED_PERMISSIONS[2], PERMISSION_REQ_ID)) {
-            initAgoraEngineAndJoinChannel(KEY)
+            initAgoraEngineAndJoinChannel(key)
         }
     }
 
@@ -90,7 +90,7 @@ class SessionActivity : AppCompatActivity() {
                     finish()
                 }
 
-                initAgoraEngineAndJoinChannel(KEY)
+                initAgoraEngineAndJoinChannel(key)
             }
         }
     }

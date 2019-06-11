@@ -61,9 +61,9 @@ class NotificationService : JobIntentService() {
         when {
             intent.action == Actions.NOTIFY.action -> {
                 val body = "You have an upcoming session in 30 minutes"
-                generateNotification(this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager, Headers.SESSION.header, body, null)
+                generateNotification(getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager, Headers.SESSION.header, body, null)
             }
-            intent.action == Actions.ALERT.action -> startActivity(Intent(this, NotificationAlarmActivity::class.java))
+            intent.action == Actions.ALERT.action -> startActivity(Intent(this, NotificationAlarmActivity::class.java).putExtra(Keys.FIRE_DATE.key, intent.getLongExtra(Keys.FIRE_DATE.key, 0)))
             intent.action == Actions.CHECK.action -> {
                 val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
                 val call: Call<NotificationsResponse>? = service?.getNotifications(NotificationsRequest(PreferencesManager(this).getId(), PreferencesManager(this).getLastUpdated()))
@@ -71,16 +71,16 @@ class NotificationService : JobIntentService() {
 
                     override fun onResponse(call: Call<NotificationsResponse>, response: Response<NotificationsResponse>) {
                         if (response.isSuccessful) {
-                            if (response.body()?.status  == true) {
+                            if (response.body()?.notifications!!.size != 0) {
+                                val body = "You have new notifications. Tab to view"
+                                val alarmIntent = Intent(context, HomeActivity::class.java)
+                                alarmIntent.putExtra(Keys.NOTIFICATIONS.key, response.body()!!.notifications)
+                                val alarmPendingIntent = PendingIntent.getActivity(context, Keys.REQUEST_CODE.ordinal, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+                                generateNotification(getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager, Headers.NOTIFICATION.header, body, alarmPendingIntent)
                                 for (notification in response.body()!!.notifications) {
-                                    val alarmIntent = Intent(context, HomeActivity::class.java)
-                                    alarmIntent.putExtra(Keys.NOTIFICATIONS.key, response.body()!!.notifications)
-                                    val alarmPendingIntent = PendingIntent.getActivity(context, Keys.REQUEST_CODE.ordinal, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT)
                                     if (notification.skill_name != null) {
-                                        val body = "You have new notifications. Tab to view"
-                                        for (i in 0 until notification.schedule!!.size)
-                                            NotificationAlarmManager.initAlarm(context, notification.schedule[i])
-                                        generateNotification(getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager, Headers.NOTIFICATION.header, body, alarmPendingIntent)
+                                        for (date in notification.schedule!!)
+                                            NotificationAlarmManager.initAlarm(context, date)
                                     }
                                 }
                             }

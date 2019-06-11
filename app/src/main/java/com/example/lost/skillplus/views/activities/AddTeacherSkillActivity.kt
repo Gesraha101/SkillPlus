@@ -73,7 +73,7 @@ class AddTeacherSkillActivity : AppCompatActivity() {
                             null,
                              null,
                             null,
-                           listOf())
+                            arrayListOf())
                     val intent = Intent(this@AddTeacherSkillActivity, ScheduleActivity::class.java).putExtra(Keys.SKILL.key, skill)
                     startActivity(intent)
                 }

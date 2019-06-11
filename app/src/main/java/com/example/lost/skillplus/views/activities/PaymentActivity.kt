@@ -26,12 +26,10 @@ class PaymentActivity : AppCompatActivity() {
 
     private var skillId: Int = 0
 
-    private var appliedRequest = ApplySkill(PreferencesManager(this).getId(), skillId, scheduleList)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment)
-
+        val appliedRequest = ApplySkill(PreferencesManager(this@PaymentActivity).getId(), skillId, scheduleList)
         skillId = intent.getIntExtra("skillId", 0)
 
         tv = findViewById(R.id.tv)
@@ -77,14 +75,14 @@ class PaymentActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<ApplySkillResponse>, response: Response<ApplySkillResponse>) {
                     if (response.isSuccessful) {
                         Toast.makeText(this@PaymentActivity ,"you just registered in this course", Toast.LENGTH_SHORT).show()
-                        for (fireAt in scheduleList)
-                            NotificationAlarmManager.initAlarm(this@PaymentActivity, fireAt)
+                        for (date in scheduleList)
+                            NotificationAlarmManager.initAlarm(this@PaymentActivity, date)
                     }
                     Toast.makeText(this@PaymentActivity, "learnerID = " + stringName!!.toIntOrNull() + ", skillId  " + skillId + " status " + response.body()?.status, Toast.LENGTH_LONG).show()
                 }
 
                 override fun onFailure(call: Call<ApplySkillResponse>, t: Throwable) {
-                    Toast.makeText(this@PaymentActivity ,"error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@PaymentActivity, "error ${t.localizedMessage}", Toast.LENGTH_SHORT).show()
                 }
             })
         }

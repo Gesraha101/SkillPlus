@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
 import com.example.lost.skillplus.R
+import com.example.lost.skillplus.models.enums.Keys
 import com.example.lost.skillplus.models.managers.BackendServiceManager
 import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.AddNeed
@@ -31,6 +32,7 @@ class AddStudentNeedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_student_need)
+        category = intent.getIntExtra(Keys.CATEGORY.key, 0)
         val personNames = arrayOf("entertainment", "arts", "food")
         val spinner = findViewById<Spinner>(R.id.categorySpinner)
         if (spinner != null) {

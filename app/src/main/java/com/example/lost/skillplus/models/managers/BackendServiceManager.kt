@@ -2,11 +2,6 @@ package com.example.lost.skillplus.models.managers
 
 import com.example.lost.skillplus.models.podos.raw.*
 import com.example.lost.skillplus.models.podos.responses.*
-import com.example.lost.skillplus.models.podos.raw.ApplySkill
-import com.example.lost.skillplus.models.podos.raw.Form
-import com.example.lost.skillplus.models.podos.raw.Skill
-import com.example.lost.skillplus.models.podos.raw.User
-import com.example.lost.skillplus.models.podos.responses.*
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -27,7 +22,7 @@ interface BackendServiceManager {
     fun getCategories(): Call<CategoriesResponse>
 
     @POST(" /category")
-    fun getCategoryPosts(@Body id: ActivatedCategory): Call<PostsResponse>
+    fun getCategoryPosts(@Body data: ActivatedCategory): Call<PostsResponse>
 
     @GET(" /category/name")
     fun getCategoryNames(): Call<List<String>>
