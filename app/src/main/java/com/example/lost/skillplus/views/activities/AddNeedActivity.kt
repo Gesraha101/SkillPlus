@@ -1,7 +1,10 @@
 package com.example.lost.skillplus.views.activities
 
 import RetrofitManager
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
@@ -13,7 +16,7 @@ import com.example.lost.skillplus.models.managers.BackendServiceManager
 import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.AddNeed
 import com.example.lost.skillplus.models.podos.responses.AddNeedResponse
-import kotlinx.android.synthetic.main.activity_add_need.*
+import kotlinx.android.synthetic.main.activity_add_form.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,7 +28,7 @@ class AddNeedActivity : AppCompatActivity() {
 
             override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_need)
+                setContentView(R.layout.activity_add_student_need)
         val personNames = arrayOf("entertainment", "arts", "food")
         if (spinner != null) {
             val arrayAdapter = ArrayAdapter(this, R.layout.spiner_layout, personNames)
@@ -62,7 +65,14 @@ class AddNeedActivity : AppCompatActivity() {
                     }
                     override fun onResponse(call: Call<AddNeedResponse>, response: Response<AddNeedResponse>) {
 
-                        Toast.makeText(this@AddNeedActivity, "Done ", Toast.LENGTH_LONG).show()
+                        val i = Intent(this@AddNeedActivity, HomeActivity::class.java)
+                        i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        Snackbar.make(it.rootView.rootView.rootView, "Added Successfully !", Snackbar.LENGTH_INDEFINITE).show()
+                        Handler().postDelayed({
+                            startActivity(i)
+                            finish()
+                        }, 3500)
+
 
                     }
 
@@ -70,7 +80,6 @@ class AddNeedActivity : AppCompatActivity() {
             }
         }
     }
-
 //TODO
 //add pic  and conect it to need fragment
 

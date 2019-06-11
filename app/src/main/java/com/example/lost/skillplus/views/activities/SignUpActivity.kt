@@ -7,9 +7,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.managers.BackendServiceManager
 import com.example.lost.skillplus.models.podos.raw.User
 import com.example.lost.skillplus.models.podos.responses.UserResponse
@@ -29,28 +31,54 @@ class SignUpActivity : AppCompatActivity() {
 
     companion object {
         @JvmStatic
+                /*
+                     email pattern ss@gg.kk
+                 */
         val EMAIL_REGEX = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})"
+        /*
+            At least 1 uppercase letter
+            At least 1 number
+            Only alphanumeric characters (no special characters)
+            At least 8 characters long
+        */
+        val PASS_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}"
+        /*
+            Only alphanumeric characters
+        */
+        val NAME_REGEX = "^([A-Za-z](.*))"
+
 
         fun isEmailValid(email: String): Boolean {
             return EMAIL_REGEX.toRegex().matches(email)
         }
-        //isEmailValid
+
+        fun isPassValid(pass: String): Boolean {
+            return PASS_REGEX.toRegex().matches(pass)
+        }
+
+        fun isNameValid(name: String): Boolean {
+            return NAME_REGEX.toRegex().matches(name)
+        }
+
     }
 
     val PICK_PHOTO_REQUEST: Int = 1
     var downloadUri: Uri? = null
     private var filePath: Uri? = null
+    var isPic: Boolean = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
-        setContentView(com.example.lost.skillplus.R.layout.activity_sign_up)
+        setContentView(R.layout.activity_sign_up)
+        pic_spinner.visibility = View.INVISIBLE
         val shake = AnimationUtils.loadAnimation(this, com.example.lost.skillplus.R.anim.animation) as Animation
         buttonPick.setOnClickListener {
             pickPhotoFromGallery()
         }
         btn_register.setOnClickListener {
-            if (NameEditText?.text.toString() == "" || mailEditText.text.toString() == ""  || passwordEditText.text.toString() == "" || pass2EditText.text.toString() == "") {
+            if (NameEditText?.text.toString() == "" || mailEditText.text.toString() == "" || passwordEditText.text.toString() == "" || pass2EditText.text.toString() == "") {
 
                 if (NameEditText?.text.toString() == "") {
                     NameEditText.error = "Required field"
@@ -72,69 +100,112 @@ class SignUpActivity : AppCompatActivity() {
                     pass2EditText.startAnimation(shake)
                     pass2EditText.requestFocus()
                 }
-            }else if(!isEmailValid(mailEditText.text.toString())){
+            } else if (!isEmailValid(mailEditText.text.toString())) {
 
                 mailEditText.error = "Wrong Email"
                 mailEditText.startAnimation(shake)
                 mailEditText.requestFocus()
 
 
-            }else {
+            } else if (!isPassValid(passwordEditText.text.toString())) {
+
+                passwordEditText.error = "Wrong Password"
+                passwordEditText.startAnimation(shake)
+                passwordEditText.requestFocus()
+
+
+            } else if (!isNameValid(NameEditText.text.toString())) {
+
+                NameEditText.error = "Wrong Name"
+                NameEditText.startAnimation(shake)
+                NameEditText.requestFocus()
+
+
+            } else {
                 if (passwordEditText.text.toString() != pass2EditText.text.toString()) {
-                    mailEditText.error = "wrong pattern"
-                    mailEditText.startAnimation(shake)
+                    passwordEditText.error = "password incorrect"
+                    passwordEditText.startAnimation(shake)
                     pass2EditText.error = "password incorrect"
                     pass2EditText.startAnimation(shake)
 
                 } else {
-                    val file = filePath
-                    val mStorageRef: StorageReference = FirebaseStorage.getInstance().reference
-                    val riversRef = mStorageRef.child("images/" + UUID.randomUUID().toString())
-                    if (file != null) {
-                        val uploadTask = riversRef.putFile(file)
+                    if (isPic) {
+                        pic_spinner.visibility = View.VISIBLE
+                        val file = filePath
+                        val mStorageRef: StorageReference = FirebaseStorage.getInstance().reference
+                        val riversRef = mStorageRef.child("images/" + UUID.randomUUID().toString())
+                        if (file != null) {
+                            val uploadTask = riversRef.putFile(file)
 
-                        uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
-                            if (!task.isSuccessful) {
-                                task.exception?.let {
-                                    throw it
+                            uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
+                                if (!task.isSuccessful) {
+                                    task.exception?.let {
+                                        throw it
+                                    }
                                 }
-                            }
-                            return@Continuation riversRef.downloadUrl
-                        }).addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                downloadUri = task.result
-                                Toast.makeText(this@SignUpActivity, "Uri is   ...   " + downloadUri.toString(), Toast.LENGTH_LONG).show()
+                                return@Continuation riversRef.downloadUrl
+                            }).addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    downloadUri = task.result
+                                    Toast.makeText(this@SignUpActivity, "Uri is   ...   " + downloadUri.toString(), Toast.LENGTH_LONG).show()
 
                                 val user = User(name = NameEditText?.text.toString(),
                                         email = mailEditText?.text.toString(),
                                         password = passwordEditText?.text.toString()
                                         , pic = if (downloadUri != null) downloadUri.toString() else "https://firebasestorage.googleapis.com/v0/b/skillplus-6d8b3.appspot.com/o/images%2Fuser-5.png?alt=media&token=b2d4da3e-d672-4f44-94f9-bb469158317c")
 
-                                val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
-                                val call: Call<UserResponse>? = user.let { it1 -> service?.addUser(it1) }
-                                call?.enqueue(object : Callback<UserResponse> {
+                                    val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
+                                    val call: Call<UserResponse>? = user.let { it1 -> service?.addUser(it1) }
+                                    call?.enqueue(object : Callback<UserResponse> {
 
-                                    override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
-                                        if (response.isSuccessful) {
-                                            Toast.makeText(this@SignUpActivity, "Successfully Added ", Toast.LENGTH_LONG).show()
-                                            val i = Intent(this@SignUpActivity, LoginActivity::class.java)
-                                            startActivity(i)
-                                            finish()
-                                        } else {
-                                            Toast.makeText(this@SignUpActivity, "Failed to add item one", Toast.LENGTH_SHORT).show()
+                                        override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
+                                            if (response.isSuccessful) {
+                                                Toast.makeText(this@SignUpActivity, "Successfully Added ", Toast.LENGTH_LONG).show()
+                                                val i = Intent(this@SignUpActivity, LoginActivity::class.java)
+                                                startActivity(i)
+                                                finish()
+                                            } else {
+                                                Toast.makeText(this@SignUpActivity, "Failed to add item one", Toast.LENGTH_SHORT).show()
+                                            }
                                         }
-                                    }
 
-                                    override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-//                                Toast.makeText(this@SignUpActivity, "Failed to add item two", Toast.LENGTH_SHORT).show()
-                                    }
-                                })
+                                        override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                                            Toast.makeText(this@SignUpActivity, " user email already exist " + t.cause, Toast.LENGTH_LONG).show()
+                                        }
+                                    })
 
 
-                            } else {
-                                Toast.makeText(this@SignUpActivity, "Uri is  Faild ...   ", Toast.LENGTH_LONG).show()
+                                } else {
+                                    Toast.makeText(this@SignUpActivity, "Uri is  Faild ...   ", Toast.LENGTH_LONG).show()
+                                }
                             }
+
                         }
+                    } else {
+
+                        val user = User(name = NameEditText?.text.toString(),
+                                email = mailEditText?.text.toString(),
+                                password = passwordEditText?.text.toString()
+                                , pic = "https://firebasestorage.googleapis.com/v0/b/skillplus-6d8b3.appspot.com/o/images%2Fuser-5.png?alt=media&token=b2d4da3e-d672-4f44-94f9-bb469158317c")
+                        val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
+                        val call: Call<UserResponse>? = user.let { it1 -> service?.addUser(it1) }
+                        call?.enqueue(object : Callback<UserResponse> {
+
+                            override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
+                                if (response.isSuccessful) {
+                                    Toast.makeText(this@SignUpActivity, "Successfully Added ", Toast.LENGTH_LONG).show()
+                                    val i = Intent(this@SignUpActivity, LoginActivity::class.java)
+                                    startActivity(i)
+                                    finish()
+                                } else {
+                                    Toast.makeText(this@SignUpActivity, "Failed to add item one", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+
+                            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                                Toast.makeText(this@SignUpActivity, " user email already exist " + t.cause, Toast.LENGTH_LONG).show()
+                            }
+                        })
 
                     }
                 }
@@ -155,6 +226,7 @@ class SignUpActivity : AppCompatActivity() {
                 && requestCode == PICK_PHOTO_REQUEST) {
 
             filePath = data?.data
+            isPic = true
 
             Toast.makeText(this@SignUpActivity, "pic selected " + data.toString(), Toast.LENGTH_LONG).show()
         } else {
