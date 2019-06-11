@@ -4,6 +4,7 @@ import RetrofitManager
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.util.Patterns
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -49,10 +50,13 @@ class LoginActivity : AppCompatActivity() {
                         if (response.isSuccessful) {
                             if (response.body()?.status == true) {
                                 if (response.body()?.userlogined?.id != null) {
+                                    Log.d("user", response.body()?.userlogined?.id.toString())
                                     val share = PreferencesManager(this@LoginActivity)
                                     share.setUser(response.body()?.userlogined!!)
                                     share.setId(response.body()?.userlogined?.id!!)
                                     share.setName(response.body()?.userlogined?.name!!)
+                                } else {
+                                    Log.d("user", response.body()?.userlogined?.id.toString())
                                 }
                                 startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
                                 finish()

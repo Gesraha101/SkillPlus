@@ -22,11 +22,13 @@ class AddStudentNeedActivity : AppCompatActivity() {
 
     var category: Int = 0
     var addneed = AddNeed("", "", "", 0, 0)
-    //    val share = PreferencesManager(this@AddStudentNeedActivity)
+//        val share = PreferencesManager(this@AddStudentNeedActivity)
 //    val userId: Int = share.getId().toInt()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_student_need)
+        //   Log.d("user", "user id is " + userId.toString())
         val personNames = arrayOf("entertainment", "arts", "food")
         val spinner = findViewById<Spinner>(R.id.categorySpinner)
         if (spinner != null) {
@@ -38,11 +40,7 @@ class AddStudentNeedActivity : AppCompatActivity() {
                     Toast.makeText(this@AddStudentNeedActivity, " position is " + (position + 1) + " " + personNames[position], Toast.LENGTH_SHORT).show()
                     category = position + 1
                     Log.d("need", "category is " + category.toString())
-                    addneed = AddNeed(need_name = titleEditText.text.toString(),
-                            need_desc = descEditText.text.toString(),
-                            need_photo = "mesh batkeshef 3la banat",
-                            cat_id = category,
-                            user_id = 10)
+
                     Log.d("need", "addneed.cat_id is " + addneed.cat_id.toString())
                 }
 
@@ -54,6 +52,20 @@ class AddStudentNeedActivity : AppCompatActivity() {
 
 
         btn_add_need.setOnClickListener {
+            if (category != 0) {
+                addneed = AddNeed(need_name = titleEditText.text.toString(),
+                        need_desc = descEditText.text.toString(),
+                        need_photo = "mesh batkeshef 3la banat",
+                        cat_id = category,
+                        user_id = 10)
+            }
+//            else{
+//                addneed = AddNeed(need_name = titleEditText.text.toString(),
+//                        need_desc = descEditText.text.toString(),
+//                        need_photo = "mesh batkeshef 3la banat",
+//                        cat_id = 1,
+//                        user_id = 10)
+//            }
 
             val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
             val call: Call<AddNeedResponse>? = service?.addNeed(addneed)
@@ -74,3 +86,5 @@ class AddStudentNeedActivity : AppCompatActivity() {
 }
 
 
+//TODO
+//pass user id
