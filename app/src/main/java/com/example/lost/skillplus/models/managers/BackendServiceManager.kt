@@ -41,4 +41,8 @@ interface BackendServiceManager {
 
     @POST(" /notifications/")
     fun getNotifications(@Body request: NotificationsRequest): Call<NotificationsResponse>
+
+    @POST("/category/favorite/update")
+    fun updateFavourite(@Body favouriteUpdate: FavouriteUpdate): Call<FavouriteResponse>
+
 }

@@ -174,7 +174,7 @@ class AddFormActivity : AppCompatActivity() {
 
                         override fun onFailure(call: Call<FormResponse>, t: Throwable) {
                             Toast.makeText(this@AddFormActivity, t.message, Toast.LENGTH_LONG).show()
-                            //Failure sending request (Internal error)
+                            //Error receiving response from server i.e error in podo received (Retrofit can't handle this response)
                         }
 
                     })

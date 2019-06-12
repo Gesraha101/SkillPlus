@@ -1,7 +1,8 @@
 package com.example.lost.skillplus.models.podos.responses
 
-class AddNeedResponse (
+
+data class FavouriteResponse(
         var status : Boolean,
-        var sqlresponse : SQLResponse?,
+        var sqlresponse: SQLResponse?,
         var message : String
 )

@@ -196,7 +196,7 @@ class SignUpActivity : AppCompatActivity() {
                                         startActivity(i)
                                         finish()
                                     }
-                                    else
+                                    else if(response.body()!!.message.equals("email is exist"))
                                     {Toast.makeText(this@SignUpActivity, "Email already exists!", Toast.LENGTH_LONG).show()
                                     }
                                 } else {
@@ -205,7 +205,7 @@ class SignUpActivity : AppCompatActivity() {
                             }
 
                             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                                Toast.makeText(this@SignUpActivity, " user email already exists " + t.cause, Toast.LENGTH_LONG).show()
+                                Toast.makeText(this@SignUpActivity, " Failed to conncet to server" + t.cause, Toast.LENGTH_LONG).show()
                             }
                         })
 
