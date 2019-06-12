@@ -50,7 +50,6 @@ class SkillsAdapter(private val list: List<Skill>): RecyclerView.Adapter<SkillsA
                 onItemClick?.invoke(list[adapterPosition])
             }
         }
-
         fun bind(skill: Skill) {
             title?.text = skill.skill_name
             Glide.with(context!!)
@@ -58,8 +57,8 @@ class SkillsAdapter(private val list: List<Skill>): RecyclerView.Adapter<SkillsA
                     .into(image!!)
 
             posterName?.text = StringBuilder().append("Created by: " + skill.user_name)
-            price?.append(" ${skill.skill_price} EGP")
-            posterRate?.rating = skill.rate!!
+            price?.append(" ${skill.skill_price} EGP") // bug here
+            // posterRate?.rating = skill.rate!!
         }
     }
 }
