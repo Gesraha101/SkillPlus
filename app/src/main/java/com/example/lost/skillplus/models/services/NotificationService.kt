@@ -52,7 +52,8 @@ class NotificationService : JobIntentService() {
     }
 
     fun generateNotification(manager: NotificationManager, header: String, body: String, intent: PendingIntent?) {
-        createChannel(manager)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            createChannel(manager)
         notify(manager, header, body, intent)
     }
 
@@ -71,6 +72,7 @@ class NotificationService : JobIntentService() {
 
                     override fun onResponse(call: Call<NotificationsResponse>, response: Response<NotificationsResponse>) {
                         if (response.isSuccessful) {
+                            PreferencesManager(context).setLastUpdated(System.currentTimeMillis())
                             if (response.body()?.notifications!!.size != 0) {
                                 val body = "You have new notifications. Tab to view"
                                 val alarmIntent = Intent(context, HomeActivity::class.java)

@@ -1,7 +1,9 @@
 package com.example.lost.skillplus.views.activities
 
 
+import android.content.IntentFilter
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.view.MenuItem
@@ -9,6 +11,7 @@ import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.enums.Keys
 import com.example.lost.skillplus.models.managers.FragmentsManager
 import com.example.lost.skillplus.models.podos.raw.Notification
+import com.example.lost.skillplus.models.receivers.NotificationReceiver
 import com.example.lost.skillplus.views.fragments.*
 import kotlinx.android.synthetic.main.activity_home.*
 
@@ -53,12 +56,23 @@ class HomeActivity : NavigationDrawerActivity(), MySkillsFragment.OnFragmentInte
         } else {
             FragmentsManager.replaceFragment(supportFragmentManager, CategoriesFragment.newInstance(), R.id.fragment_container, null, false)
         }
+
         bottom_nav.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+        registerConnectionReceiver()
         /*val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             val notifyAt = System.currentTimeMillis() + AlarmManager.INTERVAL_FIFTEEN_MINUTES / 15
             am.setExact(AlarmManager.RTC_WAKEUP, notifyAt, PendingIntent.getBroadcast(this, Keys.REQUEST_CODE.ordinal, Intent(this, AlarmReceiver::class.java).setAction(Actions.NOTIFY.action).putExtra(Keys.FIRE_DATE.key, notifyAt).addCategory("" + notifyAt), PendingIntent.FLAG_UPDATE_CURRENT))
             am.setExact(AlarmManager.RTC_WAKEUP, notifyAt + AlarmManager.INTERVAL_FIFTEEN_MINUTES / 15, PendingIntent.getBroadcast(this, Keys.REQUEST_CODE.ordinal, Intent(this, AlarmReceiver::class.java).setAction(Actions.ALERT.action).putExtra(Keys.FIRE_DATE.key, notifyAt).addCategory("" + notifyAt), PendingIntent.FLAG_UPDATE_CURRENT))
         }*/
+    }
+
+    private fun registerConnectionReceiver() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            val receiver = NotificationReceiver()
+            val intentFilter = IntentFilter()
+            intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE")
+            registerReceiver(receiver, intentFilter)
+        }
     }
 }

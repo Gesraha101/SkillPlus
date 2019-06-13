@@ -39,6 +39,6 @@ interface BackendServiceManager {
     @POST("/skill/apply")
     fun applySkill(@Body applySkill : ApplySkill) : Call<ApplySkillResponse>
 
-    @POST(" /notifications/")
+    @POST(" /notification/")
     fun getNotifications(@Body request: NotificationsRequest): Call<NotificationsResponse>
 }
