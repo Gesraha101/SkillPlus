@@ -63,6 +63,13 @@ class MySkillsFragment : Fragment() {
                         layoutManager = LinearLayoutManager(activity)
                         if (response.body()?.skills!!.isNotEmpty()) {
                             adapter = SkillsAdapter(response.body()!!.skills)
+                            (adapter as SkillsAdapter).onItemClick = { post ->
+                                val bundle = Bundle()
+                                val skillLearnersFragments = SkillLearnersFragments()
+                                bundle.putInt("cat_id", post.cat_id)
+                                skillLearnersFragments.arguments = bundle
+                                fragmentManager?.beginTransaction()?.add(R.id.fragment_container, SkillLearnersFragments())?.commit()
+                            }
 
                             //TODO  implement on click item
                         }
@@ -73,7 +80,6 @@ class MySkillsFragment : Fragment() {
             }
         })
     }
-
 
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
