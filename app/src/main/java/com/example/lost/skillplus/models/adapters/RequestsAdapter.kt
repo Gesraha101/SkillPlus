@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.example.lost.skillplus.R
+import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.Request
 import com.iarcuschin.simpleratingbar.SimpleRatingBar
 
@@ -61,6 +62,12 @@ class RequestsAdapter(private val list: List<Request>): RecyclerView.Adapter<Req
             isFav?.visibility=View.GONE
             posterRate?.visibility = View.GONE
             price?.visibility = View.GONE
+            if (request.need_id.equals(PreferencesManager(itemView.context).getId())) {
+                posterName?.visibility = View.GONE
+            } else {
+                posterName?.text = StringBuilder().append("Created by: " + request.user_name)
+            }
+
             posterName?.text = StringBuilder().append("Created by: " + request.user_name)
         }
     }

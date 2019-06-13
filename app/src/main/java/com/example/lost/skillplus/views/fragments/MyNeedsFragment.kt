@@ -1,14 +1,25 @@
 package com.example.lost.skillplus.views.fragments
 
+import RetrofitManager
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import android.widget.Toast
 import com.example.lost.skillplus.R
+import com.example.lost.skillplus.models.adapters.RequestsAdapter
+import com.example.lost.skillplus.models.managers.BackendServiceManager
+import com.example.lost.skillplus.models.managers.PreferencesManager
+import com.example.lost.skillplus.models.podos.raw.MyId
+import com.example.lost.skillplus.models.podos.responses.MyNeedResponse
+import kotlinx.android.synthetic.main.fragment_my_needs.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,7 +47,36 @@ class MyNeedsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_my_needs, container, false)
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val myReq = MyId(PreferencesManager(this.context!!).getId())
+
+        val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
+        val call: Call<MyNeedResponse>? = service?.getMyNeeds(myReq)
+        call?.enqueue(object : Callback<MyNeedResponse> {
+            override fun onFailure(call: Call<MyNeedResponse>, t: Throwable) {
+                Toast.makeText(activity, "Failed  cause is " + t.cause, Toast.LENGTH_LONG).show()
+            }
+
+            override fun onResponse(call: Call<MyNeedResponse>, response: Response<MyNeedResponse>) {
+                if (response.body()?.status == true) {
+                    rv_my_needs.apply {
+                        layoutManager = LinearLayoutManager(activity)
+                        if (response.body()?.sqlresponse!!.isNotEmpty()) {
+                            adapter = RequestsAdapter(response.body()!!.sqlresponse)
+//                            (adapter as RequestsAdapter).onItemClick = { post ->
+//                                (activity as CategoryContentActivity).loadFragment( post)
+//                            }
+                            //TODO implement MyNeedsAdapter or use RequestsAdapter
+                        }
+                    }
+                } else {
+                    Toast.makeText(activity, "Error: " + response.body(), Toast.LENGTH_LONG).show()
+                }
+            }
+        })
+    }
+
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
@@ -55,32 +95,13 @@ class MyNeedsFragment : Fragment() {
         listener = null
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
+
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MyNeedsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
                 MyNeedsFragment().apply {

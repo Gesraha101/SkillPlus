@@ -38,7 +38,6 @@ import java.io.Serializable
 class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFragmentInteractionListener, RequestDetailsFragment.OnFragmentInteractionListener {
     override fun onFragmentInteraction(uri: Uri) {
     }
-
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
     private var frag: Fragment? = null
     private var activatedCategory: Category? = null
@@ -212,7 +211,6 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
 
             private const val ARG_SECTION_NUMBER = "section_number"
             private const val ARG_ACTIVATED_CAT = "activated_cat"
-
             fun newInstance(sectionNumber: Int, activatedCategory: Category?): PostsListFragment {
                 val fragment = PostsListFragment()
                 val args = Bundle()
