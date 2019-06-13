@@ -11,11 +11,13 @@ import com.bumptech.glide.Glide
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.podos.raw.Skill
 import com.iarcuschin.simpleratingbar.SimpleRatingBar
+import kotlinx.android.synthetic.main.post.view.*
 
 
 class SkillsAdapter(private val list: List<Skill>): RecyclerView.Adapter<SkillsAdapter.SkillViewHolder>() {
 
     var onItemClick: ((Skill) -> Unit)? = null
+    var onFavouriteClick : ((Skill) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SkillViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -49,7 +51,15 @@ class SkillsAdapter(private val list: List<Skill>): RecyclerView.Adapter<SkillsA
             itemView.setOnClickListener {
                 onItemClick?.invoke(list[adapterPosition])
             }
+            itemView.is_favorite.setOnClickListener {
+                onFavouriteClick?.invoke(list[adapterPosition])
+                if(list[adapterPosition].is_favorite!!)
+                    itemView.is_favorite.setBackgroundResource(R.drawable.heart)
+                else
+                itemView.is_favorite.setBackgroundResource(R.drawable.is_favourite)
+            }
         }
+
         fun bind(skill: Skill) {
             title?.text = skill.skill_name
             Glide.with(context!!)
@@ -57,8 +67,12 @@ class SkillsAdapter(private val list: List<Skill>): RecyclerView.Adapter<SkillsA
                     .into(image!!)
 
             posterName?.text = StringBuilder().append("Created by: " + skill.user_name)
-            price?.append(" ${skill.skill_price} EGP") // bug here
-            // posterRate?.rating = skill.rate!!
+            price?.text=java.lang.StringBuilder().append(" ${skill.skill_price} EGP")
+            posterRate?.rating = skill.rate!!
+            if(skill.is_favorite!!)
+                itemView.is_favorite.setBackgroundResource(R.drawable.is_favourite)
+            else
+                itemView.is_favorite.setBackgroundResource(R.drawable.heart)
         }
     }
 }

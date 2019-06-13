@@ -2,6 +2,9 @@ package com.example.lost.skillplus.views.activities
 
 import RetrofitManager
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -62,6 +65,7 @@ class PaymentActivity : AppCompatActivity() {
                         // Toast.makeText(this@PaymentActivity ,"you just registered in this course", Toast.LENGTH_SHORT).show()
                         for (date in scheduleList)
                             NotificationAlarmManager.initAlarm(this@PaymentActivity, date)
+                        startActivity(Intent(this@PaymentActivity, HomeActivity::class.java).addFlags(FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK))
                     }
                 }
                 override fun onFailure(call: Call<ApplySkillResponse>, t: Throwable) {

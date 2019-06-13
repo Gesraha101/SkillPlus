@@ -78,7 +78,7 @@ class NotificationService : JobIntentService() {
                                 val alarmPendingIntent = PendingIntent.getActivity(context, Keys.REQUEST_CODE.ordinal, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT)
                                 generateNotification(getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager, Headers.NOTIFICATION.header, body, alarmPendingIntent)
                                 for (notification in response.body()!!.notifications) {
-                                    if (notification.skill_name != null) {
+                                    if (notification.need_id == null) {
                                         for (date in notification.schedule!!)
                                             NotificationAlarmManager.initAlarm(context, date)
                                     }

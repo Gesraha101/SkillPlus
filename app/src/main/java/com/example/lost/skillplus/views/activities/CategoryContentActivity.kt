@@ -167,6 +167,7 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
             })
         }
         companion object {
+
             private const val ARG_SECTION_NUMBER = "section_number"
             private const val ARG_ACTIVATED_CAT = "activated_cat"
             fun newInstance(sectionNumber: Int, activatedCategory: Category?): PostsListFragment {
@@ -179,4 +180,5 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
             }
         }
     }
+
 }

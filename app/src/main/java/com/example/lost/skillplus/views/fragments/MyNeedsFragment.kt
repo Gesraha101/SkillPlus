@@ -15,7 +15,6 @@ import com.example.lost.skillplus.models.adapters.RequestsAdapter
 import com.example.lost.skillplus.models.managers.BackendServiceManager
 import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.MyId
-import com.example.lost.skillplus.models.podos.responses.MyNeedResponse
 import kotlinx.android.synthetic.main.fragment_my_needs.*
 import retrofit2.Call
 import retrofit2.Callback

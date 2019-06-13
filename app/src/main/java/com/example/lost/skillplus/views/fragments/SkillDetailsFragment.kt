@@ -4,15 +4,24 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.lost.skillplus.R
+import com.example.lost.skillplus.models.managers.BackendServiceManager
+import com.example.lost.skillplus.models.managers.PreferencesManager
+import com.example.lost.skillplus.models.podos.raw.FavouriteUpdate
 import com.example.lost.skillplus.models.podos.raw.Skill
+import com.example.lost.skillplus.models.podos.responses.FavouriteResponse
 import com.example.lost.skillplus.views.activities.ChooseSchaduleActivity
 import kotlinx.android.synthetic.main.fragment_skill_details.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -50,10 +59,60 @@ class SkillDetailsFragment : Fragment() {
         for (date: Long in skill!!.schedule!!)
             schedule_values.append(Date(date).toString() + "\n")
         poster_rate.rating = skill!!.rate!!
+        if (skill!!.schedule!!.size != 0) {
+            btn_apply.setOnClickListener {
+                val intent = Intent(activity, ChooseSchaduleActivity::class.java).putExtra("Skill", skill)
+                startActivity(intent)
+            }
+        } else {
+            btn_apply.setBackgroundColor(resources.getColor(R.color.material_grey_800))
+            btn_apply.text = "Full schedule"
+        }
 
-        btn_apply.setOnClickListener{
-            val intent = Intent(activity, ChooseSchaduleActivity::class.java).putExtra("Skill", skill)
-            startActivity(intent)
+
+        //Check if this skill is favorite , then display its icon
+        if(skill?.is_favorite!!)
+            is_favorite.setBackgroundResource(R.drawable.is_favourite)
+
+
+        is_favorite.setOnClickListener {
+            var favouriteUpdate= FavouriteUpdate(
+                    PreferencesManager(this@SkillDetailsFragment.context!!).getId(),
+                    skill?.skill_id!!
+            )
+            val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
+            val call: Call<FavouriteResponse>? = service?.updateFavourite(favouriteUpdate)
+            call?.enqueue(object : Callback<FavouriteResponse> {
+                override fun onResponse(call: Call<FavouriteResponse>, response: Response<FavouriteResponse>) {
+                    if (response.isSuccessful) {
+                        if (response.body()?.status == true) {
+                            if(response.body()?.message==" package added to favorite") {
+                                Snackbar.make(view, "Added to your favourites !", Snackbar.LENGTH_SHORT).show()
+                                is_favorite.setBackgroundResource(R.drawable.is_favourite)
+                                skill!!.is_favorite=true
+                            }
+                            else {
+                                Snackbar.make(view, "Removed from your favourites !", Snackbar.LENGTH_SHORT).show()
+                                is_favorite.setBackgroundResource(R.drawable.heart)
+                                skill!!.is_favorite=false
+                            }
+                        } else {
+                            Toast.makeText(this@SkillDetailsFragment.context!!, "Failed1", Toast.LENGTH_LONG).show()
+
+                        }
+                    } else {
+                        Toast.makeText(this@SkillDetailsFragment.context!!, "Failed2", Toast.LENGTH_LONG).show()
+
+                        //Received response but not "OK" response i.e error in the request sent (Server can't handle this request)
+                    }
+                }
+
+                override fun onFailure(call: Call<FavouriteResponse>, t: Throwable) {
+                    Toast.makeText(this@SkillDetailsFragment.context!!, t.message, Toast.LENGTH_LONG).show()
+                    //Error receiving response from server i.e error in podo received (Retrofit can't handle this response)
+                }
+
+            })
         }
     }
 
@@ -90,4 +149,5 @@ class SkillDetailsFragment : Fragment() {
                     }
                 }
     }
+
 }
