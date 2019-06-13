@@ -21,7 +21,6 @@ import com.example.lost.skillplus.models.podos.raw.FavouriteUpdate
 import com.example.lost.skillplus.models.podos.responses.CategoriesResponse
 import com.example.lost.skillplus.models.podos.responses.FavouriteResponse
 import com.example.lost.skillplus.views.activities.CategoryContentActivity
-import kotlinx.android.synthetic.main.fragment_categories.*
 import kotlinx.android.synthetic.main.fragment_favorites.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -96,7 +95,7 @@ class FavoritesFragment : Fragment() {
                             }
                             else
                             {
-                                frame_layout.setBackgroundResource(R.color.colorPrimary)
+                                linear_layout.visibility=View.GONE
                             }
                         }
                     } else {
