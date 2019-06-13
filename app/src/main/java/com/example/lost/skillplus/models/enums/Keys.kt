@@ -8,5 +8,6 @@ enum class Keys(val key: String) {
     CATEGORY("category"),
     NOTIFICATIONS("notifications"),
     ACTIVE_USER("active_user"),
-    LAST_UPDATED("last_updated")
+    LAST_UPDATED("last_updated"),
+    IS_SCHEDULED("is_scheduled")
 }

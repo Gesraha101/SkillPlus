@@ -16,9 +16,8 @@ class PreferencesManager(context: Context) {
     }
 
     fun setLastUpdated(lastUpdated: Long) {
-        val editor = sharedPreferences.edit()
-        editor.putLong(Keys.LAST_UPDATED.key, lastUpdated)
-        editor.apply()
+        sharedPreferences.edit().putLong(Keys.LAST_UPDATED.key, lastUpdated)
+                .apply()
     }
 
     fun getUser(): User {
@@ -50,9 +49,5 @@ class PreferencesManager(context: Context) {
         val editor = sharedPreferences.edit()
         editor.putString("name", name)
         editor.apply()
-    }
-
-    fun getSchedule(): MutableSet<String>? {
-        return sharedPreferences.getStringSet(Keys.TIMESTAMPS.key, null)
     }
 }
