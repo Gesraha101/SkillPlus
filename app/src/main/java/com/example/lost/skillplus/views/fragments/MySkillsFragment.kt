@@ -11,7 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.adapters.SkillsAdapter
+import com.example.lost.skillplus.models.adapters.MySkillAdapter
 import com.example.lost.skillplus.models.managers.BackendServiceManager
 import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.MyId
@@ -62,16 +62,14 @@ class MySkillsFragment : Fragment() {
                     rv_my_skills.apply {
                         layoutManager = LinearLayoutManager(activity)
                         if (response.body()?.skills!!.isNotEmpty()) {
-                            adapter = SkillsAdapter(response.body()!!.skills)
-                            (adapter as SkillsAdapter).onItemClick = { post ->
+                            adapter = MySkillAdapter(response.body()!!.skills)
+                            (adapter as MySkillAdapter).onItemClick = { post ->
                                 val bundle = Bundle()
                                 val skillLearnersFragments = SkillLearnersFragments()
-                                bundle.putInt("cat_id", post.cat_id)
+                                bundle.putInt("skill_id", post.skill_id!!)
                                 skillLearnersFragments.arguments = bundle
-                                fragmentManager?.beginTransaction()?.add(R.id.fragment_container, SkillLearnersFragments())?.commit()
+                                fragmentManager?.beginTransaction()?.replace(R.id.fragment_container, skillLearnersFragments)?.commit()
                             }
-
-                            //TODO  implement on click item
                         }
                     }
                 } else {
@@ -86,6 +84,7 @@ class MySkillsFragment : Fragment() {
         listener?.onFragmentInteraction(uri)
     }
 
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnFragmentInteractionListener) {
@@ -99,13 +98,17 @@ class MySkillsFragment : Fragment() {
         super.onDetach()
         listener = null
     }
-
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
 
 
     }
+
+
+//    @Override fun onBackPressed() {
+//
+//    }
 
     companion object {
 

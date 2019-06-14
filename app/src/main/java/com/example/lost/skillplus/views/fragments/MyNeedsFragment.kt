@@ -11,10 +11,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.adapters.RequestsAdapter
+import com.example.lost.skillplus.models.adapters.MyRequestsAdapter
 import com.example.lost.skillplus.models.managers.BackendServiceManager
 import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.MyId
+import com.example.lost.skillplus.models.podos.responses.MyNeedResponse
 import kotlinx.android.synthetic.main.fragment_my_needs.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -62,10 +63,14 @@ class MyNeedsFragment : Fragment() {
                     rv_my_needs.apply {
                         layoutManager = LinearLayoutManager(activity)
                         if (response.body()?.sqlresponse!!.isNotEmpty()) {
-                            adapter = RequestsAdapter(response.body()!!.sqlresponse)
-//                            (adapter as RequestsAdapter).onItemClick = { post ->
-//                                (activity as CategoryContentActivity).loadFragment( post)
-//                            }
+                            adapter = MyRequestsAdapter(response.body()!!.sqlresponse)
+                            (adapter as MyRequestsAdapter).onItemClick = { post ->
+                                val bundle = Bundle()
+                                val needFormFragment = NeedFormFragment()
+                                bundle.putInt("need_id", post.need_id)
+                                needFormFragment.arguments = bundle
+                                fragmentManager?.beginTransaction()?.replace(R.id.fragment_container, needFormFragment)?.commit()
+                            }
                             //TODO implement MyNeedsAdapter or use RequestsAdapter
                         }
                     }

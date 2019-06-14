@@ -12,7 +12,8 @@ import com.example.lost.skillplus.models.podos.raw.Notification
 import com.example.lost.skillplus.views.fragments.*
 import kotlinx.android.synthetic.main.activity_home.*
 
-class HomeActivity : NavigationDrawerActivity(), MySkillsFragment.OnFragmentInteractionListener, SkillLearnersFragments.OnFragmentInteractionListener, MyNeedsFragment.OnFragmentInteractionListener {
+class HomeActivity : NavigationDrawerActivity(), MySkillsFragment.OnFragmentInteractionListener, NeedFormFragment.OnFragmentInteractionListener,
+        SkillLearnersFragments.OnFragmentInteractionListener, MyNeedsFragment.OnFragmentInteractionListener {
     override fun onFragmentInteraction(uri: Uri) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
