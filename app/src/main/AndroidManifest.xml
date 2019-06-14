@@ -20,27 +20,22 @@
             android:roundIcon="@mipmap/logo"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".views.activities.AddStudentNeedActivity">
-        </activity>
+        <activity android:name=".views.activities.AddStudentNeedActivity"/>
         <activity
                 android:name=".views.activities.AddFormActivity"
                 android:label="@string/title_activity_add_need"
-                android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+                android:theme="@style/AppTheme.NoActionBar"/>
         <activity
                 android:name=".views.activities.ScheduleActivity"
-                android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+                android:theme="@style/AppTheme.NoActionBar"/>
         <activity
                 android:name=".views.activities.AddTeacherSkillActivity"
                 android:label="@string/title_activity_add_teacher_skill"
-                android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+                android:theme="@style/AppTheme.NoActionBar"/>
         <activity
                 android:name=".views.activities.NavigationDrawerActivity"
                 android:label="@string/title_activity_navigation_drawer"
-                android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+                android:theme="@style/AppTheme.NoActionBar"/>
         <activity
                 android:name=".views.activities.SplashActivity"
                 android:theme="@style/AppTheme.NoActionBar">
@@ -57,8 +52,7 @@
         <activity android:name=".views.activities.SignUpActivity"/>
         <activity android:name=".views.activities.LoginActivity"/>
         <activity android:name=".views.activities.SessionActivity"
-                  android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+                  android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".views.activities.PaymentActivity"/>
         <activity android:name=".views.activities.AddNeedActivity"/>
         <activity android:name=".views.activities.ChooseSchaduleActivity"/>
@@ -67,13 +61,11 @@
                 android:label="@string/title_activity_category_content"
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".views.activities.NotificationActivity"/>
-
-        <service
-            android:name=".models.services.NotificationService"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE"/>
-
+        <activity android:name=".views.activities.NotificationAlarmActivity"
+                  android:launchMode="singleInstance"
+                  android:taskAffinity=""
+                  android:excludeFromRecents="true"
+                  android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"/>
         <receiver
             android:name=".models.receivers.AlarmReceiver"
             android:enabled="true"
@@ -88,11 +80,17 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".views.activities.NotificationAlarmActivity"
-                  android:launchMode="singleInstance"
-                  android:taskAffinity=""
-                  android:excludeFromRecents="true"
-                  android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"></activity>
+        <service
+                android:name=".models.services.NotificationService"
+                android:enabled="true"
+                android:exported="true"
+                android:permission="android.permission.BIND_JOB_SERVICE"/>
+
+        <service
+                android:name=".models.services.NotificationScheduler"
+                android:label="Word service"
+                android:permission="android.permission.BIND_JOB_SERVICE"/>
+
     </application>
 
 </manifest>

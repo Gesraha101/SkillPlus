@@ -8,8 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.work.Constraints
-import androidx.work.NetworkType
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.adapters.NotificationsAdapter
 import com.example.lost.skillplus.models.enums.Keys
@@ -77,7 +75,6 @@ class NotificationsFragment : Fragment() {
                 }
             }
         }
-        val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED)
     }
 
     companion object {

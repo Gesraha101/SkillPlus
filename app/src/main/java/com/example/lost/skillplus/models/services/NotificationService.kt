@@ -6,8 +6,10 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.support.v4.app.JobIntentService
 import android.support.v4.app.NotificationCompat
@@ -43,7 +45,8 @@ class NotificationService : JobIntentService() {
         val builder = NotificationCompat.Builder(this, Ids.NOTIFICATION_CHANNEL.id)
                 .setContentTitle(header)
                 .setContentText(body)
-                .setDefaults(Notification.DEFAULT_LIGHTS or Notification.DEFAULT_SOUND)
+                .setDefaults(Notification.DEFAULT_LIGHTS)
+                .setSound(Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.packageName + "/" + R.raw.notification))
                 .setAutoCancel(false)
                 .setSmallIcon(R.drawable.ic_today_notification)
                 .setContentIntent(intent)

@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.example.lost.skillplus.R
+import com.example.lost.skillplus.models.enums.Headers
 import com.example.lost.skillplus.models.podos.raw.Notification
 
 class NotificationsAdapter(private val list: ArrayList<Notification>) : RecyclerView.Adapter<NotificationsAdapter.NotificationViewHolder>() {
@@ -43,11 +44,23 @@ class NotificationsAdapter(private val list: ArrayList<Notification>) : Recycler
         }
 
         fun bind(notification: Notification) {
-            header?.text = if (notification.skill_name != null) "Student Applied" else ""
+            when {
+                notification.skill_name != null -> {
+                    header?.text = Headers.SKILL_APPLICATION.header
+                    body?.text = String.format(context!!.resources.getString(R.string.notification_skill_apply), notification.user_name!!, notification.skill_name)
+                }
+                notification.form_id != null -> {
+                    header?.text = Headers.FORM_RECEIVED.header
+                    body?.text = String.format(context!!.resources.getString(R.string.notification_form_received), notification.user_name!!, notification.need_name)
+                }
+                else -> {
+                    header?.text = Headers.FORM_APPROVED.header
+                    body?.text = String.format(context!!.resources.getString(R.string.notification_form_approved), notification.user_name!!, notification.need_name)
+                }
+            }
             Glide.with(context!!)
                     .load(notification.user_pic)
                     .into(image!!)
-            body?.append("${notification.user_name} has applied for your skill ${notification.skill_name}")
         }
     }
 }
