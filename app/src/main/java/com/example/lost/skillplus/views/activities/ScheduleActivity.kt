@@ -55,18 +55,20 @@ class ScheduleActivity : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         spinner.adapter = adapter
-        spinner.setSelection(-1)
+        spinner.setSelection(0)
         spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                eT_Days.hint = "Click to select a day"
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                dayPicked = position + 1
-                eT_Days.hint = ""
+            if(position>0)
+                dayPicked = position
+            else
+                dayPicked = null
             }
         }
         val hours = findViewById<TextView>(R.id.eT_Hours)
+        hours.text="Tap to set time"
         hours.setOnClickListener {
             val c = Calendar.getInstance()
             val hour = c.get(Calendar.HOUR)
@@ -95,6 +97,14 @@ class ScheduleActivity : AppCompatActivity() {
                 mAdapter.notifyDataSetChanged()
                 dayTimeArray.add(arrayOf(dayPicked, hourPicked, minutePicked))
                 mScrollView.post { mScrollView.fullScroll(ScrollView.FOCUS_DOWN) }
+
+                //Empty the fields
+                hours.text="Tap to set time"
+                hourPicked=null
+                minutePicked=null
+                spinner.setSelection(0)
+                dayPicked=null
+
             }
         }
         btn_add_skill.setOnClickListener {

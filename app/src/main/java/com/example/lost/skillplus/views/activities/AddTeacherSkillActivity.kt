@@ -63,7 +63,7 @@ class AddTeacherSkillActivity : AppCompatActivity() {
                             eT_NumberOfSessions.text.toString().toInt(),
                             eT_Price?.text.toString().toFloat(),
                             eT_SessionDuration?.text.toString().toFloat(),
-                            eT_ExtraFees?.text.toString().toFloat(),//Todo: update extra_fees UI
+                            eT_ExtraFees?.text.toString().toFloat(),
                             "Test",//Todo: get photo
                             PreferencesManager(this@AddTeacherSkillActivity).getId(),
                             activatedCategory.cat_id,
