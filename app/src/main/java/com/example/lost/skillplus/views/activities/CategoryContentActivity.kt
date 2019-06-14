@@ -4,6 +4,7 @@ import RetrofitManager
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -19,10 +20,8 @@ import com.example.lost.skillplus.models.enums.Keys
 import com.example.lost.skillplus.models.managers.BackendServiceManager
 import com.example.lost.skillplus.models.managers.FragmentsManager
 import com.example.lost.skillplus.models.managers.PreferencesManager
-import com.example.lost.skillplus.models.podos.raw.ActivatedCategory
-import com.example.lost.skillplus.models.podos.raw.Category
-import com.example.lost.skillplus.models.podos.raw.Request
-import com.example.lost.skillplus.models.podos.raw.Skill
+import com.example.lost.skillplus.models.podos.raw.*
+import com.example.lost.skillplus.models.podos.responses.FavouriteResponse
 import com.example.lost.skillplus.models.podos.responses.PostsResponse
 import com.example.lost.skillplus.views.fragments.RequestDetailsFragment
 import com.example.lost.skillplus.views.fragments.SkillDetailsFragment
@@ -33,9 +32,11 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.Serializable
 
+
 class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFragmentInteractionListener, RequestDetailsFragment.OnFragmentInteractionListener {
     override fun onFragmentInteraction(uri: Uri) {
     }
+
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
     private var frag: Fragment? = null
     private var activatedCategory: Category? = null
@@ -54,6 +55,7 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.activity_category_content)
         super.onCreate(savedInstanceState)
+
         activatedCategory = intent.getSerializableExtra(Keys.CATEGORY.key) as Category
 
         setSupportActionBar(toolbar)
@@ -118,6 +120,7 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
 
     class PostsListFragment : Fragment() {
 
+
         var isSkill: Boolean? = false
         private var activatedCategory: Category? = null
 
@@ -148,6 +151,45 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
                                     (adapter as SkillsAdapter).onItemClick = { post ->
                                         (activity as CategoryContentActivity).loadFragment(isSkill, post)
                                     }
+                                    (adapter as SkillsAdapter).onFavouriteClick= {post ->
+                                        var favouriteUpdate= FavouriteUpdate(
+                                                PreferencesManager(this@PostsListFragment.context!!).getId(),
+                                                post.skill_id!!
+                                        )
+
+                                        val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
+                                        val call: Call<FavouriteResponse>? = service?.updateFavourite(favouriteUpdate)
+                                        call?.enqueue(object : Callback<FavouriteResponse> {
+                                            override fun onResponse(call: Call<FavouriteResponse>, response: Response<FavouriteResponse>) {
+                                                if (response.isSuccessful) {
+                                                    if (response.body()?.status == true) {
+                                                        if(response.body()?.message==" package added to favorite") {
+                                                            Snackbar.make(view, "Added to your favourites !", Snackbar.LENGTH_SHORT).show()
+                                                            post.is_favorite=true
+                                                        }
+                                                        else {
+                                                            Snackbar.make(view, "Removed from your favourites !", Snackbar.LENGTH_SHORT).show()
+                                                            post.is_favorite=false
+                                                        }
+                                                    } else {
+                                                        Toast.makeText(this@PostsListFragment.context!!, "Failed1", Toast.LENGTH_LONG).show()
+
+                                                    }
+                                                } else {
+                                                    Toast.makeText(this@PostsListFragment.context!!, "Failed2", Toast.LENGTH_LONG).show()
+
+                                                    //Received response but not "OK" response i.e error in the request sent (Server can't handle this request)
+                                                }
+                                            }
+
+                                            override fun onFailure(call: Call<FavouriteResponse>, t: Throwable) {
+                                                Toast.makeText(this@PostsListFragment.context!!, t.message, Toast.LENGTH_LONG).show()
+                                                //Error receiving response from server i.e error in podo received (Retrofit can't handle this response)
+                                            }
+
+                                        })
+                                    }
+
                                 } else if (!isSkill!! && response.body()?.skillsAndNeeds?.needs!!.isNotEmpty()){
                                     adapter = RequestsAdapter(response.body()!!.skillsAndNeeds.needs)
                                     (adapter as RequestsAdapter).onItemClick = { post ->
@@ -170,6 +212,7 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
 
             private const val ARG_SECTION_NUMBER = "section_number"
             private const val ARG_ACTIVATED_CAT = "activated_cat"
+
             fun newInstance(sectionNumber: Int, activatedCategory: Category?): PostsListFragment {
                 val fragment = PostsListFragment()
                 val args = Bundle()
@@ -179,6 +222,8 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
                 return fragment
             }
         }
+
+        }
     }
 
-}
+

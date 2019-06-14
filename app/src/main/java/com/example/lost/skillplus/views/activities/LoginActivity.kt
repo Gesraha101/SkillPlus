@@ -65,12 +65,12 @@ class LoginActivity : AppCompatActivity() {
                                 startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
                                 finish()
                             } else if (response.body()?.status == false) {
-                                if (response.body()?.message.equals("wrong password")) {
+                                if (response.body()?.message.equals("Wrong password")) {
                                     passEditText.error = "wrong password"
                                     passEditText.startAnimation(shake)
                                     passEditText.requestFocus()
 
-                                } else if (response.body()?.message.equals("wrong email")) {
+                                } else if (response.body()?.message.equals("Email is not registered")) {
                                     emailEditText.error = "Wrong email"
                                     emailEditText.startAnimation(shake)
                                     emailEditText.requestFocus()

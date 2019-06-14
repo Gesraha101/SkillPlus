@@ -48,7 +48,6 @@ interface BackendServiceManager {
     @POST("/category/favorite/update")
     fun updateFavourite(@Body favouriteUpdate: FavouriteUpdate): Call<FavouriteResponse>
 
-
     @POST("/need/mine")
     fun getMyNeeds(@Body myNeed: MyId): Call<MyNeedResponse>
 
