@@ -3,15 +3,14 @@ package com.example.lost.skillplus.models.adapters
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.podos.raw.User
+import com.example.lost.skillplus.models.podos.raw.Learner
 
-class MySkillLearnerAdapter(private val list: List<User>) : RecyclerView.Adapter<MySkillLearnerAdapter.MySkillLearnerViewHolder>() {
+class MySkillLearnerAdapter(private val list: List<Learner>) : RecyclerView.Adapter<MySkillLearnerAdapter.MySkillLearnerViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MySkillLearnerViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -19,7 +18,7 @@ class MySkillLearnerAdapter(private val list: List<User>) : RecyclerView.Adapter
     }
 
     override fun onBindViewHolder(holder: MySkillLearnerViewHolder, position: Int) {
-        val request: User = list[position]
+        val request: Learner = list[position]
         holder.bind(request)
     }
 
@@ -39,14 +38,12 @@ class MySkillLearnerAdapter(private val list: List<User>) : RecyclerView.Adapter
 
         }
 
-        fun bind(request: User) {
-            userName?.text = request.name
+        fun bind(request: Learner) {
+            userName?.text = request.user_name
             Glide.with(context!!)
-                    .load(request.pic)
+                    .load(request.user_pic)
                     .into(userImage!!)
-
-//            formScheduleList?.text = request.schedule?.get(0).toString()
-            formScheduleList?.visibility = View.GONE
+            formScheduleList?.text = request.schedule?.get(0).toString()
 
         }
     }

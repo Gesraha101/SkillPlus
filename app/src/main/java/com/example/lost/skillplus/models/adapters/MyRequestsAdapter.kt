@@ -33,6 +33,7 @@ class MyRequestsAdapter(private val list: List<Request>) : RecyclerView.Adapter<
     inner class RequestViewHolder(inflater: LayoutInflater, parent: ViewGroup) : RecyclerView.ViewHolder(inflater.inflate(R.layout.post, parent, false)) {
         private var title: TextView? = null
         private var image: ImageView? = null
+        private var imageProfile: ImageView? = null
         private var price: TextView? = null
         private var posterName: TextView? = null
         private var posterRate: SimpleRatingBar? = null
@@ -42,6 +43,7 @@ class MyRequestsAdapter(private val list: List<Request>) : RecyclerView.Adapter<
         init {
             title = itemView.findViewById(R.id.skill_name)
             image = itemView.findViewById(R.id.post_image)
+            imageProfile = itemView.findViewById(R.id.poster_profile_image)
             posterName = itemView.findViewById(R.id.poster_name)
             posterRate = itemView.findViewById(R.id.poster_rate)
             price = itemView.findViewById(R.id.skill_price)
@@ -62,7 +64,8 @@ class MyRequestsAdapter(private val list: List<Request>) : RecyclerView.Adapter<
             isFav?.visibility = View.GONE
             posterRate?.visibility = View.GONE
             price?.visibility = View.GONE
-            posterName?.visibility = View.GONE
+            posterName?.text = request.need_desc
+            imageProfile?.visibility = View.GONE
         }
     }
 }

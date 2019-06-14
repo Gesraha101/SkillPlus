@@ -61,7 +61,7 @@ class MySkillAdapter(private val list: List<Skill>) : RecyclerView.Adapter<MySki
             Glide.with(context!!)
                     .load(skill.photo_path)
                     .into(image!!)
-            posterName?.visibility = View.GONE
+            posterName?.text = skill.skill_desc
             imageName?.visibility = View.GONE
             price?.text = java.lang.StringBuilder().append(" ${skill.skill_price} EGP")
             posterRate?.rating = skill.rate!!
