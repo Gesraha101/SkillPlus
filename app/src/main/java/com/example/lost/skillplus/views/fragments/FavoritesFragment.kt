@@ -25,6 +25,7 @@ import com.example.lost.skillplus.models.podos.raw.Skill
 import com.example.lost.skillplus.models.podos.responses.CategoriesResponse
 import com.example.lost.skillplus.models.podos.responses.FavouriteResponse
 import com.example.lost.skillplus.views.activities.CategoryContentActivity
+import com.google.android.gms.dynamic.SupportFragmentWrapper
 import kotlinx.android.synthetic.main.fragment_favorites.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -39,7 +40,8 @@ class FavoritesFragment : Fragment() {
         } else {
             RequestDetailsFragment.newInstance(paramPassed as Request)
         }
-        FragmentsManager.replaceFragment(fragmentManager!!, fragment,R.id.favorites_fragment, null, true)
+        FragmentsManager.replaceFragment(fragmentManager!!, fragment,R.id.favorites_fragment, "details_frag_from_favorites", true)
+        rv_favorites.visibility=View.GONE
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

@@ -53,10 +53,14 @@ class SkillsAdapter(private val list: List<Skill>): RecyclerView.Adapter<SkillsA
             }
             itemView.is_favorite.setOnClickListener {
                 onFavouriteClick?.invoke(list[adapterPosition])
-                if(list[adapterPosition].is_favorite!!)
-                    itemView.is_favorite.setBackgroundResource(R.drawable.heart)
+                if(list[adapterPosition].is_favorite!=null) {
+                    if (list[adapterPosition].is_favorite!!)
+                        itemView.is_favorite.setBackgroundResource(R.drawable.heart)
+                    else
+                        itemView.is_favorite.setBackgroundResource(R.drawable.is_favourite)
+                }
                 else
-                itemView.is_favorite.setBackgroundResource(R.drawable.is_favourite)
+                    itemView.is_favorite.setBackgroundResource(R.drawable.heart)
             }
         }
 
