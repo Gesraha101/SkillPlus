@@ -1,34 +1,38 @@
 package com.example.lost.skillplus.views.fragments
 
+import RetrofitManager
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.lost.skillplus.R
-import kotlinx.android.synthetic.main.fragment_skill_learners_fragments.view.*
+import com.example.lost.skillplus.models.adapters.MySkillLearnerAdapter
+import com.example.lost.skillplus.models.managers.BackendServiceManager
+import com.example.lost.skillplus.models.podos.raw.MyId
+import com.example.lost.skillplus.models.podos.responses.MySkillLearnersResponse
+import kotlinx.android.synthetic.main.fragment_skill_learners_fragments.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [SkillLearnersFragments.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [SkillLearnersFragments.newInstance] factory method to
- * create an instance of this fragment.
- *
- */
+
 class SkillLearnersFragments : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
+    private var skillId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,10 +46,42 @@ class SkillLearnersFragments : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_skill_learners_fragments, container, false)
-        if (arguments?.getInt(("cat_id")) != 0) {
-            view.text_bundle.text = arguments?.getInt("cat_id").toString()
+        if (arguments?.getInt(("skill_id")) != 0) {
+            skillId = arguments!!.getInt("skill_id")
+
         }
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val myReq = MyId(skillId)
+        Log.d("skillId", skillId.toString())
+
+        val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
+        val call: Call<MySkillLearnersResponse>? = service?.getMySkillsLearners(myReq)
+        call?.enqueue(object : Callback<MySkillLearnersResponse> {
+            override fun onFailure(call: Call<MySkillLearnersResponse>, t: Throwable) {
+                Toast.makeText(activity, "Failed  cause is " + t.cause, Toast.LENGTH_LONG).show()
+            }
+
+            override fun onResponse(call: Call<MySkillLearnersResponse>, response: Response<MySkillLearnersResponse>) {
+                if (response.body()?.status == true) {
+
+                    rv_my_skill_learners.apply {
+                        layoutManager = LinearLayoutManager(activity)
+                        if (response.body()?.skills!!.isNotEmpty()) {
+                            adapter = MySkillLearnerAdapter(response.body()!!.skills)
+
+
+                        }
+                    }
+                } else {
+                    Toast.makeText(activity, "Error: " + response.body(), Toast.LENGTH_LONG).show()
+                }
+            }
+        })
     }
 
     // TODO: Rename method, update argument and hook method into UI event
