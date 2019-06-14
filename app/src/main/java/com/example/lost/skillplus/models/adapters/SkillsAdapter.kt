@@ -69,10 +69,16 @@ class SkillsAdapter(private val list: List<Skill>): RecyclerView.Adapter<SkillsA
             posterName?.text = StringBuilder().append("Created by: " + skill.user_name)
             price?.text=java.lang.StringBuilder().append(" ${skill.skill_price} EGP")
             posterRate?.rating = skill.rate!!
+            if(skill.is_favorite!=null)
+            {
             if(skill.is_favorite!!)
                 itemView.is_favorite.setBackgroundResource(R.drawable.is_favourite)
             else
                 itemView.is_favorite.setBackgroundResource(R.drawable.heart)
+
+                }
+            else
+                itemView.is_favorite.setBackgroundResource(R.drawable.is_favourite)
         }
     }
 }
