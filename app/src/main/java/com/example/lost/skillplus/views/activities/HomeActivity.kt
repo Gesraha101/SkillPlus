@@ -17,9 +17,6 @@ import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_favorites.*
 import kotlin.system.exitProcess
 
-class HomeActivity : NavigationDrawerActivity(), MySkillsFragment.OnFragmentInteractionListener, SkillLearnersFragments.OnFragmentInteractionListener, MyNeedsFragment.OnFragmentInteractionListener,SkillDetailsFragment.OnFragmentInteractionListener {
-    override fun onBackPressed() {
-
 
 class HomeActivity : NavigationDrawerActivity() {
 
