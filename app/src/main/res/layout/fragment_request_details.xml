@@ -67,12 +67,6 @@
                         android:textStyle="bold"
                         android:layout_weight="8"/>
 
-                    <Button
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:id="@+id/is_favorite"
-                        android:background="@drawable/heart"/>
-
                 </LinearLayout>
 
                 <android.support.constraint.ConstraintLayout

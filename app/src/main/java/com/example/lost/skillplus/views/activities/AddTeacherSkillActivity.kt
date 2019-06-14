@@ -30,10 +30,7 @@ class AddTeacherSkillActivity : AppCompatActivity() {
         val shake = AnimationUtils.loadAnimation(this, R.anim.animation) as Animation
         var badEntry:Boolean
         btn_proceed.setOnClickListener {
-            if (eT_Title.text.toString().isEmpty() || eT_Description.text.toString().isEmpty() || eT_NumberOfSessions.text.toString().isEmpty() || eT_SessionDuration.text.toString().isEmpty() || eT_Price.text.toString().isEmpty() || eT_ExtraFees.text.toString().isEmpty()) {
-                Toast.makeText(this@AddTeacherSkillActivity, "Please complete all of the entries !", Toast.LENGTH_LONG).show()
-            } else {
-                badEntry=false
+                    badEntry=false
                 if (eT_NumberOfSessions.text.toString().toIntOrNull() == null) {
                     eT_NumberOfSessions.error = "A number is required"
                     eT_NumberOfSessions.startAnimation(shake)
@@ -46,13 +43,13 @@ class AddTeacherSkillActivity : AppCompatActivity() {
                     eT_SessionDuration.requestFocus()
                     badEntry=true
                 }
-                if (eT_Price.text.toString().toIntOrNull() == null) {
+                if (eT_Price.text.toString().toFloatOrNull() == null) {
                     eT_Price.error = "A number is required"
                     eT_Price.startAnimation(shake)
                     eT_Price.requestFocus()
                     badEntry=true
                 }
-                if (eT_ExtraFees.text.toString().toIntOrNull() == null) {
+                if (eT_ExtraFees.text.toString().toFloatOrNull() == null) {
                     eT_ExtraFees.error = "A number is required"
                     eT_ExtraFees.startAnimation(shake)
                     eT_ExtraFees.requestFocus()
@@ -73,13 +70,13 @@ class AddTeacherSkillActivity : AppCompatActivity() {
                             null,
                              null,
                             null,
-                            arrayListOf())
+                            arrayListOf(),false)
                     val intent = Intent(this@AddTeacherSkillActivity, ScheduleActivity::class.java).putExtra(Keys.SKILL.key, skill)
                     startActivity(intent)
                 }
             }
         }
     }
-}
+
 
 

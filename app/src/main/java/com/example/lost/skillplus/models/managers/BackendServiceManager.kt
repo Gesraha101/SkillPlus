@@ -41,4 +41,17 @@ interface BackendServiceManager {
 
     @POST(" /notification/")
     fun getNotifications(@Body request: NotificationsRequest): Call<NotificationsResponse>
+
+    @POST("/category/favorite")
+    fun getFavourites(@Body favouriteUpdate: FavouriteUpdate): Call<FavouriteResponse>
+
+    @POST("/category/favorite/update")
+    fun updateFavourite(@Body favouriteUpdate: FavouriteUpdate): Call<FavouriteResponse>
+
+
+    @POST("/need/mine")
+    fun getMyNeeds(@Body myNeed: MyId): Call<MyNeedResponse>
+
+    @POST("/skill/mine")
+    fun getMySkills(@Body mySkill: MyId): Call<MySkillResponse>
 }

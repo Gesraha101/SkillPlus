@@ -1,7 +1,10 @@
 package com.example.lost.skillplus.views.activities
 
 import RetrofitManager
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.AdapterView
@@ -85,7 +88,14 @@ class AddStudentNeedActivity : AppCompatActivity() {
 
                 override fun onResponse(call: Call<AddNeedResponse>, response: Response<AddNeedResponse>) {
 
-                    Toast.makeText(this@AddStudentNeedActivity, "Done ", Toast.LENGTH_LONG).show()
+                    val i = Intent(this@AddStudentNeedActivity, HomeActivity::class.java)
+                    i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    Snackbar.make(it, "Added Successfully !", Snackbar.LENGTH_INDEFINITE).show()
+                    Handler().postDelayed({
+                        startActivity(i)
+                        finish()
+                    }, 2500)
+
 
                 }
 

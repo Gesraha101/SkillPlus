@@ -3,13 +3,21 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
+             android:id="@+id/my_skill_fragment"
              tools:context=".views.fragments.MySkillsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorHeader"
-            android:text="@string/hello_blank_fragment"/>
+            android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rv_my_skills"
+                tools:ignore="MissingConstraints">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </android.support.constraint.ConstraintLayout>
 
 </FrameLayout>

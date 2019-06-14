@@ -111,7 +111,7 @@ class ScheduleActivity : AppCompatActivity() {
                             Handler().postDelayed({
                                 startActivity(i)
                                 finish()
-                            }, 3500)
+                            }, 2500)
 
                         }
                         else{

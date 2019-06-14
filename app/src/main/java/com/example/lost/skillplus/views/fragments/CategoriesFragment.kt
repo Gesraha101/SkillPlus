@@ -37,8 +37,7 @@ class CategoriesFragment : Fragment() {
                 if (response.isSuccessful) {
                     if (response.body()?.status == true) {
                         rv_categories.apply {
-                            // set a LinearLayoutManager to handle Android
-                            // RecyclerView behavior
+
                             layoutManager = LinearLayoutManager(activity)
                             // set the custom adapter to the RecyclerView
                             adapter = CategoriesAdapter(response.body()!!.categories)
