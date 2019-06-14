@@ -3,6 +3,7 @@ package com.example.lost.skillplus.views.fragments
 import RetrofitManager
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
@@ -16,18 +17,32 @@ import com.example.lost.skillplus.models.adapters.CategoriesAdapter
 import com.example.lost.skillplus.models.adapters.SkillsAdapter
 import com.example.lost.skillplus.models.enums.Keys
 import com.example.lost.skillplus.models.managers.BackendServiceManager
+import com.example.lost.skillplus.models.managers.FragmentsManager
 import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.FavouriteUpdate
+import com.example.lost.skillplus.models.podos.raw.Request
+import com.example.lost.skillplus.models.podos.raw.Skill
 import com.example.lost.skillplus.models.podos.responses.CategoriesResponse
 import com.example.lost.skillplus.models.podos.responses.FavouriteResponse
 import com.example.lost.skillplus.views.activities.CategoryContentActivity
+import com.google.android.gms.dynamic.SupportFragmentWrapper
 import kotlinx.android.synthetic.main.fragment_favorites.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.Serializable
 
 class FavoritesFragment : Fragment() {
 
+    fun loadFragment(isSkill: Boolean?, paramPassed: Serializable) {
+        val fragment : Fragment = if (isSkill!!) {
+            SkillDetailsFragment.newInstance(paramPassed as Skill)
+        } else {
+            RequestDetailsFragment.newInstance(paramPassed as Request)
+        }
+        FragmentsManager.replaceFragment(fragmentManager!!, fragment,R.id.favorites_fragment, "details_frag_from_favorites", true)
+        rv_favorites.visibility=View.GONE
+    }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_favorites, container, false)
@@ -53,7 +68,7 @@ class FavoritesFragment : Fragment() {
 
                                 adapter = SkillsAdapter(response.body()!!.data!!)
                                 (adapter as SkillsAdapter).onItemClick = { post ->
-                                    (activity as CategoryContentActivity).loadFragment(true, post)
+                                    loadFragment(true, post)
                                 }
                                 (adapter as SkillsAdapter).onFavouriteClick = { post ->
                                     var favouriteUpdate = FavouriteUpdate(
@@ -73,6 +88,7 @@ class FavoritesFragment : Fragment() {
                                                     } else {
                                                         Snackbar.make(view, "Removed from your favourites !", Snackbar.LENGTH_SHORT).show()
                                                         post.is_favorite = false
+
                                                     }
                                                 } else {
                                                     Toast.makeText(this@FavoritesFragment.context!!, "Failed1", Toast.LENGTH_LONG).show()

@@ -17,6 +17,7 @@ import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.FavouriteUpdate
 import com.example.lost.skillplus.models.podos.raw.Skill
 import com.example.lost.skillplus.models.podos.responses.FavouriteResponse
+import com.example.lost.skillplus.views.activities.CategoryContentActivity
 import com.example.lost.skillplus.views.activities.ChooseSchaduleActivity
 import kotlinx.android.synthetic.main.fragment_skill_details.*
 import retrofit2.Call
@@ -70,8 +71,14 @@ class SkillDetailsFragment : Fragment() {
         }
 
 
-        //Check if this skill is favorite , then display its icon
-        if(skill?.is_favorite!!)
+        //Check if its not null (i.e not coming from favourites)
+        if(skill?.is_favorite!=null) {
+
+            //Check if this skill is favorite , then display its icon
+            if (skill?.is_favorite!!)
+                is_favorite.setBackgroundResource(R.drawable.is_favourite)
+        }
+        else
             is_favorite.setBackgroundResource(R.drawable.is_favourite)
 
 
@@ -133,8 +140,16 @@ class SkillDetailsFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         listener = null
-    }
 
+        //This block recreates the entire category activity to get recent updates (new posts , favourites updates)
+        //Check if its not null (i.e not coming from favourites)
+        if (skill?.is_favorite != null) {
+            this.activity!!.finish()
+            this.activity!!.overridePendingTransition(0, 0)
+            this.activity!!.startActivity(this.activity!!.intent)
+            this.activity!!.overridePendingTransition(0, 0)
+        }
+    }
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
