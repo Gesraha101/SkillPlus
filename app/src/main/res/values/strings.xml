@@ -49,6 +49,7 @@
     <string name="notification_form_received">"%1$s has sent a proposal for your need %2$s"</string>
     <string name="notification_form_approved">"%1$s has approved your proposal for their need %2$s"</string>
     <string-array name="week_list">
+        <item>Tap to Select a day</item>
         <item>Monday</item>
         <item>Tuesday</item>
         <item>Wednesday</item>

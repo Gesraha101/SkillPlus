@@ -7,9 +7,10 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.Toast
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.adapters.RequestsAdapter
+import com.example.lost.skillplus.models.adapters.MyRequestsAdapter
 import com.example.lost.skillplus.models.managers.BackendServiceManager
 import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.MyId
@@ -29,6 +30,7 @@ class MyNeedsFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    var kk: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +43,8 @@ class MyNeedsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_needs, container, false)
+        kk = inflater.inflate(R.layout.fragment_my_needs, container, false)
+        return kk
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -60,10 +63,16 @@ class MyNeedsFragment : Fragment() {
                     rv_my_needs.apply {
                         layoutManager = LinearLayoutManager(activity)
                         if (response.body()?.sqlresponse!!.isNotEmpty()) {
-                            adapter = RequestsAdapter(response.body()!!.sqlresponse)
-//                            (adapter as RequestsAdapter).onItemClick = { post ->
-//                                (activity as CategoryContentActivity).loadFragment( post)
-//                            }
+                            adapter = MyRequestsAdapter(response.body()!!.sqlresponse)
+                            (adapter as MyRequestsAdapter).onItemClick = { post ->
+                                val bundle = Bundle()
+                                val needFormFragment = NeedFormFragment()
+                                bundle.putInt("need_id", post.need_id)
+                                needFormFragment.arguments = bundle
+                                kk?.findViewById<FrameLayout>(R.id.main_my_need)?.visibility = View.GONE
+                                kk?.findViewById<FrameLayout>(R.id.sec_my_need)?.visibility = View.VISIBLE
+                                fragmentManager?.beginTransaction()?.replace(R.id.sec_my_need, needFormFragment)?.commit()
+                            }
                             //TODO implement MyNeedsAdapter or use RequestsAdapter
                         }
                     }

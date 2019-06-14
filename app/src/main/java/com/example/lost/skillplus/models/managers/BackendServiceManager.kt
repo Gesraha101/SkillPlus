@@ -34,10 +34,10 @@ interface BackendServiceManager {
     fun addForm(@Body need: Form): Call<FormResponse>
 
     @POST("/category/add/need")
-    fun addNeed(@Body addNeed : AddNeed): Call<AddNeedResponse>
+    fun addNeed(@Body addNeed: AddNeed): Call<AddNeedResponse>
 
     @POST("/skill/apply")
-    fun applySkill(@Body applySkill : ApplySkill) : Call<ApplySkillResponse>
+    fun applySkill(@Body applySkill: ApplySkill): Call<ApplySkillResponse>
 
     @POST(" /notification/")
     fun getNotifications(@Body request: NotificationsRequest): Call<NotificationsResponse>
@@ -49,8 +49,16 @@ interface BackendServiceManager {
     fun updateFavourite(@Body favouriteUpdate: FavouriteUpdate): Call<FavouriteResponse>
 
     @POST("/need/mine")
-    fun getMyNeeds(@Body myNeed: MyId): Call<MyNeedResponse>
+    fun getMyNeeds(@Body myId: MyId): Call<MyNeedResponse>
+
+    @POST("/need/forms")
+    fun getMyNeedForms(@Body myNeedId: MyId): Call<MyNeedFormsResponse>
 
     @POST("/skill/mine")
-    fun getMySkills(@Body mySkill: MyId): Call<MySkillResponse>
+    fun getMySkills(@Body myId: MyId): Call<MySkillResponse>
+
+    @POST("/skill/learners")
+    fun getMySkillsLearners(@Body myId: MyId): Call<MySkillLearnersResponse>
+
+
 }

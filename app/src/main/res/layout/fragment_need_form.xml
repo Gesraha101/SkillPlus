@@ -3,13 +3,12 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context=".views.fragments.SkillLearnersFragments">
+             tools:context=".views.fragments.NeedFormFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/rv_my_skill_learners"
+            android:id="@+id/rv_my_need_forms"
             tools:ignore="MissingConstraints">
     </android.support.v7.widget.RecyclerView>
 

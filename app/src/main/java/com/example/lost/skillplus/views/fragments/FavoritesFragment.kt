@@ -89,6 +89,7 @@ class FavoritesFragment : Fragment() {
                                                         Snackbar.make(view, "Removed from your favourites !", Snackbar.LENGTH_SHORT).show()
                                                         post.is_favorite = false
 
+
                                                     }
                                                 } else {
                                                     Toast.makeText(this@FavoritesFragment.context!!, "Failed1", Toast.LENGTH_LONG).show()
