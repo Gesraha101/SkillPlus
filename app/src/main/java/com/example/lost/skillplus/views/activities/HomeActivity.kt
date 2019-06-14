@@ -3,7 +3,9 @@ package com.example.lost.skillplus.views.activities
 
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.support.design.widget.BottomNavigationView
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
 import android.view.MenuItem
 import android.view.View
@@ -17,22 +19,20 @@ import kotlinx.android.synthetic.main.fragment_favorites.*
 import kotlin.system.exitProcess
 
 class HomeActivity : NavigationDrawerActivity(), MySkillsFragment.OnFragmentInteractionListener, SkillLearnersFragments.OnFragmentInteractionListener, MyNeedsFragment.OnFragmentInteractionListener,SkillDetailsFragment.OnFragmentInteractionListener {
+    private var doubleBackToExitPressedOnce = false
     override fun onBackPressed() {
 
         if (supportFragmentManager.backStackEntryCount == 0) {//Check if there are no fragments at backstack
-            val builder = AlertDialog.Builder(this@HomeActivity)
-
-            builder.setTitle("Quit")
-            builder.setMessage("Are you sure you want to quit?")
-
-            builder.setPositiveButton("YES") { dialog, which ->
-                exitProcess(0)
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed()
+                return
             }
-            builder.setNegativeButton("NO") { dialog, which ->
+
+            this.doubleBackToExitPressedOnce = true
+            Snackbar.make(container, "Press back again to exit", Snackbar.LENGTH_SHORT).show()
+
+            Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
             }
-            val dialog: AlertDialog = builder.create()
-            dialog.show()
-        }
         else {
             if(supportFragmentManager.findFragmentByTag("details_frag_from_favorites")!!.isVisible)
                     rv_favorites.visibility=View.VISIBLE

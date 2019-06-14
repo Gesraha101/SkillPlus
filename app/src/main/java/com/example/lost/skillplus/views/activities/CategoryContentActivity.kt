@@ -48,7 +48,7 @@ class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFrag
             RequestDetailsFragment.newInstance(paramPassed as Request)
         }
         frag = fragment
-        FragmentsManager.replaceFragment(supportFragmentManager, fragment, R.id.post_fragment_container, null, true)
+        FragmentsManager.replaceFragment(supportFragmentManager, fragment, R.id.post_fragment_container, "details_fragment_from_categories", true)
         tabbed_view.visibility = View.GONE
     }
 

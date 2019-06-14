@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentTransaction
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.managers.BackendServiceManager
+import com.example.lost.skillplus.models.managers.FragmentsManager
 import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.FavouriteUpdate
 import com.example.lost.skillplus.models.podos.raw.Skill
@@ -142,12 +144,19 @@ class SkillDetailsFragment : Fragment() {
         listener = null
 
         //This block recreates the entire category activity to get recent updates (new posts , favourites updates)
-        //Check if its not null (i.e not coming from favourites)
-        if (skill?.is_favorite != null) {
+        //Check if its coming from categories)
+        if (this.activity!!.localClassName=="views.activities.CategoryContentActivity") {
             this.activity!!.finish()
             this.activity!!.overridePendingTransition(0, 0)
             this.activity!!.startActivity(this.activity!!.intent)
             this.activity!!.overridePendingTransition(0, 0)
+        }
+        else {
+            var frg = this.activity!!.supportFragmentManager.findFragmentByTag("2131296432") //Todo @Gesraha 3amly el Tagname bl menu item id, 7raaaaaam
+            var ft: FragmentTransaction = this.activity!!.supportFragmentManager.beginTransaction()
+            ft.detach(frg!!)
+            ft.attach(frg!!)
+            ft.commit()
         }
     }
     interface OnFragmentInteractionListener {
