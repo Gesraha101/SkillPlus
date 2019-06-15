@@ -24,7 +24,10 @@ import kotlinx.android.synthetic.main.activity_schedule.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.Instant
 import java.util.*
+import android.animation.AnimatorListenerAdapter
+import android.animation.Animator
 
 
 class ScheduleActivity : AppCompatActivity() {
@@ -43,7 +46,10 @@ class ScheduleActivity : AppCompatActivity() {
         setContentView(R.layout.activity_schedule)
         setSupportActionBar(toolbar_schedule)
 
-    skillRequest = intent.getSerializableExtra(Keys.SKILL.key) as Skill
+
+        var progressOverlay : View = findViewById(R.id.progress_overlay)
+
+        skillRequest = intent.getSerializableExtra(Keys.SKILL.key) as Skill
     tF_Title.text=skillRequest.skill_name
 
         rV_Schedule.apply {
@@ -80,8 +86,9 @@ class ScheduleActivity : AppCompatActivity() {
                         hourPicked=h
                         minutePicked=m
                     }), hour, minute, true)
+            var date = Calendar.getInstance()
+            tpd.updateTime(date.time.hours,date.time.minutes)
             tpd.show()
-
         }
         btn_add_to_schedule.setOnClickListener {
             if (dayPicked == null || hourPicked == null || minutePicked == null)
@@ -108,7 +115,10 @@ class ScheduleActivity : AppCompatActivity() {
             }
         }
         btn_add_skill.setOnClickListener {
-          skillRequest.schedule = NotificationAlarmManager.convertToLong(dayTimeArray)
+            progressOverlay.visibility = View.VISIBLE
+            animateView(progressOverlay, View.VISIBLE, 0.4f, 200)
+
+            skillRequest.schedule = NotificationAlarmManager.convertToLong(dayTimeArray)
             val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
             val call: Call<SkillsResponse>? = service?.addSkill(skillRequest)
             call?.enqueue(object : Callback<SkillsResponse> {
@@ -117,10 +127,11 @@ class ScheduleActivity : AppCompatActivity() {
                         if (response.body()?.status == true) {
                             val i = Intent(this@ScheduleActivity, HomeActivity::class.java)
                             i.flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
-                            Snackbar.make(it, "Added Successfully !", Snackbar.LENGTH_INDEFINITE).show()
                             Handler().postDelayed({
+                                animateView(progressOverlay, View.GONE, 0f, 200);
                                 startActivity(i)
                                 finish()
+                                Snackbar.make(it, "Added Successfully !", Snackbar.LENGTH_INDEFINITE).show()
                             }, 2500)
 
                         }
@@ -143,5 +154,21 @@ class ScheduleActivity : AppCompatActivity() {
             })
 
         }
+    }
+
+    fun animateView(view: View, toVisibility: Int, toAlpha: Float, duration: Int) {
+        val show = toVisibility == View.VISIBLE
+        if (show) {
+            view.alpha = 0f
+        }
+        view.visibility = View.VISIBLE
+        view.animate()
+                .setDuration(duration.toLong())
+                .alpha(if (show) toAlpha else 0f)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        view.visibility = toVisibility
+                    }
+                })
     }
 }
