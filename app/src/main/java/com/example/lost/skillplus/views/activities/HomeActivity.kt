@@ -20,6 +20,8 @@ import kotlinx.android.synthetic.main.fragment_favorites.*
 
 class HomeActivity : NavigationDrawerActivity() {
 
+    private var doubleBackToExitPressedOnce = false
+
     override fun onBackPressed() {
 
         if (supportFragmentManager.backStackEntryCount == 0) {//Check if there are no fragments at backstack
