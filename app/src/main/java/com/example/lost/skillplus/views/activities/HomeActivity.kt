@@ -3,6 +3,8 @@ package com.example.lost.skillplus.views.activities
 
 import android.app.job.JobScheduler
 import android.os.Build
+import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.BottomNavigationView
@@ -21,6 +23,7 @@ import com.example.lost.skillplus.views.fragments.FavoritesFragment
 import com.example.lost.skillplus.views.fragments.NotificationsFragment
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_favorites.*
+import org.aviran.cookiebar2.CookieBar
 
 
 class HomeActivity : NavigationDrawerActivity() {
@@ -37,8 +40,11 @@ class HomeActivity : NavigationDrawerActivity() {
             }
 
             this.doubleBackToExitPressedOnce = true
-            Snackbar.make(container, "Press back again to exit", Snackbar.LENGTH_SHORT).show()
-
+            CookieBar.build(this@HomeActivity)
+                    .setCookiePosition(CookieBar.BOTTOM)
+                    .setMessage("Press back again to exit ")
+                    .setBackgroundColor(R.color.alert)
+                    .show()
             Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
             }
         else {
@@ -87,6 +93,15 @@ class HomeActivity : NavigationDrawerActivity() {
             bottom_nav.selectedItemId = R.id.navigation_notifications
         } else {
             bottom_nav.selectedItemId = R.id.navigation_categories
+        }
+        bottom_nav.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+
+        if(intent.getBooleanExtra("isComingAfterSubmition",false))
+        {
+            CookieBar.build(this@HomeActivity)
+                    .setCookiePosition(CookieBar.BOTTOM)
+                    .setMessage("Submitted successfully !")
+                    .show()
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

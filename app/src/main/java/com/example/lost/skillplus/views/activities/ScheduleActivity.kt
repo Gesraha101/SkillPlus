@@ -1,13 +1,14 @@
 package com.example.lost.skillplus.views.activities
 
 import RetrofitManager
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
 import android.os.Handler
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
@@ -24,10 +25,7 @@ import kotlinx.android.synthetic.main.activity_schedule.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.time.Instant
 import java.util.*
-import android.animation.AnimatorListenerAdapter
-import android.animation.Animator
 
 
 class ScheduleActivity : AppCompatActivity() {
@@ -126,12 +124,12 @@ class ScheduleActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         if (response.body()?.status == true) {
                             val i = Intent(this@ScheduleActivity, HomeActivity::class.java)
-                            i.flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
                             Handler().postDelayed({
-                                animateView(progressOverlay, View.GONE, 0f, 200);
+                                animateView(progressOverlay, View.GONE, 0f, 200)
+                                i.flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
+                                i.putExtra("isComingAfterSubmition",true)
                                 startActivity(i)
                                 finish()
-                                Snackbar.make(it, "Added Successfully !", Snackbar.LENGTH_INDEFINITE).show()
                             }, 2500)
 
                         }

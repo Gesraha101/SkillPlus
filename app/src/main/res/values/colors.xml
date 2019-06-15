@@ -11,5 +11,6 @@
     <color name="colorTabBarBackground">#e3eae8</color>
     <color name="colorCardBackground">#fff8a4</color>
     <color name="colorDark">#111111</color>
+    <color name="alert">#797980</color>
 
 </resources>
