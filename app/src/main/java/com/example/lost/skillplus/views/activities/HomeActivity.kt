@@ -1,6 +1,8 @@
 package com.example.lost.skillplus.views.activities
 
 
+import android.app.job.JobScheduler
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.BottomNavigationView
@@ -8,9 +10,12 @@ import android.support.design.widget.Snackbar
 import android.view.MenuItem
 import android.view.View
 import com.example.lost.skillplus.R
+import com.example.lost.skillplus.models.enums.Ids
 import com.example.lost.skillplus.models.enums.Keys
 import com.example.lost.skillplus.models.managers.FragmentsManager
+import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.Notification
+import com.example.lost.skillplus.models.services.NotificationScheduler
 import com.example.lost.skillplus.views.fragments.CategoriesFragment
 import com.example.lost.skillplus.views.fragments.FavoritesFragment
 import com.example.lost.skillplus.views.fragments.NotificationsFragment
@@ -21,6 +26,7 @@ import kotlinx.android.synthetic.main.fragment_favorites.*
 class HomeActivity : NavigationDrawerActivity() {
 
     private var doubleBackToExitPressedOnce = false
+    private lateinit var notifications: ArrayList<Notification>
 
     override fun onBackPressed() {
 
@@ -52,7 +58,7 @@ class HomeActivity : NavigationDrawerActivity() {
                 FavoritesFragment.newInstance()
             }
             R.id.navigation_notifications -> {
-                NotificationsFragment.newInstance(null)
+                NotificationsFragment.newInstance(notifications)
             }
             else -> {
                 null
@@ -76,11 +82,17 @@ class HomeActivity : NavigationDrawerActivity() {
         bottom_nav.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
         if (intent.getSerializableExtra(Keys.NOTIFICATIONS.key) != null) {
-            FragmentsManager.replaceFragment(supportFragmentManager, NotificationsFragment.newInstance(intent.getSerializableExtra(Keys.NOTIFICATIONS.key) as ArrayList<Notification>?), R.id.fragment_container, null, false)
+            notifications = intent.getSerializableExtra(Keys.NOTIFICATIONS.key) as ArrayList<Notification>
+//            FragmentsManager.replaceFragment(supportFragmentManager, NotificationsFragment.newInstance(intent.getSerializableExtra(Keys.NOTIFICATIONS.key) as ArrayList<Notification>?), R.id.fragment_container, null, false)
+            PreferencesManager(this@HomeActivity).setLastUpdated(System.currentTimeMillis())
             bottom_nav.selectedItemId = R.id.navigation_notifications
         } else {
             FragmentsManager.replaceFragment(supportFragmentManager, CategoriesFragment.newInstance(), R.id.fragment_container, null, false)
         }
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            if (getSystemService(JobScheduler::class.java).getPendingJob(Ids.JOB.ordinal) == null)
+                NotificationScheduler.scheduleJob(this@HomeActivity, null)
+        }
     }
 }

@@ -32,34 +32,6 @@ import retrofit2.Response
 
 class NotificationService : JobIntentService() {
 
-    private lateinit var context: Context
-
-    @TargetApi(Build.VERSION_CODES.O)
-    fun createChannel(manager: NotificationManager) {
-        val channel = NotificationChannel(Ids.NOTIFICATION_CHANNEL.id, Ids.VISIBLE.id, NotificationManager.IMPORTANCE_DEFAULT)
-        channel.description = "Displays reminders for upcoming sessions"
-        manager.createNotificationChannel(channel)
-    }
-
-    private fun notify(manager: NotificationManager, header: String, body: String, intent: PendingIntent?) {
-        val builder = NotificationCompat.Builder(this, Ids.NOTIFICATION_CHANNEL.id)
-                .setContentTitle(header)
-                .setContentText(body)
-                .setDefaults(Notification.DEFAULT_LIGHTS)
-                .setSound(Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.packageName + "/" + R.raw.notification))
-                .setAutoCancel(false)
-                .setSmallIcon(R.drawable.ic_today_notification)
-                .setContentIntent(intent)
-
-        manager.notify(notificationID++, builder.build())
-    }
-
-    fun generateNotification(manager: NotificationManager, header: String, body: String, intent: PendingIntent?) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            createChannel(manager)
-        notify(manager, header, body, intent)
-    }
-
     override fun onHandleWork(intent: Intent) {
         context = this
         when {
@@ -75,7 +47,6 @@ class NotificationService : JobIntentService() {
 
                     override fun onResponse(call: Call<NotificationsResponse>, response: Response<NotificationsResponse>) {
                         if (response.isSuccessful) {
-                            PreferencesManager(context).setLastUpdated(System.currentTimeMillis())
                             if (response.body()?.notifications!!.size != 0) {
                                 val body = "You have new notifications. Tab to view"
                                 val alarmIntent = Intent(context, HomeActivity::class.java)
@@ -89,8 +60,6 @@ class NotificationService : JobIntentService() {
                                     }
                                 }
                             }
-                        } else {
-
                         }
                     }
 
@@ -102,12 +71,40 @@ class NotificationService : JobIntentService() {
         }
     }
 
+    private lateinit var context: Context
+
+    @TargetApi(Build.VERSION_CODES.O)
+    fun createChannel(manager: NotificationManager) {
+        val channel = NotificationChannel(Ids.NOTIFICATION_CHANNEL.id, Ids.VISIBLE.id, NotificationManager.IMPORTANCE_DEFAULT)
+        channel.description = "Displays reminders for upcoming sessions"
+        manager.createNotificationChannel(channel)
+    }
+
+    private fun notify(manager: NotificationManager, header: String, body: String, intent: PendingIntent?) {
+        val builder = NotificationCompat.Builder(this, Ids.NOTIFICATION_CHANNEL.id)
+                .setContentTitle(header)
+                .setContentText(body)
+                .setDefaults(Notification.DEFAULT_LIGHTS)
+                .setSound(Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.packageName + "/" + R.raw.notification))
+                .setAutoCancel(true)
+                .setSmallIcon(R.drawable.ic_today_notification)
+                .setContentIntent(intent)
+
+        manager.notify(notificationID++, builder.build())
+    }
+
+    fun generateNotification(manager: NotificationManager, header: String, body: String, intent: PendingIntent?) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            createChannel(manager)
+        notify(manager, header, body, intent)
+    }
+
     companion object {
 
         private var notificationID = 0
 
         fun enqueueTask(context: Context, work: Intent) {
-            enqueueWork(context, NotificationService::class.java, Ids.JOB.ordinal, work)
+            enqueueWork(context, NotificationService::class.java, Ids.WORK.ordinal, work)
         }
     }
 }

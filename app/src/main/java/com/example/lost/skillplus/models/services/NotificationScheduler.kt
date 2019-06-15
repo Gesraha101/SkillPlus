@@ -8,18 +8,16 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.support.annotation.RequiresApi
 import com.example.lost.skillplus.models.enums.Actions
 import com.example.lost.skillplus.models.enums.Ids
 
 
-@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 class NotificationScheduler : JobService() {
 
     override fun onStartJob(params: JobParameters): Boolean {
         val service = Intent(applicationContext, NotificationService::class.java).setAction(Actions.CHECK.action)
         NotificationService.enqueueTask(this@NotificationScheduler, service)
-        scheduleJob(applicationContext, 60 * 1000)
+        scheduleJob(applicationContext, 30 * 1000)
         return true
     }
 

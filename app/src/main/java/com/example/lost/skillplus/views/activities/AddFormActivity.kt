@@ -13,10 +13,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.adapters.ScheduleAdapter
 import com.example.lost.skillplus.models.managers.BackendServiceManager
@@ -30,13 +27,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
-import android.view.View.FOCUS_DOWN
-import android.widget.ScrollView
-
-
-
-
-
 
 
 class AddFormActivity : AppCompatActivity() {
@@ -61,7 +51,7 @@ class AddFormActivity : AppCompatActivity() {
             mAdapter = ScheduleAdapter(dayTimeList)
             rV_Schedule.adapter = mAdapter
         }
-        val adapter = ArrayAdapter.createFromResource(this, com.example.lost.skillplus.R.array.week_list, android.R.layout.simple_spinner_item)
+        val adapter = ArrayAdapter.createFromResource(this, R.array.week_list, android.R.layout.simple_spinner_item)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         spinner.adapter = adapter
