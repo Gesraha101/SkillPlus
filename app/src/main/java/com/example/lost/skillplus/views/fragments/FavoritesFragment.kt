@@ -112,7 +112,7 @@ class FavoritesFragment : Fragment() {
                             }
                             else
                             {
-                                linear_layout.visibility=View.GONE
+                                linear_layout.visibility=View.VISIBLE
                             }
                         }
                     } else {

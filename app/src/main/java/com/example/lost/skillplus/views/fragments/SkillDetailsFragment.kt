@@ -152,7 +152,7 @@ class SkillDetailsFragment : Fragment() {
             this.activity!!.overridePendingTransition(0, 0)
         }
         else {
-            var frg = this.activity!!.supportFragmentManager.findFragmentByTag("2131296432") //Todo @Gesraha 3amly el Tagname bl menu item id, 7raaaaaam
+            var frg = this.activity!!.supportFragmentManager.findFragmentByTag(R.id.navigation_favorites.toString()) //its tag name is given by it's menu item id
             var ft: FragmentTransaction = this.activity!!.supportFragmentManager.beginTransaction()
             ft.detach(frg!!)
             ft.attach(frg!!)

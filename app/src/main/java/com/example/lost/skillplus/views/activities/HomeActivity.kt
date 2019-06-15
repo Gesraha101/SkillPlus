@@ -45,7 +45,7 @@ class HomeActivity : NavigationDrawerActivity(), MySkillsFragment.OnFragmentInte
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    private fun loadFragment(item: MenuItem) {
+    private fun loadFragment(item: MenuItem) { //tag name of these fragments are created by its menu items id
         val tag = item.itemId.toString()
         val fragment = supportFragmentManager.findFragmentByTag(tag) ?: when (item.itemId) {
             R.id.navigation_home -> {
