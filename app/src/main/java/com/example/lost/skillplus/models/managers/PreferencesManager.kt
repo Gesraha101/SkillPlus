@@ -32,6 +32,16 @@ class PreferencesManager(context: Context) {
         editor.apply()
     }
 
+    fun getFlag(): Boolean {
+        return sharedPreferences.getBoolean("flag", false)
+    }
+
+    fun setFlag(flag: Boolean) {
+        val editor = sharedPreferences.edit()
+        editor.putBoolean("flag", flag)
+        editor.apply()
+    }
+
     fun getId(): Int {
         return sharedPreferences.getInt("id", 0)
     }

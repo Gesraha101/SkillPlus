@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.Toast
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.adapters.MyRequestsAdapter
@@ -32,6 +33,8 @@ class MyNeedsFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
+    var kk: View? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +47,8 @@ class MyNeedsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_needs, container, false)
+        kk = inflater.inflate(R.layout.fragment_my_needs, container, false)
+        return kk
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -69,7 +73,9 @@ class MyNeedsFragment : Fragment() {
                                 val needFormFragment = NeedFormFragment()
                                 bundle.putInt("need_id", post.need_id)
                                 needFormFragment.arguments = bundle
-                                fragmentManager?.beginTransaction()?.replace(R.id.fragment_container, needFormFragment)?.commit()
+                                kk?.findViewById<FrameLayout>(R.id.main_my_need)?.visibility = View.GONE
+                                kk?.findViewById<FrameLayout>(R.id.sec_my_need)?.visibility = View.VISIBLE
+                                fragmentManager?.beginTransaction()?.replace(R.id.sec_my_need, needFormFragment)?.commit()
                             }
                             //TODO implement MyNeedsAdapter or use RequestsAdapter
                         }
@@ -115,4 +121,5 @@ class MyNeedsFragment : Fragment() {
                     }
                 }
     }
+
 }

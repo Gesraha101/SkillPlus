@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.Snackbar
-import android.support.v7.app.AlertDialog
 import android.view.MenuItem
 import android.view.View
 import com.example.lost.skillplus.R
@@ -16,9 +15,9 @@ import com.example.lost.skillplus.models.podos.raw.Notification
 import com.example.lost.skillplus.views.fragments.*
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_favorites.*
-import kotlin.system.exitProcess
 
-class HomeActivity : NavigationDrawerActivity(), MySkillsFragment.OnFragmentInteractionListener, SkillLearnersFragments.OnFragmentInteractionListener, MyNeedsFragment.OnFragmentInteractionListener,SkillDetailsFragment.OnFragmentInteractionListener {
+class HomeActivity : NavigationDrawerActivity(), MySkillsFragment.OnFragmentInteractionListener, NeedFormFragment.OnFragmentInteractionListener,
+        SkillLearnersFragments.OnFragmentInteractionListener, MyNeedsFragment.OnFragmentInteractionListener, SkillDetailsFragment.OnFragmentInteractionListener {
     private var doubleBackToExitPressedOnce = false
     override fun onBackPressed() {
 
