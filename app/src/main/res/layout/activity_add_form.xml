@@ -195,5 +195,5 @@
         </ScrollView>
 
     </android.support.constraint.ConstraintLayout>
-
+    <include layout="@layout/loading_overlay"/>
 </android.support.design.widget.CoordinatorLayout>
