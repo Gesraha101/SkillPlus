@@ -11,8 +11,6 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.podos.raw.Request
-import com.iarcuschin.simpleratingbar.SimpleRatingBar
-
 
 class MyRequestsAdapter(private val list: List<Request>) : RecyclerView.Adapter<MyRequestsAdapter.RequestViewHolder>() {
 
@@ -30,29 +28,22 @@ class MyRequestsAdapter(private val list: List<Request>) : RecyclerView.Adapter<
 
     override fun getItemCount(): Int = list.size
 
-    inner class RequestViewHolder(inflater: LayoutInflater, parent: ViewGroup) : RecyclerView.ViewHolder(inflater.inflate(R.layout.post, parent, false)) {
+    inner class RequestViewHolder(inflater: LayoutInflater, parent: ViewGroup) : RecyclerView.ViewHolder(inflater.inflate(R.layout.my_need_view, parent, false)) {
         private var title: TextView? = null
         private var image: ImageView? = null
-        private var imageProfile: ImageView? = null
-        private var price: TextView? = null
-        private var posterName: TextView? = null
-        private var posterRate: SimpleRatingBar? = null
+        private var posterDesc: TextView? = null
         private var context: Context? = null
-        private var isFav: Button? = null
+        private var Proposal: Button? = null
 
         init {
             title = itemView.findViewById(R.id.skill_name)
             image = itemView.findViewById(R.id.post_image)
-            imageProfile = itemView.findViewById(R.id.poster_profile_image)
-            posterName = itemView.findViewById(R.id.poster_name)
-            posterRate = itemView.findViewById(R.id.poster_rate)
-            price = itemView.findViewById(R.id.skill_price)
-            isFav = itemView.findViewById(R.id.is_favorite)
+            posterDesc = itemView.findViewById(R.id.my_need_desc)
+            Proposal = itemView.findViewById(R.id.proposal_btn)
             context = parent.context
             itemView.setOnClickListener {
                 onItemClick?.invoke(list[adapterPosition])
             }
-
         }
 
         fun bind(request: Request) {
@@ -61,11 +52,8 @@ class MyRequestsAdapter(private val list: List<Request>) : RecyclerView.Adapter<
                     .load(request.need_photo)
                     .into(image!!)
 
-            isFav?.visibility = View.GONE
-            posterRate?.visibility = View.GONE
-            price?.visibility = View.GONE
-            posterName?.text = request.need_desc
-            imageProfile?.visibility = View.GONE
+            Proposal?.visibility = View.GONE
+            posterDesc?.text = request.need_desc
         }
     }
 }

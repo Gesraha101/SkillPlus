@@ -1,12 +1,10 @@
 package com.example.lost.skillplus.views.activities
 
 
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.BottomNavigationView
-import android.support.design.widget.Snackbar
 import android.view.MenuItem
 import android.view.View
 import com.example.lost.skillplus.R
@@ -16,7 +14,8 @@ import com.example.lost.skillplus.models.podos.raw.Notification
 import com.example.lost.skillplus.views.fragments.*
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_favorites.*
-import org.aviran.cookiebar2.CookieBar
+import kotlinx.android.synthetic.main.fragment_my_needs.*
+import kotlinx.android.synthetic.main.fragment_my_skills.*
 
 class HomeActivity : NavigationDrawerActivity(), MySkillsFragment.OnFragmentInteractionListener, NeedFormFragment.OnFragmentInteractionListener,
         SkillLearnersFragments.OnFragmentInteractionListener, MyNeedsFragment.OnFragmentInteractionListener, SkillDetailsFragment.OnFragmentInteractionListener {
@@ -36,10 +35,17 @@ class HomeActivity : NavigationDrawerActivity(), MySkillsFragment.OnFragmentInte
                     .setBackgroundColor(R.color.alert)
                     .show()
             Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
-            }
-        else {
+            } else if (supportFragmentManager.findFragmentByTag("skill_learner_fragment")!!.isVisible) {
+            main_my_skill.visibility = View.VISIBLE
+            sec_my_skill.visibility = View.GONE
+
+        } else if (supportFragmentManager.findFragmentByTag("need_form_fragment")!!.isVisible) {
+            main_my_need.visibility = View.VISIBLE
+            sec_my_need.visibility = View.GONE
+
+        } else {
             if(supportFragmentManager.findFragmentByTag("details_frag_from_favorites")!!.isVisible)
-                    rv_favorites.visibility=View.VISIBLE
+                rv_favorites.visibility=View.VISIBLE
 
             supportFragmentManager.popBackStack()
         }
@@ -49,7 +55,7 @@ class HomeActivity : NavigationDrawerActivity(), MySkillsFragment.OnFragmentInte
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    private fun loadFragment(item: MenuItem) { //tag name of these fragments are created by its menu items id
+    private fun loadFragment(item: MenuItem) {
         val tag = item.itemId.toString()
         val fragment = supportFragmentManager.findFragmentByTag(tag) ?: when (item.itemId) {
             R.id.navigation_home -> {

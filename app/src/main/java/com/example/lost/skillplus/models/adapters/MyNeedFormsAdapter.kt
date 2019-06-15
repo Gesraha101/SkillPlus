@@ -28,17 +28,10 @@ class MyNeedFormsAdapter(private val list: List<SqlResponseFromMyNeedForms>) : R
     inner class MyNeedFormViewHolder(inflater: LayoutInflater, parent: ViewGroup) : RecyclerView.ViewHolder(inflater.inflate(R.layout.form, parent, false)) {
         private var userName: TextView? = null
         private var userImage: ImageView? = null
-        private var formPrice: TextView? = null
-        private var formDuraation: TextView? = null
-        private var formScheduleList: TextView? = null
-
         private var context: Context? = null
 
         init {
             userName = itemView.findViewById(R.id.form_user_name)
-            formPrice = itemView.findViewById(R.id.form_price)
-            formDuraation = itemView.findViewById(R.id.form_duration)
-            formScheduleList = itemView.findViewById(R.id.form_schedule_list)
             userImage = itemView.findViewById(R.id.form_user_image)
             context = parent.context
         }
@@ -48,9 +41,6 @@ class MyNeedFormsAdapter(private val list: List<SqlResponseFromMyNeedForms>) : R
             Glide.with(context!!)
                     .load(request.user_pic)
                     .into(userImage!!)
-
-            formDuraation?.text = request.duration.toString()
-            formScheduleList?.text = request.schedule?.get(0).toString()
 
         }
     }
