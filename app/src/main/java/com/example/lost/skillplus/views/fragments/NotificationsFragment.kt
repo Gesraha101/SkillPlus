@@ -1,6 +1,7 @@
 package com.example.lost.skillplus.views.fragments
 
 import RetrofitManager
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -68,10 +69,21 @@ class NotificationsFragment : Fragment() {
                 adapter = NotificationsAdapter(notifications!!)
 
                 (adapter as NotificationsAdapter).onItemClick = { notification ->
-//                    if (notification.skill_name != null)
-//                    val intent = Intent(activity, CategoryContentActivity::class.java)
-//                    intent.putExtra("CATEGORY", category)
-//                    startActivity(intent)
+                    lateinit var intent: Intent
+                    when {
+                        //TODO
+                        notification.skill_name != null -> {            //Skill applied for
+                            intent = Intent(activity, ::class.java)
+                            intent.putExtra(Keys.SKILL_ID.key, notification.skill_id)
+                            startActivity(intent)
+                        }
+                        notification.need_id != null -> {               //Form proposed
+
+                        }
+                        else -> {                                       //Form approved
+
+                        }
+                    }
                 }
             }
         }

@@ -51,7 +51,7 @@ class HomeActivity : NavigationDrawerActivity() {
     private fun loadFragment(item: MenuItem) {
         val tag = item.itemId.toString()
         val fragment = supportFragmentManager.findFragmentByTag(tag) ?: when (item.itemId) {
-            R.id.navigation_home -> {
+            R.id.navigation_categories -> {
                 CategoriesFragment.newInstance()
             }
             R.id.navigation_favorites-> {
@@ -83,11 +83,10 @@ class HomeActivity : NavigationDrawerActivity() {
 
         if (intent.getSerializableExtra(Keys.NOTIFICATIONS.key) != null) {
             notifications = intent.getSerializableExtra(Keys.NOTIFICATIONS.key) as ArrayList<Notification>
-//            FragmentsManager.replaceFragment(supportFragmentManager, NotificationsFragment.newInstance(intent.getSerializableExtra(Keys.NOTIFICATIONS.key) as ArrayList<Notification>?), R.id.fragment_container, null, false)
             PreferencesManager(this@HomeActivity).setLastUpdated(System.currentTimeMillis())
             bottom_nav.selectedItemId = R.id.navigation_notifications
         } else {
-            FragmentsManager.replaceFragment(supportFragmentManager, CategoriesFragment.newInstance(), R.id.fragment_container, null, false)
+            bottom_nav.selectedItemId = R.id.navigation_categories
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

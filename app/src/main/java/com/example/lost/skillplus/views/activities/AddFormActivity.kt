@@ -112,7 +112,7 @@ class AddFormActivity : AppCompatActivity() {
             }
         }
 
-        val shake = AnimationUtils.loadAnimation(this, com.example.lost.skillplus.R.anim.animation) as Animation
+        val shake = AnimationUtils.loadAnimation(this, R.anim.animation) as Animation
         var badEntry: Boolean
 
         btn_add_need.setOnClickListener {
