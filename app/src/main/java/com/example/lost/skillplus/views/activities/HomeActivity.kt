@@ -1,6 +1,7 @@
 package com.example.lost.skillplus.views.activities
 
 
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -15,6 +16,7 @@ import com.example.lost.skillplus.models.podos.raw.Notification
 import com.example.lost.skillplus.views.fragments.*
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_favorites.*
+import org.aviran.cookiebar2.CookieBar
 
 class HomeActivity : NavigationDrawerActivity(), MySkillsFragment.OnFragmentInteractionListener, NeedFormFragment.OnFragmentInteractionListener,
         SkillLearnersFragments.OnFragmentInteractionListener, MyNeedsFragment.OnFragmentInteractionListener, SkillDetailsFragment.OnFragmentInteractionListener {
@@ -28,8 +30,11 @@ class HomeActivity : NavigationDrawerActivity(), MySkillsFragment.OnFragmentInte
             }
 
             this.doubleBackToExitPressedOnce = true
-            Snackbar.make(container, "Press back again to exit", Snackbar.LENGTH_SHORT).show()
-
+            CookieBar.build(this@HomeActivity)
+                    .setCookiePosition(CookieBar.BOTTOM)
+                    .setMessage("Press back again to exit ")
+                    .setBackgroundColor(R.color.alert)
+                    .show()
             Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
             }
         else {
@@ -81,6 +86,14 @@ class HomeActivity : NavigationDrawerActivity(), MySkillsFragment.OnFragmentInte
             FragmentsManager.replaceFragment(supportFragmentManager, CategoriesFragment.newInstance(), R.id.fragment_container, null, false)
         }
         bottom_nav.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+
+        if(intent.getBooleanExtra("isComingAfterSubmition",false))
+        {
+            CookieBar.build(this@HomeActivity)
+                    .setCookiePosition(CookieBar.BOTTOM)
+                    .setMessage("Submitted successfully !")
+                    .show()
+        }
         /*val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             val notifyAt = System.currentTimeMillis() + AlarmManager.INTERVAL_FIFTEEN_MINUTES / 15

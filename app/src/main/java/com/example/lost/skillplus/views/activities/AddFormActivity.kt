@@ -65,7 +65,7 @@ class AddFormActivity : AppCompatActivity() {
             mAdapter = ScheduleAdapter(dayTimeList)
             rV_Schedule.adapter = mAdapter
         }
-        val adapter = ArrayAdapter.createFromResource(this, com.example.lost.skillplus.R.array.week_list, android.R.layout.simple_spinner_item)
+        val adapter = ArrayAdapter.createFromResource(this, R.array.week_list, android.R.layout.simple_spinner_item)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         spinner.adapter = adapter
@@ -171,16 +171,18 @@ class AddFormActivity : AppCompatActivity() {
                                 if (response.body()?.status == true) {
                                     for (date in form.schedule!!)
                                         NotificationAlarmManager.initAlarm(this@AddFormActivity, date)
-                                    val i = Intent(this@AddFormActivity, HomeActivity::class.java)
-                                    i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                     Handler().postDelayed({
-                                        animateView(progressOverlay, View.GONE, 0f, 200);
+                                        this@AddFormActivity.supportFragmentManager.popBackStack() //Todo: mesh 3aref leh lazem a3ml popstack
+                                        animateView(progressOverlay, View.GONE, 0f, 200)
+                                        val i = Intent(this@AddFormActivity, HomeActivity::class.java)
+                                        i.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                                        i.putExtra("isComingAfterSubmition",true)
                                         startActivity(i)
                                         finish()
-                                        Snackbar.make(it, "Added Successfully !", Snackbar.LENGTH_INDEFINITE).show()
-                                    }, 2500)
+                                    }, 2000)
 
-                                } else {
+
+                                   } else {
                                     Toast.makeText(this@AddFormActivity, "Failed1", Toast.LENGTH_LONG).show()
 
                                 }
