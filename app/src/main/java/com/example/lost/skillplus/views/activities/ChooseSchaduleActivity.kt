@@ -52,7 +52,7 @@ class ChooseSchaduleActivity : AppCompatActivity() {
         for (i in 0 until schadualDatail.size) {
             val model = Schadule()
             model.setSelecteds(isSelect)
-            schadualDatail.get(i).let { model.setSchedule(it.toString()) }
+            schadualDatail[i].let { model.setSchedule(it.toString()) }
             list.add(model)
         }
         return list

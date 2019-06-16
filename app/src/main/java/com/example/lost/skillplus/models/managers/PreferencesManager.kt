@@ -17,7 +17,7 @@ class PreferencesManager(val context: Context) {
         editor.apply()
     }
 
-    inline fun Context.getData(func: SharedPreferences.() -> Unit): Any {
+    private inline fun Context.getData(func: SharedPreferences.() -> Any): Any {
         val sharedPreferences = getSharedPreferences(Keys.MY_PREFERENCES.key, Context.MODE_PRIVATE)!!
         return sharedPreferences.func()
     }
@@ -31,7 +31,7 @@ class PreferencesManager(val context: Context) {
     }
 
     fun getSchedules(): Set<String>? {
-        return context.getData { getStringSet(Keys.SCHEDULES.key, null)!! } as Set<String>
+        return context.getData { getStringSet(Keys.SCHEDULES.key, emptySet())!! } as Set<String>
     }
 
     fun addToSchedules(schedule: Schedule) {

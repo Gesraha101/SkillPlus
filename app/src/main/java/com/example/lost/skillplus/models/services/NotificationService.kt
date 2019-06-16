@@ -95,8 +95,12 @@ class NotificationService : JobIntentService() {
                 .setDefaults(Notification.DEFAULT_LIGHTS)
                 .setSound(Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.packageName + "/" + R.raw.notification))
                 .setAutoCancel(true)
-                .setSmallIcon(R.drawable.ic_today_notification)
                 .setContentIntent(intent)
+        if (body == "You have new notifications. Tab to view") {
+            builder.setSmallIcon(R.drawable.alert)
+        } else {
+            builder.setSmallIcon(R.drawable.ic_today_notification)
+        }
 
         manager.notify(notificationID++, builder.build())
     }

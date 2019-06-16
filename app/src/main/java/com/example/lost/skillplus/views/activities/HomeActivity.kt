@@ -15,9 +15,7 @@ import com.example.lost.skillplus.models.managers.FragmentsManager
 import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.Notification
 import com.example.lost.skillplus.models.services.NotificationScheduler
-import com.example.lost.skillplus.views.fragments.CategoriesFragment
-import com.example.lost.skillplus.views.fragments.FavoritesFragment
-import com.example.lost.skillplus.views.fragments.NotificationsFragment
+import com.example.lost.skillplus.views.fragments.*
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_favorites.*
 import kotlinx.android.synthetic.main.fragment_my_needs.*
@@ -41,11 +39,11 @@ class HomeActivity : NavigationDrawerActivity() {
             this.doubleBackToExitPressedOnce = true
             CookieBar.build(this@HomeActivity)
                     .setCookiePosition(CookieBar.BOTTOM)
-                    .setMessage("Press back again to exit ")
+                    .setMessage("Press back again to exit")
                     .setBackgroundColor(R.color.alert)
                     .show()
             Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
-            } else if (supportFragmentManager.findFragmentByTag("skill_learner_fragment")!!.isVisible) {
+        } else if (supportFragmentManager.findFragmentByTag("skill_learner_fragment")!!.isVisible) {
             main_my_skill.visibility = View.VISIBLE
             sec_my_skill.visibility = View.GONE
 
@@ -97,6 +95,19 @@ class HomeActivity : NavigationDrawerActivity() {
             notifications = intent.getSerializableExtra(Keys.NOTIFICATIONS.key) as ArrayList<Notification>
             PreferencesManager(this@HomeActivity).setLastUpdated(System.currentTimeMillis())
             bottom_nav.selectedItemId = R.id.navigation_notifications
+        } else if (intent.getSerializableExtra(Keys.NOTIFICATION.key) != null) {
+            val notification = intent.getSerializableExtra(Keys.NOTIFICATION.key) as Notification
+            when {
+                notification.skill_name != null -> {                //Skill applied for
+                    FragmentsManager.replaceFragment(supportFragmentManager, SkillLearnersFragment.newInstance(notification.skill_id!!), R.id.fragment_container, null, true)
+                }
+                notification.need_id != null -> {                   //Form proposed
+                    FragmentsManager.replaceFragment(supportFragmentManager, NeedFormFragment.newInstance(notification.need_id, notification.form_id!!), R.id.fragment_container, null, true)
+                }
+                else -> {                                           //Form approved
+                    FragmentsManager.replaceFragment(supportFragmentManager, MentoredNeedsFragment.newInstance(notification.form_id!!), R.id.fragment_container, null, true)
+                }
+            }
         } else {
             bottom_nav.selectedItemId = R.id.navigation_categories
         }

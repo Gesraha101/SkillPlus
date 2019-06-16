@@ -15,12 +15,11 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.enums.Keys
-import com.example.lost.skillplus.models.managers.FragmentsManager
 import com.example.lost.skillplus.models.managers.PreferencesManager
-import com.example.lost.skillplus.models.podos.raw.Notification
 import com.example.lost.skillplus.models.podos.raw.User
-import com.example.lost.skillplus.views.fragments.*
+import com.example.lost.skillplus.views.fragments.CategoriesFragment
+import com.example.lost.skillplus.views.fragments.MyNeedsFragment
+import com.example.lost.skillplus.views.fragments.MySkillsFragment
 import kotlinx.android.synthetic.main.activity_navigation_drawer.*
 import kotlinx.android.synthetic.main.nav_header_navigation_drawer.view.*
 
@@ -46,21 +45,6 @@ open class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavi
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
-
-        if (savedInstanceState != null) {
-            val notification = savedInstanceState.getSerializable(Keys.NOTIFICATION.key) as Notification
-            when {
-                notification.skill_name != null -> {                //Skill applied for
-                    FragmentsManager.replaceFragment(supportFragmentManager, SkillLearnersFragment.newInstance(notification.skill_id!!), R.id.fragment_container, null, true)
-                }
-                notification.need_id != null -> {                   //Form proposed
-                    FragmentsManager.replaceFragment(supportFragmentManager, NeedFormFragment.newInstance(notification.need_id, notification.form_id!!), R.id.fragment_container, null, true)
-                }
-                else -> {                                           //Form approved
-                    FragmentsManager.replaceFragment(supportFragmentManager, MentoredNeedsFragment.newInstance(notification.form_id!!), R.id.fragment_container, null, true)
-                }
-            }
-        }
     }
 
     override fun onBackPressed() {

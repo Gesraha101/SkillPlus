@@ -43,8 +43,8 @@ class SkillLearnersFragment : Fragment() {
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
         val myReq = MyId(skillId)
         Log.d("skillId", skillId.toString())
@@ -52,10 +52,6 @@ class SkillLearnersFragment : Fragment() {
         val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
         val call: Call<MySkillLearnersResponse>? = service?.getMySkillsLearners(myReq)
         call?.enqueue(object : Callback<MySkillLearnersResponse> {
-            override fun onFailure(call: Call<MySkillLearnersResponse>, t: Throwable) {
-                Toast.makeText(activity, "Failed  cause is " + t.cause, Toast.LENGTH_LONG).show()
-            }
-
             override fun onResponse(call: Call<MySkillLearnersResponse>, response: Response<MySkillLearnersResponse>) {
                 if (response.body()?.status == true) {
 
@@ -70,6 +66,10 @@ class SkillLearnersFragment : Fragment() {
                 } else {
                     Toast.makeText(activity, "Error: " + response.body(), Toast.LENGTH_LONG).show()
                 }
+            }
+
+            override fun onFailure(call: Call<MySkillLearnersResponse>, t: Throwable) {
+                Toast.makeText(activity, "Failed  cause is " + t.cause, Toast.LENGTH_LONG).show()
             }
         })
     }
