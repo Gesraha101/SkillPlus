@@ -42,7 +42,9 @@ class NotificationAlarmManager {
         }
 
         fun cancelAlarm(context: Context, timeStamp: Long) {
-            val pendingIntent = PendingIntent.getBroadcast(context, Keys.REQUEST_CODE.ordinal, Intent(context, AlarmReceiver::class.java).setAction(Actions.NOTIFY.name).addCategory("" + timeStamp), PendingIntent.FLAG_UPDATE_CURRENT)
+            val pendingIntent = PendingIntent.getBroadcast(context, Keys.REQUEST_CODE.ordinal, Intent(context, AlarmReceiver::class.java)
+                    .setAction(Actions.NOTIFY.name)
+                    .addCategory("" + timeStamp), PendingIntent.FLAG_UPDATE_CURRENT)
             val am = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             am.cancel(pendingIntent)
             pendingIntent.cancel()
