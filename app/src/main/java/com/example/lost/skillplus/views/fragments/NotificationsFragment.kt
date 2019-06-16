@@ -17,6 +17,7 @@ import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.Notification
 import com.example.lost.skillplus.models.podos.raw.NotificationsRequest
 import com.example.lost.skillplus.models.podos.responses.NotificationsResponse
+import com.example.lost.skillplus.views.activities.HomeActivity
 import kotlinx.android.synthetic.main.fragment_notifications.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -69,21 +70,7 @@ class NotificationsFragment : Fragment() {
                 adapter = NotificationsAdapter(notifications!!)
 
                 (adapter as NotificationsAdapter).onItemClick = { notification ->
-                    lateinit var intent: Intent
-                    when {
-                        //TODO
-                        notification.skill_name != null -> {            //Skill applied for
-                            intent = Intent(activity, ::class.java)
-                            intent.putExtra(Keys.SKILL_ID.key, notification.skill_id)
-                            startActivity(intent)
-                        }
-                        notification.need_id != null -> {               //Form proposed
-
-                        }
-                        else -> {                                       //Form approved
-
-                        }
-                    }
+                    startActivity(Intent(activity, HomeActivity::class.java).putExtra(Keys.NOTIFICATION.key, notification))
                 }
             }
         }
