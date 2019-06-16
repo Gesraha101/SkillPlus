@@ -1,63 +1,77 @@
 package com.example.lost.skillplus.models.managers
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.example.lost.skillplus.models.enums.Keys
+import com.example.lost.skillplus.models.podos.raw.Schedule
 import com.example.lost.skillplus.models.podos.raw.User
 import com.google.gson.Gson
 
 
+class PreferencesManager(val context: Context) {
 
-class PreferencesManager(context: Context) {
-    private val myPreferences = "myPrefs"
-    private val sharedPreferences = context.getSharedPreferences(myPreferences, Context.MODE_PRIVATE)!!
+    private inline fun Context.putData(func: SharedPreferences.Editor.() -> Unit) {
+        val sharedPreferences = getSharedPreferences(Keys.MY_PREFERENCES.key, Context.MODE_PRIVATE)!!
+        val editor = sharedPreferences.edit()
+        editor.func()
+        editor.apply()
+    }
+
+    inline fun Context.getData(func: SharedPreferences.() -> Unit): Any {
+        val sharedPreferences = getSharedPreferences(Keys.MY_PREFERENCES.key, Context.MODE_PRIVATE)!!
+        return sharedPreferences.func()
+    }
 
     fun getLastUpdated(): Long {
-        return sharedPreferences.getLong(Keys.LAST_UPDATED.key, 0)
+        return context.getData { getLong(Keys.LAST_UPDATED.key, 0) } as Long
     }
 
     fun setLastUpdated(lastUpdated: Long) {
-        sharedPreferences.edit().putLong(Keys.LAST_UPDATED.key, lastUpdated)
-                .apply()
+        context.putData { putLong(Keys.LAST_UPDATED.key, lastUpdated) }
+    }
+
+    fun getSchedules(): Set<String>? {
+        return context.getData { getStringSet(Keys.SCHEDULES.key, null)!! } as Set<String>
+    }
+
+    fun addToSchedules(schedule: Schedule) {
+        context.putData { putStringSet(Keys.SCHEDULES.key, getSchedules()?.plusElement(Gson().toJson(schedule))) }
+    }
+
+    fun removeFromSchedules(schedule: Schedule) {
+        context.putData { putStringSet(Keys.SCHEDULES.key, getSchedules()?.plusElement(Gson().toJson(schedule))) }
     }
 
     fun getUser(): User {
-        val json = sharedPreferences.getString(Keys.ACTIVE_USER.key, null)!!
+        val json = context.getData { getString(Keys.ACTIVE_USER.key, null)!! } as String
         return Gson().fromJson<User>(json, User::class.java)
     }
 
     fun setUser(user: User) {
-        val editor = sharedPreferences.edit()
-        editor.putString(Keys.ACTIVE_USER.key, Gson().toJson(user))
-        editor.apply()
+        context.putData { putString(Keys.ACTIVE_USER.key, Gson().toJson(user)) }
     }
 
     fun getFlag(): Boolean {
-        return sharedPreferences.getBoolean("flag", false)
+        return context.getData { getBoolean("flag", false) } as Boolean
     }
 
     fun setFlag(flag: Boolean) {
-        val editor = sharedPreferences.edit()
-        editor.putBoolean("flag", flag)
-        editor.apply()
+        context.putData { putBoolean("flag", flag) }
     }
 
     fun getId(): Int {
-        return sharedPreferences.getInt("id", 0)
+        return context.getData { getInt("id", 0) } as Int
     }
 
     fun setId(id: Int) {
-        val editor = sharedPreferences.edit()
-        editor.putInt("id", id)
-        editor.apply()
+        context.putData { putInt("id", id) }
     }
 
     fun getName(): String? {
-        return sharedPreferences.getString("name", "")
+        return context.getData { getString("name", "") } as String
     }
 
     fun setName(name: String) {
-        val editor = sharedPreferences.edit()
-        editor.putString("name", name)
-        editor.apply()
+        context.putData { putString("name", name) }
     }
 }

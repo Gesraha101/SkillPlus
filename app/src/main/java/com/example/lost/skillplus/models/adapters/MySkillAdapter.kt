@@ -31,7 +31,7 @@ class MySkillAdapter(private val list: List<Skill>) : RecyclerView.Adapter<MySki
 
     override fun getItemCount(): Int = list.size
 
-    inner class SkillViewHolder(inflater: LayoutInflater, parent: ViewGroup) : RecyclerView.ViewHolder(inflater.inflate(R.layout.my_skill_view, parent, false)) {
+    inner class SkillViewHolder(inflater: LayoutInflater, parent: ViewGroup) : RecyclerView.ViewHolder(inflater.inflate(R.layout.post, parent, false)) {
         private var title: TextView? = null
         private var image: ImageView? = null
         private var imageName: ImageView? = null
@@ -48,7 +48,7 @@ class MySkillAdapter(private val list: List<Skill>) : RecyclerView.Adapter<MySki
             image = itemView.findViewById(R.id.post_image)
             imageName = itemView.findViewById(R.id.poster_profile_image)
             price = itemView.findViewById(R.id.skill_price)
-            sessionNumber = itemView.findViewById(R.id.session_number)
+            //        sessionNumber = itemView.findViewById(R.id.session_number)
             extraSession = itemView.findViewById(R.id.extra_session)
             sessionDuration = itemView.findViewById(R.id.session_duration)
             posterRate = itemView.findViewById(R.id.poster_rate)

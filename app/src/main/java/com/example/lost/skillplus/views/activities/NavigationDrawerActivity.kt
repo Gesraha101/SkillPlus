@@ -51,14 +51,13 @@ open class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavi
             val notification = savedInstanceState.getSerializable(Keys.NOTIFICATION.key) as Notification
             when {
                 notification.skill_name != null -> {                //Skill applied for
-                    FragmentsManager.replaceFragment(supportFragmentManager, SkillLearnersFragments.newInstance(notification.skill_id!!), R.id.fragment_container, null, true)
+                    FragmentsManager.replaceFragment(supportFragmentManager, SkillLearnersFragment.newInstance(notification.skill_id!!), R.id.fragment_container, null, true)
                 }
                 notification.need_id != null -> {                   //Form proposed
                     FragmentsManager.replaceFragment(supportFragmentManager, NeedFormFragment.newInstance(notification.need_id, notification.form_id!!), R.id.fragment_container, null, true)
                 }
                 else -> {                                           //Form approved
-                    FragmentsManager.replaceFragment(supportFragmentManager, SkillLearnersFragments.newInstance(notification.skill_id!!), R.id.fragment_container, null, true)
-                    intent.putExtra(Keys.FORM_ID.key, notification.form_id)
+                    FragmentsManager.replaceFragment(supportFragmentManager, MentoredNeedsFragment.newInstance(notification.form_id!!), R.id.fragment_container, null, true)
                 }
             }
         }

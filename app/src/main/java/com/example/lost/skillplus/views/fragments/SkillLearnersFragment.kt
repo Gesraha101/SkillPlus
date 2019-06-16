@@ -21,7 +21,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class SkillLearnersFragments : Fragment() {
+class SkillLearnersFragment : Fragment() {
 
     private var skillId: Int = 0
 
@@ -81,12 +81,12 @@ class SkillLearnersFragments : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment SkillLearnersFragments.
+         * @return A new instance of fragment SkillLearnersFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(skillId: Int) =
-                SkillLearnersFragments().apply {
+                SkillLearnersFragment().apply {
                     arguments = Bundle().apply {
                         putInt(Keys.SKILL_ID.key, skillId)
                     }

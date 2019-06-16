@@ -23,6 +23,7 @@ import com.example.lost.skillplus.models.managers.BackendServiceManager
 import com.example.lost.skillplus.models.managers.NotificationAlarmManager
 import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.NotificationsRequest
+import com.example.lost.skillplus.models.podos.raw.Schedule
 import com.example.lost.skillplus.models.podos.responses.NotificationsResponse
 import com.example.lost.skillplus.views.activities.HomeActivity
 import com.example.lost.skillplus.views.activities.NotificationAlarmActivity
@@ -55,8 +56,15 @@ class NotificationService : JobIntentService() {
                                 generateNotification(getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager, Headers.NOTIFICATION.header, body, alarmPendingIntent)
                                 for (notification in response.body()!!.notifications) {
                                     if (notification.need_id == null) {
-                                        for (date in notification.schedule!!)
-                                            NotificationAlarmManager.initAlarm(context, date)
+                                        for (date in notification.schedule!!) {
+                                            if (notification.skill_name != null) {
+                                                PreferencesManager(context).addToSchedules(Schedule(date, notification.user_id, true))
+                                                NotificationAlarmManager.initAlarm(context, date, PreferencesManager(context).getId(), notification.user_id!!)
+                                            } else {
+                                                PreferencesManager(context).addToSchedules(Schedule(date, notification.user_id, false))
+                                                NotificationAlarmManager.initAlarm(context, date, notification.user_id!!, PreferencesManager(context).getId())
+                                            }
+                                        }
                                     }
                                 }
                             }

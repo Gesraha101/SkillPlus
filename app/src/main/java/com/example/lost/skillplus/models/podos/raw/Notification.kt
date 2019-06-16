@@ -2,7 +2,8 @@ package com.example.lost.skillplus.models.podos.raw
 
 import java.io.Serializable
 
-data class Notification(val user_name: String?,
+data class Notification(val user_id: Int?,
+                        val user_name: String?,
                         val need_name: String?,
                         val skill_name: String?,
                         val user_pic: String?,

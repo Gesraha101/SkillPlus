@@ -1,7 +1,7 @@
 package com.example.lost.skillplus.models.enums
 
 enum class Keys(val key: String) {
-    TIMESTAMPS("timestamps"),
+    SCHEDULES("schedules"),
     FIRE_DATE("fire_date"),
     REQUEST_CODE("request_code"),
     SKILL("skill"),
@@ -13,5 +13,8 @@ enum class Keys(val key: String) {
     IS_SCHEDULED("is_scheduled"),
     SKILL_ID("skill_id"),
     NEED_ID("need_id"),
-    FORM_ID("form_id")
+    FORM_ID("form_id"),
+    LEARNER_ID("learner_id"),
+    TEACHER_ID("teacher_id"),
+    MY_PREFERENCES("myPrefs")
 }

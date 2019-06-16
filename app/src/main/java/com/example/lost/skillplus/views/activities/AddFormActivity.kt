@@ -9,7 +9,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.support.annotation.RequiresApi
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
@@ -159,8 +158,6 @@ class AddFormActivity : AppCompatActivity() {
                         override fun onResponse(call: Call<FormResponse>, response: Response<FormResponse>) {
                             if (response.isSuccessful) {
                                 if (response.body()?.status == true) {
-                                    for (date in form.schedule!!)
-                                        NotificationAlarmManager.initAlarm(this@AddFormActivity, date)
                                     Handler().postDelayed({
                                         this@AddFormActivity.supportFragmentManager.popBackStack() //Todo: mesh 3aref leh lazem a3ml popstack
                                         animateView(progressOverlay, View.GONE, 0f, 200)

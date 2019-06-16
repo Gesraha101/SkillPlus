@@ -3,8 +3,6 @@ package com.example.lost.skillplus.views.activities
 
 import android.app.job.JobScheduler
 import android.os.Build
-import android.graphics.Color
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.BottomNavigationView
@@ -24,6 +22,7 @@ import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_favorites.*
 import kotlinx.android.synthetic.main.fragment_my_needs.*
 import kotlinx.android.synthetic.main.fragment_my_skills.*
+import org.aviran.cookiebar2.CookieBar
 
 
 class HomeActivity : NavigationDrawerActivity() {

@@ -8,9 +8,9 @@ import android.widget.BaseAdapter
 import android.widget.CheckBox
 import android.widget.TextView
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.podos.raw.Schedule
+import com.example.lost.skillplus.models.podos.raw.Schadule
 
-class CustomAdapter(private val context: Context, private var modelArrayList: java.util.ArrayList<Schedule>?) : BaseAdapter() {
+class CustomAdapter(private val context: Context, private var modelArrayList: java.util.ArrayList<Schadule>?) : BaseAdapter() {
 
     override fun getViewTypeCount(): Int {
         return count
@@ -84,7 +84,7 @@ class CustomAdapter(private val context: Context, private var modelArrayList: ja
 
     }
     companion object {
-        lateinit var public_modelArrayList: java.util.ArrayList<Schedule>
+        lateinit var public_modelArrayList: java.util.ArrayList<Schadule>
     }
 
 }

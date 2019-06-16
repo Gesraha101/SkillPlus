@@ -65,7 +65,7 @@ class MySkillsFragment : Fragment() {
                             adapter = MySkillAdapter(response.body()!!.skills)
                             (adapter as MySkillAdapter).onItemClick = { post ->
                                 val bundle = Bundle()
-                                val skillLearnersFragments = SkillLearnersFragments()
+                                val skillLearnersFragments = SkillLearnersFragment()
                                 bundle.putInt("skill_id", post.skill_id!!)
                                 skillLearnersFragments.arguments = bundle
                                 MySkillView?.findViewById<FrameLayout>(R.id.main_my_skill)?.visibility = View.GONE

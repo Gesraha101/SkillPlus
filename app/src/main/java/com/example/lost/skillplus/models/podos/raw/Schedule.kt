@@ -1,23 +1,7 @@
 package com.example.lost.skillplus.models.podos.raw
 
-class Schedule {
+import java.io.Serializable
 
-    var isSelected: Boolean = false
-    var schedulee: String? = null
-    fun getSchedule(): String {
-        return this.schedulee.toString()
-    }
-
-    fun setSchedule(x: String) {
-        this.schedulee = x
-    }
-
-    fun getSelecteds(): Boolean {
-        return isSelected
-    }
-
-    fun setSelecteds(selected: Boolean) {
-        isSelected = selected
-    }
-
-}
+data class Schedule(val date: Long,
+                    val otherId: Int?,
+                    val isMentor: Boolean) : Serializable
