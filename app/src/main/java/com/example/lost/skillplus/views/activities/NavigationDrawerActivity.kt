@@ -1,6 +1,7 @@
 package com.example.lost.skillplus.views.activities
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
@@ -111,6 +112,12 @@ open class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavi
                 Toast.makeText(this@NavigationDrawerActivity, "About Ua", Toast.LENGTH_LONG).show()
 
 
+            }
+            R.id.nav_log_out -> {
+                PreferencesManager(this@NavigationDrawerActivity).setFlag(false)
+
+                startActivity(Intent(this@NavigationDrawerActivity, LoginActivity::class.java))
+                finish()
             }
         }
 

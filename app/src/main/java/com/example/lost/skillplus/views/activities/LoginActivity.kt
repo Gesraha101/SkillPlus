@@ -2,7 +2,6 @@ package com.example.lost.skillplus.views.activities
 
 import RetrofitManager
 import android.content.Intent
-import android.opengl.Visibility
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -58,19 +57,21 @@ class LoginActivity : AppCompatActivity() {
                                     val share = PreferencesManager(this@LoginActivity)
                                     share.setUser(response.body()?.userlogined!!)
                                     share.setId(response.body()?.userlogined?.id!!)
-                                    share.setName(response.body()?.userlogined?.name!!)
+//                                    share.setName(response.body()?.userlogined?.name!!)
                                 } else {
                                     Log.d("user", response.body()?.userlogined?.id.toString())
                                 }
+                                PreferencesManager(this@LoginActivity).setFlag(true)
                                 startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+
                                 finish()
                             } else if (response.body()?.status == false) {
-                                if (response.body()?.message.equals("wrong password")) {
+                                if (response.body()?.message.equals("Wrong password")) {
                                     passEditText.error = "wrong password"
                                     passEditText.startAnimation(shake)
                                     passEditText.requestFocus()
 
-                                } else if (response.body()?.message.equals("wrong email")) {
+                                } else if (response.body()?.message.equals("Email is not registered")) {
                                     emailEditText.error = "Wrong email"
                                     emailEditText.startAnimation(shake)
                                     emailEditText.requestFocus()
@@ -94,7 +95,14 @@ class LoginActivity : AppCompatActivity() {
             val i = Intent(this@LoginActivity, SignUpActivity::class.java)
             startActivity(i)
         }
+    }
 
+    override fun onStart() {
+        super.onStart()
+
+        if (PreferencesManager(this@LoginActivity).getFlag()) {
+            startActivity(Intent(this, HomeActivity::class.java))
+        }
     }
     fun String.isValidEmail(): Boolean = this.isNotEmpty() &&
             Patterns.EMAIL_ADDRESS.matcher(this).matches()

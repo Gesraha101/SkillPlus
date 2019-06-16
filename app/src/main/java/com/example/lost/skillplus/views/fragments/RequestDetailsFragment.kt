@@ -77,6 +77,12 @@ class RequestDetailsFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         listener = null
+
+        //This block recreates the entire category activity to get recent updates (new posts)
+        this.activity!!.finish()
+        this.activity!!.overridePendingTransition(0, 0)
+        this.activity!!.startActivity(this.activity!!.intent)
+        this.activity!!.overridePendingTransition(0, 0)
     }
 
     interface OnFragmentInteractionListener {

@@ -1,5 +1,6 @@
 package com.example.lost.skillplus.models.podos.raw
 
+import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class Skill(val skill_id: Int?,
@@ -16,4 +17,4 @@ data class Skill(val skill_id: Int?,
                  val rate: Float?,
                  val user_name: String?,
                  var schedule: ArrayList<Long>?,
-                 var is_favorite: Boolean?) : Serializable
+                 @SerializedName("is_favorite") var is_favorite: Boolean?) : Serializable

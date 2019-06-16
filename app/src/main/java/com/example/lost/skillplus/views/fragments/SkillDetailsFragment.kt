@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentTransaction
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,10 +14,12 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.managers.BackendServiceManager
+import com.example.lost.skillplus.models.managers.FragmentsManager
 import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.FavouriteUpdate
 import com.example.lost.skillplus.models.podos.raw.Skill
 import com.example.lost.skillplus.models.podos.responses.FavouriteResponse
+import com.example.lost.skillplus.views.activities.CategoryContentActivity
 import com.example.lost.skillplus.views.activities.ChooseSchaduleActivity
 import kotlinx.android.synthetic.main.fragment_skill_details.*
 import retrofit2.Call
@@ -70,8 +73,14 @@ class SkillDetailsFragment : Fragment() {
         }
 
 
-        //Check if this skill is favorite , then display its icon
-        if(skill?.is_favorite!!)
+        //Check if its not null (i.e not coming from favourites)
+        if(skill?.is_favorite!=null) {
+
+            //Check if this skill is favorite , then display its icon
+            if (skill?.is_favorite!!)
+                is_favorite.setBackgroundResource(R.drawable.is_favourite)
+        }
+        else
             is_favorite.setBackgroundResource(R.drawable.is_favourite)
 
 
@@ -133,8 +142,23 @@ class SkillDetailsFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         listener = null
-    }
 
+        //This block recreates the entire category activity to get recent updates (new posts , favourites updates)
+        //Check if its coming from categories)
+        if (this.activity!!.localClassName=="views.activities.CategoryContentActivity") {
+            this.activity!!.finish()
+            this.activity!!.overridePendingTransition(0, 0)
+            this.activity!!.startActivity(this.activity!!.intent)
+            this.activity!!.overridePendingTransition(0, 0)
+        }
+        else {
+            var frg = this.activity!!.supportFragmentManager.findFragmentByTag(R.id.navigation_favorites.toString()) //its tag name is given by it's menu item id
+            var ft: FragmentTransaction = this.activity!!.supportFragmentManager.beginTransaction()
+            ft.detach(frg!!)
+            ft.attach(frg!!)
+            ft.commit()
+        }
+    }
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)

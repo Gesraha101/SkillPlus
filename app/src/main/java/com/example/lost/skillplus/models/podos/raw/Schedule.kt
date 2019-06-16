@@ -3,13 +3,13 @@ package com.example.lost.skillplus.models.podos.raw
 class Schedule {
 
     var isSelected: Boolean = false
-    var animal: String? = null
+    var schedulee: String? = null
     fun getSchedule(): String {
-        return this.animal.toString()
+        return this.schedulee.toString()
     }
 
-    fun setSchedule(animal: String) {
-        this.animal = animal
+    fun setSchedule(x: String) {
+        this.schedulee = x
     }
 
     fun getSelecteds(): Boolean {

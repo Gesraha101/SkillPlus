@@ -6,19 +6,17 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.Toast
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.adapters.MyRequestsAdapter
+import com.example.lost.skillplus.models.adapters.MyNeedFormsAdapter
 import com.example.lost.skillplus.models.managers.BackendServiceManager
-import com.example.lost.skillplus.models.managers.FragmentsManager
-import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.MyId
-import com.example.lost.skillplus.models.podos.responses.MyNeedResponse
-import kotlinx.android.synthetic.main.fragment_my_needs.*
+import com.example.lost.skillplus.models.podos.responses.MyNeedFormsResponse
+import kotlinx.android.synthetic.main.fragment_need_form.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,14 +26,21 @@ import retrofit2.Response
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-
-class MyNeedsFragment : Fragment() {
+/**
+ * A simple [Fragment] subclass.
+ * Activities that contain this fragment must implement the
+ * [NeedFormFragment.OnFragmentInteractionListener] interface
+ * to handle interaction events.
+ * Use the [NeedFormFragment.newInstance] factory method to
+ * create an instance of this fragment.
+ *
+ */
+class NeedFormFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
-    var MyNeedView: View? = null
-
+    var formId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,37 +53,34 @@ class MyNeedsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        MyNeedView = inflater.inflate(R.layout.fragment_my_needs, container, false)
-        return MyNeedView
+        val view = inflater.inflate(R.layout.fragment_need_form, container, false)
+        if (arguments?.getInt(("need_id")) != 0) {
+            formId = arguments!!.getInt("need_id")
+        }
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val myReq = MyId(PreferencesManager(this.context!!).getId())
+
+        val myReq = MyId(formId)
+        Log.d("formId", formId.toString())
 
         val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
-        val call: Call<MyNeedResponse>? = service?.getMyNeeds(myReq)
-        call?.enqueue(object : Callback<MyNeedResponse> {
-            override fun onFailure(call: Call<MyNeedResponse>, t: Throwable) {
+        val call: Call<MyNeedFormsResponse>? = service?.getMyNeedForms(myReq)
+        call?.enqueue(object : Callback<MyNeedFormsResponse> {
+            override fun onFailure(call: Call<MyNeedFormsResponse>, t: Throwable) {
                 Toast.makeText(activity, "Failed  cause is " + t.cause, Toast.LENGTH_LONG).show()
             }
 
-            override fun onResponse(call: Call<MyNeedResponse>, response: Response<MyNeedResponse>) {
+            override fun onResponse(call: Call<MyNeedFormsResponse>, response: Response<MyNeedFormsResponse>) {
                 if (response.body()?.status == true) {
-                    rv_my_needs.apply {
+                    rv_my_need_forms.apply {
                         layoutManager = LinearLayoutManager(activity)
-                        if (response.body()?.sqlresponse!!.isNotEmpty()) {
-                            adapter = MyRequestsAdapter(response.body()!!.sqlresponse)
-                            (adapter as MyRequestsAdapter).onItemClick = { post ->
-                                val bundle = Bundle()
-                                val needFormFragment = NeedFormFragment()
-                                bundle.putInt("need_id", post.need_id)
-                                needFormFragment.arguments = bundle
-                                MyNeedView?.findViewById<FrameLayout>(R.id.main_my_need)?.visibility = View.GONE
-                                MyNeedView?.findViewById<FrameLayout>(R.id.sec_my_need)?.visibility = View.VISIBLE
-                                // fragmentManager?.beginTransaction()?.replace(R.id.sec_my_need, needFormFragment)?.commit()
-                                FragmentsManager.replaceFragment(this@MyNeedsFragment.fragmentManager!!, needFormFragment, R.id.sec_my_need, "need_form_fragment", true)
-                            }
+                        if (response.body()?.sqlresponse != null) {
+                            adapter = MyNeedFormsAdapter(response?.body()!!.sqlresponse)
+
+                            //TODO implement MyNeedsAdapter or use RequestsAdapter
                         }
                     }
                 } else {
@@ -88,6 +90,7 @@ class MyNeedsFragment : Fragment() {
         })
     }
 
+    // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
@@ -106,21 +109,28 @@ class MyNeedsFragment : Fragment() {
         listener = null
     }
 
-
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
     }
 
     companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param param1 Parameter 1.
+         * @param param2 Parameter 2.
+         * @return A new instance of fragment NeedFormFragment.
+         */
+        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-                MyNeedsFragment().apply {
+                NeedFormFragment().apply {
                     arguments = Bundle().apply {
                         putString(ARG_PARAM1, param1)
                         putString(ARG_PARAM2, param2)
                     }
                 }
     }
-
 }

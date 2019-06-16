@@ -1,6 +1,8 @@
 package com.example.lost.skillplus.views.activities
 
 import RetrofitManager
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Build
@@ -56,26 +58,31 @@ class AddFormActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_form)
         setSupportActionBar(toolbar)
 
+        var progressOverlay : View = findViewById(R.id.progress_overlay)
+
         rV_Schedule.apply {
             layoutManager = LinearLayoutManager(this@AddFormActivity)
             mAdapter = ScheduleAdapter(dayTimeList)
             rV_Schedule.adapter = mAdapter
         }
-        val adapter = ArrayAdapter.createFromResource(this, com.example.lost.skillplus.R.array.week_list, android.R.layout.simple_spinner_item)
+        val adapter = ArrayAdapter.createFromResource(this, R.array.week_list, android.R.layout.simple_spinner_item)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         spinner.adapter = adapter
+        spinner.setSelection(0)
         spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                eT_Days.hint = "Click to select a day"
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                dayPicked = position + 1
-                eT_Days.hint = ""
+                if(position>0)
+                    dayPicked = position
+                else
+                    dayPicked = null
             }
         }
         val hours = findViewById<TextView>(R.id.eT_Hours)
+        hours.text="Tap to set time"
         hours.setOnClickListener {
             val c = Calendar.getInstance()
             val hour = c.get(Calendar.HOUR)
@@ -87,6 +94,8 @@ class AddFormActivity : AppCompatActivity() {
                         hourPicked = h
                         minutePicked = m
                     }), hour, minute, true)
+            var date = Calendar.getInstance()
+            tpd.updateTime(date.time.hours,date.time.minutes)
             tpd.show()
 
         }
@@ -103,6 +112,13 @@ class AddFormActivity : AppCompatActivity() {
                 mAdapter.notifyDataSetChanged()
                 dayTimeArray.add(arrayOf(dayPicked, hourPicked, minutePicked))
                 mScrollView.post { mScrollView.fullScroll(ScrollView.FOCUS_DOWN) }
+
+                //Empty the fields
+                hours.text="Tap to set time"
+                hourPicked=null
+                minutePicked=null
+                spinner.setSelection(0)
+                dayPicked=null
             }
         }
 
@@ -136,6 +152,8 @@ class AddFormActivity : AppCompatActivity() {
                     badEntry = true
                 }
                 if (!badEntry) {
+                    progressOverlay.visibility = View.VISIBLE
+                    animateView(progressOverlay, View.VISIBLE, 0.4f, 200)
                     var form = Form(
                             eT_NumberOfSessions.text.toString().toInt(),
                             eT_SessionDuration.text.toString().toFloat(),
@@ -153,15 +171,18 @@ class AddFormActivity : AppCompatActivity() {
                                 if (response.body()?.status == true) {
                                     for (date in form.schedule!!)
                                         NotificationAlarmManager.initAlarm(this@AddFormActivity, date)
-                                    val i = Intent(this@AddFormActivity, HomeActivity::class.java)
-                                    i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                    Snackbar.make(it, "Added Successfully !", Snackbar.LENGTH_INDEFINITE).show()
                                     Handler().postDelayed({
+                                        this@AddFormActivity.supportFragmentManager.popBackStack() //Todo: mesh 3aref leh lazem a3ml popstack
+                                        animateView(progressOverlay, View.GONE, 0f, 200)
+                                        val i = Intent(this@AddFormActivity, HomeActivity::class.java)
+                                        i.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                                        i.putExtra("isComingAfterSubmition",true)
                                         startActivity(i)
                                         finish()
-                                    }, 2500)
+                                    }, 2000)
 
-                                } else {
+
+                                   } else {
                                     Toast.makeText(this@AddFormActivity, "Failed1", Toast.LENGTH_LONG).show()
 
                                 }
@@ -182,5 +203,21 @@ class AddFormActivity : AppCompatActivity() {
 
             }
         }
+    fun animateView(view: View, toVisibility: Int, toAlpha: Float, duration: Int) {
+        val show = toVisibility == View.VISIBLE
+        if (show) {
+            view.alpha = 0f
+        }
+        view.visibility = View.VISIBLE
+        view.animate()
+                .setDuration(duration.toLong())
+                .alpha(if (show) toAlpha else 0f)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        view.visibility = toVisibility
+                    }
+                })
     }
+}
+
 
