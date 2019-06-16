@@ -57,6 +57,9 @@ interface BackendServiceManager {
     @POST("/skill/mine")
     fun getMySkills(@Body myId: MyId): Call<MySkillResponse>
 
+    @POST("/skill/current")
+    fun getCurrentSkills(@Body myId: MyId): Call<CurrentSkillResponse>
+
     @POST("/skill/learners")
     fun getMySkillsLearners(@Body myId: MyId): Call<MySkillLearnersResponse>
 

@@ -104,7 +104,5 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent(this, HomeActivity::class.java))
         }
     }
-    fun String.isValidEmail(): Boolean = this.isNotEmpty() &&
-            Patterns.EMAIL_ADDRESS.matcher(this).matches()
 }
 

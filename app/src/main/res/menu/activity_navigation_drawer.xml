@@ -14,8 +14,11 @@
                 android:id="@+id/nav_needs"
                 android:title="@string/needs"/>
         <item
-                android:id="@+id/nav_active_jobs"
-                android:title="@string/active_jobs"/>
+                android:id="@+id/current_need"
+                android:title="Current Need"/>
+        <item
+                android:id="@+id/current_skill"
+                android:title="Current Skill"/>
     </group>
 
     <item android:title="Help">
