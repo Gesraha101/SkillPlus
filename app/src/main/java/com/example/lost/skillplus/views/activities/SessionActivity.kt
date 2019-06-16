@@ -51,7 +51,7 @@ class SessionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_session)
-        key = intent!!.getStringExtra(Keys.FIRE_DATE.key)
+        key = intent!!.getStringExtra(Keys.LEARNER_ID.key) + intent!!.getStringExtra(Keys.FIRE_DATE.key) + intent!!.getStringExtra(Keys.TEACHER_ID.key)
         if (checkSelfPermission(REQUESTED_PERMISSIONS[0], PERMISSION_REQ_ID) &&
                 checkSelfPermission(REQUESTED_PERMISSIONS[1], PERMISSION_REQ_ID) &&
                 checkSelfPermission(REQUESTED_PERMISSIONS[2], PERMISSION_REQ_ID)) {
@@ -66,7 +66,7 @@ class SessionActivity : AppCompatActivity() {
         joinChannel(channelId)
     }
 
-    fun checkSelfPermission(permission: String, requestCode: Int): Boolean {
+    private fun checkSelfPermission(permission: String, requestCode: Int): Boolean {
         Log.i(LOG_TAG, "checkSelfPermission $permission $requestCode")
         if (ContextCompat.checkSelfPermission(this,
                         permission) != PackageManager.PERMISSION_GRANTED) {
@@ -95,7 +95,7 @@ class SessionActivity : AppCompatActivity() {
         }
     }
 
-    fun showLongToast(msg: String) {
+    private fun showLongToast(msg: String) {
         this.runOnUiThread { Toast.makeText(applicationContext, msg, Toast.LENGTH_LONG).show() }
     }
 
@@ -138,11 +138,11 @@ class SessionActivity : AppCompatActivity() {
         mRtcEngine!!.muteLocalAudioStream(iv.isSelected)
     }
 
-    fun onSwitchCameraClicked(view: View) {
+    fun onSwitchCameraClicked() {
         mRtcEngine!!.switchCamera()
     }
 
-    fun onEncCallClicked(view: View) {
+    fun onEncCallClicked() {
         finish()
     }
 

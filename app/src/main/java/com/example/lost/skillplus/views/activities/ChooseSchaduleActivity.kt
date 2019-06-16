@@ -7,13 +7,14 @@ import android.widget.Button
 import android.widget.ListView
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.adapters.CustomAdapter
-import com.example.lost.skillplus.models.podos.raw.Schedule
+import com.example.lost.skillplus.models.enums.Keys
+import com.example.lost.skillplus.models.podos.raw.Schadule
 import com.example.lost.skillplus.models.podos.raw.Skill
 import java.util.*
 
 class ChooseSchaduleActivity : AppCompatActivity() {
     private var lv: ListView? = null
-    private var modelArrayList: ArrayList<Schedule>? = null
+    private var modelArrayList: ArrayList<Schadule>? = null
     private var customAdapter: CustomAdapter? = null
     private var btnnext: Button? = null
     private var skillFromDetailsFragment : Skill? = null
@@ -40,18 +41,18 @@ class ChooseSchaduleActivity : AppCompatActivity() {
 
             val intent = Intent(this@ChooseSchaduleActivity, PaymentActivity::class.java)
             if(skillFromDetailsFragment?.skill_id != null) {
-                intent.putExtra("skillId", skillFromDetailsFragment!!.skill_id)
+                intent.putExtra(Keys.SKILL.key, skillFromDetailsFragment)
                 startActivity(intent)
             }
         }
     }
 
-    private fun getModel(isSelect: Boolean): ArrayList<Schedule> {
-        val list = ArrayList<Schedule>()
+    private fun getModel(isSelect: Boolean): ArrayList<Schadule> {
+        val list = ArrayList<Schadule>()
         for (i in 0 until schadualDatail.size) {
-            val model = Schedule()
+            val model = Schadule()
             model.setSelecteds(isSelect)
-            schadualDatail.get(i).let { model.setSchedule(it.toString()) }
+            schadualDatail[i].let { model.setSchedule(it.toString()) }
             list.add(model)
         }
         return list

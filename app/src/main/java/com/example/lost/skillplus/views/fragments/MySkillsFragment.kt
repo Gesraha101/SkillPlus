@@ -1,8 +1,6 @@
 package com.example.lost.skillplus.views.fragments
 
 import RetrofitManager
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -32,7 +30,6 @@ class MySkillsFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var listener: OnFragmentInteractionListener? = null
     var MySkillView: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,7 +65,7 @@ class MySkillsFragment : Fragment() {
                             adapter = MySkillAdapter(response.body()!!.skills)
                             (adapter as MySkillAdapter).onItemClick = { post ->
                                 val bundle = Bundle()
-                                val skillLearnersFragments = SkillLearnersFragments()
+                                val skillLearnersFragments = SkillLearnersFragment()
                                 bundle.putInt("skill_id", post.skill_id!!)
                                 skillLearnersFragments.arguments = bundle
                                 MySkillView?.findViewById<FrameLayout>(R.id.main_my_skill)?.visibility = View.GONE
@@ -83,32 +80,6 @@ class MySkillsFragment : Fragment() {
                 }
             }
         })
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
-    }
-
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }
-    interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
-
-
     }
 
     companion object {

@@ -1,8 +1,7 @@
 package com.example.lost.skillplus.views.activities
 
 
-import android.content.IntentFilter
-import android.net.Uri
+import android.app.job.JobScheduler
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -10,19 +9,25 @@ import android.support.design.widget.BottomNavigationView
 import android.view.MenuItem
 import android.view.View
 import com.example.lost.skillplus.R
+import com.example.lost.skillplus.models.enums.Ids
 import com.example.lost.skillplus.models.enums.Keys
 import com.example.lost.skillplus.models.managers.FragmentsManager
+import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.Notification
-import com.example.lost.skillplus.models.receivers.NotificationReceiver
+import com.example.lost.skillplus.models.services.NotificationScheduler
 import com.example.lost.skillplus.views.fragments.*
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_favorites.*
 import kotlinx.android.synthetic.main.fragment_my_needs.*
 import kotlinx.android.synthetic.main.fragment_my_skills.*
+import org.aviran.cookiebar2.CookieBar
 
-class HomeActivity : NavigationDrawerActivity(), MySkillsFragment.OnFragmentInteractionListener, NeedFormFragment.OnFragmentInteractionListener,
-        SkillLearnersFragments.OnFragmentInteractionListener, MyNeedsFragment.OnFragmentInteractionListener, SkillDetailsFragment.OnFragmentInteractionListener {
+
+class HomeActivity : NavigationDrawerActivity() {
+
     private var doubleBackToExitPressedOnce = false
+    private lateinit var notifications: ArrayList<Notification>
+
     override fun onBackPressed() {
 
         if (supportFragmentManager.backStackEntryCount == 0) {//Check if there are no fragments at backstack
@@ -34,11 +39,11 @@ class HomeActivity : NavigationDrawerActivity(), MySkillsFragment.OnFragmentInte
             this.doubleBackToExitPressedOnce = true
             CookieBar.build(this@HomeActivity)
                     .setCookiePosition(CookieBar.BOTTOM)
-                    .setMessage("Press back again to exit ")
+                    .setMessage("Press back again to exit")
                     .setBackgroundColor(R.color.alert)
                     .show()
             Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
-            } else if (supportFragmentManager.findFragmentByTag("skill_learner_fragment")!!.isVisible) {
+        } else if (supportFragmentManager.findFragmentByTag("skill_learner_fragment")!!.isVisible) {
             main_my_skill.visibility = View.VISIBLE
             sec_my_skill.visibility = View.GONE
 
@@ -53,29 +58,23 @@ class HomeActivity : NavigationDrawerActivity(), MySkillsFragment.OnFragmentInte
             supportFragmentManager.popBackStack()
         }
     }
-
-    override fun onFragmentInteraction(uri: Uri) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     private fun loadFragment(item: MenuItem) {
         val tag = item.itemId.toString()
         val fragment = supportFragmentManager.findFragmentByTag(tag) ?: when (item.itemId) {
-            R.id.navigation_home -> {
+            R.id.navigation_categories -> {
                 CategoriesFragment.newInstance()
             }
             R.id.navigation_favorites-> {
                 FavoritesFragment.newInstance()
             }
             R.id.navigation_notifications -> {
-                NotificationsFragment.newInstance(null)
+                NotificationsFragment.newInstance(notifications)
             }
             else -> {
                 null
             }
         }
 
-        // replace fragment
         if (fragment != null) {
             FragmentsManager.replaceFragment(supportFragmentManager, fragment, R.id.fragment_container, tag, false)
         }
@@ -89,12 +88,29 @@ class HomeActivity : NavigationDrawerActivity(), MySkillsFragment.OnFragmentInte
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.activity_home)
         super.onCreate(savedInstanceState)
-        if (intent.getSerializableExtra(Keys.NOTIFICATIONS.key) != null) {
-            FragmentsManager.replaceFragment(supportFragmentManager, NotificationsFragment.newInstance(intent.getSerializableExtra(Keys.NOTIFICATIONS.key) as ArrayList<Notification>?), R.id.fragment_container, null, false)
-        } else {
-            FragmentsManager.replaceFragment(supportFragmentManager, CategoriesFragment.newInstance(), R.id.fragment_container, null, false)
-        }
 
+        bottom_nav.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+
+        if (intent.getSerializableExtra(Keys.NOTIFICATIONS.key) != null) {
+            notifications = intent.getSerializableExtra(Keys.NOTIFICATIONS.key) as ArrayList<Notification>
+            PreferencesManager(this@HomeActivity).setLastUpdated(System.currentTimeMillis())
+            bottom_nav.selectedItemId = R.id.navigation_notifications
+        } else if (intent.getSerializableExtra(Keys.NOTIFICATION.key) != null) {
+            val notification = intent.getSerializableExtra(Keys.NOTIFICATION.key) as Notification
+            when {
+                notification.skill_name != null -> {                //Skill applied for
+                    FragmentsManager.replaceFragment(supportFragmentManager, SkillLearnersFragment.newInstance(notification.skill_id!!), R.id.fragment_container, null, true)
+                }
+                notification.need_id != null -> {                   //Form proposed
+                    FragmentsManager.replaceFragment(supportFragmentManager, NeedFormFragment.newInstance(notification.need_id, notification.form_id!!), R.id.fragment_container, null, true)
+                }
+                else -> {                                           //Form approved
+                    FragmentsManager.replaceFragment(supportFragmentManager, MentoredNeedsFragment.newInstance(notification.form_id!!), R.id.fragment_container, null, true)
+                }
+            }
+        } else {
+            bottom_nav.selectedItemId = R.id.navigation_categories
+        }
         bottom_nav.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
         if(intent.getBooleanExtra("isComingAfterSubmition",false))
@@ -104,11 +120,10 @@ class HomeActivity : NavigationDrawerActivity(), MySkillsFragment.OnFragmentInte
                     .setMessage("Submitted successfully !")
                     .show()
         }
-        /*val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            val notifyAt = System.currentTimeMillis() + AlarmManager.INTERVAL_FIFTEEN_MINUTES / 15
-            am.setExact(AlarmManager.RTC_WAKEUP, notifyAt, PendingIntent.getBroadcast(this, Keys.REQUEST_CODE.ordinal, Intent(this, AlarmReceiver::class.java).setAction(Actions.NOTIFY.action).putExtra(Keys.FIRE_DATE.key, notifyAt).addCategory("" + notifyAt), PendingIntent.FLAG_UPDATE_CURRENT))
-            am.setExact(AlarmManager.RTC_WAKEUP, notifyAt + AlarmManager.INTERVAL_FIFTEEN_MINUTES / 15, PendingIntent.getBroadcast(this, Keys.REQUEST_CODE.ordinal, Intent(this, AlarmReceiver::class.java).setAction(Actions.ALERT.action).putExtra(Keys.FIRE_DATE.key, notifyAt).addCategory("" + notifyAt), PendingIntent.FLAG_UPDATE_CURRENT))
-        }*/
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            if (getSystemService(JobScheduler::class.java).getPendingJob(Ids.JOB.ordinal) == null)
+                NotificationScheduler.scheduleJob(this@HomeActivity, null)
+        }
     }
 }

@@ -17,6 +17,7 @@ object RetrofitManager {
 
             return retrofit
         }
+
     fun getInstance(): Retrofit? {
         return retrofitInstance
     }

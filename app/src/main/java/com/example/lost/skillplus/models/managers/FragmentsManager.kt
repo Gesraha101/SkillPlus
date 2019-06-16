@@ -8,7 +8,7 @@ class FragmentsManager {
 
     companion object {
 
-        inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit, addToBackStack: Boolean) {
+        private inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit, addToBackStack: Boolean) {
             val fragmentTransaction = beginTransaction()
             fragmentTransaction.func()
             if (addToBackStack)

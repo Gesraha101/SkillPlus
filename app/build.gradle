@@ -9,7 +9,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.lost.skillplus"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 28
         multiDexEnabled true
         versionCode 1

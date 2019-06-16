@@ -1,6 +1,7 @@
 package com.example.lost.skillplus.views.fragments
 
 import RetrofitManager
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -8,8 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.work.Constraints
-import androidx.work.NetworkType
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.adapters.NotificationsAdapter
 import com.example.lost.skillplus.models.enums.Keys
@@ -18,6 +17,7 @@ import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.Notification
 import com.example.lost.skillplus.models.podos.raw.NotificationsRequest
 import com.example.lost.skillplus.models.podos.responses.NotificationsResponse
+import com.example.lost.skillplus.views.activities.HomeActivity
 import kotlinx.android.synthetic.main.fragment_notifications.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -70,14 +70,10 @@ class NotificationsFragment : Fragment() {
                 adapter = NotificationsAdapter(notifications!!)
 
                 (adapter as NotificationsAdapter).onItemClick = { notification ->
-//                    if (notification.skill_name != null)
-//                    val intent = Intent(activity, CategoryContentActivity::class.java)
-//                    intent.putExtra("CATEGORY", category)
-//                    startActivity(intent)
+                    startActivity(Intent(activity, HomeActivity::class.java).putExtra(Keys.NOTIFICATION.key, notification))
                 }
             }
         }
-        val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED)
     }
 
     companion object {
