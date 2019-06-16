@@ -12,6 +12,7 @@ import android.widget.Toast
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.adapters.MyRequestsAdapter
 import com.example.lost.skillplus.models.managers.BackendServiceManager
+import com.example.lost.skillplus.models.managers.FragmentsManager
 import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.MyId
 import com.example.lost.skillplus.models.podos.responses.MyNeedResponse
@@ -30,7 +31,7 @@ class MyNeedsFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    var kk: View? = null
+    var MyNeedView: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,8 +44,8 @@ class MyNeedsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        kk = inflater.inflate(R.layout.fragment_my_needs, container, false)
-        return kk
+        MyNeedView = inflater.inflate(R.layout.fragment_my_needs, container, false)
+        return MyNeedView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -69,11 +70,11 @@ class MyNeedsFragment : Fragment() {
                                 val needFormFragment = NeedFormFragment()
                                 bundle.putInt("need_id", post.need_id)
                                 needFormFragment.arguments = bundle
-                                kk?.findViewById<FrameLayout>(R.id.main_my_need)?.visibility = View.GONE
-                                kk?.findViewById<FrameLayout>(R.id.sec_my_need)?.visibility = View.VISIBLE
-                                fragmentManager?.beginTransaction()?.replace(R.id.sec_my_need, needFormFragment)?.commit()
+                                MyNeedView?.findViewById<FrameLayout>(R.id.main_my_need)?.visibility = View.GONE
+                                MyNeedView?.findViewById<FrameLayout>(R.id.sec_my_need)?.visibility = View.VISIBLE
+                                // fragmentManager?.beginTransaction()?.replace(R.id.sec_my_need, needFormFragment)?.commit()
+                                FragmentsManager.replaceFragment(this@MyNeedsFragment.fragmentManager!!, needFormFragment, R.id.sec_my_need, "need_form_fragment", true)
                             }
-                            //TODO implement MyNeedsAdapter or use RequestsAdapter
                         }
                     }
                 } else {

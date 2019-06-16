@@ -8,7 +8,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.BottomNavigationView
-import android.support.design.widget.Snackbar
 import android.view.MenuItem
 import android.view.View
 import com.example.lost.skillplus.R
@@ -23,7 +22,8 @@ import com.example.lost.skillplus.views.fragments.FavoritesFragment
 import com.example.lost.skillplus.views.fragments.NotificationsFragment
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_favorites.*
-import org.aviran.cookiebar2.CookieBar
+import kotlinx.android.synthetic.main.fragment_my_needs.*
+import kotlinx.android.synthetic.main.fragment_my_skills.*
 
 
 class HomeActivity : NavigationDrawerActivity() {
@@ -46,8 +46,15 @@ class HomeActivity : NavigationDrawerActivity() {
                     .setBackgroundColor(R.color.alert)
                     .show()
             Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
-            }
-        else {
+            } else if (supportFragmentManager.findFragmentByTag("skill_learner_fragment")!!.isVisible) {
+            main_my_skill.visibility = View.VISIBLE
+            sec_my_skill.visibility = View.GONE
+
+        } else if (supportFragmentManager.findFragmentByTag("need_form_fragment")!!.isVisible) {
+            main_my_need.visibility = View.VISIBLE
+            sec_my_need.visibility = View.GONE
+
+        } else {
             if(supportFragmentManager.findFragmentByTag("details_frag_from_favorites")!!.isVisible)
                 rv_favorites.visibility=View.VISIBLE
 

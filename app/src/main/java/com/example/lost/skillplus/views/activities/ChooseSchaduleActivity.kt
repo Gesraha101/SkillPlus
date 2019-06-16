@@ -3,7 +3,6 @@ package com.example.lost.skillplus.views.activities
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.widget.Button
 import android.widget.ListView
 import com.example.lost.skillplus.R
@@ -33,13 +32,15 @@ class ChooseSchaduleActivity : AppCompatActivity() {
         customAdapter = CustomAdapter(this, modelArrayList!!)
         lv!!.adapter = customAdapter
 
+//
+//        if(modelArrayList!!.isEmpty()) {
+//           btnnext.visibility = View.GONE
+//        }
         btnnext!!.setOnClickListener {
+
             val intent = Intent(this@ChooseSchaduleActivity, PaymentActivity::class.java)
             if(skillFromDetailsFragment?.skill_id != null) {
-                Log.d("SchaduleActivity", skillFromDetailsFragment?.skill_id.toString())
-                //       Toast.makeText(this@SchaduleActivity, skillFromDetailsFragment!!.cat_id , Toast.LENGTH_LONG)
                 intent.putExtra("skillId", skillFromDetailsFragment!!.skill_id)
-                Log.d("SchaduleActivity", "skill from intent put extra " + skillFromDetailsFragment!!.skill_id.toString())
                 startActivity(intent)
             }
         }
@@ -48,7 +49,6 @@ class ChooseSchaduleActivity : AppCompatActivity() {
     private fun getModel(isSelect: Boolean): ArrayList<Schedule> {
         val list = ArrayList<Schedule>()
         for (i in 0 until schadualDatail.size) {
-
             val model = Schedule()
             model.setSelecteds(isSelect)
             schadualDatail.get(i).let { model.setSchedule(it.toString()) }

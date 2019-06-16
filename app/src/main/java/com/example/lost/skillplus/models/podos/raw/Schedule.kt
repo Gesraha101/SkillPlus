@@ -8,8 +8,8 @@ class Schedule {
         return this.schedulee.toString()
     }
 
-    fun setSchedule(animal: String) {
-        this.schedulee = animal
+    fun setSchedule(x: String) {
+        this.schedulee = x
     }
 
     fun getSelecteds(): Boolean {

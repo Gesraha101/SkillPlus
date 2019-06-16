@@ -7,10 +7,12 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.Toast
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.adapters.MySkillAdapter
 import com.example.lost.skillplus.models.managers.BackendServiceManager
+import com.example.lost.skillplus.models.managers.FragmentsManager
 import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.MyId
 import com.example.lost.skillplus.models.podos.responses.MySkillResponse
@@ -28,6 +30,7 @@ class MySkillsFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    var MySkillView: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,9 +43,9 @@ class MySkillsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_skills, container, false)
+        MySkillView = inflater.inflate(R.layout.fragment_my_skills, container, false)
+        return MySkillView
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -65,7 +68,10 @@ class MySkillsFragment : Fragment() {
                                 val skillLearnersFragments = SkillLearnersFragments()
                                 bundle.putInt("skill_id", post.skill_id!!)
                                 skillLearnersFragments.arguments = bundle
-                                fragmentManager?.beginTransaction()?.replace(R.id.fragment_container, skillLearnersFragments)?.commit()
+                                MySkillView?.findViewById<FrameLayout>(R.id.main_my_skill)?.visibility = View.GONE
+                                MySkillView?.findViewById<FrameLayout>(R.id.sec_my_skill)?.visibility = View.VISIBLE
+                                FragmentsManager.replaceFragment(this@MySkillsFragment.fragmentManager!!, skillLearnersFragments, R.id.fragment_container, "skill_learner_fragment", true)
+                                //   fragmentManager?.beginTransaction()?.replace(R.id.fragment_container, skillLearnersFragments)?.commit()
                             }
                         }
                     }

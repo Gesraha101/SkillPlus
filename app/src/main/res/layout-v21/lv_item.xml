@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+              android:orientation="horizontal" android:layout_width="match_parent"
+              android:layout_height="match_parent">
 
 
     <android.support.v7.widget.CardView
@@ -11,21 +11,22 @@
             android:layout_margin="16dp"
             card_view:cardCornerRadius="8dp"
             card_view:cardElevation="8dp"
-            card_view:cardBackgroundColor="@color/colorCardBackground">
+    >
         <CheckBox
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
+                android:shadowColor="@color/colorPrimaryDark"
                 android:id="@+id/cb"/>
         <TextView
                 android:id="@+id/date"
                 android:layout_width="364dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="@string/schadual_time"
+                android:textColor="@color/colorPrimaryDark"
                 android:layout_marginLeft="50dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textSize="18sp"
-                android:textStyle="bold"
-        />
+                android:textStyle="bold"/>
 
     </android.support.v7.widget.CardView>
 </LinearLayout>
