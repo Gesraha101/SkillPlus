@@ -12,7 +12,6 @@ import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.enums.Ids
 import com.example.lost.skillplus.models.enums.Keys
 import com.example.lost.skillplus.models.managers.FragmentsManager
-import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.Notification
 import com.example.lost.skillplus.models.services.NotificationScheduler
 import com.example.lost.skillplus.views.fragments.*
@@ -93,7 +92,6 @@ class HomeActivity : NavigationDrawerActivity() {
 
         if (intent.getSerializableExtra(Keys.NOTIFICATIONS.key) != null) {
             notifications = intent.getSerializableExtra(Keys.NOTIFICATIONS.key) as ArrayList<Notification>
-            PreferencesManager(this@HomeActivity).setLastUpdated(System.currentTimeMillis())
             bottom_nav.selectedItemId = R.id.navigation_notifications
         } else if (intent.getSerializableExtra(Keys.NOTIFICATION.key) != null) {
             val notification = intent.getSerializableExtra(Keys.NOTIFICATION.key) as Notification
@@ -117,7 +115,9 @@ class HomeActivity : NavigationDrawerActivity() {
         {
             CookieBar.build(this@HomeActivity)
                     .setCookiePosition(CookieBar.BOTTOM)
-                    .setMessage("Submitted successfully !")
+                    .setBackgroundColor(R.color.colorPrimaryDark)
+                    .setMessageColor(R.color.colorTabBarBackground)
+                    .setMessage("Submitted successfully!")
                     .show()
         }
 

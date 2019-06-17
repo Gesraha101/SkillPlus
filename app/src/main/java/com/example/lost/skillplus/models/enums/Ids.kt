@@ -5,5 +5,6 @@ enum class Ids(val id: String) {
     VISIBLE("Session Reminder"),
     JOB("job"),
     WORK("work"),
-    PUSH_NOTIFICATION("push_notifications")
+    PUSH_NOTIFICATION("push_notifications"),
+    ALERT_NOTIFICATION("push_notifications")
 }

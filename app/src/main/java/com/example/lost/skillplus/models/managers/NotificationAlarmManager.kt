@@ -10,6 +10,7 @@ import com.example.lost.skillplus.models.receivers.AlarmReceiver
 import org.joda.time.DateTime
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.abs
 
 class NotificationAlarmManager {
 
@@ -25,6 +26,16 @@ class NotificationAlarmManager {
                 arr += time
             }
             return arr
+        }
+
+        fun isValidDate(schedules: ArrayList<Array<Int?>>, date: Array<Int?>, duration: Int): Boolean {
+            val dates = convertToLong(schedules)
+            val longDate = convertToLong(arrayListOf(date))
+            for (time in dates) {
+                if (abs(time - longDate[0]) < duration * AlarmManager.INTERVAL_HOUR)
+                    return false
+            }
+            return true
         }
 
         fun initAlarm(context: Context, fireAt: Long, teacherId: Int, learnerId: Int) {

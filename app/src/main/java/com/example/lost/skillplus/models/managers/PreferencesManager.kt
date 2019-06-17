@@ -22,6 +22,14 @@ class PreferencesManager(val context: Context) {
         return sharedPreferences.func()
     }
 
+    fun isNotified(): Boolean {
+        return context.getData { getBoolean(Keys.IS_NOTIFIED.key, false) } as Boolean
+    }
+
+    fun setIsNotified(value: Boolean) {
+        return context.putData { putBoolean(Keys.IS_NOTIFIED.key, value) }
+    }
+
     fun getLastUpdated(): Long {
         return context.getData { getLong(Keys.LAST_UPDATED.key, 0) } as Long
     }

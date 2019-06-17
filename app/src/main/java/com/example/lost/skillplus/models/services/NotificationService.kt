@@ -48,7 +48,8 @@ class NotificationService : JobIntentService() {
 
                     override fun onResponse(call: Call<NotificationsResponse>, response: Response<NotificationsResponse>) {
                         if (response.isSuccessful) {
-                            if (response.body()?.notifications!!.size != 0) {
+                            if (response.body()?.notifications!!.size != 0 && !PreferencesManager(context).isNotified()) {
+                                PreferencesManager(context).setLastUpdated(System.currentTimeMillis())
                                 val body = "You have new notifications. Tab to view"
                                 val alarmIntent = Intent(context, HomeActivity::class.java)
                                 alarmIntent.putExtra(Keys.NOTIFICATIONS.key, response.body()!!.notifications)
@@ -67,6 +68,7 @@ class NotificationService : JobIntentService() {
                                         }
                                     }
                                 }
+                                PreferencesManager(context).setIsNotified(true)
                             }
                         }
                     }
@@ -96,13 +98,16 @@ class NotificationService : JobIntentService() {
                 .setSound(Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.packageName + "/" + R.raw.notification))
                 .setAutoCancel(true)
                 .setContentIntent(intent)
-        if (body == "You have new notifications. Tab to view") {
+        val notificationId: Int = if (body == "You have new notifications. Tab to view") {
             builder.setSmallIcon(R.drawable.alert)
+                    .setOngoing(true)
+            Ids.PUSH_NOTIFICATION.ordinal
         } else {
             builder.setSmallIcon(R.drawable.ic_today_notification)
+            Ids.ALERT_NOTIFICATION.ordinal
         }
 
-        manager.notify(notificationID++, builder.build())
+        manager.notify(notificationId, builder.build())
     }
 
     fun generateNotification(manager: NotificationManager, header: String, body: String, intent: PendingIntent?) {
@@ -112,8 +117,6 @@ class NotificationService : JobIntentService() {
     }
 
     companion object {
-
-        private var notificationID = 0
 
         fun enqueueTask(context: Context, work: Intent) {
             enqueueWork(context, NotificationService::class.java, Ids.WORK.ordinal, work)

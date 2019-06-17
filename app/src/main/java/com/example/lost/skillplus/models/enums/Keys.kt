@@ -11,6 +11,7 @@ enum class Keys(val key: String) {
     ACTIVE_USER("active_user"),
     LAST_UPDATED("last_updated"),
     IS_SCHEDULED("is_scheduled"),
+    IS_NOTIFIED("is_notified"),
     SKILL_ID("skill_id"),
     NEED_ID("need_id"),
     FORM_ID("form_id"),
