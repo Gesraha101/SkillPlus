@@ -28,7 +28,7 @@ class NotificationAlarmManager {
             return arr
         }
 
-        fun isValidDate(schedules: ArrayList<Array<Int?>>, date: Array<Int?>, duration: Int): Boolean {
+        fun isValidDate(schedules: ArrayList<Array<Int?>>, date: Array<Int?>, duration: Float): Boolean {
             val dates = convertToLong(schedules)
             val longDate = convertToLong(arrayListOf(date))
             for (time in dates) {
