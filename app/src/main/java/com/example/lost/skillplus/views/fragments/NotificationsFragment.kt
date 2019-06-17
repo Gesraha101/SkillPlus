@@ -31,7 +31,10 @@ class NotificationsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            notifications = it.getSerializable(Keys.NOTIFICATIONS.key) as ArrayList<Notification>
+            if (it.getSerializable(Keys.NOTIFICATIONS.key) != null)
+                notifications = it.getSerializable(Keys.NOTIFICATIONS.key) as ArrayList<Notification>
+            else
+                notifications = null
         }
     }
 
@@ -51,9 +54,9 @@ class NotificationsFragment : Fragment() {
                     if (response.isSuccessful) {
                         PreferencesManager(context!!).setLastUpdated(System.currentTimeMillis())
                         if (response.body()?.notifications!!.size != 0) {
+                            notifications = response.body()?.notifications!!
+                            fillRecyclerView()
                         }
-                    } else {
-
                     }
                 }
 
@@ -62,16 +65,21 @@ class NotificationsFragment : Fragment() {
                 }
             })
         } else {
-            rv_notifications.apply {
-                // set a LinearLayoutManager to handle Android
-                // RecyclerView behavior
-                layoutManager = LinearLayoutManager(activity)
-                // set the custom adapter to the RecyclerView
-                adapter = NotificationsAdapter(notifications!!)
+            fillRecyclerView()
+        }
+    }
 
-                (adapter as NotificationsAdapter).onItemClick = { notification ->
-                    startActivity(Intent(activity, HomeActivity::class.java).putExtra(Keys.NOTIFICATION.key, notification))
-                }
+    fun fillRecyclerView() {
+        rv_notifications.apply {
+            // set a LinearLayoutManager to handle Android
+            // RecyclerView behavior
+            layoutManager = LinearLayoutManager(activity)
+            // set the custom adapter to the RecyclerView
+            adapter = NotificationsAdapter(notifications!!)
+
+            (adapter as NotificationsAdapter).onItemClick = { notification ->
+                startActivity(Intent(activity, HomeActivity::class.java)
+                        .putExtra(Keys.NOTIFICATION.key, notification))
             }
         }
     }

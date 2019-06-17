@@ -40,7 +40,7 @@ class NotificationAlarmManager {
 
         fun initAlarm(context: Context, fireAt: Long, teacherId: Int, learnerId: Int) {
             val am = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                val notifyAt = fireAt - AlarmManager.INTERVAL_FIFTEEN_MINUTES / 3
+            val notifyAt = fireAt - AlarmManager.INTERVAL_FIFTEEN_MINUTES * 2
             am.setExact(AlarmManager.RTC_WAKEUP, notifyAt, PendingIntent.getBroadcast(context, Keys.REQUEST_CODE.ordinal, Intent(context, AlarmReceiver::class.java)
                     .setAction(Actions.NOTIFY.action)
                     .addCategory("" + notifyAt), PendingIntent.FLAG_UPDATE_CURRENT))
