@@ -11,6 +11,7 @@ import android.view.View
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.enums.Ids
 import com.example.lost.skillplus.models.enums.Keys
+import com.example.lost.skillplus.models.enums.Tags
 import com.example.lost.skillplus.models.managers.FragmentsManager
 import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.Notification
@@ -43,28 +44,40 @@ class HomeActivity : NavigationDrawerActivity() {
                     .setBackgroundColor(R.color.alert)
                     .show()
             Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
-        } else if (supportFragmentManager.findFragmentByTag("skill_learner_fragment")!!.isVisible) {
-            main_my_skill.visibility = View.VISIBLE
-            sec_my_skill.visibility = View.GONE
+        } else if (supportFragmentManager.findFragmentByTag("skill_learner_fragment") != null) {
+            if (supportFragmentManager.findFragmentByTag("skill_learner_fragment")!!.isVisible) {
+                main_my_skill.visibility = View.VISIBLE
+                sec_my_skill.visibility = View.GONE
+            }
+        } else if (supportFragmentManager.findFragmentByTag("need_form_fragment") != null) {
+            if (supportFragmentManager.findFragmentByTag("need_form_fragment")!!.isVisible) {
+                main_my_need.visibility = View.VISIBLE
+                sec_my_need.visibility = View.GONE
+            }
+        } else if (supportFragmentManager.findFragmentByTag("details_frag_from_favorites") != null) {
+            if (supportFragmentManager.findFragmentByTag("details_frag_from_favorites")!!.isVisible) {
+                rv_favorites.visibility = View.VISIBLE
 
-        } else if (supportFragmentManager.findFragmentByTag("need_form_fragment")!!.isVisible) {
-            main_my_need.visibility = View.VISIBLE
-            sec_my_need.visibility = View.GONE
-
-        } else {
-            if(supportFragmentManager.findFragmentByTag("details_frag_from_favorites")!!.isVisible)
-                rv_favorites.visibility=View.VISIBLE
-
-            supportFragmentManager.popBackStack()
+                supportFragmentManager.popBackStack()
+            }
         }
+        else if (supportFragmentManager.findFragmentByTag(Tags.APPLICANT_NOTIFICATION.tag) != null||supportFragmentManager.findFragmentByTag(Tags.FORM_RECEIVED.tag) != null||supportFragmentManager.findFragmentByTag(Tags.FORM_APPROVED.tag) != null) {
+            if (supportFragmentManager.findFragmentByTag(Tags.APPLICANT_NOTIFICATION.tag)!!.isVisible||supportFragmentManager.findFragmentByTag(Tags.FORM_RECEIVED.tag)!!.isVisible||supportFragmentManager.findFragmentByTag(Tags.FORM_APPROVED.tag)!!.isVisible) {
+                supportFragmentManager.popBackStack()
+                FragmentsManager.replaceFragment(supportFragmentManager,CategoriesFragment.newInstance(),R.id.fragment_container,null,true)
+
+            }
+        }
+
     }
+
     private fun loadFragment(item: MenuItem) {
         val tag = item.itemId.toString()
         val fragment = supportFragmentManager.findFragmentByTag(tag) ?: when (item.itemId) {
             R.id.navigation_categories -> {
                 CategoriesFragment.newInstance()
             }
-            R.id.navigation_favorites-> {
+            R.id.navigation_favorites -> {
                 FavoritesFragment.newInstance()
             }
             R.id.navigation_notifications -> {
@@ -99,13 +112,13 @@ class HomeActivity : NavigationDrawerActivity() {
             val notification = intent.getSerializableExtra(Keys.NOTIFICATION.key) as Notification
             when {
                 notification.skill_name != null -> {                //Skill applied for
-                    FragmentsManager.replaceFragment(supportFragmentManager, SkillLearnersFragment.newInstance(notification.skill_id!!), R.id.fragment_container, null, true)
+                    FragmentsManager.replaceFragment(supportFragmentManager, SkillLearnersFragment.newInstance(notification.skill_id!!), R.id.fragment_container, Tags.APPLICANT_NOTIFICATION.tag, true)
                 }
                 notification.need_id != null -> {                   //Form proposed
-                    FragmentsManager.replaceFragment(supportFragmentManager, NeedFormFragment.newInstance(notification.need_id, notification.form_id!!), R.id.fragment_container, null, true)
+                    FragmentsManager.replaceFragment(supportFragmentManager, NeedFormFragment.newInstance(notification.need_id, notification.form_id!!), R.id.fragment_container, Tags.FORM_RECEIVED.tag, true)
                 }
                 else -> {                                           //Form approved
-                    FragmentsManager.replaceFragment(supportFragmentManager, MentoredNeedsFragment.newInstance(notification.form_id!!), R.id.fragment_container, null, true)
+                    FragmentsManager.replaceFragment(supportFragmentManager, MentoredNeedsFragment.newInstance(notification.form_id!!), R.id.fragment_container, Tags.FORM_APPROVED.tag, true)
                 }
             }
         } else {
@@ -113,11 +126,9 @@ class HomeActivity : NavigationDrawerActivity() {
         }
         bottom_nav.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
-        if(intent.getBooleanExtra("isComingAfterSubmition",false))
-        {
+        if (intent.getBooleanExtra("isComingAfterSubmition", false)) {
             CookieBar.build(this@HomeActivity)
                     .setCookiePosition(CookieBar.BOTTOM)
-                    .setBackgroundColor(R.color.colorPrimaryDark)
                     .setMessageColor(R.color.colorTabBarBackground)
                     .setMessage("Submitted successfully!")
                     .show()
