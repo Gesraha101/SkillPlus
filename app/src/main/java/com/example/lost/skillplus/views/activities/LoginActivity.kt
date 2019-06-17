@@ -13,6 +13,7 @@ import android.widget.Toast
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.managers.BackendServiceManager
 import com.example.lost.skillplus.models.managers.PreferencesManager
+import com.example.lost.skillplus.models.managers.UtilityManager
 import com.example.lost.skillplus.models.podos.raw.User
 import com.example.lost.skillplus.models.podos.responses.UserResponse
 import kotlinx.android.synthetic.main.activity_login.*
@@ -28,6 +29,7 @@ class LoginActivity : AppCompatActivity() {
 
         val shake = AnimationUtils.loadAnimation(this, R.anim.animation) as Animation
         btn_sign_in.setOnClickListener {
+            UtilityManager.hideKeyboard(emailEditText)
             mProgressBar.visibility= View.VISIBLE
             val logUser = User(email = emailEditText?.text.toString(),
                     password = passEditText?.text.toString())
@@ -43,6 +45,7 @@ class LoginActivity : AppCompatActivity() {
                     passEditText.startAnimation(shake)
                     passEditText.requestFocus()
                 }
+                mProgressBar.visibility = View.GONE
             } else {
                 val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
                 val call: Call<UserResponse>? = service?.loginUser(logUser)
@@ -104,7 +107,5 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent(this, HomeActivity::class.java))
         }
     }
-    fun String.isValidEmail(): Boolean = this.isNotEmpty() &&
-            Patterns.EMAIL_ADDRESS.matcher(this).matches()
 }
 

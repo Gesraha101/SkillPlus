@@ -13,6 +13,7 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.managers.BackendServiceManager
+import com.example.lost.skillplus.models.managers.UtilityManager
 import com.example.lost.skillplus.models.podos.raw.User
 import com.example.lost.skillplus.models.podos.responses.UserResponse
 import com.google.android.gms.tasks.Continuation
@@ -71,11 +72,13 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
         pic_spinner.visibility = View.INVISIBLE
-        val shake = AnimationUtils.loadAnimation(this, com.example.lost.skillplus.R.anim.animation) as Animation
+        val shake = AnimationUtils.loadAnimation(this, R.anim.animation) as Animation
         buttonPick.setOnClickListener {
+
             pickPhotoFromGallery()
         }
         btn_register.setOnClickListener {
+            UtilityManager.hideKeyboard(NameEditText)
             if (NameEditText?.text.toString() == "" || mailEditText.text.toString() == "" || passwordEditText.text.toString() == "" || pass2EditText.text.toString() == "") {
 
                 if (NameEditText?.text.toString() == "") {
@@ -147,10 +150,10 @@ class SignUpActivity : AppCompatActivity() {
                                     downloadUri = task.result
                                     Toast.makeText(this@SignUpActivity, "Uri is   ...   " + downloadUri.toString(), Toast.LENGTH_LONG).show()
 
-                                val user = User(name = NameEditText?.text.toString(),
-                                        email = mailEditText?.text.toString(),
-                                        password = passwordEditText?.text.toString(),
-                                        pic = downloadUri.toString())
+                                    val user = User(name = NameEditText?.text.toString(),
+                                            email = mailEditText?.text.toString(),
+                                            password = passwordEditText?.text.toString(),
+                                            pic = downloadUri.toString())
                                     val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
                                     val call: Call<UserResponse>? = user.let { it1 -> service?.addUser(it1) }
                                     call?.enqueue(object : Callback<UserResponse> {
@@ -190,14 +193,12 @@ class SignUpActivity : AppCompatActivity() {
 
                             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                                 if (response.isSuccessful) {
-                                    if(response.body()!!.status==true) {
+                                    if (response.body()!!.status) {
                                         Toast.makeText(this@SignUpActivity, "Successfully Added ", Toast.LENGTH_LONG).show()
                                         val i = Intent(this@SignUpActivity, LoginActivity::class.java)
                                         startActivity(i)
                                         finish()
-                                    }
-                                    else if(response.body()!!.message.equals("email is exist"))
-                                    {Toast.makeText(this@SignUpActivity, "Email already exists!", Toast.LENGTH_LONG).show()
+                                    } else if(response.body()!!.message.equals("email is exist")) {Toast.makeText(this@SignUpActivity, "Email already exists!", Toast.LENGTH_LONG).show()
                                     }
                                 } else {
                                     Toast.makeText(this@SignUpActivity, "Failed to add item one", Toast.LENGTH_SHORT).show()

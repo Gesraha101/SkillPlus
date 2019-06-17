@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="472dp"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="@color/colorCardBackground">
+
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="442dp"
+                android:layout_margin="16dp" tools:layout_editor_absoluteY="16dp" tools:layout_editor_absoluteX="16dp">
+
+            <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:id="@+id/post_image"
+                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/skill_name"
+                    android:hint="skills name"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/post_image"
+                    android:layout_marginTop="8dp"/>
+
+
+            <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                    android:id="@+id/poster_rate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srb_borderColor="@color/colorPrimary"
+                    app:srb_fillColor="@color/colorPrimary"
+                    app:srb_numberOfStars="5"
+                    app:srb_starBorderWidth="2"
+                    app:srb_starCornerRadius="20"
+                    app:srb_isIndicator="true"
+                    app:srb_starSize="30dp"
+                    app:srb_stepSize="0.1"
+                    tools:ignore="MissingConstraints" tools:layout_editor_absoluteY="239dp"
+                    tools:layout_editor_absoluteX="0dp"/>
+
+
+            <TextView
+                    android:id="@+id/skill_price"
+                    android:layout_width="150dp"
+                    android:layout_height="38dp"
+                    android:text="@string/skill_price"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteY="239dp"
+                    tools:layout_editor_absoluteX="213dp"/>
+
+            <TextView android:layout_width="179dp"
+                      android:text="Details"
+                      android:textColor="@color/colorHeader"
+                      android:textSize="18sp"
+                      android:layout_height="30dp" tools:layout_editor_absoluteY="277dp"
+                      tools:layout_editor_absoluteX="0dp"/>
+            <TextView
+                    android:text="Sessions duration:"
+                    android:layout_width="179dp"
+                    android:layout_height="30dp" android:id="@+id/textView5" tools:layout_editor_absoluteY="350dp"
+                    tools:layout_editor_absoluteX="16dp" android:textColor="@color/colorHeader"
+                    android:textSize="18sp"/>
+            <TextView
+                    android:text="Number of sessions:"
+                    android:layout_width="179dp"
+                    android:layout_height="30dp" android:id="@+id/textView7" tools:layout_editor_absoluteY="317dp"
+                    tools:layout_editor_absoluteX="16dp" android:textColor="@color/colorHeader"
+                    android:textSize="18sp"/>
+            <TextView
+                    android:text="Fees for extra sessions:"
+                    android:layout_width="208dp"
+                    android:layout_height="37dp"
+                    android:id="@+id/textView" tools:layout_editor_absoluteY="380dp"
+                    tools:layout_editor_absoluteX="16dp"
+                    android:textColor="@color/colorHeader"
+                    android:textSize="18sp"/>
+            <TextView android:layout_height="36dp" android:layout_width="112dp" tools:layout_editor_absoluteY="317dp"
+                      tools:layout_editor_absoluteX="219dp"
+                      android:id="@+id/session_number" tools:ignore="MissingConstraints"></TextView>
+
+            <TextView android:layout_height="36dp" android:layout_width="112dp" tools:layout_editor_absoluteY="390dp"
+                      tools:layout_editor_absoluteX="235dp"
+                      android:id="@+id/extra_session" tools:ignore="MissingConstraints"></TextView>
+
+            <TextView android:layout_height="36dp" android:layout_width="112dp" tools:layout_editor_absoluteY="353dp"
+                      tools:layout_editor_absoluteX="224dp" android:id="@+id/session_duration"
+                      tools:ignore="MissingConstraints"></TextView>
+
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>

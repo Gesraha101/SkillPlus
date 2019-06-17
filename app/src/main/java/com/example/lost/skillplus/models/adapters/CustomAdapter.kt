@@ -7,11 +7,10 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.CheckBox
 import android.widget.TextView
-import android.widget.Toast
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.podos.raw.Schedule
+import com.example.lost.skillplus.models.podos.raw.Schadule
 
-class CustomAdapter(private val context: Context, private var modelArrayList: java.util.ArrayList<Schedule>) : BaseAdapter() {
+class CustomAdapter(private val context: Context, private var modelArrayList: java.util.ArrayList<Schadule>?) : BaseAdapter() {
 
     override fun getViewTypeCount(): Int {
         return count
@@ -23,11 +22,11 @@ class CustomAdapter(private val context: Context, private var modelArrayList: ja
     }
 
     override fun getCount(): Int {
-        return modelArrayList.size
+        return modelArrayList!!.size
     }
 
     override fun getItem(position: Int): Any {
-        return modelArrayList[position]
+        return modelArrayList!![position]
     }
 
     override fun getItemId(position: Int): Long {
@@ -54,9 +53,9 @@ class CustomAdapter(private val context: Context, private var modelArrayList: ja
         }
 
 
-        holder.tvDate!!.text = modelArrayList[position].getSchedule()
+        holder.tvDate!!.text = modelArrayList!![position].getSchedule()
 
-        holder.checkBox!!.isChecked = modelArrayList[position].getSelecteds()
+        holder.checkBox!!.isChecked = modelArrayList!![position].getSelecteds()
 
         holder.checkBox!!.setTag(R.integer.btnplusview, convertView)
         holder.checkBox!!.tag = position
@@ -64,14 +63,14 @@ class CustomAdapter(private val context: Context, private var modelArrayList: ja
             val tempview = holder.checkBox!!.getTag(R.integer.btnplusview) as View
             val tv = tempview.findViewById(R.id.date) as TextView
             val pos = holder.checkBox!!.tag as Int
-            Toast.makeText(context, "Checkbox $pos clicked!", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(context, "Checkbox $pos clicked!", Toast.LENGTH_SHORT).show()
 
-            if (modelArrayList[pos].getSelecteds()) {
-                modelArrayList[pos].setSelecteds(false)
-                public_modelArrayList = modelArrayList
+            if (modelArrayList!![pos].getSelecteds()) {
+                modelArrayList!![pos].setSelecteds(false)
+                public_modelArrayList = modelArrayList!!
             } else {
-                modelArrayList[pos].setSelecteds(true)
-                public_modelArrayList = modelArrayList
+                modelArrayList!![pos].setSelecteds(true)
+                public_modelArrayList = modelArrayList!!
             }
         }
 
@@ -84,9 +83,8 @@ class CustomAdapter(private val context: Context, private var modelArrayList: ja
         var tvDate: TextView? = null
 
     }
-
     companion object {
-        lateinit var public_modelArrayList: java.util.ArrayList<Schedule>
+        lateinit var public_modelArrayList: java.util.ArrayList<Schadule>
     }
 
 }

@@ -9,16 +9,12 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.support.annotation.RequiresApi
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.adapters.ScheduleAdapter
 import com.example.lost.skillplus.models.managers.BackendServiceManager
@@ -32,13 +28,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
-import android.view.View.FOCUS_DOWN
-import android.widget.ScrollView
-
-
-
-
-
 
 
 class AddFormActivity : AppCompatActivity() {
@@ -122,7 +111,7 @@ class AddFormActivity : AppCompatActivity() {
             }
         }
 
-        val shake = AnimationUtils.loadAnimation(this, com.example.lost.skillplus.R.anim.animation) as Animation
+        val shake = AnimationUtils.loadAnimation(this, R.anim.animation) as Animation
         var badEntry: Boolean
 
         btn_add_need.setOnClickListener {
@@ -169,8 +158,6 @@ class AddFormActivity : AppCompatActivity() {
                         override fun onResponse(call: Call<FormResponse>, response: Response<FormResponse>) {
                             if (response.isSuccessful) {
                                 if (response.body()?.status == true) {
-                                    for (date in form.schedule!!)
-                                        NotificationAlarmManager.initAlarm(this@AddFormActivity, date)
                                     Handler().postDelayed({
                                         this@AddFormActivity.supportFragmentManager.popBackStack() //Todo: mesh 3aref leh lazem a3ml popstack
                                         animateView(progressOverlay, View.GONE, 0f, 200)

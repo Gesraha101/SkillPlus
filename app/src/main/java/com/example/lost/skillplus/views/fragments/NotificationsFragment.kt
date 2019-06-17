@@ -1,6 +1,7 @@
 package com.example.lost.skillplus.views.fragments
 
 import RetrofitManager
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -16,6 +17,7 @@ import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.Notification
 import com.example.lost.skillplus.models.podos.raw.NotificationsRequest
 import com.example.lost.skillplus.models.podos.responses.NotificationsResponse
+import com.example.lost.skillplus.views.activities.HomeActivity
 import kotlinx.android.synthetic.main.fragment_notifications.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -47,8 +49,8 @@ class NotificationsFragment : Fragment() {
 
                 override fun onResponse(call: Call<NotificationsResponse>, response: Response<NotificationsResponse>) {
                     if (response.isSuccessful) {
-                        if (response.body()?.status  == true) {
-
+                        PreferencesManager(context!!).setLastUpdated(System.currentTimeMillis())
+                        if (response.body()?.notifications!!.size != 0) {
                         }
                     } else {
 
@@ -68,10 +70,7 @@ class NotificationsFragment : Fragment() {
                 adapter = NotificationsAdapter(notifications!!)
 
                 (adapter as NotificationsAdapter).onItemClick = { notification ->
-//                    if (notification.skill_name != null)
-//                    val intent = Intent(activity, CategoryContentActivity::class.java)
-//                    intent.putExtra("CATEGORY", category)
-//                    startActivity(intent)
+                    startActivity(Intent(activity, HomeActivity::class.java).putExtra(Keys.NOTIFICATION.key, notification))
                 }
             }
         }

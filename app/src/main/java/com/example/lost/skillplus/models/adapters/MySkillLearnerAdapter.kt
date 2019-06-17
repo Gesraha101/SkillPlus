@@ -23,7 +23,7 @@ class MySkillLearnerAdapter(private val list: List<Learner>) : RecyclerView.Adap
     }
 
     override fun getItemCount(): Int = list.size
-    inner class MySkillLearnerViewHolder(inflater: LayoutInflater, parent: ViewGroup) : RecyclerView.ViewHolder(inflater.inflate(R.layout.form, parent, false)) {
+    inner class MySkillLearnerViewHolder(inflater: LayoutInflater, parent: ViewGroup) : RecyclerView.ViewHolder(inflater.inflate(R.layout.skill_learner, parent, false)) {
         private var userName: TextView? = null
         private var userImage: ImageView? = null
         private var formScheduleList: TextView? = null
@@ -31,9 +31,9 @@ class MySkillLearnerAdapter(private val list: List<Learner>) : RecyclerView.Adap
         private var context: Context? = null
 
         init {
-            userName = itemView.findViewById(R.id.form_user_name)
-            formScheduleList = itemView.findViewById(R.id.form_schedule_list)
-            userImage = itemView.findViewById(R.id.form_user_image)
+            userName = itemView.findViewById(R.id.skill_user_name)
+            formScheduleList = itemView.findViewById(R.id.skill_schedule_list)
+            userImage = itemView.findViewById(R.id.skill_user_image)
             context = parent.context
 
         }

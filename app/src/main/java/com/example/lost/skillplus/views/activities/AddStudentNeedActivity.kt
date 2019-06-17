@@ -1,9 +1,12 @@
 package com.example.lost.skillplus.views.activities
 
 import RetrofitManager
+import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.provider.MediaStore
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -17,21 +20,24 @@ import com.example.lost.skillplus.models.managers.BackendServiceManager
 import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.AddNeed
 import com.example.lost.skillplus.models.podos.responses.AddNeedResponse
+import com.google.android.gms.tasks.Continuation
+import com.google.android.gms.tasks.Task
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.activity_add_student_need.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 class AddStudentNeedActivity : AppCompatActivity() {
-
+    val PICK_PHOTO_REQUEST: Int = 1
+    var downloadUri: Uri? = null
+    private var filePath: Uri? = null
+    var isPic: Boolean = false
     var category: Int = 0
     var addneed = AddNeed("", "", "", 0, 0)
-
-
-//    val share = PreferencesManager(this@AddStudentNeedActivity)
-//    val userId: Int = share.getId()
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_student_need)
@@ -46,13 +52,6 @@ class AddStudentNeedActivity : AppCompatActivity() {
                 override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                     Toast.makeText(this@AddStudentNeedActivity, " position is " + (position + 1) + " " + personNames[position], Toast.LENGTH_SHORT).show()
                     category = position + 1
-//                    Log.d("need", "category is " + category.toString())
-//                    addneed = AddNeed(need_name = "b3mel molokhia",
-//                            need_desc = "basheak sharkah el shief el shepeny",
-//                            need_photo = "mesh batkeshef 3la banat",
-//                            cat_id = category,
-//                            user_id = 5)
-//                    Log.d("need", "addneed.cat_id is " + addneed.cat_id.toString())
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
@@ -60,24 +59,49 @@ class AddStudentNeedActivity : AppCompatActivity() {
                 }
             }
         }
-//        val share = PreferencesManager(this@AddStudentNeedActivity)
-//        val userId: Int = share.getId().toInt()
+        btn_add_image_need.setOnClickListener(View.OnClickListener {
+            pickPhotoFromGallery()
+        })
 
         btn_add_need.setOnClickListener {
-            if (category != 0) {
-                addneed = AddNeed(need_name = titleEditText.text.toString(),
-                        need_desc = descEditText.text.toString(),
-                        need_photo = "mesh batkeshef 3la banat",
-                        cat_id = category,
-                        user_id = PreferencesManager(this@AddStudentNeedActivity).getId())
+            if (isPic) {
+                pic_spinner_add_need.visibility = View.VISIBLE
+                val file = filePath
+                val mStorageRef: StorageReference = FirebaseStorage.getInstance().reference
+                val riversRef = mStorageRef.child("images/" + UUID.randomUUID().toString())
+                if (file != null) {
+                    val uploadTask = riversRef.putFile(file)
+
+                    uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
+                        if (!task.isSuccessful) {
+                            task.exception?.let {
+                                throw it
+                            }
+                        }
+                        return@Continuation riversRef.downloadUrl
+                    }).addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            downloadUri = task.result
+                            if (category != 0) {
+                                addneed = AddNeed(need_name = titleEditText.text.toString(),
+                                        need_desc = descEditText.text.toString(),
+                                        need_photo = downloadUri.toString(),
+                                        cat_id = category,
+                                        user_id = PreferencesManager(this@AddStudentNeedActivity).getId())
+                            }
+
+                        }
+                    }
+                }
+            } else {
+                if (category != 0) {
+                    addneed = AddNeed(need_name = titleEditText.text.toString(),
+                            need_desc = descEditText.text.toString(),
+                            need_photo = "mesh batkeshef 3la banat",
+                            cat_id = category,
+                            user_id = PreferencesManager(this@AddStudentNeedActivity).getId())
+                }
             }
-//            else{
-//                addneed = AddNeed(need_name = titleEditText.text.toString(),
-//                        need_desc = descEditText.text.toString(),
-//                        need_photo = "mesh batkeshef 3la banat",
-//                        cat_id = 1,
-//                        user_id = 10)
-//            }
 
             val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
             val call: Call<AddNeedResponse>? = service?.addNeed(addneed)
@@ -102,8 +126,25 @@ class AddStudentNeedActivity : AppCompatActivity() {
             })
         }
     }
+
+    private fun pickPhotoFromGallery() {
+        val pickImageIntent = Intent(Intent.ACTION_PICK,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+
+        startActivityForResult(pickImageIntent, PICK_PHOTO_REQUEST)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int,
+                                  data: Intent?) {
+        if (resultCode == Activity.RESULT_OK
+                && requestCode == PICK_PHOTO_REQUEST) {
+
+            filePath = data?.data
+            isPic = true
+
+            //   Toast.makeText(this@SignUpActivity, "pic selected " + data.toString(), Toast.LENGTH_LONG).show()
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
+        }
+    }
 }
-
-
-//TODO
-//pass user id

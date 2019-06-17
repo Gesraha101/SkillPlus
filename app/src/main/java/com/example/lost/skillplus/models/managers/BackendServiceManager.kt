@@ -39,7 +39,7 @@ interface BackendServiceManager {
     @POST("/skill/apply")
     fun applySkill(@Body applySkill: ApplySkill): Call<ApplySkillResponse>
 
-    @POST(" /notifications/")
+    @POST(" /notification/")
     fun getNotifications(@Body request: NotificationsRequest): Call<NotificationsResponse>
 
     @POST("/category/favorite")
@@ -56,6 +56,9 @@ interface BackendServiceManager {
 
     @POST("/skill/mine")
     fun getMySkills(@Body myId: MyId): Call<MySkillResponse>
+
+    @POST("/skill/current")
+    fun getCurrentSkills(@Body myId: MyId): Call<CurrentSkillResponse>
 
     @POST("/skill/learners")
     fun getMySkillsLearners(@Body myId: MyId): Call<MySkillLearnersResponse>

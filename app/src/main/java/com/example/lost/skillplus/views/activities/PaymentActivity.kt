@@ -12,10 +12,13 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.adapters.CustomAdapter
+import com.example.lost.skillplus.models.enums.Keys
 import com.example.lost.skillplus.models.managers.BackendServiceManager
 import com.example.lost.skillplus.models.managers.NotificationAlarmManager
 import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.ApplySkill
+import com.example.lost.skillplus.models.podos.raw.Schedule
+import com.example.lost.skillplus.models.podos.raw.Skill
 import com.example.lost.skillplus.models.podos.responses.ApplySkillResponse
 import kotlinx.android.synthetic.main.activity_payment.*
 import retrofit2.Call
@@ -26,17 +29,16 @@ class PaymentActivity : AppCompatActivity() {
 
     private var tv: TextView? = null
     private var scheduleList = arrayListOf<Long>()
-    private var skillId: Int = 0
+    private var skill: Skill? = null
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment)
         var appliedRequest: ApplySkill
-        skillId = intent.getIntExtra("skillId", 0)
+        skill = intent.getSerializableExtra(Keys.SKILL.key) as Skill
 
-        Log.d("SchaduleActivity", "skill from intent " + skillId.toString())
+        Log.d("SchaduleActivity", "skill from intent " + skill.toString())
         Log.d("SchaduleActivity", "LERNER ID  " + PreferencesManager(this@PaymentActivity).getId().toString())
-
 
         tv = findViewById(R.id.tv)
 
@@ -50,7 +52,7 @@ class PaymentActivity : AppCompatActivity() {
 
         payButton.setOnClickListener {
 
-            appliedRequest = ApplySkill(PreferencesManager(this@PaymentActivity).getId(), skillId, scheduleList)
+            appliedRequest = ApplySkill(PreferencesManager(this@PaymentActivity).getId(), skill!!.skill_id!!, scheduleList)
 
             Log.d("SchaduleActivity", "learner  " + appliedRequest.learner.toString())
             Log.d("SchaduleActivity", "skill  " + appliedRequest.skill.toString())
@@ -63,8 +65,10 @@ class PaymentActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<ApplySkillResponse>, response: Response<ApplySkillResponse>) {
                     if (response.isSuccessful) {
                         // Toast.makeText(this@PaymentActivity ,"you just registered in this course", Toast.LENGTH_SHORT).show()
-                        for (date in scheduleList)
-                            NotificationAlarmManager.initAlarm(this@PaymentActivity, date)
+                        for (date in scheduleList) {
+                            PreferencesManager(this@PaymentActivity).addToSchedules(Schedule(date, skill!!.user_id, false))
+                            NotificationAlarmManager.initAlarm(this@PaymentActivity, date, skill!!.user_id, PreferencesManager(this@PaymentActivity).getId())
+                        }
                         startActivity(Intent(this@PaymentActivity, HomeActivity::class.java).addFlags(FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK))
                     }
                 }

@@ -7,6 +7,8 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.enums.Keys
+import com.example.lost.skillplus.models.managers.PreferencesManager
+import com.example.lost.skillplus.models.podos.raw.Schedule
 
 class NotificationAlarmActivity : AppCompatActivity() {
 
@@ -18,8 +20,10 @@ class NotificationAlarmActivity : AppCompatActivity() {
         setContentView(R.layout.activity_notification_alarm)
         setFinishOnTouchOutside(false)
         val fireDate = intent.getLongExtra(Keys.FIRE_DATE.key, 0)
+        val teacherId = intent.getIntExtra(Keys.TEACHER_ID.key, 0)
+        val learnerId = intent.getIntExtra(Keys.LEARNER_ID.key, 0)
         player = MediaPlayer.create(this, R.raw.alarm)
-        player.isLooping = true // Set looping
+        player.isLooping = true
         player.setVolume(100f, 100f)
         player.start()
         alertBuilder = AlertDialog.Builder(this)
@@ -28,7 +32,14 @@ class NotificationAlarmActivity : AppCompatActivity() {
                 .setPositiveButton("Start") { _, _ ->
                     player.stop()
                     player.release()
-                    startActivity(Intent(this@NotificationAlarmActivity, SessionActivity::class.java).putExtra(Keys.FIRE_DATE.key, fireDate.toString()))
+                    if (teacherId == PreferencesManager(this@NotificationAlarmActivity).getId())
+                        PreferencesManager(this@NotificationAlarmActivity).removeFromSchedules(Schedule(fireDate, learnerId, true))
+                    else
+                        PreferencesManager(this@NotificationAlarmActivity).removeFromSchedules(Schedule(fireDate, teacherId, false))
+                    startActivity(Intent(this@NotificationAlarmActivity, SessionActivity::class.java)
+                            .putExtra(Keys.LEARNER_ID.key, learnerId.toString())
+                            .putExtra(Keys.FIRE_DATE.key, fireDate.toString())
+                            .putExtra(Keys.TEACHER_ID.key, teacherId.toString()))
                     finish()
                 }
                 .setNegativeButton("Cancel") { _, _ ->

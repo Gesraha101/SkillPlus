@@ -18,7 +18,7 @@ import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.User
 import com.example.lost.skillplus.views.fragments.CategoriesFragment
-import com.example.lost.skillplus.views.fragments.CurrentSkillsFragment
+import com.example.lost.skillplus.views.fragments.CurrentSkillFragment
 import com.example.lost.skillplus.views.fragments.MyNeedsFragment
 import com.example.lost.skillplus.views.fragments.MySkillsFragment
 import kotlinx.android.synthetic.main.activity_navigation_drawer.*
@@ -86,11 +86,15 @@ open class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavi
                 nav_view.setCheckedItem(R.id.nav_needs)
                 Log.d("test", "nav_needs")
             }
-            R.id.nav_active_jobs -> {
+            R.id.current_skill -> {
+                findViewById<FrameLayout>(R.id.fragment_container).visibility = View.VISIBLE
                 supportFragmentManager.beginTransaction().replace(
-                        R.id.fragment_container,CurrentSkillsFragment()
-                        ).commit()
-                nav_view.setCheckedItem(R.id.nav_active_jobs)
+                        R.id.fragment_container,
+                        CurrentSkillFragment()).commit()
+                nav_view.setCheckedItem(R.id.nav_needs)
+                Log.d("test", "nav_needs")
+
+                Toast.makeText(this@NavigationDrawerActivity, "no Active jobs is available", Toast.LENGTH_LONG).show()
 
             }
             R.id.nav_settings -> {
