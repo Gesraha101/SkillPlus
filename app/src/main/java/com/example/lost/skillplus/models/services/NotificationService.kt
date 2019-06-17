@@ -42,41 +42,43 @@ class NotificationService : JobIntentService() {
             }
             intent.action == Actions.ALERT.action -> startActivity(Intent(this, NotificationAlarmActivity::class.java).putExtra(Keys.FIRE_DATE.key, intent.getLongExtra(Keys.FIRE_DATE.key, 0)))
             intent.action == Actions.CHECK.action -> {
-                val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
-                val call: Call<NotificationsResponse>? = service?.getNotifications(NotificationsRequest(PreferencesManager(this).getId(), PreferencesManager(this).getLastUpdated()))
-                call?.enqueue(object : Callback<NotificationsResponse> {
+                if (!PreferencesManager(context).isNotified()) {
+                    val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
+                    val call: Call<NotificationsResponse>? = service?.getNotifications(NotificationsRequest(PreferencesManager(this).getId(), PreferencesManager(this).getLastUpdated()))
+                    call?.enqueue(object : Callback<NotificationsResponse> {
 
-                    override fun onResponse(call: Call<NotificationsResponse>, response: Response<NotificationsResponse>) {
-                        if (response.isSuccessful) {
-                            if (response.body()?.notifications!!.size != 0 && !PreferencesManager(context).isNotified()) {
-                                PreferencesManager(context).setLastUpdated(System.currentTimeMillis())
-                                val body = "You have new notifications. Tab to view"
-                                val alarmIntent = Intent(context, HomeActivity::class.java)
-                                alarmIntent.putExtra(Keys.NOTIFICATIONS.key, response.body()!!.notifications)
-                                val alarmPendingIntent = PendingIntent.getActivity(context, Keys.REQUEST_CODE.ordinal, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-                                generateNotification(getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager, Headers.NOTIFICATION.header, body, alarmPendingIntent)
-                                for (notification in response.body()!!.notifications) {
-                                    if (notification.need_id == null) {
-                                        for (date in notification.schedule!!) {
-                                            if (notification.skill_name != null) {
-                                                PreferencesManager(context).addToSchedules(Schedule(date, notification.user_id, true))
-                                                NotificationAlarmManager.initAlarm(context, date, PreferencesManager(context).getId(), notification.user_id!!)
-                                            } else {
-                                                PreferencesManager(context).addToSchedules(Schedule(date, notification.user_id, false))
-                                                NotificationAlarmManager.initAlarm(context, date, notification.user_id!!, PreferencesManager(context).getId())
+                        override fun onResponse(call: Call<NotificationsResponse>, response: Response<NotificationsResponse>) {
+                            if (response.isSuccessful) {
+                                if (response.body()?.notifications!!.size != 0) {
+                                    PreferencesManager(context).setLastUpdated(System.currentTimeMillis())
+                                    val body = "You have new notifications. Tab to view"
+                                    val alarmIntent = Intent(context, HomeActivity::class.java)
+                                    alarmIntent.putExtra(Keys.NOTIFICATIONS.key, response.body()!!.notifications)
+                                    val alarmPendingIntent = PendingIntent.getActivity(context, Keys.REQUEST_CODE.ordinal, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+                                    generateNotification(getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager, Headers.NOTIFICATION.header, body, alarmPendingIntent)
+                                    for (notification in response.body()!!.notifications) {
+                                        if (notification.need_id == null) {
+                                            for (date in notification.schedule!!) {
+                                                if (notification.skill_name != null) {
+                                                    PreferencesManager(context).addToSchedules(Schedule(date, notification.user_id, true))
+                                                    NotificationAlarmManager.initAlarm(context, date, PreferencesManager(context).getId(), notification.user_id!!)
+                                                } else {
+                                                    PreferencesManager(context).addToSchedules(Schedule(date, notification.user_id, false))
+                                                    NotificationAlarmManager.initAlarm(context, date, notification.user_id!!, PreferencesManager(context).getId())
+                                                }
                                             }
                                         }
                                     }
+                                    PreferencesManager(context).setIsNotified(true)
                                 }
-                                PreferencesManager(context).setIsNotified(true)
                             }
                         }
-                    }
 
-                    override fun onFailure(call: Call<NotificationsResponse>, t: Throwable) {
-                        Toast.makeText(this@NotificationService, "Failed" + t.localizedMessage, Toast.LENGTH_LONG).show()
-                    }
-                })
+                        override fun onFailure(call: Call<NotificationsResponse>, t: Throwable) {
+                            Toast.makeText(this@NotificationService, "Failed" + t.localizedMessage, Toast.LENGTH_LONG).show()
+                        }
+                    })
+                }
             }
         }
     }

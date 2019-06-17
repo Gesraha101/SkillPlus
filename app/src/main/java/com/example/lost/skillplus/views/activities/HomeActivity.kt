@@ -12,6 +12,7 @@ import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.enums.Ids
 import com.example.lost.skillplus.models.enums.Keys
 import com.example.lost.skillplus.models.managers.FragmentsManager
+import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.Notification
 import com.example.lost.skillplus.models.services.NotificationScheduler
 import com.example.lost.skillplus.views.fragments.*
@@ -25,7 +26,7 @@ import org.aviran.cookiebar2.CookieBar
 class HomeActivity : NavigationDrawerActivity() {
 
     private var doubleBackToExitPressedOnce = false
-    private lateinit var notifications: ArrayList<Notification>
+    private var notifications: ArrayList<Notification>? = null
 
     override fun onBackPressed() {
 
@@ -93,6 +94,7 @@ class HomeActivity : NavigationDrawerActivity() {
         if (intent.getSerializableExtra(Keys.NOTIFICATIONS.key) != null) {
             notifications = intent.getSerializableExtra(Keys.NOTIFICATIONS.key) as ArrayList<Notification>
             bottom_nav.selectedItemId = R.id.navigation_notifications
+            PreferencesManager(this@HomeActivity).setIsNotified(false)
         } else if (intent.getSerializableExtra(Keys.NOTIFICATION.key) != null) {
             val notification = intent.getSerializableExtra(Keys.NOTIFICATION.key) as Notification
             when {

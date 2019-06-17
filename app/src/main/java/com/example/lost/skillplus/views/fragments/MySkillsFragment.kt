@@ -56,7 +56,6 @@ class MySkillsFragment : Fragment() {
         call?.enqueue(object : Callback<MySkillResponse> {
             override fun onFailure(call: Call<MySkillResponse>, t: Throwable) =
                     Toast.makeText(activity, "Failed  cause is " + t.cause, Toast.LENGTH_LONG).show()
-
             override fun onResponse(call: Call<MySkillResponse>, response: Response<MySkillResponse>) {
                 if (response.body()?.status == true) {
                     rv_my_skills.apply {
