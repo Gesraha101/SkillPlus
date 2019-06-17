@@ -39,6 +39,7 @@ class AddFormActivity : AppCompatActivity() {
     var isEmpty: Boolean? = true
     var dayTimeList: ArrayList<DayTime> = arrayListOf()
     var dayTimeArray = arrayListOf<Array<Int?>>()
+    private lateinit var form: Form
 
     @RequiresApi(Build.VERSION_CODES.M)
 
@@ -47,12 +48,21 @@ class AddFormActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_form)
         setSupportActionBar(toolbar)
 
-        var progressOverlay : View = findViewById(R.id.progress_overlay)
+        var progressOverlay: View = findViewById(R.id.progress_overlay)
 
         rV_Schedule.apply {
             layoutManager = LinearLayoutManager(this@AddFormActivity)
             mAdapter = ScheduleAdapter(dayTimeList)
             rV_Schedule.adapter = mAdapter
+            (adapter as ScheduleAdapter).onItemClick = { pos ->
+                dayTimeList.removeAt(pos)
+                dayTimeArray.removeAt(pos)
+                mAdapter.notifyDataSetChanged()
+                if (dayTimeArray.size == 0) {
+                    btn_add_need.visibility = View.GONE
+                    isEmpty = true
+                }
+            }
         }
         val adapter = ArrayAdapter.createFromResource(this, R.array.week_list, android.R.layout.simple_spinner_item)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -64,14 +74,14 @@ class AddFormActivity : AppCompatActivity() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if(position>0)
+                if (position > 0)
                     dayPicked = position
                 else
                     dayPicked = null
             }
         }
         val hours = findViewById<TextView>(R.id.eT_Hours)
-        hours.text="Tap to set time"
+        hours.text = "Tap to set time"
         hours.setOnClickListener {
             val c = Calendar.getInstance()
             val hour = c.get(Calendar.HOUR)
@@ -84,112 +94,131 @@ class AddFormActivity : AppCompatActivity() {
                         minutePicked = m
                     }), hour, minute, true)
             var date = Calendar.getInstance()
-            tpd.updateTime(date.time.hours,date.time.minutes)
+            tpd.updateTime(date.time.hours, date.time.minutes)
             tpd.show()
 
         }
 
         btn_add_to_schedule.setOnClickListener {
-            if (dayPicked == null || hourPicked == null || minutePicked == null) {
-                Toast.makeText(this, "Please set a date first!", Toast.LENGTH_LONG).show()
-            } else {
-                if (isEmpty == true) {
+            if (eT_SessionDuration.text.toString() != "") {
+                if (dayPicked == null || hourPicked == null || minutePicked == null)
+                    Toast.makeText(this, "Please set a date first!", Toast.LENGTH_LONG).show()
+                if (!isEmpty!!) {
+                    if (NotificationAlarmManager.isValidDate(dayTimeArray, arrayOf(dayPicked, hourPicked, minutePicked), eT_SessionDuration.text.toString().toFloat())) {
+                        dayTimeList.add(DayTime(spinner.selectedItem.toString(), hourPicked, minutePicked))
+                        mAdapter.notifyDataSetChanged()
+                        dayTimeArray.add(arrayOf(dayPicked, hourPicked, minutePicked))
+                        mScrollView.post { mScrollView.fullScroll(ScrollView.FOCUS_DOWN) }
+
+                        //Empty the fields
+                        hours.text = "Tap to set time"
+                        hourPicked = null
+                        minutePicked = null
+                        spinner.setSelection(0)
+                        dayPicked = null
+                    } else
+                        Toast.makeText(this@AddFormActivity.applicationContext, "Please make enough time after and before sessions", Toast.LENGTH_SHORT).show()
+
+                } else {
+                    //Adding first time
+                    dayTimeList.add(DayTime(spinner.selectedItem.toString(), hourPicked, minutePicked))
+                    mAdapter.notifyDataSetChanged()
+                    dayTimeArray.add(arrayOf(dayPicked, hourPicked, minutePicked))
+                    mScrollView.post { mScrollView.fullScroll(ScrollView.FOCUS_DOWN) }
+
+                    //Empty the fields
+                    hours.text = "Tap to set time"
+                    hourPicked = null
+                    minutePicked = null
+                    spinner.setSelection(0)
+                    dayPicked = null
+
                     btn_add_need.visibility = View.VISIBLE
                     isEmpty = false
                 }
-                dayTimeList.add(DayTime(spinner.selectedItem.toString(), hourPicked, minutePicked))
-                mAdapter.notifyDataSetChanged()
-                dayTimeArray.add(arrayOf(dayPicked, hourPicked, minutePicked))
-                mScrollView.post { mScrollView.fullScroll(ScrollView.FOCUS_DOWN) }
-
-                //Empty the fields
-                hours.text="Tap to set time"
-                hourPicked=null
-                minutePicked=null
-                spinner.setSelection(0)
-                dayPicked=null
-            }
+            } else
+                Toast.makeText(this@AddFormActivity.applicationContext, "Please set the duration before you can add to schedule", Toast.LENGTH_SHORT).show()
         }
-
         val shake = AnimationUtils.loadAnimation(this, R.anim.animation) as Animation
         var badEntry: Boolean
 
         btn_add_need.setOnClickListener {
-                 badEntry = false
-                if (eT_NumberOfSessions.text.toString().toIntOrNull() == null) {
-                    eT_NumberOfSessions.error = "A number is required"
-                    eT_NumberOfSessions.startAnimation(shake)
-                    eT_NumberOfSessions.requestFocus()
-                    badEntry = true
-                }
-                if (eT_SessionDuration.text.toString().toIntOrNull() == null) {
-                    eT_SessionDuration.error = "A number is required"
-                    eT_SessionDuration.startAnimation(shake)
-                    eT_SessionDuration.requestFocus()
-                    badEntry = true
-                }
-                if (eT_Price.text.toString().toFloatOrNull() == null) {
-                    eT_Price.error = "A number is required"
-                    eT_Price.startAnimation(shake)
-                    eT_Price.requestFocus()
-                    badEntry = true
-                }
-                if (eT_ExtraFees.text.toString().toFloatOrNull() == null) {
-                    eT_ExtraFees.error = "A number is required"
-                    eT_ExtraFees.startAnimation(shake)
-                    eT_ExtraFees.requestFocus()
-                    badEntry = true
-                }
-                if (!badEntry) {
-                    progressOverlay.visibility = View.VISIBLE
-                    animateView(progressOverlay, View.VISIBLE, 0.4f, 200)
-                    var form = Form(
-                            eT_NumberOfSessions.text.toString().toInt(),
-                            eT_SessionDuration.text.toString().toFloat(),
-                            eT_Price.text.toString().toFloat(),
-                            eT_ExtraFees.text.toString().toFloat(),
-                            intent.getIntExtra("need_id",0),
-                            NotificationAlarmManager.convertToLong(dayTimeArray),
-                            PreferencesManager(this@AddFormActivity).getId())
-
-                    val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
-                    val call: Call<FormResponse>? = service?.addForm(form)
-                    call?.enqueue(object : Callback<FormResponse> {
-                        override fun onResponse(call: Call<FormResponse>, response: Response<FormResponse>) {
-                            if (response.isSuccessful) {
-                                if (response.body()?.status == true) {
-                                    Handler().postDelayed({
-                                        this@AddFormActivity.supportFragmentManager.popBackStack() //Todo: mesh 3aref leh lazem a3ml popstack
-                                        animateView(progressOverlay, View.GONE, 0f, 200)
-                                        val i = Intent(this@AddFormActivity, HomeActivity::class.java)
-                                        i.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-                                        i.putExtra("isComingAfterSubmition",true)
-                                        startActivity(i)
-                                        finish()
-                                    }, 2000)
-
-
-                                   } else {
-                                    Toast.makeText(this@AddFormActivity, "Failed1", Toast.LENGTH_LONG).show()
-
-                                }
-                            } else {
-                                Toast.makeText(this@AddFormActivity, "Failed2", Toast.LENGTH_LONG).show()
-
-                                //Received response but not "OK" response i.e error in the request sent (Server can't handle this request)
-                            }
-                        }
-
-                        override fun onFailure(call: Call<FormResponse>, t: Throwable) {
-                            Toast.makeText(this@AddFormActivity, t.message, Toast.LENGTH_LONG).show()
-                            //Error receiving response from server i.e error in podo received (Retrofit can't handle this response)
-                        }
-
-                    })
-                }
-
+            badEntry = false
+            if (eT_NumberOfSessions.text.toString().toIntOrNull() == null) {
+                eT_NumberOfSessions.error = "A number is required"
+                eT_NumberOfSessions.startAnimation(shake)
+                eT_NumberOfSessions.requestFocus()
+                badEntry = true
             }
+            if (eT_SessionDuration.text.toString().toIntOrNull() == null) {
+                eT_SessionDuration.error = "A number is required"
+                eT_SessionDuration.startAnimation(shake)
+                eT_SessionDuration.requestFocus()
+                badEntry = true
+            }
+            if (eT_Price.text.toString().toFloatOrNull() == null) {
+                eT_Price.error = "A number is required"
+                eT_Price.startAnimation(shake)
+                eT_Price.requestFocus()
+                badEntry = true
+            }
+            if (eT_ExtraFees.text.toString().toFloatOrNull() == null) {
+                eT_ExtraFees.error = "A number is required"
+                eT_ExtraFees.startAnimation(shake)
+                eT_ExtraFees.requestFocus()
+                badEntry = true
+            }
+            if (!badEntry) {
+                progressOverlay.visibility = View.VISIBLE
+                animateView(progressOverlay, View.VISIBLE, 0.4f, 200)
+                form = Form(
+                        eT_NumberOfSessions.text.toString().toInt(),
+                        eT_SessionDuration.text.toString().toFloat(),
+                        eT_Price.text.toString().toFloat(),
+                        eT_ExtraFees.text.toString().toFloat(),
+                        intent.getIntExtra("need_id", 0),
+                        NotificationAlarmManager.convertToLong(dayTimeArray),
+                        PreferencesManager(this@AddFormActivity).getId())
+
+                val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
+                val call: Call<FormResponse>? = service?.addForm(form)
+                call?.enqueue(object : Callback<FormResponse> {
+                    override fun onResponse(call: Call<FormResponse>, response: Response<FormResponse>) {
+                        if (response.isSuccessful) {
+                            if (response.body()?.status == true) {
+                                Handler().postDelayed({
+                                    this@AddFormActivity.supportFragmentManager.popBackStack() //Todo: mesh 3aref leh lazem a3ml popstack
+                                    animateView(progressOverlay, View.GONE, 0f, 200)
+                                    val i = Intent(this@AddFormActivity, HomeActivity::class.java)
+                                    i.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                                    i.putExtra("isComingAfterSubmition", true)
+                                    startActivity(i)
+                                    finish()
+                                }, 2000)
+
+
+                            } else {
+                                Toast.makeText(this@AddFormActivity, "Failed1", Toast.LENGTH_LONG).show()
+
+                            }
+                        } else {
+                            Toast.makeText(this@AddFormActivity, "Failed2", Toast.LENGTH_LONG).show()
+
+                            //Received response but not "OK" response i.e error in the request sent (Server can't handle this request)
+                        }
+                    }
+
+                    override fun onFailure(call: Call<FormResponse>, t: Throwable) {
+                        Toast.makeText(this@AddFormActivity, t.message, Toast.LENGTH_LONG).show()
+                        //Error receiving response from server i.e error in podo received (Retrofit can't handle this response)
+                    }
+
+                })
+            }
+
         }
+    }
+
     fun animateView(view: View, toVisibility: Int, toAlpha: Float, duration: Int) {
         val show = toVisibility == View.VISIBLE
         if (show) {

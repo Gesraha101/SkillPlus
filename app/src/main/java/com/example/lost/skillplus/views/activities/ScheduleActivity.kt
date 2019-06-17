@@ -3,6 +3,7 @@ package com.example.lost.skillplus.views.activities
 import RetrofitManager
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.app.AlarmManager
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -54,6 +55,15 @@ class ScheduleActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@ScheduleActivity)
             mAdapter = ScheduleAdapter(dayTimeList)
             rV_Schedule.adapter = mAdapter
+            (adapter as ScheduleAdapter).onItemClick = { pos ->
+                dayTimeList.removeAt(pos)
+                dayTimeArray.removeAt(pos)
+                mAdapter.notifyDataSetChanged()
+                if (dayTimeArray.size == 0) {
+                    btn_add_skill.visibility = View.GONE
+                    isEmpty = true
+                }
+            }
         }
         val adapter = ArrayAdapter.createFromResource(this, R.array.week_list, android.R.layout.simple_spinner_item)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -93,25 +103,46 @@ class ScheduleActivity : AppCompatActivity() {
             {
                 Toast.makeText(this, "Please set a date first!", Toast.LENGTH_LONG).show()
             }
-            else {
-                if(isEmpty==true) {
-                    btn_add_skill.visibility = View.VISIBLE
-                    isEmpty=false
+            else if(!isEmpty!!) {
+                if (NotificationAlarmManager.isValidDate(dayTimeArray, arrayOf(dayPicked, hourPicked, minutePicked), skillRequest.duration)) {
+                    dayTimeList.add(DayTime(spinner.selectedItem.toString(), hourPicked, minutePicked))
+                    mAdapter.notifyDataSetChanged()
+                    dayTimeArray.add(arrayOf(dayPicked, hourPicked, minutePicked))
+                    mScrollView.post { mScrollView.fullScroll(ScrollView.FOCUS_DOWN) }
+
+                    //Empty the fields
+                    hours.text = "Tap to set time"
+                    hourPicked = null
+                    minutePicked = null
+                    spinner.setSelection(0)
+                    dayPicked = null
+
                 }
+                else
+                {
+                    Toast.makeText(this, "Please make enough time after and before sessions", Toast.LENGTH_LONG).show()
+                }
+            }
+            else
+            {  //Adding first time
                 dayTimeList.add(DayTime(spinner.selectedItem.toString(), hourPicked, minutePicked))
                 mAdapter.notifyDataSetChanged()
                 dayTimeArray.add(arrayOf(dayPicked, hourPicked, minutePicked))
                 mScrollView.post { mScrollView.fullScroll(ScrollView.FOCUS_DOWN) }
 
                 //Empty the fields
-                hours.text="Tap to set time"
-                hourPicked=null
-                minutePicked=null
+                hours.text = "Tap to set time"
+                hourPicked = null
+                minutePicked = null
                 spinner.setSelection(0)
-                dayPicked=null
+                dayPicked = null
+
+                btn_add_skill.visibility = View.VISIBLE
+                isEmpty = false
 
             }
         }
+
         btn_add_skill.setOnClickListener {
             progressOverlay.visibility = View.VISIBLE
             animateView(progressOverlay, View.VISIBLE, 0.4f, 200)

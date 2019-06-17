@@ -1,17 +1,19 @@
 package com.example.lost.skillplus.models.adapters
 
+import android.media.Image
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.podos.raw.DayTime
 import com.example.lost.skillplus.models.podos.raw.Skill
 
 
-class ScheduleAdapter(private val list: List<DayTime>): RecyclerView.Adapter<ScheduleAdapter.ScheduleViewHolder>() {
+class ScheduleAdapter(private val list: ArrayList<DayTime>): RecyclerView.Adapter<ScheduleAdapter.ScheduleViewHolder>() {
 
-    var onItemClick: ((Skill) -> Unit)? = null
+    var onItemClick: ((Int) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -28,15 +30,21 @@ class ScheduleAdapter(private val list: List<DayTime>): RecyclerView.Adapter<Sch
     inner class ScheduleViewHolder(inflater: LayoutInflater, parent: ViewGroup) : RecyclerView.ViewHolder(inflater.inflate(R.layout.schedule_item, parent, false)) {
         var mDay:TextView? = null
         var mTime:TextView? = null
+        var delete: ImageView? = null
         init {
             mDay= itemView.findViewById(R.id.tV_Day)
             mTime= itemView.findViewById(R.id.tV_Time)
+            delete= itemView.findViewById(R.id.iv_delete)
+
 
         }
 
         fun bind(dayTime: DayTime) {
             mDay?.text = "Day : "+dayTime.day.toString()
             mTime?.text ="Time : "+dayTime.hour.toString()+":"+dayTime.minute
+            delete?.setOnClickListener {
+                onItemClick?.invoke(adapterPosition)
+            }
         }
     }
 }
