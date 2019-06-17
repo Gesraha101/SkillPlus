@@ -9,6 +9,7 @@ import android.util.Patterns
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.CheckBox
 import android.widget.Toast
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.managers.BackendServiceManager
@@ -21,6 +22,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
 class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +30,13 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         val shake = AnimationUtils.loadAnimation(this, R.anim.animation) as Animation
+        chkAndroid.setOnClickListener { v ->
+            val checked = (v as CheckBox).isChecked
+            // Check which checkbox was clicked
+            if (checked) {
+                PreferencesManager(this@LoginActivity).setFlag(true)
+            }
+        }
         btn_sign_in.setOnClickListener {
             UtilityManager.hideKeyboard(emailEditText)
             mProgressBar.visibility= View.VISIBLE
@@ -64,7 +73,8 @@ class LoginActivity : AppCompatActivity() {
                                 } else {
                                     Log.d("user", response.body()?.userlogined?.id.toString())
                                 }
-                                PreferencesManager(this@LoginActivity).setFlag(true)
+
+//                                PreferencesManager(this@LoginActivity).setFlag(true)
                                 startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
 
                                 finish()
@@ -103,7 +113,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        if (PreferencesManager(this@LoginActivity).getFlag()) {
+        if (PreferencesManager(this@LoginActivity).getFlag() && PreferencesManager(this@LoginActivity).getId() != 0) {
             startActivity(Intent(this, HomeActivity::class.java))
         }
     }

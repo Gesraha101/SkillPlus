@@ -13,5 +13,5 @@ class CurrentSkill(
         val cat_id: Int,
         val adding_date: String?,
         val my_sessions: Int?,
-        var schedule: ArrayList<Long>?
+        var schedule: List<Long>?
 )

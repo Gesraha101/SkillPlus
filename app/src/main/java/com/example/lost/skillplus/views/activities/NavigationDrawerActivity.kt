@@ -92,9 +92,9 @@ open class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavi
                         R.id.fragment_container,
                         CurrentSkillFragment()).commit()
                 nav_view.setCheckedItem(R.id.nav_needs)
-                Log.d("test", "nav_needs")
-
-                Toast.makeText(this@NavigationDrawerActivity, "no Active jobs is available", Toast.LENGTH_LONG).show()
+                Log.d("test", "nav_skill")
+//
+//                Toast.makeText(this@NavigationDrawerActivity, "no Active jobs is available", Toast.LENGTH_LONG).show()
 
             }
             R.id.nav_settings -> {
@@ -115,6 +115,7 @@ open class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavi
             }
             R.id.nav_log_out -> {
                 PreferencesManager(this@NavigationDrawerActivity).setFlag(false)
+                PreferencesManager(this@NavigationDrawerActivity).setId(0)
 
                 startActivity(Intent(this@NavigationDrawerActivity, LoginActivity::class.java))
                 finish()

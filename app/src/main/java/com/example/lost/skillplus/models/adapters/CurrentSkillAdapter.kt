@@ -1,6 +1,7 @@
 package com.example.lost.skillplus.models.adapters
 
 import android.content.Context
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,6 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.podos.raw.CurrentSkill
-import com.iarcuschin.simpleratingbar.SimpleRatingBar
 
 
 class CurrentSkillAdapter(private val list: List<CurrentSkill>) : RecyclerView.Adapter<CurrentSkillAdapter.SkillViewHolder>() {
@@ -39,7 +39,7 @@ class CurrentSkillAdapter(private val list: List<CurrentSkill>) : RecyclerView.A
         private var sessionNumber: TextView? = null
         private var extraSession: TextView? = null
         private var sessionDuration: TextView? = null
-        private var posterRate: SimpleRatingBar? = null
+        private var dates: RecyclerView? = null
 
         private var context: Context? = null
 
@@ -51,7 +51,7 @@ class CurrentSkillAdapter(private val list: List<CurrentSkill>) : RecyclerView.A
             sessionNumber = itemView.findViewById(R.id.session_number)
             extraSession = itemView.findViewById(R.id.extra_session)
             sessionDuration = itemView.findViewById(R.id.session_duration)
-            posterRate = itemView.findViewById(R.id.poster_rate)
+            dates = itemView.findViewById(R.id.rv_current_skills_schedual)
 
             context = parent.context
             itemView.setOnClickListener {
@@ -69,8 +69,11 @@ class CurrentSkillAdapter(private val list: List<CurrentSkill>) : RecyclerView.A
             sessionDuration?.text = skill.duration.toString()
             imageName?.visibility = View.GONE
             price?.text = java.lang.StringBuilder().append(" ${skill.skill_price} EGP")
+            dates?.apply {
+                layoutManager = LinearLayoutManager(context)
+                adapter = ScheduleStringAdapter(skill.schedule!!)
 
-
+            }
         }
     }
 }

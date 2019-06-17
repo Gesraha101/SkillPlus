@@ -1,6 +1,7 @@
 package com.example.lost.skillplus.models.adapters
 
 import android.content.Context
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -28,11 +29,14 @@ class MyNeedFormsAdapter(private val list: List<SqlResponseFromMyNeedForms>) : R
     inner class MyNeedFormViewHolder(inflater: LayoutInflater, parent: ViewGroup) : RecyclerView.ViewHolder(inflater.inflate(R.layout.form, parent, false)) {
         private var userName: TextView? = null
         private var userImage: ImageView? = null
+        private var dates: RecyclerView? = null
         private var context: Context? = null
 
         init {
             userName = itemView.findViewById(R.id.form_user_name)
             userImage = itemView.findViewById(R.id.form_user_image)
+            dates = itemView.findViewById(R.id.rv_my_need_schedual)
+
             context = parent.context
         }
 
@@ -41,7 +45,12 @@ class MyNeedFormsAdapter(private val list: List<SqlResponseFromMyNeedForms>) : R
             Glide.with(context!!)
                     .load(request.user_pic)
                     .into(userImage!!)
+            dates?.apply {
+                layoutManager = LinearLayoutManager(context)
+                adapter = ScheduleStringAdapter(request.schedule!!)
 
+
+            }
         }
     }
 }

@@ -1,7 +1,9 @@
 package com.example.lost.skillplus.models.adapters
 
 import android.content.Context
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,6 +42,7 @@ class MySkillAdapter(private val list: List<Skill>) : RecyclerView.Adapter<MySki
         private var extraSession: TextView? = null
         private var sessionDuration: TextView? = null
         private var posterRate: SimpleRatingBar? = null
+        private var dates: RecyclerView? = null
 
         private var context: Context? = null
 
@@ -52,6 +55,7 @@ class MySkillAdapter(private val list: List<Skill>) : RecyclerView.Adapter<MySki
             extraSession = itemView.findViewById(R.id.extra_session)
             sessionDuration = itemView.findViewById(R.id.session_duration)
             posterRate = itemView.findViewById(R.id.poster_rate)
+            dates = itemView.findViewById(R.id.rv_my_skills_schedual)
 
             context = parent.context
             itemView.setOnClickListener {
@@ -70,6 +74,11 @@ class MySkillAdapter(private val list: List<Skill>) : RecyclerView.Adapter<MySki
             imageName?.visibility = View.GONE
             price?.text = java.lang.StringBuilder().append(" ${skill.skill_price} EGP")
             posterRate?.rating = skill.rate!!
+            dates?.apply {
+                layoutManager = LinearLayoutManager(context)
+                adapter = ScheduleStringAdapter(skill.schedule!!)
+                Log.d("adapter my skill", skill.schedule!!.size.toString())
+            }
 
 
         }
