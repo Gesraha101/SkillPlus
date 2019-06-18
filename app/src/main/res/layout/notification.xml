@@ -43,6 +43,8 @@
                 app:layout_constraintStart_toEndOf="@id/notification_user_pic"
                 card_view:layout_constraintTop_toBottomOf="@id/notification_header"
                 android:layout_marginStart="8dp"
-        />
+                android:ellipsize="none"
+                android:maxLines="100"
+                android:scrollHorizontally="false"/>
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

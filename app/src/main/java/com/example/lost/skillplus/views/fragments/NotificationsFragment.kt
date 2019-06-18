@@ -82,6 +82,7 @@ class NotificationsFragment : Fragment() {
             (adapter as NotificationsAdapter).onItemClick = { notification ->
                 startActivity(Intent(activity, HomeActivity::class.java)
                         .putExtra(Keys.NOTIFICATION.key, notification))
+                activity!!.finish()
             }
         }
     }

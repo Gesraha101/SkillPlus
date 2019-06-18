@@ -71,4 +71,11 @@ interface BackendServiceManager {
 
     @POST("/need/current/details")
     fun getMyCurrentNeedsDetails(@Body myId: MyId): Call<CurrentNeedDetailsResponse>
+
+    //TODO
+    @POST("/session/skill")
+    fun doPostSkillSession(@Body myId: MyId): Call<CurrentNeedDetailsResponse>
+
+    @POST("/session/need")
+    fun doPostNeedSession(@Body myId: MyId): Call<CurrentNeedDetailsResponse>
 }

@@ -142,7 +142,20 @@ class SessionActivity : AppCompatActivity() {
         mRtcEngine!!.switchCamera()
     }
 
-    fun onEncCallClicked() {
+    fun onEndCallClicked() {
+//        val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
+//        val call: Call<PostSessionResponse>? = service?.getNotifications(Session())
+//        call?.enqueue(object : Callback<PostSessionResponse> {
+//
+//            override fun onResponse(call: Call<PostSessionResponse>, response: Response<PostSessionResponse>) {
+//                if (response.isSuccessful) {
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<PostSessionResponse>, t: Throwable) {
+//                Toast.makeText(this@SessionActivity, "Failed" + t.localizedMessage, Toast.LENGTH_LONG).show()
+//            }
+//        })
         finish()
     }
 

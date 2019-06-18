@@ -18,6 +18,7 @@ import com.example.lost.skillplus.models.podos.raw.Notification
 import com.example.lost.skillplus.models.services.NotificationScheduler
 import com.example.lost.skillplus.views.fragments.*
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.activity_navigation_drawer.*
 import kotlinx.android.synthetic.main.fragment_favorites.*
 import kotlinx.android.synthetic.main.fragment_my_needs.*
 import kotlinx.android.synthetic.main.fragment_my_skills.*
@@ -35,40 +36,44 @@ class HomeActivity : NavigationDrawerActivity() {
             if (doubleBackToExitPressedOnce) {
                 super.onBackPressed()
             }
-
-            this.doubleBackToExitPressedOnce = true
-            CookieBar.build(this@HomeActivity)
-                    .setCookiePosition(CookieBar.BOTTOM)
-                    .setMessage("Press back again to exit")
-                    .setBackgroundColor(R.color.alert)
-                    .show()
-            Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
-        } else if (supportFragmentManager.findFragmentByTag("skill_learner_fragment") != null) {
-            if (supportFragmentManager.findFragmentByTag("skill_learner_fragment")!!.isVisible) {
-                main_my_skill.visibility = View.VISIBLE
-                sec_my_skill.visibility = View.GONE
-            }
-        } else if (supportFragmentManager.findFragmentByTag("need_form_fragment") != null) {
-            if (supportFragmentManager.findFragmentByTag("need_form_fragment")!!.isVisible) {
-                main_my_need.visibility = View.VISIBLE
-                sec_my_need.visibility = View.GONE
-            }
-        } else if (supportFragmentManager.findFragmentByTag("details_frag_from_favorites") != null) {
-            if (supportFragmentManager.findFragmentByTag("details_frag_from_favorites")!!.isVisible) {
-                rv_favorites.visibility = View.VISIBLE
-
-                supportFragmentManager.popBackStack()
-            }
-        }
-        else if (supportFragmentManager.findFragmentByTag(Tags.APPLICANT_NOTIFICATION.tag) != null||supportFragmentManager.findFragmentByTag(Tags.FORM_RECEIVED.tag) != null||supportFragmentManager.findFragmentByTag(Tags.FORM_APPROVED.tag) != null) {
-            if (supportFragmentManager.findFragmentByTag(Tags.APPLICANT_NOTIFICATION.tag)!!.isVisible||supportFragmentManager.findFragmentByTag(Tags.FORM_RECEIVED.tag)!!.isVisible||supportFragmentManager.findFragmentByTag(Tags.FORM_APPROVED.tag)!!.isVisible) {
-                supportFragmentManager.popBackStack()
-//                FragmentsManager.replaceFragment(supportFragmentManager,CategoriesFragment.newInstance(),R.id.fragment_container,null,true)
-                bottom_nav.selectedItemId = R.id.navigation_categories
-
+            promptDoubleTabToGoBack()
+        } else {
+            for (tag in Tags.values()) {
+                val frag = supportFragmentManager.findFragmentByTag(tag.tag)
+                if (frag != null) {
+                    if (frag.isVisible) {
+                        when (frag.tag) {
+                            Tags.LEARNER_FRAGMENT.tag -> {
+                                main_my_skill.visibility = View.VISIBLE
+                                sec_my_skill.visibility = View.GONE
+                            }
+                            Tags.FORM_FRAGMENT.tag -> {
+                                main_my_need.visibility = View.VISIBLE
+                                sec_my_need.visibility = View.GONE
+                            }
+                            Tags.DETAILS_FROM_FAVORITE.tag -> {
+                                rv_favorites.visibility = View.VISIBLE
+                                supportFragmentManager.popBackStack()
+                            }
+                            Tags.FORM_RECEIVED.tag, Tags.FORM_APPROVED.tag, Tags.APPLICANT_NOTIFICATION.tag -> {
+                                supportFragmentManager.popBackStack()
+                                bottom_nav.selectedItemId = R.id.navigation_categories
+                            }
+                        }
+                    }
+                }
             }
         }
+    }
 
+    private fun promptDoubleTabToGoBack() {
+        this.doubleBackToExitPressedOnce = true
+        CookieBar.build(this@HomeActivity)
+                .setCookiePosition(CookieBar.BOTTOM)
+                .setMessage("Press back again to exit")
+                .setBackgroundColor(R.color.alert)
+                .show()
+        Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
     }
 
     private fun loadFragment(item: MenuItem) {
@@ -90,6 +95,8 @@ class HomeActivity : NavigationDrawerActivity() {
 
         if (fragment != null) {
             FragmentsManager.replaceFragment(supportFragmentManager, fragment, R.id.fragment_container, tag, false)
+        } else {
+            nav_view.menu.setGroupCheckable(0, false, true)
         }
     }
 
@@ -104,25 +111,28 @@ class HomeActivity : NavigationDrawerActivity() {
 
         bottom_nav.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
-        if (intent.getSerializableExtra(Keys.NOTIFICATIONS.key) != null) {
-            notifications = intent.getSerializableExtra(Keys.NOTIFICATIONS.key) as ArrayList<Notification>
-            bottom_nav.selectedItemId = R.id.navigation_notifications
-            PreferencesManager(this@HomeActivity).setIsNotified(false)
-        } else if (intent.getSerializableExtra(Keys.NOTIFICATION.key) != null) {
-            val notification = intent.getSerializableExtra(Keys.NOTIFICATION.key) as Notification
-            when {
-                notification.skill_name != null -> {                //Skill applied for
-                    FragmentsManager.replaceFragment(supportFragmentManager, SkillLearnersFragment.newInstance(notification.skill_id!!), R.id.fragment_container, Tags.APPLICANT_NOTIFICATION.tag, true)
-                }
-                notification.need_id != null -> {                   //Form proposed
-                    FragmentsManager.replaceFragment(supportFragmentManager, NeedFormFragment.newInstance(notification.need_id, notification.form_id!!), R.id.fragment_container, Tags.FORM_RECEIVED.tag, true)
-                }
-                else -> {                                           //Form approved
-                    FragmentsManager.replaceFragment(supportFragmentManager, MentoredNeedsFragment.newInstance(notification.form_id!!), R.id.fragment_container, Tags.FORM_APPROVED.tag, true)
-                }
+        when {
+            intent.getSerializableExtra(Keys.NOTIFICATIONS.key) != null -> {
+                notifications = intent.getSerializableExtra(Keys.NOTIFICATIONS.key) as ArrayList<Notification>
+                bottom_nav.selectedItemId = R.id.navigation_notifications
+                PreferencesManager(this@HomeActivity).setIsNotified(false)
             }
-        } else {
-            bottom_nav.selectedItemId = R.id.navigation_categories
+            intent.getSerializableExtra(Keys.NOTIFICATION.key) != null -> {
+                val notification = intent.getSerializableExtra(Keys.NOTIFICATION.key) as Notification
+                when {
+                    notification.skill_name != null -> {                //Skill applied for
+                        FragmentsManager.replaceFragment(supportFragmentManager, SkillLearnersFragment.newInstance(notification.skill_id!!), R.id.fragment_container, Tags.APPLICANT_NOTIFICATION.tag, true)
+                    }
+                    notification.need_id != null -> {                   //Form proposed
+                        FragmentsManager.replaceFragment(supportFragmentManager, NeedFormFragment.newInstance(notification.need_id, notification.form_id!!), R.id.fragment_container, Tags.FORM_RECEIVED.tag, true)
+                    }
+                    else -> {                                           //Form approved
+                        FragmentsManager.replaceFragment(supportFragmentManager, MentoredNeedsFragment.newInstance(notification.form_id!!), R.id.fragment_container, Tags.FORM_APPROVED.tag, true)
+                    }
+                }
+                nav_view.menu.setGroupCheckable(0, false, true)
+            }
+            else -> bottom_nav.selectedItemId = R.id.navigation_categories
         }
         bottom_nav.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
