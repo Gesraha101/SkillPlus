@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import android.widget.ListView
+import android.widget.Toast
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.adapters.CustomAdapter
 import com.example.lost.skillplus.models.enums.Keys
@@ -38,12 +39,15 @@ class ChooseSchaduleActivity : AppCompatActivity() {
 //           btnnext.visibility = View.GONE
 //        }
         btnnext!!.setOnClickListener {
-
-            val intent = Intent(this@ChooseSchaduleActivity, PaymentActivity::class.java)
-            if(skillFromDetailsFragment?.skill_id != null) {
-                intent.putExtra(Keys.SKILL.key, skillFromDetailsFragment)
-                startActivity(intent)
+            if (isAnySelected(modelArrayList!!)) {
+                val intent = Intent(this@ChooseSchaduleActivity, PaymentActivity::class.java)
+                if (skillFromDetailsFragment?.skill_id != null) {
+                    intent.putExtra(Keys.SKILL.key, skillFromDetailsFragment)
+                    startActivity(intent)
+                }
             }
+            else
+                Toast.makeText(this@ChooseSchaduleActivity.applicationContext,"Please select at least one",Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -56,6 +60,17 @@ class ChooseSchaduleActivity : AppCompatActivity() {
             list.add(model)
         }
         return list
+    }
+
+    private fun isAnySelected(arr:ArrayList<Schadule>) : Boolean
+    {
+
+        for(i in arr)
+        {
+            if(i.isSelected)
+                return true
+        }
+        return false
     }
 
 }
