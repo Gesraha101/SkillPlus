@@ -25,15 +25,6 @@ import retrofit2.Response
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [currentNeedFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [currentNeedFragment.newInstance] factory method to
- * create an instance of this fragment.
- *
- */
 class CurrentNeedFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -70,8 +61,8 @@ class CurrentNeedFragment : Fragment() {
                 if (response.body()?.status == true) {
                     rv_current_needs.apply {
                         layoutManager = LinearLayoutManager(activity)
-                        if (response.body()?.skills!!.isNotEmpty()) {
-                            adapter = CurrentNeedAdapter(response.body()!!.skills)
+                        if (response.body()?.data?.isNotEmpty()!!) {
+                            adapter = CurrentNeedAdapter(response.body()!!.data)
 //                            (adapter as CurrentSkillAdapter).onItemClick = { post ->
 //                                val bundle = Bundle()
 //                                val skillLearnersFragments = SkillLearnersFragments()
