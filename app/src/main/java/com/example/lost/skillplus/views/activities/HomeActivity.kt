@@ -31,10 +31,9 @@ class HomeActivity : NavigationDrawerActivity() {
 
     override fun onBackPressed() {
 
-        if (supportFragmentManager.backStackEntryCount == 0) {//Check if there are no fragments at backstack
+        if (supportFragmentManager.backStackEntryCount==0) {//Check if there are no fragments at backstack
             if (doubleBackToExitPressedOnce) {
                 super.onBackPressed()
-                return
             }
 
             this.doubleBackToExitPressedOnce = true
@@ -64,7 +63,8 @@ class HomeActivity : NavigationDrawerActivity() {
         else if (supportFragmentManager.findFragmentByTag(Tags.APPLICANT_NOTIFICATION.tag) != null||supportFragmentManager.findFragmentByTag(Tags.FORM_RECEIVED.tag) != null||supportFragmentManager.findFragmentByTag(Tags.FORM_APPROVED.tag) != null) {
             if (supportFragmentManager.findFragmentByTag(Tags.APPLICANT_NOTIFICATION.tag)!!.isVisible||supportFragmentManager.findFragmentByTag(Tags.FORM_RECEIVED.tag)!!.isVisible||supportFragmentManager.findFragmentByTag(Tags.FORM_APPROVED.tag)!!.isVisible) {
                 supportFragmentManager.popBackStack()
-                FragmentsManager.replaceFragment(supportFragmentManager,CategoriesFragment.newInstance(),R.id.fragment_container,null,true)
+//                FragmentsManager.replaceFragment(supportFragmentManager,CategoriesFragment.newInstance(),R.id.fragment_container,null,true)
+                bottom_nav.selectedItemId = R.id.navigation_categories
 
             }
         }

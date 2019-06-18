@@ -115,6 +115,7 @@ class LoginActivity : AppCompatActivity() {
 
         if (PreferencesManager(this@LoginActivity).getFlag() && PreferencesManager(this@LoginActivity).getId() != 0) {
             startActivity(Intent(this, HomeActivity::class.java))
+            finish()
         }
     }
 }

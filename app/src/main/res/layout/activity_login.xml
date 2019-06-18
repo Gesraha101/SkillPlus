@@ -75,7 +75,7 @@
                 android:id="@+id/chkAndroid"
                 android:layout_width="216dp"
                 android:layout_height="32dp"
-                android:text="remember me"
+                android:text="Remember me"
                 android:checked="false"
                 app:layout_constraintTop_toBottomOf="@+id/passEditText" app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="80dp" app:layout_constraintEnd_toEndOf="parent"
