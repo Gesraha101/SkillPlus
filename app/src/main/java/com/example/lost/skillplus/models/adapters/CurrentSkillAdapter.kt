@@ -72,7 +72,6 @@ class CurrentSkillAdapter(private val list: List<CurrentSkill>) : RecyclerView.A
             dates?.apply {
                 layoutManager = LinearLayoutManager(context)
                 adapter = ScheduleStringAdapter(skill.schedule!!)
-
             }
         }
     }
