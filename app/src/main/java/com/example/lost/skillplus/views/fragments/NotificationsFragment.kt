@@ -57,6 +57,8 @@ class NotificationsFragment : Fragment() {
                             notifications = response.body()?.notifications!!
                             fillRecyclerView()
                         }
+                        else
+                            place_holder_layout.visibility=View.VISIBLE
                     }
                 }
 

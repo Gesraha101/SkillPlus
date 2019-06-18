@@ -28,6 +28,36 @@
                  android:visibility="gone">
 
     </FrameLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                  android:layout_marginTop="8dp"
+                  android:layout_marginBottom="8dp"
+                  android:orientation="vertical"
+                  android:gravity="center"
+                  android:visibility="gone"
+                  android:id="@+id/place_holder_layout"
+
+                  android:layout_marginStart="8dp"
+                  android:layout_marginEnd="8dp">
+        <ImageView
+                android:src="@drawable/need"
+                android:layout_width="77dp"
+                android:layout_height="127dp" android:id="@+id/imageView4"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+        />
+        <TextView
+                android:text="Select a category from home screen to add to your needs"
+                android:layout_width="wrap_content"
+                android:textSize="25dp"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:layout_height="97dp"
+                android:id="@+id/textView"
+
+                android:layout_marginEnd="8dp" />
+    </LinearLayout>
 
 
 </FrameLayout>

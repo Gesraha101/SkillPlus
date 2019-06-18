@@ -11,5 +11,35 @@
             android:id="@+id/rv_notifications">
         
     </android.support.v7.widget.RecyclerView>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                  android:layout_marginTop="8dp"
+                  android:layout_marginBottom="8dp"
+                  android:orientation="vertical"
+                  android:gravity="center"
+                  android:visibility="gone"
+                  android:id="@+id/place_holder_layout"
+
+                  android:layout_marginStart="8dp"
+                  android:layout_marginEnd="8dp">
+        <ImageView
+                android:src="@drawable/notification"
+                android:layout_width="77dp"
+                android:layout_height="127dp" android:id="@+id/imageView4"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+        />
+        <TextView
+                android:text="You will receive notifications when someone apply on your skills , approve or reject your proposal"
+                android:layout_width="wrap_content"
+                android:textSize="20dp"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:layout_height="97dp"
+                android:id="@+id/textView"
+
+                android:layout_marginEnd="8dp" />
+    </LinearLayout>
 
 </FrameLayout>

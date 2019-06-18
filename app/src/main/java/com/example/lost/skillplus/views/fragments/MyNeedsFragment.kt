@@ -76,6 +76,8 @@ class MyNeedsFragment : Fragment() {
                                 FragmentsManager.replaceFragment(this@MyNeedsFragment.fragmentManager!!, needFormFragment, R.id.sec_my_need, "need_form_fragment", true)
                             }
                         }
+                        else
+                            place_holder_layout.visibility=View.VISIBLE
                     }
                 } else {
                     Toast.makeText(activity, "Error: " + response.body(), Toast.LENGTH_LONG).show()

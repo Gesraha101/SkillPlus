@@ -73,6 +73,8 @@ class MySkillsFragment : Fragment() {
                                 //   fragmentManager?.beginTransaction()?.replace(R.id.fragment_container, skillLearnersFragments)?.commit()
                             }
                         }
+                        else
+                            place_holder_layout.visibility=View.VISIBLE
                     }
                 } else {
                     Toast.makeText(activity, "Error: " + response.body(), Toast.LENGTH_LONG).show()
