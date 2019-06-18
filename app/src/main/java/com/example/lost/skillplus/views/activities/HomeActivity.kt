@@ -27,6 +27,7 @@ import org.aviran.cookiebar2.CookieBar
 
 class HomeActivity : NavigationDrawerActivity() {
 
+
     private var doubleBackToExitPressedOnce = false
     private var notifications: ArrayList<Notification>? = null
 
