@@ -30,7 +30,6 @@ private const val ARG_SENT_KEY = "request"
 class RequestDetailsFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var request: Request? = null
-    private var listener: OnFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,11 +42,6 @@ class RequestDetailsFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_request_details, container, false)
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -63,31 +57,6 @@ class RequestDetailsFragment : Fragment() {
         }
 
 
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-
-        //This block recreates the entire category activity to get recent updates (new posts)
-        this.activity!!.finish()
-        this.activity!!.overridePendingTransition(0, 0)
-        this.activity!!.startActivity(this.activity!!.intent)
-        this.activity!!.overridePendingTransition(0, 0)
-    }
-
-    interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
     }
 
     companion object {

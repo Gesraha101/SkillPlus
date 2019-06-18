@@ -15,6 +15,7 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.lost.skillplus.R
+import com.example.lost.skillplus.models.enums.Tags
 import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.User
 import com.example.lost.skillplus.views.fragments.CategoriesFragment
@@ -74,7 +75,7 @@ open class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavi
                 findViewById<FrameLayout>(R.id.fragment_container).visibility = View.VISIBLE
                 supportFragmentManager.beginTransaction().replace(
                         R.id.fragment_container,
-                        MySkillsFragment()).commit()
+                        MySkillsFragment(), Tags.MY_SKILLS.tag).commit()
                 nav_view.setCheckedItem(R.id.nav_skills)
                 Log.d("test", "nav_skills")
             }
@@ -82,7 +83,7 @@ open class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavi
                 findViewById<FrameLayout>(R.id.fragment_container).visibility = View.VISIBLE
                 supportFragmentManager.beginTransaction().replace(
                         R.id.fragment_container,
-                        MyNeedsFragment()).commit()
+                        MyNeedsFragment(), Tags.MY_NEEDS.tag).commit()
                 nav_view.setCheckedItem(R.id.nav_needs)
                 Log.d("test", "nav_needs")
             }
@@ -90,7 +91,7 @@ open class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavi
                 findViewById<FrameLayout>(R.id.fragment_container).visibility = View.VISIBLE
                 supportFragmentManager.beginTransaction().replace(
                         R.id.fragment_container,
-                        CurrentSkillFragment()).commit()
+                        CurrentSkillFragment(), Tags.CURRENT_SKILLS.tag).commit()
                 nav_view.setCheckedItem(R.id.nav_needs)
                 Log.d("test", "nav_skill")
 //

@@ -31,6 +31,10 @@ class MySkillsFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     var MySkillView: View? = null
+    override fun onDestroy() {
+        my_skill_fragment.visibility=View.GONE
+        super.onDestroy()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

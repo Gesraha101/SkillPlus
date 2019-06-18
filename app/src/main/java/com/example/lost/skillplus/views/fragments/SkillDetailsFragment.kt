@@ -34,7 +34,6 @@ private const val ARG_SENT_KEY = "skill"
 class SkillDetailsFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var skill: Skill? = null
-    private var listener: OnFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -123,45 +122,6 @@ class SkillDetailsFragment : Fragment() {
 
             })
         }
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-
-        //This block recreates the entire category activity to get recent updates (new posts , favourites updates)
-        //Check if its coming from categories)
-        if (this.activity!!.localClassName=="views.activities.CategoryContentActivity") {
-            this.activity!!.finish()
-            this.activity!!.overridePendingTransition(0, 0)
-            this.activity!!.startActivity(this.activity!!.intent)
-            this.activity!!.overridePendingTransition(0, 0)
-        }
-        else {
-            var frg = this.activity!!.supportFragmentManager.findFragmentByTag(R.id.navigation_favorites.toString()) //its tag name is given by it's menu item id
-            var ft: FragmentTransaction = this.activity!!.supportFragmentManager.beginTransaction()
-            ft.detach(frg!!)
-            ft.attach(frg!!)
-            ft.commit()
-        }
-    }
-    interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
     }
 
     companion object {

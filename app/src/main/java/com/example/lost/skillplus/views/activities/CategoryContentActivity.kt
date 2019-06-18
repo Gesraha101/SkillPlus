@@ -33,9 +33,7 @@ import retrofit2.Response
 import java.io.Serializable
 
 
-class CategoryContentActivity : AppCompatActivity(), SkillDetailsFragment.OnFragmentInteractionListener, RequestDetailsFragment.OnFragmentInteractionListener {
-    override fun onFragmentInteraction(uri: Uri) {
-    }
+class CategoryContentActivity : AppCompatActivity() {
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
     private var frag: Fragment? = null

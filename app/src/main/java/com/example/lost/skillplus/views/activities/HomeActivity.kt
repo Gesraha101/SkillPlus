@@ -6,8 +6,10 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.BottomNavigationView
+import android.support.design.widget.NavigationView
 import android.view.MenuItem
 import android.view.View
+import android.widget.FrameLayout
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.enums.Ids
 import com.example.lost.skillplus.models.enums.Keys
@@ -18,7 +20,7 @@ import com.example.lost.skillplus.models.podos.raw.Notification
 import com.example.lost.skillplus.models.services.NotificationScheduler
 import com.example.lost.skillplus.views.fragments.*
 import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.activity_navigation_drawer.*
+
 import kotlinx.android.synthetic.main.fragment_favorites.*
 import kotlinx.android.synthetic.main.fragment_my_needs.*
 import kotlinx.android.synthetic.main.fragment_my_skills.*
@@ -29,15 +31,43 @@ class HomeActivity : NavigationDrawerActivity() {
 
     private var doubleBackToExitPressedOnce = false
     private var notifications: ArrayList<Notification>? = null
-
+    private lateinit var navigation_view : NavigationView
+    private lateinit var navigation_container : FrameLayout
     override fun onBackPressed() {
 
         if (supportFragmentManager.backStackEntryCount==0) {//Check if there are no fragments at backstack
-            if (doubleBackToExitPressedOnce) {
-                super.onBackPressed()
+            for (tag in Tags.values()) {
+                val frag = supportFragmentManager.findFragmentByTag(tag.tag)
+                if (frag != null) {
+                    if (frag.isVisible) {
+                        when (frag.tag) {
+                            Tags.MY_SKILLS.tag -> {
+
+                                fragment_container.visibility = View.VISIBLE
+                            }
+                            Tags.MY_NEEDS.tag -> {
+                                fragment_container.visibility = View.VISIBLE
+                                supportFragmentManager.popBackStack()
+                            }
+                            Tags.CURRENT_SKILLS.tag -> {
+                                fragment_container.visibility = View.VISIBLE
+                                supportFragmentManager.popBackStack()
+                            }
+                            else ->{
+                                if (doubleBackToExitPressedOnce)
+                                    super.onBackPressed()
+
+                                promptDoubleTabToGoBack()
+                            }
+
+                        }
+
+                    }
+                }
             }
-            promptDoubleTabToGoBack()
-        } else {
+
+        }
+        else {
             for (tag in Tags.values()) {
                 val frag = supportFragmentManager.findFragmentByTag(tag.tag)
                 if (frag != null) {
@@ -64,6 +94,7 @@ class HomeActivity : NavigationDrawerActivity() {
                 }
             }
         }
+
     }
 
     private fun promptDoubleTabToGoBack() {
@@ -96,7 +127,7 @@ class HomeActivity : NavigationDrawerActivity() {
         if (fragment != null) {
             FragmentsManager.replaceFragment(supportFragmentManager, fragment, R.id.fragment_container, tag, false)
         } else {
-            nav_view.menu.setGroupCheckable(0, false, true)
+            navigation_view.menu.setGroupCheckable(0, false, true)
         }
     }
 
@@ -109,6 +140,8 @@ class HomeActivity : NavigationDrawerActivity() {
         setContentView(R.layout.activity_home)
         super.onCreate(savedInstanceState)
 
+         navigation_container = findViewById<FrameLayout>(R.id.fragment_container)
+         navigation_view = findViewById<NavigationView>(R.id.nav_view)
         bottom_nav.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
         when {
@@ -130,7 +163,7 @@ class HomeActivity : NavigationDrawerActivity() {
                         FragmentsManager.replaceFragment(supportFragmentManager, MentoredNeedsFragment.newInstance(notification.form_id!!), R.id.fragment_container, Tags.FORM_APPROVED.tag, true)
                     }
                 }
-                nav_view.menu.setGroupCheckable(0, false, true)
+                navigation_view.menu.setGroupCheckable(0, false, true)
             }
             else -> bottom_nav.selectedItemId = R.id.navigation_categories
         }

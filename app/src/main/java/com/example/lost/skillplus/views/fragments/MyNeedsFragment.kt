@@ -32,7 +32,10 @@ class MyNeedsFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     var MyNeedView: View? = null
-
+    override fun onDetach() {
+        super.onDetach()
+        my_need_fragment.visibility=View.GONE
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
