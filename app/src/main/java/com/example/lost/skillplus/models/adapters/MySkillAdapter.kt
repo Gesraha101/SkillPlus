@@ -43,7 +43,6 @@ class MySkillAdapter(private val list: List<Skill>) : RecyclerView.Adapter<MySki
         private var sessionDuration: TextView? = null
         private var posterRate: SimpleRatingBar? = null
         private var dates: RecyclerView? = null
-
         private var context: Context? = null
 
         init {
@@ -64,7 +63,7 @@ class MySkillAdapter(private val list: List<Skill>) : RecyclerView.Adapter<MySki
         }
 
         fun bind(skill: Skill) {
-            title?.text = skill.skill_name
+            title?.text = java.lang.StringBuilder().append(" Skill Name : ${skill.skill_name} ")
             Glide.with(context!!)
                     .load(skill.photo_path)
                     .into(image!!)
@@ -72,7 +71,7 @@ class MySkillAdapter(private val list: List<Skill>) : RecyclerView.Adapter<MySki
             extraSession?.text = skill.extra_fees.toString()
             sessionDuration?.text = skill.duration.toString()
             imageName?.visibility = View.GONE
-            price?.text = java.lang.StringBuilder().append(" ${skill.skill_price} EGP")
+            price?.text = java.lang.StringBuilder().append(" Price  : ${skill.skill_price} EGP")
             posterRate?.rating = skill.rate!!
             dates?.apply {
                 layoutManager = LinearLayoutManager(context)

@@ -33,7 +33,6 @@ class CategoriesAdapter(private val list: List<Category>): RecyclerView.Adapter<
         private var image: ImageView? = null
         private var brief: TextView? = null
         private var context: Context? = null
-
         init {
             name = itemView.findViewById(R.id.category_name)
             image = itemView.findViewById(R.id.category_img)
