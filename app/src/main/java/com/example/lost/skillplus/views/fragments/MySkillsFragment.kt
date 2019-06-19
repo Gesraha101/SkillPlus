@@ -70,7 +70,7 @@ class MySkillsFragment : Fragment() {
                                 skillLearnersFragments.arguments = bundle
                                 MySkillView?.findViewById<FrameLayout>(R.id.main_my_skill)?.visibility = View.GONE
                                 MySkillView?.findViewById<FrameLayout>(R.id.sec_my_skill)?.visibility = View.VISIBLE
-                                FragmentsManager.replaceFragment(this@MySkillsFragment.fragmentManager!!, skillLearnersFragments, R.id.fragment_container, Tags.LEARNER_FRAGMENT.tag, true)
+                                FragmentsManager.replaceFragment(this@MySkillsFragment.fragmentManager!!, skillLearnersFragments, R.id.sec_my_skill, Tags.LEARNER_FRAGMENT.tag, true)
                                 //   fragmentManager?.beginTransaction()?.replace(R.id.fragment_container, skillLearnersFragments)?.commit()
                             }
                         }

@@ -40,7 +40,6 @@ class PaymentActivity : AppCompatActivity() {
         Log.d("SchaduleActivity", "skill from intent " + skill.toString())
         Log.d("SchaduleActivity", "LERNER ID  " + PreferencesManager(this@PaymentActivity).getId().toString())
 
-        tv = findViewById(R.id.tv)
 
         for (i in 0 until CustomAdapter.public_modelArrayList.size) {
             if (CustomAdapter.public_modelArrayList[i].getSelecteds()) {

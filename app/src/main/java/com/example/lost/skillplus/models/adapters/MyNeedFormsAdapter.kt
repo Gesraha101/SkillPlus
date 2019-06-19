@@ -48,8 +48,6 @@ class MyNeedFormsAdapter(private val list: List<SqlResponseFromMyNeedForms>) : R
             dates?.apply {
                 layoutManager = LinearLayoutManager(context)
                 adapter = ScheduleStringAdapter(request.schedule!!)
-
-
             }
         }
     }

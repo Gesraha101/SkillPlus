@@ -1,7 +1,9 @@
 package com.example.lost.skillplus.models.adapters
 
 import android.content.Context
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -26,13 +28,13 @@ class MySkillLearnerAdapter(private val list: List<Learner>) : RecyclerView.Adap
     inner class MySkillLearnerViewHolder(inflater: LayoutInflater, parent: ViewGroup) : RecyclerView.ViewHolder(inflater.inflate(R.layout.skill_learner, parent, false)) {
         private var userName: TextView? = null
         private var userImage: ImageView? = null
-        private var formScheduleList: TextView? = null
+        private var formScheduleList: RecyclerView? = null
 
         private var context: Context? = null
 
         init {
             userName = itemView.findViewById(R.id.skill_user_name)
-            formScheduleList = itemView.findViewById(R.id.skill_schedule_list)
+            formScheduleList = itemView.findViewById(R.id.rv_my_skills_learner)
             userImage = itemView.findViewById(R.id.skill_user_image)
             context = parent.context
 
@@ -43,7 +45,12 @@ class MySkillLearnerAdapter(private val list: List<Learner>) : RecyclerView.Adap
             Glide.with(context!!)
                     .load(request.user_pic)
                     .into(userImage!!)
-            formScheduleList?.text = request.schedule?.get(0).toString()
+            formScheduleList?.apply {
+                layoutManager = LinearLayoutManager(context)
+                adapter = ScheduleStringAdapter(request.schedule!!)
+                Log.d("adapter my skill", request.schedule!!.size.toString())
+            }
+
 
         }
     }

@@ -19,35 +19,37 @@
                 android:layout_margin="16dp">
 
             <ImageView
-                    android:layout_width="141dp"
-                    android:layout_height="100dp"
+                    android:layout_width="132dp"
+                    android:layout_height="109dp"
                     android:id="@+id/form_user_image"
                     card_view:layout_constraintTop_toTopOf="parent"
                     android:layout_marginTop="16dp" card_view:layout_constraintStart_toStartOf="parent"
-                    card_view:layout_constraintEnd_toStartOf="@+id/form_user_name" android:layout_marginEnd="11dp"/>
+            />
 
             <TextView
-                    android:layout_width="170dp"
-                    android:layout_height="45dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:id="@+id/form_user_name"
+                    android:text="name"
+                    android:textColor="@color/colorPrimary"
                     android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    card_view:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginTop="48dp" card_view:layout_constraintStart_toEndOf="@+id/form_user_image"
-                    android:layout_marginStart="11dp" card_view:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginEnd="16dp"/>
+                    card_view:layout_constraintStart_toEndOf="@+id/form_user_image"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="17dp" card_view:layout_constraintTop_toTopOf="parent"
+                    card_view:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="156dp"/>
 
             <android.support.v7.widget.RecyclerView
-                    android:layout_width="315dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/rv_my_need_schedual"
                     tools:ignore="MissingConstraints"
 
-                    android:layout_marginTop="10dp"
-                    card_view:layout_constraintTop_toBottomOf="@+id/form_user_image"
-                    card_view:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
-                    card_view:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp">
+                    card_view:layout_constraintTop_toBottomOf="@+id/form_user_name"
+                    android:layout_marginStart="20dp"
+                    card_view:layout_constraintStart_toEndOf="@+id/form_user_image"
+            >
 
             </android.support.v7.widget.RecyclerView>
 

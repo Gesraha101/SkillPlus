@@ -22,7 +22,7 @@
 
                  android:layout_marginStart="8dp" android:layout_marginEnd="8dp">
         <ImageView
-                android:src="@drawable/need_icon"
+
                 android:layout_width="77dp"
                 android:layout_height="127dp"
                 android:layout_marginStart="8dp"

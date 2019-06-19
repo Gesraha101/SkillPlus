@@ -36,7 +36,6 @@ class CustomAdapter(private val context: Context, private var modelArrayList: ja
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var convertView = convertView
         val holder: ViewHolder
-
         if (convertView == null) {
             holder = ViewHolder()
             val inflater = context
@@ -48,11 +47,8 @@ class CustomAdapter(private val context: Context, private var modelArrayList: ja
 
             convertView.tag = holder
         } else {
-            // the getTag returns the viewHolder object set as a tag to the view
             holder = convertView.tag as ViewHolder
         }
-
-
         holder.tvDate!!.text = modelArrayList!![position].getSchedule()
 
         holder.checkBox!!.isChecked = modelArrayList!![position].getSelecteds()
@@ -63,8 +59,6 @@ class CustomAdapter(private val context: Context, private var modelArrayList: ja
             val tempview = holder.checkBox!!.getTag(R.integer.btnplusview) as View
             val tv = tempview.findViewById(R.id.date) as TextView
             val pos = holder.checkBox!!.tag as Int
-//            Toast.makeText(context, "Checkbox $pos clicked!", Toast.LENGTH_SHORT).show()
-
             if (modelArrayList!![pos].getSelecteds()) {
                 modelArrayList!![pos].setSelecteds(false)
                 public_modelArrayList = modelArrayList!!
@@ -83,6 +77,7 @@ class CustomAdapter(private val context: Context, private var modelArrayList: ja
         var tvDate: TextView? = null
 
     }
+
     companion object {
         lateinit var public_modelArrayList: java.util.ArrayList<Schadule>
     }
