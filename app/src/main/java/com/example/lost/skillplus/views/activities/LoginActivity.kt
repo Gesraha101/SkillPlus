@@ -98,7 +98,7 @@ class LoginActivity : AppCompatActivity() {
 
                     override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                         mProgressBar.visibility= View.GONE
-                        Toast.makeText(this@LoginActivity, "Failed to connect to server ", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@LoginActivity, "Failed to connect to server " + t.localizedMessage, Toast.LENGTH_LONG).show()
                     }
                 })
             }

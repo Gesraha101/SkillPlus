@@ -20,25 +20,37 @@
         android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".views.activities.AddStudentNeedActivity"/>
+        <activity android:name=".views.activities.AddStudentNeedActivity"
+                  android:screenOrientation="portrait"
+                  android:configChanges="orientation|keyboardHidden"/>
         <activity
                 android:name=".views.activities.AddFormActivity"
                 android:label="@string/title_activity_add_need"
-                android:theme="@style/AppTheme.NoActionBar"/>
+                android:theme="@style/AppTheme.NoActionBar"
+                android:screenOrientation="portrait"
+                android:configChanges="orientation|keyboardHidden"/>
         <activity
                 android:name=".views.activities.ScheduleActivity"
-                android:theme="@style/AppTheme.NoActionBar"/>
+                android:theme="@style/AppTheme.NoActionBar"
+                android:screenOrientation="portrait"
+                android:configChanges="orientation|keyboardHidden"/>
         <activity
                 android:name=".views.activities.AddTeacherSkillActivity"
                 android:label="@string/title_activity_add_teacher_skill"
-                android:theme="@style/AppTheme.NoActionBar"/>
+                android:theme="@style/AppTheme.NoActionBar"
+                android:screenOrientation="portrait"
+                android:configChanges="orientation|keyboardHidden"/>
         <activity
                 android:name=".views.activities.NavigationDrawerActivity"
                 android:label="@string/title_activity_navigation_drawer"
-                android:theme="@style/AppTheme.NoActionBar"/>
+                android:theme="@style/AppTheme.NoActionBar"
+                android:screenOrientation="portrait"
+                android:configChanges="orientation|keyboardHidden"/>
         <activity
                 android:name=".views.activities.SplashActivity"
-                android:theme="@style/AppTheme.NoActionBar">
+                android:theme="@style/AppTheme.NoActionBar"
+                android:screenOrientation="portrait"
+                android:configChanges="orientation|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -48,23 +60,41 @@
         <activity
                 android:name=".views.activities.HomeActivity"
                 android:label="@string/title_activity_home"
-                android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".views.activities.SignUpActivity"/>
-        <activity android:name=".views.activities.LoginActivity"/>
+                android:theme="@style/AppTheme.NoActionBar"
+                android:screenOrientation="portrait"
+                android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".views.activities.SignUpActivity"
+                  android:screenOrientation="portrait"
+                  android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".views.activities.LoginActivity"
+                  android:screenOrientation="portrait"
+                  android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".views.activities.SessionActivity"
-                  android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".views.activities.PaymentActivity"/>
-        <activity android:name=".views.activities.ChooseSchaduleActivity"/>
+                  android:theme="@style/AppTheme.NoActionBar"
+                  android:screenOrientation="portrait"
+                  android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".views.activities.PaymentActivity"
+                  android:screenOrientation="portrait"
+                  android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".views.activities.ChooseSchaduleActivity"
+                  android:screenOrientation="portrait"
+                  android:configChanges="orientation|keyboardHidden"/>
         <activity
                 android:name=".views.activities.CategoryContentActivity"
                 android:label="@string/title_activity_category_content"
-                android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".views.activities.NotificationActivity"/>
+                android:theme="@style/AppTheme.NoActionBar"
+                android:screenOrientation="portrait"
+                android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".views.activities.NotificationActivity"
+                  android:screenOrientation="portrait"
+                  android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".views.activities.NotificationAlarmActivity"
                   android:launchMode="singleInstance"
                   android:taskAffinity=""
                   android:excludeFromRecents="true"
-                  android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"/>
+                  android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"
+                  android:screenOrientation="portrait"
+                  android:configChanges="orientation|keyboardHidden"/>
         <receiver
             android:name=".models.receivers.AlarmReceiver"
             android:enabled="true"

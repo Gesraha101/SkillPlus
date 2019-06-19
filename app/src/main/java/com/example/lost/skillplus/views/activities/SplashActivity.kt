@@ -8,6 +8,7 @@ import com.example.lost.skillplus.R
 
 class SplashActivity : AppCompatActivity() {
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
@@ -17,6 +18,6 @@ class SplashActivity : AppCompatActivity() {
             val intent = Intent(applicationContext, LoginActivity::class.java)
             startActivity(intent)
             finish()
-        }, 1000)
+        }, 1500)
     }
 }

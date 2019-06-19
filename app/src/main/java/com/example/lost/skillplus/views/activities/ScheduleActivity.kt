@@ -3,7 +3,6 @@ package com.example.lost.skillplus.views.activities
 import RetrofitManager
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import android.app.AlarmManager
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -176,7 +175,7 @@ class ScheduleActivity : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<SkillsResponse>, t: Throwable) {
-                    Toast.makeText(this@ScheduleActivity,"Failed",Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@ScheduleActivity, "Failed" + t.localizedMessage, Toast.LENGTH_LONG).show()
                     //Error receiving response from server i.e error in podo received (Retrofit can't handle this response)
                 }
 

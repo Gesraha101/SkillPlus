@@ -1,5 +1,6 @@
 package com.example.lost.skillplus.views.activities
 
+import RetrofitManager
 import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.PorterDuff
@@ -15,10 +16,21 @@ import android.widget.ImageView
 import android.widget.Toast
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.enums.Keys
+import com.example.lost.skillplus.models.managers.BackendServiceManager
+import com.example.lost.skillplus.models.managers.PreferencesManager
+import com.example.lost.skillplus.models.podos.raw.Rate
+import com.example.lost.skillplus.models.podos.raw.Session
+import com.example.lost.skillplus.models.podos.responses.PostSessionResponse
+import com.iarcuschin.simpleratingbar.SimpleRatingBar
 import io.agora.rtc.IRtcEngineEventHandler
 import io.agora.rtc.RtcEngine
 import io.agora.rtc.video.VideoCanvas
 import io.agora.rtc.video.VideoEncoderConfiguration
+import kotlinx.android.synthetic.main.activity_session.*
+import kotlinx.android.synthetic.main.rating_overlay.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class SessionActivity : AppCompatActivity() {
@@ -27,7 +39,8 @@ class SessionActivity : AppCompatActivity() {
     private lateinit var key: String
 
     private val LOG_TAG = SessionActivity::class.java.simpleName
-
+    private var learnerId: Int? = null
+    private var date: Long? = null
     private val PERMISSION_REQ_ID = 22
 
     // permission WRITE_EXTERNAL_STORAGE is not mandatory for Agora RTC SDK, just in case if you wanna save logs to external sdcard
@@ -51,6 +64,8 @@ class SessionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_session)
+        learnerId = intent!!.getStringExtra(Keys.LEARNER_ID.key).toInt()
+        date = intent!!.getStringExtra(Keys.FIRE_DATE.key).toLong()
         key = intent!!.getStringExtra(Keys.LEARNER_ID.key) + intent!!.getStringExtra(Keys.FIRE_DATE.key) + intent!!.getStringExtra(Keys.TEACHER_ID.key)
         if (checkSelfPermission(REQUESTED_PERMISSIONS[0], PERMISSION_REQ_ID) &&
                 checkSelfPermission(REQUESTED_PERMISSIONS[1], PERMISSION_REQ_ID) &&
@@ -138,25 +153,52 @@ class SessionActivity : AppCompatActivity() {
         mRtcEngine!!.muteLocalAudioStream(iv.isSelected)
     }
 
-    fun onSwitchCameraClicked() {
+    fun onSwitchCameraClicked(view: View) {
         mRtcEngine!!.switchCamera()
     }
 
-    fun onEndCallClicked() {
-//        val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
-//        val call: Call<PostSessionResponse>? = service?.getNotifications(Session())
-//        call?.enqueue(object : Callback<PostSessionResponse> {
-//
-//            override fun onResponse(call: Call<PostSessionResponse>, response: Response<PostSessionResponse>) {
-//                if (response.isSuccessful) {
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<PostSessionResponse>, t: Throwable) {
-//                Toast.makeText(this@SessionActivity, "Failed" + t.localizedMessage, Toast.LENGTH_LONG).show()
-//            }
-//        })
-        finish()
+    override fun onBackPressed() {
+    }
+
+    fun onEndCallClicked(view: View) {
+        if (PreferencesManager(this@SessionActivity).getId() == learnerId) {
+            val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
+            val call: Call<PostSessionResponse>? = service?.doPostSkillSession(Session(learnerId!!, date!!))
+            call?.enqueue(object : Callback<PostSessionResponse> {
+
+                override fun onResponse(call: Call<PostSessionResponse>, response: Response<PostSessionResponse>) {
+                    if (response.isSuccessful) {
+                        if (response.body()!!.status) {
+                            rating_overlay.visibility = View.VISIBLE
+                            instructor_rate.setOnRatingBarChangeListener { _: SimpleRatingBar, fl: Float, _: Boolean ->
+                                val rateCall: Call<PostSessionResponse>? = service.rateSkillMentor(Rate(response.body()!!.skill_id!!, fl))
+                                rateCall?.enqueue(object : Callback<PostSessionResponse> {
+
+                                    override fun onResponse(call: Call<PostSessionResponse>, response: Response<PostSessionResponse>) {
+                                        if (response.isSuccessful) {
+                                            Toast.makeText(this@SessionActivity, "Thank you for your feedback", Toast.LENGTH_SHORT).show()
+                                            finish()
+                                        }
+                                    }
+
+                                    override fun onFailure(call: Call<PostSessionResponse>, t: Throwable) {
+                                        Toast.makeText(this@SessionActivity, "Failed" + t.localizedMessage, Toast.LENGTH_LONG).show()
+                                    }
+                                })
+                            }
+                        } else {
+                            finish()
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<PostSessionResponse>, t: Throwable) {
+                    Toast.makeText(this@SessionActivity, "Failed" + t.localizedMessage, Toast.LENGTH_LONG).show()
+                }
+            })
+        } else {
+            finish()
+        }
     }
 
     private fun initializeAgoraEngine() {
@@ -204,8 +246,6 @@ class SessionActivity : AppCompatActivity() {
         mRtcEngine!!.setupRemoteVideo(VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_FIT, uid))
 
         surfaceView.tag = uid // for mark purpose
-        val tipMsg = findViewById<View>(R.id.quick_tips_when_use_agora_sdk) // optional UI
-        tipMsg.visibility = View.GONE
     }
 
     private fun leaveChannel() {
@@ -215,9 +255,6 @@ class SessionActivity : AppCompatActivity() {
     private fun onRemoteUserLeft() {
         val container = findViewById<View>(R.id.remote_video_view_container) as FrameLayout
         container.removeAllViews()
-
-        val tipMsg = findViewById<View>(R.id.quick_tips_when_use_agora_sdk) // optional UI
-        tipMsg.visibility = View.VISIBLE
     }
 
     private fun onRemoteUserVideoMuted(uid: Int, muted: Boolean) {

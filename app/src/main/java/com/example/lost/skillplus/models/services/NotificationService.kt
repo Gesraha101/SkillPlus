@@ -40,7 +40,9 @@ class NotificationService : JobIntentService() {
                 val body = "You have an upcoming session in 30 minutes"
                 generateNotification(getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager, Headers.SESSION.header, body, null)
             }
-            intent.action == Actions.ALERT.action -> startActivity(Intent(this, NotificationAlarmActivity::class.java).putExtra(Keys.FIRE_DATE.key, intent.getLongExtra(Keys.FIRE_DATE.key, 0)))
+            intent.action == Actions.ALERT.action -> startActivity(Intent(this, NotificationAlarmActivity::class.java)
+                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .putExtra(Keys.FIRE_DATE.key, intent.getLongExtra(Keys.FIRE_DATE.key, 0)))
             intent.action == Actions.CHECK.action -> {
                 if (!PreferencesManager(context).isNotified()) {
                     val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)

@@ -98,7 +98,7 @@ class AddTeacherSkillActivity : AppCompatActivity() {
                                             eT_Price?.text.toString().toFloat(),
                                             eT_SessionDuration?.text.toString().toFloat(),
                                             eT_ExtraFees?.text.toString().toFloat(),
-                                            downloadUri.toString(),//Todo: get photo
+                                            downloadUri.toString(),
                                             PreferencesManager(this@AddTeacherSkillActivity).getId(),
                                             activatedCategory.cat_id,
                                             null,

@@ -36,7 +36,7 @@ class ChooseSchaduleActivity : AppCompatActivity() {
 
 //
 //        if(modelArrayList!!.isEmpty()) {
-//           btnnext.visibility = View.GONE
+//           btnnext.visibility = LoginView.GONE
 //        }
         btnnext!!.setOnClickListener {
             if (isAnySelected(modelArrayList!!)) {

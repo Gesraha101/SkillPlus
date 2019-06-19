@@ -52,7 +52,7 @@ class CurrentNeedFragment : Fragment() {
         val myReq = MyId(PreferencesManager(this.context!!).getId())
 
         val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
-        val call: Call<CurrentNeedResponse>? = service?.getCurrentneeds(myReq)
+        val call: Call<CurrentNeedResponse>? = service?.getCurrentNeeds(myReq)
         call?.enqueue(object : Callback<CurrentNeedResponse> {
             override fun onFailure(call: Call<CurrentNeedResponse>, t: Throwable) =
                     Toast.makeText(activity, "Failed  cause is " + t.cause, Toast.LENGTH_LONG).show()
