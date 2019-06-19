@@ -43,20 +43,16 @@ class HomeActivity : NavigationDrawerActivity() {
                     if (frag.isVisible) {
                         when (frag.tag) {
                             Tags.MY_SKILLS.tag -> {
-                                FragmentsManager.removeFragment(supportFragmentManager,supportFragmentManager.findFragmentByTag(Tags.MY_SKILLS.tag)!!,true)
-                                FragmentsManager.addFragment(supportFragmentManager,CategoriesFragment.newInstance(),R.id.fragment_container,Tags.CATEGORIES_CONTAINER_NEW.tag,false)
+                                bottom_nav.selectedItemId=R.id.navigation_categories
                             }
                             Tags.MY_NEEDS.tag -> {
-                                FragmentsManager.removeFragment(supportFragmentManager,supportFragmentManager.findFragmentByTag(Tags.MY_NEEDS.tag)!!,true)
-                                FragmentsManager.addFragment(supportFragmentManager,CategoriesFragment.newInstance(),R.id.fragment_container,Tags.CATEGORIES_CONTAINER_NEW.tag,false)
+                                bottom_nav.selectedItemId=R.id.navigation_categories
                             }
                             Tags.CURRENT_SKILLS.tag -> {
-                                FragmentsManager.removeFragment(supportFragmentManager,supportFragmentManager.findFragmentByTag(Tags.CURRENT_SKILLS.tag)!!,true)
-                                FragmentsManager.addFragment(supportFragmentManager,CategoriesFragment.newInstance(),R.id.fragment_container,Tags.CATEGORIES_CONTAINER_NEW.tag,false)
+                                bottom_nav.selectedItemId=R.id.navigation_categories
                             }
                             Tags.CURRENT_NEEDS.tag -> {
-                                FragmentsManager.removeFragment(supportFragmentManager,supportFragmentManager.findFragmentByTag(Tags.CURRENT_NEEDS.tag)!!,true)
-                                FragmentsManager.addFragment(supportFragmentManager,CategoriesFragment.newInstance(),R.id.fragment_container,Tags.CATEGORIES_CONTAINER_NEW.tag,false)
+                                bottom_nav.selectedItemId=R.id.navigation_categories
                             }
 
                             Tags.CATEGORIES_CONTAINER.tag ->{
@@ -65,9 +61,17 @@ class HomeActivity : NavigationDrawerActivity() {
 
                                 promptDoubleTabToGoBack()
                             }
+
+                            Tags.CATEGORIES_CONTAINER_NEW.tag ->{
+                                if (doubleBackToExitPressedOnce)
+                                    super.onBackPressed()
+
+                                promptDoubleTabToGoBack()
+                            }
                             Tags.FAVOURITES_CONTAINER.tag ->{
                                 bottom_nav.selectedItemId=R.id.navigation_categories
                             }
+
                             Tags.NOTIFICATIONS_CONTAINER.tag ->{
                                 bottom_nav.selectedItemId=R.id.navigation_categories
                             }

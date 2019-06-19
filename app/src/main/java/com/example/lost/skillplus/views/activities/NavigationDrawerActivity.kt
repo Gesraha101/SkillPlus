@@ -70,7 +70,7 @@ open class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavi
                 findViewById<FrameLayout>(R.id.fragment_container).visibility = View.VISIBLE
                 supportFragmentManager.beginTransaction().replace(
                         R.id.fragment_container,
-                        MySkillsFragment(), Tags.MY_SKILLS.tag).disallowAddToBackStack().
+                        MySkillsFragment(), Tags.MY_SKILLS.tag).
                         commit()
                 nav_view.setCheckedItem(R.id.nav_skills)
                 supportActionBar!!.title="My Skills"

@@ -56,8 +56,8 @@ class CategoryContentActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.activity_category_content)
-        super.onCreate(savedInstanceState)
 
+        super.onCreate(savedInstanceState)
         //initializing references of  static skills and needs
         PostsListFragment.skills = arrayListOf()
         PostsListFragment.needs = arrayListOf()

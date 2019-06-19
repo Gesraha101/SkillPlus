@@ -11,6 +11,7 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.adapters.MySkillAdapter
+import com.example.lost.skillplus.models.enums.Tags
 import com.example.lost.skillplus.models.managers.BackendServiceManager
 import com.example.lost.skillplus.models.managers.FragmentsManager
 import com.example.lost.skillplus.models.managers.PreferencesManager
@@ -69,7 +70,7 @@ class MySkillsFragment : Fragment() {
                                 skillLearnersFragments.arguments = bundle
                                 MySkillView?.findViewById<FrameLayout>(R.id.main_my_skill)?.visibility = View.GONE
                                 MySkillView?.findViewById<FrameLayout>(R.id.sec_my_skill)?.visibility = View.VISIBLE
-                                FragmentsManager.replaceFragment(this@MySkillsFragment.fragmentManager!!, skillLearnersFragments, R.id.fragment_container, "skill_learner_fragment", true)
+                                FragmentsManager.replaceFragment(this@MySkillsFragment.fragmentManager!!, skillLearnersFragments, R.id.fragment_container, Tags.LEARNER_FRAGMENT.tag, true)
                                 //   fragmentManager?.beginTransaction()?.replace(R.id.fragment_container, skillLearnersFragments)?.commit()
                             }
                         }
