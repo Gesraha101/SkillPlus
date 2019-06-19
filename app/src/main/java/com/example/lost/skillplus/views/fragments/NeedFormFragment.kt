@@ -65,8 +65,6 @@ class NeedFormFragment : Fragment() {
                         layoutManager = LinearLayoutManager(activity)
                         if (response.body()?.sqlresponse != null) {
                             adapter = MyNeedFormsAdapter(response?.body()!!.sqlresponse)
-
-                            //TODO implement MyNeedsAdapter or use RequestsAdapter
                         }
                     }
                 } else {

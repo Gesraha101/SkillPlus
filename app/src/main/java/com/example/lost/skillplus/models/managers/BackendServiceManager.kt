@@ -68,4 +68,8 @@ interface BackendServiceManager {
 
     @POST("/need/current/details")
     fun getMyCurrentNeedsDetails(@Body myId: MyId): Call<MyCurrentNeedFormsResponse>
+
+
+    @POST("/need/form/approve")
+    fun approveForForm(@Body formApprove: FormApprove): Call<FormResponse>
 }

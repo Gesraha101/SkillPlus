@@ -52,13 +52,11 @@ class CurrentSkillAdapter(private val list: List<CurrentSkill>) : RecyclerView.A
             extraSession = itemView.findViewById(R.id.extra_session)
             sessionDuration = itemView.findViewById(R.id.session_duration)
             dates = itemView.findViewById(R.id.rv_current_skills_schedual)
-
             context = parent.context
             itemView.setOnClickListener {
                 onItemClick?.invoke(list[adapterPosition])
             }
         }
-
         fun bind(skill: CurrentSkill) {
             title?.text = skill.skill_name
             Glide.with(context!!)
