@@ -21,6 +21,7 @@ import com.example.lost.skillplus.views.fragments.CurrentNeedFragment
 import com.example.lost.skillplus.views.fragments.CurrentSkillFragment
 import com.example.lost.skillplus.views.fragments.MyNeedsFragment
 import com.example.lost.skillplus.views.fragments.MySkillsFragment
+import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_navigation_drawer.*
 import kotlinx.android.synthetic.main.nav_header_navigation_drawer.view.*
 
@@ -69,6 +70,8 @@ open class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavi
                         commit()
                 nav_view.setCheckedItem(R.id.nav_skills)
                 supportActionBar!!.title="My Skills"
+                bottom_nav.menu.getItem(0).isChecked=true
+
             }
             R.id.nav_needs -> {
                 findViewById<FrameLayout>(R.id.fragment_container).visibility = View.VISIBLE
@@ -77,6 +80,7 @@ open class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavi
                         MyNeedsFragment(), Tags.MY_NEEDS.tag).commit()
                 nav_view.setCheckedItem(R.id.nav_needs)
                 supportActionBar!!.title="My Needs"
+                bottom_nav.menu.getItem(0).isChecked=true
             }
             R.id.current_skill -> {
                 findViewById<FrameLayout>(R.id.fragment_container).visibility = View.VISIBLE
@@ -85,19 +89,20 @@ open class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavi
                         CurrentSkillFragment(), Tags.CURRENT_SKILLS.tag).commit()
                 nav_view.setCheckedItem(R.id.nav_needs)
                 supportActionBar!!.title="My current skills"
+                bottom_nav.menu.getItem(0).isChecked=true
 
             }
             R.id.current_need -> {
                 supportFragmentManager.beginTransaction().replace(
                         R.id.fragment_container,
-                        CurrentNeedFragment()).commit()
+                        CurrentNeedFragment(),Tags.CURRENT_NEEDS.tag).commit()
                 supportActionBar!!.title="My current needs"
-
+                bottom_nav.menu.getItem(0).isChecked=true
             }
             R.id.nav_about_us -> {
                 Toast.makeText(this@NavigationDrawerActivity, "About Ua", Toast.LENGTH_LONG).show()
 
-
+                bottom_nav.menu.getItem(0).isChecked=true
             }
             R.id.nav_log_out -> {
                 PreferencesManager(this@NavigationDrawerActivity).setFlag(false)
