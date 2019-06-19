@@ -9,6 +9,8 @@ import android.widget.CheckBox
 import android.widget.TextView
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.podos.raw.Schadule
+import java.text.SimpleDateFormat
+import java.util.*
 
 class CustomAdapter(private val context: Context, private var modelArrayList: java.util.ArrayList<Schadule>?) : BaseAdapter() {
 
@@ -49,7 +51,14 @@ class CustomAdapter(private val context: Context, private var modelArrayList: ja
         } else {
             holder = convertView.tag as ViewHolder
         }
-        holder.tvDate!!.text = modelArrayList!![position].getSchedule()
+
+
+        //        val date = schedulee?.toLong()?.let { Date(it) }
+//        val format = SimpleDateFormat("yyyy.MM.dd HH:mm")
+//        return format.format(date)
+        val date = modelArrayList!![position].getSchedule()?.toLong()?.let { Date(it) }
+        val format = SimpleDateFormat("yyyy.MM.dd HH:mm")
+        holder.tvDate!!.text = format.format(date).toString()
 
         holder.checkBox!!.isChecked = modelArrayList!![position].getSelecteds()
 
