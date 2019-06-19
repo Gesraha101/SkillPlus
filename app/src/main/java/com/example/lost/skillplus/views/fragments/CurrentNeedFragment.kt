@@ -61,8 +61,8 @@ class CurrentNeedFragment : Fragment() {
                 if (response.body()?.status == true) {
                     rv_current_needs.apply {
                         layoutManager = LinearLayoutManager(activity)
-                        if (response.body()?.skills?.isNotEmpty()!!) {
-                            adapter = CurrentNeedAdapter(response.body()!!.skills)
+                        if (response.body()?.data?.isNotEmpty()!!) {
+                            adapter = CurrentNeedAdapter(response.body()!!.data)
 //                            (adapter as CurrentSkillAdapter).onItemClick = { post ->
 //                                val bundle = Bundle()
 //                                val skillLearnersFragments = SkillLearnersFragments()
