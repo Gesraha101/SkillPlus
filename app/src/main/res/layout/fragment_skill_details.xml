@@ -1,8 +1,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context="com.example.lost.skillplus.views.fragments.SkillDetailsFragment">
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             tools:context="com.example.lost.skillplus.views.fragments.SkillDetailsFragment">
 
     <android.support.v7.widget.CardView
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -250,8 +250,15 @@
                             card_view:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"/>
 
                     <TextView
-                        android:id="@+id/skill_price"
-                        android:layout_width="wrap_content"
+                            android:id="@+id/skill_price"
+                            android:layout_width="130dp"
+                            android:layout_marginStart="21dp"
+                            card_view:layout_constraintStart_toEndOf="@+id/poster_rate"
+                            card_view:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp"
+                            android:layout_marginEnd="2dp" card_view:layout_constraintEnd_toEndOf="parent"
+                            card_view:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="3dp"
+                            android:layout_height="wrap_content"/>
+                    "
                         android:layout_height="match_parent"
                         android:layout_marginStart="24dp"
                         android:layout_marginLeft="24dp"

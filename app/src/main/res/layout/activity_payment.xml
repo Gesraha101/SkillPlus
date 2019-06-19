@@ -28,9 +28,10 @@
             android:id="@+id/emailPaymentEditText" android:layout_marginTop="20dp"
             app:layout_constraintTop_toBottomOf="@+id/textView6"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="64dp" android:layout_marginRight="64dp"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="77dp"
-            android:layout_marginStart="77dp"/>
+            android:layout_marginEnd="80dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="80dp" android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/phonePaymentEditText"/>
     <EditText
             android:background="@drawable/password"
             android:layout_width="275dp"
@@ -39,12 +40,13 @@
             android:textSize="18sp"
             android:id="@+id/phonePaymentEditText"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="64dp"
+            android:layout_marginEnd="80dp"
             android:layout_marginTop="20dp"
             app:layout_constraintTop_toBottomOf="@+id/emailPaymentEditText"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="72dp"
-            app:layout_constraintHorizontal_bias="1.0"/>
+            android:layout_marginStart="80dp"
+            app:layout_constraintHorizontal_bias="0.416" android:layout_marginBottom="26dp"
+            app:layout_constraintBottom_toTopOf="@+id/payButton"/>
     <Button
             android:text="pay"
             android:textColor="@color/colorAccent"

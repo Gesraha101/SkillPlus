@@ -51,7 +51,7 @@ class CurrentNeedAdapter(private val list: List<CurrentNeed>) : RecyclerView.Ada
         }
 
         fun bind(skill: CurrentNeed) {
-            title?.text = skill.need_name
+            title?.text = java.lang.StringBuilder().append(" Skill Name : ${skill.need_name} ")
             Glide.with(context!!)
                     .load(skill.need_photo)
                     .into(image!!)

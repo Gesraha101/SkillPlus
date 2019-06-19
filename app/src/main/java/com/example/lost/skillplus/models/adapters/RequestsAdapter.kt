@@ -54,7 +54,7 @@ class RequestsAdapter(private val list: List<Request>): RecyclerView.Adapter<Req
         }
 
         fun bind(request: Request) {
-            title?.text = request.need_name
+            title?.text = StringBuilder().append("Skill title : " + request.need_name)
             Glide.with(context!!)
                     .load(request.need_photo)
                     .into(image!!)
@@ -65,7 +65,7 @@ class RequestsAdapter(private val list: List<Request>): RecyclerView.Adapter<Req
             if (request.need_id.equals(PreferencesManager(itemView.context).getId())) {
                 posterName?.visibility = View.GONE
             } else {
-                posterName?.text = StringBuilder().append("Created by: " + request.user_name)
+                posterName?.text = StringBuilder().append("Created by: ${request.user_name}")
             }
 
             posterName?.text = StringBuilder().append("Created by: " + request.user_name)

@@ -53,7 +53,9 @@ class MyNeedFormsAdapter(private val list: List<SqlResponseFromMyNeedForms>) : R
         }
 
         fun bind(request: SqlResponseFromMyNeedForms) {
-            userName?.text = request.user_name
+            //title?.text = java.lang.StringBuilder().append(" Skill Name : ${skill.need_name} ")
+
+            userName?.text = java.lang.StringBuilder().append("Name : ${request.user_name} ")
             Glide.with(context!!)
                     .load(request.user_pic)
                     .into(userImage!!)

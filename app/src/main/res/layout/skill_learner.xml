@@ -39,15 +39,14 @@
                     android:layout_marginTop="16dp"
                     card_view:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginEnd="16dp" card_view:layout_constraintStart_toEndOf="@+id/skill_user_image"
-                    android:layout_marginStart="21dp" card_view:layout_constraintHorizontal_bias="0.523"/>
+                    android:layout_marginStart="21dp" card_view:layout_constraintHorizontal_bias="1.0"/>
 
             <android.support.v7.widget.RecyclerView
                     android:layout_width="142dp"
                     android:layout_height="85dp"
                     android:id="@+id/rv_my_skills_learner"
-                    android:layout_marginTop="4dp"
                     card_view:layout_constraintTop_toBottomOf="@+id/skill_user_name" android:layout_marginEnd="17dp"
-                    card_view:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="24dp"
+                    card_view:layout_constraintEnd_toEndOf="parent"
                     card_view:layout_constraintStart_toEndOf="@+id/skill_user_image"
                     card_view:layout_constraintHorizontal_bias="0.0"/>
 

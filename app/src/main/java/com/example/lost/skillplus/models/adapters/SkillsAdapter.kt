@@ -65,13 +65,13 @@ class SkillsAdapter(private val list: List<Skill>): RecyclerView.Adapter<SkillsA
         }
 
         fun bind(skill: Skill) {
-            title?.text = skill.skill_name
+            title?.text = StringBuilder().append("Skill title : " + skill.skill_name)
             Glide.with(context!!)
                     .load(skill.photo_path)
                     .into(image!!)
 
-            posterName?.text = StringBuilder().append("Created by: " + skill.user_name)
-            price?.text=java.lang.StringBuilder().append(" ${skill.skill_price} EGP")
+            posterName?.text = StringBuilder().append("Created by: ${skill.user_name}")
+            price?.text = java.lang.StringBuilder().append("Price : ${skill.skill_price} EGP")
             posterRate?.rating = skill.rate!!
             if(skill.is_favorite!=null)
             {

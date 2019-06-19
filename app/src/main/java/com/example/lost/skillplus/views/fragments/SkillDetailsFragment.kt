@@ -1,12 +1,10 @@
 package com.example.lost.skillplus.views.fragments
 
-import android.content.Context
+import RetrofitManager
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentTransaction
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,17 +12,16 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.managers.BackendServiceManager
-import com.example.lost.skillplus.models.managers.FragmentsManager
 import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.FavouriteUpdate
 import com.example.lost.skillplus.models.podos.raw.Skill
 import com.example.lost.skillplus.models.podos.responses.FavouriteResponse
-import com.example.lost.skillplus.views.activities.CategoryContentActivity
 import com.example.lost.skillplus.views.activities.ChooseSchaduleActivity
 import kotlinx.android.synthetic.main.fragment_skill_details.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
 import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -58,8 +55,12 @@ class SkillDetailsFragment : Fragment() {
         sessions_count_value.text = skill!!.session_no.toString()
         session_duration_value.append("${skill!!.duration} hour(s)")
         extra_session_value.append("+" + skill!!.extra_fees.toString() + " per session")
-        for (date: Long in skill!!.schedule!!)
-            schedule_values.append(Date(date).toString() + "\n")
+        for (date: Long in skill!!.schedule!!) {
+            val dat = date?.let { Date(it) }
+            val format = SimpleDateFormat("yyyy.MM.dd HH:mm")
+            schedule_values.append(format.format(dat).toString() + "\n")
+        }
+
         poster_rate.rating = skill!!.rate!!
         if (skill!!.schedule!!.size != 0) {
             btn_apply.setOnClickListener {
