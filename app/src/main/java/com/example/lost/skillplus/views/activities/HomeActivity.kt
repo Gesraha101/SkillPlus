@@ -42,19 +42,6 @@ class HomeActivity : NavigationDrawerActivity() {
                 if (frag != null) {
                     if (frag.isVisible) {
                         when (frag.tag) {
-                            Tags.MY_SKILLS.tag -> {
-                                bottom_nav.selectedItemId=R.id.navigation_categories
-                            }
-                            Tags.MY_NEEDS.tag -> {
-                                bottom_nav.selectedItemId=R.id.navigation_categories
-                            }
-                            Tags.CURRENT_SKILLS.tag -> {
-                                bottom_nav.selectedItemId=R.id.navigation_categories
-                            }
-                            Tags.CURRENT_NEEDS.tag -> {
-                                bottom_nav.selectedItemId=R.id.navigation_categories
-                            }
-
                             Tags.CATEGORIES_CONTAINER.tag ->{
                                 if (doubleBackToExitPressedOnce)
                                     super.onBackPressed()
@@ -68,14 +55,10 @@ class HomeActivity : NavigationDrawerActivity() {
 
                                 promptDoubleTabToGoBack()
                             }
-                            Tags.FAVOURITES_CONTAINER.tag ->{
+
+                            else ->{
                                 bottom_nav.selectedItemId=R.id.navigation_categories
                             }
-
-                            Tags.NOTIFICATIONS_CONTAINER.tag ->{
-                                bottom_nav.selectedItemId=R.id.navigation_categories
-                            }
-
 
                         }
 
