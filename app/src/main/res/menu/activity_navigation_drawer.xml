@@ -21,9 +21,7 @@
 
     <item android:title="Help">
         <menu>
-            <item
-                    android:id="@+id/nav_settings"
-                    android:title="@string/settings"/>
+
             <item
                     android:id="@+id/nav_about_us"
                     android:title="@string/about_us"/>
