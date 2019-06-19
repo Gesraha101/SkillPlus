@@ -110,7 +110,7 @@ class CategoryContentActivity : AppCompatActivity() {
             if (tabs.selectedTabPosition == 0) {
                 startActivity(Intent(this, AddTeacherSkillActivity::class.java).putExtra(Keys.CATEGORY.key, activatedCategory))
             } else {
-                startActivity(Intent(this, AddStudentNeedActivity::class.java).putExtra(Keys.CATEGORY.key, activatedCategory!!.cat_id))
+                startActivity(Intent(this, AddStudentNeedActivity::class.java).putExtra(Keys.CATEGORY.key, activatedCategory))
             }
         }
 

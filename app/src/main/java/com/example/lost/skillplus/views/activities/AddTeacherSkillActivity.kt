@@ -119,7 +119,7 @@ class AddTeacherSkillActivity : AppCompatActivity() {
                                 eT_Price?.text.toString().toFloat(),
                                 eT_SessionDuration?.text.toString().toFloat(),
                                 eT_ExtraFees?.text.toString().toFloat(),
-                                "https://firebasestorage.googleapis.com/v0/b/skillplus-6d8b3.appspot.com/o/images%2Fuser-5.png?alt=media&token=b2d4da3e-d672-4f44-94f9-bb469158317c",
+                                activatedCategory.cat_photo,
                                 PreferencesManager(this@AddTeacherSkillActivity).getId(),
                                 activatedCategory.cat_id,
                                 null,

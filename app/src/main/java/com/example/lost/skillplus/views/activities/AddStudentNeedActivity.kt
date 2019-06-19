@@ -19,6 +19,7 @@ import com.example.lost.skillplus.models.enums.Keys
 import com.example.lost.skillplus.models.managers.BackendServiceManager
 import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.AddNeed
+import com.example.lost.skillplus.models.podos.raw.Category
 import com.example.lost.skillplus.models.podos.responses.AddNeedResponse
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
@@ -36,32 +37,16 @@ class AddStudentNeedActivity : AppCompatActivity() {
     var downloadUri: Uri? = null
     private var filePath: Uri? = null
     var isPic: Boolean = false
-    var category: Int = 0
+    var category: Category? = null
     var addneed = AddNeed("", "", "", 0, 0)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_student_need)
-        category = intent.getIntExtra(Keys.CATEGORY.key, 0)
-        val personNames = arrayOf("entertainment", "arts", "food")
-        val spinner = findViewById<Spinner>(R.id.categorySpinner)
-        if (spinner != null) {
-            val arrayAdapter = ArrayAdapter(this, R.layout.spiner_layout, personNames)
-            spinner.adapter = arrayAdapter
+        category = intent.getSerializableExtra(Keys.CATEGORY.key) as Category
 
-            spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                    Toast.makeText(this@AddStudentNeedActivity, " position is " + (position + 1) + " " + personNames[position], Toast.LENGTH_SHORT).show()
-                    category = position + 1
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>) {
-                    // Code to perform some action when nothing is selected
-                }
-            }
-        }
-        btn_add_image_need.setOnClickListener(View.OnClickListener {
+        btn_add_image_need.setOnClickListener{
             pickPhotoFromGallery()
-        })
+        }
 
         btn_add_need.setOnClickListener {
             if (isPic) {
@@ -82,11 +67,11 @@ class AddStudentNeedActivity : AppCompatActivity() {
                     }).addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             downloadUri = task.result
-                            if (category != 0) {
+                            if (category!!.cat_id != 0) {
                                 addneed = AddNeed(need_name = titleEditText.text.toString(),
                                         need_desc = descEditText.text.toString(),
                                         need_photo = downloadUri.toString(),
-                                        cat_id = category,
+                                        cat_id = category!!.cat_id,
                                         user_id = PreferencesManager(this@AddStudentNeedActivity).getId())
                             }
 
@@ -94,11 +79,11 @@ class AddStudentNeedActivity : AppCompatActivity() {
                     }
                 }
             } else {
-                if (category != 0) {
+                if (category!!.cat_id != 0) {
                     addneed = AddNeed(need_name = titleEditText.text.toString(),
                             need_desc = descEditText.text.toString(),
-                            need_photo = "mesh batkeshef 3la banat",
-                            cat_id = category,
+                            need_photo =category!!.cat_photo,
+                            cat_id = category!!.cat_id,
                             user_id = PreferencesManager(this@AddStudentNeedActivity).getId())
                 }
             }
