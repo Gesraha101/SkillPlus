@@ -95,6 +95,12 @@ class HomeActivity : NavigationDrawerActivity() {
 
                                 promptDoubleTabToGoBack()
                             }
+                            Tags.FAVOURITES_CONTAINER.tag ->{
+                                bottom_nav.selectedItemId=R.id.navigation_categories
+                            }
+                            Tags.NOTIFICATIONS_CONTAINER.tag ->{
+                                bottom_nav.selectedItemId=R.id.navigation_categories
+                            }
                             Tags.LEARNER_FRAGMENT.tag -> {
                                 main_my_skill.visibility = View.VISIBLE
                                 sec_my_skill.visibility = View.GONE
