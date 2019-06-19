@@ -14,8 +14,8 @@ enum class Tags(val tag: String) {
     CURRENT_NEEDS("current_needs"),
     CURRENT_SKILLS("current_skills"),
     CATEGORIES_CONTAINER(R.id.navigation_categories.toString()),
-    CATEGORIES_FROM_SIDE("categories_container"),
-    FAVOURITES_CONTAINER("favourites_container"),
-    NOTIFICATIONS_CONTAINER("notifications_container")
+    FAVOURITES_CONTAINER(R.id.navigation_favorites.toString()),
+    NOTIFICATIONS_CONTAINER(R.id.navigation_notifications.toString()),
+    CATEGORIES_CONTAINER_NEW("categories_container")
 
 }
