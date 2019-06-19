@@ -28,8 +28,9 @@
                   app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp">
         <ImageView
 
-                android:layout_width="77dp"
-                android:layout_height="127dp" android:id="@+id/imageView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/instructor_1"
                 app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
                 app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp"
@@ -57,8 +58,10 @@
                   app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp">
         <ImageView
 
-                android:layout_width="77dp"
-                android:layout_height="127dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/training"
+
                 app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
                 app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp"

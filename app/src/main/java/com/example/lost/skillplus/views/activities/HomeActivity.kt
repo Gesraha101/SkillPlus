@@ -96,7 +96,7 @@ class HomeActivity : NavigationDrawerActivity() {
                                 main_my_need.visibility = View.VISIBLE
                                 sec_my_need.visibility = View.GONE
                             }
-                                    Tags.DETAILS_FROM_FAVORITE.tag -> {
+                            Tags.DETAILS_FROM_FAVORITE.tag -> {
                                 rv_favorites.visibility = View.VISIBLE
                                 supportFragmentManager.popBackStack()
                             }

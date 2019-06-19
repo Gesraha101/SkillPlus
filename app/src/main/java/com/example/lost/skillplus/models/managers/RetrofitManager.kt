@@ -6,7 +6,7 @@ object RetrofitManager {
     //    private const val BASE_URL = "http://10.1.41.86:2000/"
     //  private const val BASE_URL = "http://172.16.1.178:2000/"
        private const val BASE_URL = "http://10.0.2.2:2000/"
-    //private const val BASE_URL = "http://skillplus.ddns.net:2000/"
+    //private const val BASE_URL = "http://skillplus.ddns.net:1200/"
     private val retrofitInstance: Retrofit?
         get() {
             if (retrofit == null) {
