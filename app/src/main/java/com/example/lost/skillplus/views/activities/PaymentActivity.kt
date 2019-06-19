@@ -8,7 +8,6 @@ import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.widget.TextView
 import android.widget.Toast
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.adapters.CustomAdapter
@@ -27,7 +26,6 @@ import retrofit2.Response
 
 class PaymentActivity : AppCompatActivity() {
 
-    private var tv: TextView? = null
     private var scheduleList = arrayListOf<Long>()
     private var skill: Skill? = null
     @SuppressLint("SetTextI18n")
@@ -43,7 +41,6 @@ class PaymentActivity : AppCompatActivity() {
 
         for (i in 0 until CustomAdapter.public_modelArrayList.size) {
             if (CustomAdapter.public_modelArrayList[i].getSelecteds()) {
-                tv!!.text = tv!!.text.toString() + " , " + CustomAdapter.public_modelArrayList[i].getSchedule()
                 scheduleList.add(CustomAdapter.public_modelArrayList[i].getSchedule().toLong())
             }
         }
