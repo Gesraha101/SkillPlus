@@ -18,6 +18,7 @@
                 android:layout_margin="16dp">
 
             <ImageView
+                    android:src="@drawable/profile"
                     android:layout_width="166dp"
                     android:layout_height="112dp"
                     android:id="@+id/skill_user_image"

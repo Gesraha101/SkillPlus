@@ -19,6 +19,7 @@
                 android:layout_margin="16dp">
 
             <ImageView
+                    android:src="@drawable/profile"
                     android:layout_width="132dp"
                     android:layout_height="109dp"
                     android:id="@+id/form_user_image"
