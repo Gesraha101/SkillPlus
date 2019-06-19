@@ -64,8 +64,6 @@ open class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavi
                         R.id.fragment_container,
                         CategoriesFragment()).commit()
                 nav_view.setCheckedItem(R.id.nav_needs)
-                Log.d("test", "nav_needs")
-
             }
             R.id.nav_skills -> {
 
@@ -74,7 +72,7 @@ open class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavi
                         R.id.fragment_container,
                         MySkillsFragment(), Tags.MY_SKILLS.tag).commit()
                 nav_view.setCheckedItem(R.id.nav_skills)
-                Log.d("test", "nav_skills")
+                supportActionBar!!.title="My Skills"
             }
             R.id.nav_needs -> {
                 findViewById<FrameLayout>(R.id.fragment_container).visibility = View.VISIBLE
@@ -82,7 +80,7 @@ open class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavi
                         R.id.fragment_container,
                         MyNeedsFragment(), Tags.MY_NEEDS.tag).commit()
                 nav_view.setCheckedItem(R.id.nav_needs)
-                Log.d("test", "nav_needs")
+                supportActionBar!!.title="My Needs"
             }
             R.id.current_skill -> {
                 findViewById<FrameLayout>(R.id.fragment_container).visibility = View.VISIBLE
@@ -90,7 +88,7 @@ open class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavi
                         R.id.fragment_container,
                         CurrentSkillFragment(), Tags.CURRENT_SKILLS.tag).commit()
                 nav_view.setCheckedItem(R.id.nav_needs)
-                Log.d("test", "nav_skill")
+                supportActionBar!!.title="My current skills"
 //
 //                Toast.makeText(this@NavigationDrawerActivity, "no Active jobs is available", Toast.LENGTH_LONG).show()
 
@@ -99,6 +97,7 @@ open class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavi
                 supportFragmentManager.beginTransaction().replace(
                         R.id.fragment_container,
                         CurrentNeedFragment()).commit()
+                supportActionBar!!.title="My current needs"
 //                nav_view.setCheckedItem(R.id.nav_needs)
 //                Log.d("test", "nav_needs")
                 //    Toast.makeText(this@NavigationDrawerActivity, "Settings", Toast.LENGTH_LONG).show()

@@ -9,9 +9,11 @@ import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
+import android.widget.LinearLayout
 import android.widget.Toast
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.adapters.RequestsAdapter
@@ -34,11 +36,13 @@ import java.io.Serializable
 
 
 class CategoryContentActivity : AppCompatActivity() {
+    companion object {
+        lateinit var skillPlaceholder : LinearLayout //Memory leak , But i can't find another way
+    }
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
     private var frag: Fragment? = null
     private var activatedCategory: Category? = null
-
     fun loadFragment(isSkill: Boolean?, paramPassed: Serializable) {
         val fragment : Fragment = if (isSkill!!) {
             SkillDetailsFragment.newInstance(paramPassed as Skill)
@@ -53,6 +57,42 @@ class CategoryContentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.activity_category_content)
         super.onCreate(savedInstanceState)
+
+        //initializing references of  static skills and needs
+        PostsListFragment.skills = arrayListOf()
+        PostsListFragment.needs = arrayListOf()
+
+        //initializing references of  static skill placeholder
+        skillPlaceholder = findViewById(R.id.skill_placeholder)
+
+        //Handling selecting one of the tabs of viewpager to handle its placeholder
+        var viewPager = findViewById<ViewPager>(R.id.container)
+        viewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+            }
+            override fun onPageSelected(position: Int) {
+                if(position==0) {
+                    if (PostsListFragment.skills.isEmpty())
+                        skill_placeholder.visibility = View.VISIBLE
+
+                    need_placeholder.visibility = View.GONE
+
+                }
+                else{
+                    if(PostsListFragment.needs.isEmpty())
+                        need_placeholder.visibility=View.VISIBLE
+
+                    skill_placeholder.visibility=View.GONE
+                    }
+
+            }
+
+        })
 
         activatedCategory = intent.getSerializableExtra(Keys.CATEGORY.key) as Category
 
@@ -120,6 +160,7 @@ class CategoryContentActivity : AppCompatActivity() {
 
 
         var isSkill: Boolean? = false
+
         private var activatedCategory: Category? = null
 
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -144,7 +185,12 @@ class CategoryContentActivity : AppCompatActivity() {
                                 // set a LinearLayoutManager to handle Android
                                 // RecyclerView behavior
                                 layoutManager = LinearLayoutManager(activity)
+
+                                CategoryContentActivity.skillPlaceholder.visibility=View.VISIBLE  //make skill placeholder appear by default because skills are automatically selected
                                 if (isSkill!! && response.body()?.skillsAndNeeds?.skills!!.isNotEmpty()) {
+                                    CategoryContentActivity.skillPlaceholder.visibility=View.GONE  //disable its placeholder if there are actual data to display
+
+                                    skills= (response.body()?.skillsAndNeeds?.skills as ArrayList<Skill>?)!!
                                     adapter = SkillsAdapter(response.body()!!.skillsAndNeeds.skills)
                                     (adapter as SkillsAdapter).onItemClick = { post ->
                                         (activity as CategoryContentActivity).loadFragment(isSkill, post)
@@ -189,12 +235,13 @@ class CategoryContentActivity : AppCompatActivity() {
                                     }
 
                                 } else if (!isSkill!! && response.body()?.skillsAndNeeds?.needs!!.isNotEmpty()){
+                                    needs= (response.body()?.skillsAndNeeds?.needs as ArrayList<Request>?)!!
                                     adapter = RequestsAdapter(response.body()!!.skillsAndNeeds.needs)
                                     (adapter as RequestsAdapter).onItemClick = { post ->
                                         (activity as CategoryContentActivity).loadFragment(isSkill, post)
                                     }
                                 } else
-                                    isSkill = null
+                                    isSkill=null
                             }
                         } else {
                             Toast.makeText(activity, "Error: " + response.body(), Toast.LENGTH_LONG).show()
@@ -207,6 +254,8 @@ class CategoryContentActivity : AppCompatActivity() {
             })
         }
         companion object {
+            lateinit var skills: ArrayList<Skill>
+            lateinit var needs: ArrayList<Request>
 
             private const val ARG_SECTION_NUMBER = "section_number"
             private const val ARG_ACTIVATED_CAT = "activated_cat"

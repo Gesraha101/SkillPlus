@@ -22,6 +22,12 @@ class FragmentsManager {
             else
                 manager.inTransaction({ replace(frameId, fragment, tag) }, addToBackStack)
         }
+        fun addFragment(manager: FragmentManager, fragment: Fragment, frameId: Int, tag: String?, addToBackStack: Boolean) {
+            if (tag.isNullOrBlank())
+                manager.inTransaction({ add(frameId, fragment)}, addToBackStack)
+            else
+                manager.inTransaction({ add(frameId, fragment, tag) }, addToBackStack)
+        }
 
         fun removeFragment(manager: FragmentManager, fragment: Fragment, addToBackStack: Boolean) {
             manager.inTransaction({ remove(fragment)}, addToBackStack)

@@ -1,5 +1,7 @@
 package com.example.lost.skillplus.models.enums
 
+import com.example.lost.skillplus.R
+
 enum class Tags(val tag: String) {
     APPLICANT_NOTIFICATION("applicant_notification"),
     FORM_RECEIVED("form_received"),
@@ -10,6 +12,10 @@ enum class Tags(val tag: String) {
     MY_NEEDS("my_needs"),
     MY_SKILLS("my_skills"),
     CURRENT_NEEDS("current_needs"),
-    CURRENT_SKILLS("current_skills")
+    CURRENT_SKILLS("current_skills"),
+    CATEGORIES_CONTAINER(R.id.navigation_categories.toString()),
+    CATEGORIES_FROM_SIDE("categories_container"),
+    FAVOURITES_CONTAINER("favourites_container"),
+    NOTIFICATIONS_CONTAINER("notifications_container")
 
 }

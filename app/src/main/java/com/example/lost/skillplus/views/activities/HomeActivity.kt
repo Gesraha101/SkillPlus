@@ -43,18 +43,35 @@ class HomeActivity : NavigationDrawerActivity() {
                     if (frag.isVisible) {
                         when (frag.tag) {
                             Tags.MY_SKILLS.tag -> {
-
-                                fragment_container.visibility = View.VISIBLE
+                                FragmentsManager.removeFragment(supportFragmentManager,supportFragmentManager.findFragmentByTag(Tags.MY_SKILLS.tag)!!,true)
+                                FragmentsManager.addFragment(supportFragmentManager,CategoriesFragment.newInstance(),R.id.fragment_container,Tags.CATEGORIES_FROM_SIDE.tag,true)
                             }
                             Tags.MY_NEEDS.tag -> {
-                                fragment_container.visibility = View.VISIBLE
-                                supportFragmentManager.popBackStack()
+                                FragmentsManager.replaceFragment(supportFragmentManager,CategoriesFragment.newInstance(),R.id.fragment_container,Tags.CATEGORIES_FROM_SIDE.tag,true)
                             }
                             Tags.CURRENT_SKILLS.tag -> {
-                                fragment_container.visibility = View.VISIBLE
-                                supportFragmentManager.popBackStack()
+                                FragmentsManager.replaceFragment(supportFragmentManager,CategoriesFragment.newInstance(),R.id.fragment_container,Tags.CATEGORIES_FROM_SIDE.tag,true)
+
                             }
-                            else ->{
+//                            Tags.FAVOURITES_CONTAINER.tag ->{
+//                                if (doubleBackToExitPressedOnce)
+//                                    super.onBackPressed()
+//
+//                                promptDoubleTabToGoBack()
+//                            }
+//                            Tags.NOTIFICATIONS_CONTAINER.tag ->{
+//                                if (doubleBackToExitPressedOnce)
+//                                    super.onBackPressed()
+//
+//                                promptDoubleTabToGoBack()
+//                            }
+                            Tags.CATEGORIES_CONTAINER.tag ->{
+                                if (doubleBackToExitPressedOnce)
+                                    super.onBackPressed()
+
+                                promptDoubleTabToGoBack()
+                            }
+                            Tags.CATEGORIES_FROM_SIDE.tag ->{
                                 if (doubleBackToExitPressedOnce)
                                     super.onBackPressed()
 
@@ -82,7 +99,7 @@ class HomeActivity : NavigationDrawerActivity() {
                                 main_my_need.visibility = View.VISIBLE
                                 sec_my_need.visibility = View.GONE
                             }
-                            Tags.DETAILS_FROM_FAVORITE.tag -> {
+                                    Tags.DETAILS_FROM_FAVORITE.tag -> {
                                 rv_favorites.visibility = View.VISIBLE
                                 supportFragmentManager.popBackStack()
                             }
@@ -112,12 +129,15 @@ class HomeActivity : NavigationDrawerActivity() {
         val tag = item.itemId.toString()
         val fragment = supportFragmentManager.findFragmentByTag(tag) ?: when (item.itemId) {
             R.id.navigation_categories -> {
+                supportActionBar!!.title="Categories"
                 CategoriesFragment.newInstance()
             }
             R.id.navigation_favorites -> {
+                supportActionBar!!.title="My Favourites"
                 FavoritesFragment.newInstance()
             }
             R.id.navigation_notifications -> {
+                supportActionBar!!.title="My Notifications"
                 NotificationsFragment.newInstance(notifications)
             }
             else -> {
