@@ -91,10 +91,13 @@ class HomeActivity : NavigationDrawerActivity() {
                             Tags.LEARNER_FRAGMENT.tag -> {
                                 main_my_skill.visibility = View.VISIBLE
                                 sec_my_skill.visibility = View.GONE
+                                supportFragmentManager.popBackStack()
+
                             }
                             Tags.FORM_FRAGMENT.tag -> {
                                 main_my_need.visibility = View.VISIBLE
                                 sec_my_need.visibility = View.GONE
+                                supportFragmentManager.popBackStack()
                             }
                             Tags.DETAILS_FROM_FAVORITE.tag -> {
                                 rv_favorites.visibility = View.VISIBLE

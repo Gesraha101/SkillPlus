@@ -144,20 +144,20 @@ class AddFormActivity : AppCompatActivity() {
 
         btn_add_need.setOnClickListener {
             badEntry = false
-            if (eT_NumberOfSessions.text.toString().toIntOrNull() == null) {
-                eT_NumberOfSessions.error = "A number is required"
+            if (eT_NumberOfSessions.text.toString().toIntOrNull() == null||eT_NumberOfSessions.text.toString().toIntOrNull() == 0) {
+                eT_NumberOfSessions.error = "A postive number is required"
                 eT_NumberOfSessions.startAnimation(shake)
                 eT_NumberOfSessions.requestFocus()
                 badEntry = true
             }
-            if (eT_SessionDuration.text.toString().toIntOrNull() == null) {
-                eT_SessionDuration.error = "A number is required"
+            if (eT_SessionDuration.text.toString().toIntOrNull() == null||eT_SessionDuration.text.toString().toIntOrNull() == 0) {
+                eT_SessionDuration.error = "A postive number is required"
                 eT_SessionDuration.startAnimation(shake)
                 eT_SessionDuration.requestFocus()
                 badEntry = true
             }
-            if (eT_Price.text.toString().toFloatOrNull() == null) {
-                eT_Price.error = "A number is required"
+            if (eT_Price.text.toString().toFloatOrNull() == null||eT_Price.text.toString().toIntOrNull() == 0) {
+                eT_Price.error = "A postive number is required"
                 eT_Price.startAnimation(shake)
                 eT_Price.requestFocus()
                 badEntry = true
@@ -187,7 +187,6 @@ class AddFormActivity : AppCompatActivity() {
                         if (response.isSuccessful) {
                             if (response.body()?.status == true) {
                                 Handler().postDelayed({
-                                    this@AddFormActivity.supportFragmentManager.popBackStack() //Todo: mesh 3aref leh lazem a3ml popstack
                                     animateView(progressOverlay, View.GONE, 0f, 200)
                                     val i = Intent(this@AddFormActivity, HomeActivity::class.java)
                                     i.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK

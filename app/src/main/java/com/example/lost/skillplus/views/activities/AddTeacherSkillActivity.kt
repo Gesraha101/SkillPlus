@@ -46,20 +46,20 @@ class AddTeacherSkillActivity : AppCompatActivity() {
         }
         btn_proceed.setOnClickListener {
                     badEntry=false
-                if (eT_NumberOfSessions.text.toString().toIntOrNull() == null) {
-                    eT_NumberOfSessions.error = "A number is required"
+                if (eT_NumberOfSessions.text.toString().toIntOrNull() == null||eT_NumberOfSessions.text.toString().toIntOrNull() ==0) {
+                    eT_NumberOfSessions.error = "A postive number is required"
                     eT_NumberOfSessions.startAnimation(shake)
                     eT_NumberOfSessions.requestFocus()
                     badEntry=true
                 }
-                if (eT_SessionDuration.text.toString().toIntOrNull() == null) {
-                    eT_SessionDuration.error = "A number is required"
+                if (eT_SessionDuration.text.toString().toIntOrNull() == null||eT_SessionDuration.text.toString().toIntOrNull() ==0) {
+                    eT_SessionDuration.error = "A postive number is required"
                     eT_SessionDuration.startAnimation(shake)
                     eT_SessionDuration.requestFocus()
                     badEntry=true
                 }
-                if (eT_Price.text.toString().toFloatOrNull() == null) {
-                    eT_Price.error = "A number is required"
+                if (eT_Price.text.toString().toFloatOrNull() == null||eT_Price.text.toString().toIntOrNull() ==0) {
+                    eT_Price.error = "A postive number is required"
                     eT_Price.startAnimation(shake)
                     eT_Price.requestFocus()
                     badEntry=true
