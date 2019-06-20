@@ -49,7 +49,7 @@ class NotificationsAdapter(private val list: ArrayList<Notification>) : Recycler
                     header?.text = Headers.SKILL_APPLICATION.header
                     body?.text = String.format(context!!.resources.getString(R.string.notification_skill_apply), notification.user_name!!, notification.skill_name)
                 }
-                notification.form_id != null -> {
+                notification.need_id != null -> {
                     header?.text = Headers.FORM_RECEIVED.header
                     body?.text = String.format(context!!.resources.getString(R.string.notification_form_received), notification.user_name!!, notification.need_name)
                 }

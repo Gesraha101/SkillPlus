@@ -1,6 +1,5 @@
 package com.example.lost.skillplus.views.activities
 
-import RetrofitManager
 import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.PorterDuff
@@ -16,21 +15,10 @@ import android.widget.ImageView
 import android.widget.Toast
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.enums.Keys
-import com.example.lost.skillplus.models.managers.BackendServiceManager
-import com.example.lost.skillplus.models.managers.PreferencesManager
-import com.example.lost.skillplus.models.podos.raw.Rate
-import com.example.lost.skillplus.models.podos.raw.Session
-import com.example.lost.skillplus.models.podos.responses.PostSessionResponse
-import com.iarcuschin.simpleratingbar.SimpleRatingBar
 import io.agora.rtc.IRtcEngineEventHandler
 import io.agora.rtc.RtcEngine
 import io.agora.rtc.video.VideoCanvas
 import io.agora.rtc.video.VideoEncoderConfiguration
-import kotlinx.android.synthetic.main.activity_session.*
-import kotlinx.android.synthetic.main.rating_overlay.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 
 class SessionActivity : AppCompatActivity() {
@@ -161,7 +149,8 @@ class SessionActivity : AppCompatActivity() {
     }
 
     fun onEndCallClicked(view: View) {
-        if (PreferencesManager(this@SessionActivity).getId() == learnerId) {
+        finish()
+        /*if (PreferencesManager(this@SessionActivity).getId() == learnerId) {
             val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
             val call: Call<PostSessionResponse>? = service?.doPostSkillSession(Session(learnerId!!, date!!))
             call?.enqueue(object : Callback<PostSessionResponse> {
@@ -198,7 +187,7 @@ class SessionActivity : AppCompatActivity() {
             })
         } else {
             finish()
-        }
+        }*/
     }
 
     private fun initializeAgoraEngine() {

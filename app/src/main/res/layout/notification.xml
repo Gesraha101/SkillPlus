@@ -37,6 +37,7 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxLines="100"
                 android:id="@+id/notification_body"
                 app:layout_constraintStart_toEndOf="@id/notification_user_pic"
                 card_view:layout_constraintTop_toBottomOf="@id/notification_header"

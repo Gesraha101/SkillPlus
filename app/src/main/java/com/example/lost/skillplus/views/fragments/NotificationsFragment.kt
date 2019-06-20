@@ -47,7 +47,7 @@ class NotificationsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         if (notifications == null) {
             val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
-            val call: Call<NotificationsResponse>? = service?.getNotifications(NotificationsRequest(PreferencesManager(context!!).getId(), PreferencesManager(context!!).getLastUpdated()))
+            val call: Call<NotificationsResponse>? = service?.getNotifications(NotificationsRequest(PreferencesManager(context!!).getId(), 0))
             call?.enqueue(object : Callback<NotificationsResponse> {
 
                 override fun onResponse(call: Call<NotificationsResponse>, response: Response<NotificationsResponse>) {

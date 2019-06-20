@@ -13,6 +13,8 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.lost.skillplus.R
 import com.example.lost.skillplus.models.managers.BackendServiceManager
+import com.example.lost.skillplus.models.managers.NotificationAlarmManager
+import com.example.lost.skillplus.models.managers.PreferencesManager
 import com.example.lost.skillplus.models.podos.raw.FormApprove
 import com.example.lost.skillplus.models.podos.raw.SqlResponseFromMyNeedForms
 import com.example.lost.skillplus.models.podos.responses.FormResponse
@@ -61,7 +63,7 @@ class MyNeedFormsAdapter(private val list: List<SqlResponseFromMyNeedForms>) : R
                     .into(userImage!!)
             dates?.apply {
                 layoutManager = LinearLayoutManager(context)
-                adapter = ScheduleStringAdapter(request.schedule!!)
+                adapter = ScheduleStringAdapter(request.schedule)
                 approve?.setOnClickListener {
 
                     val approve = FormApprove(request.form_id, request.need_id, request.schedule)
@@ -73,8 +75,9 @@ class MyNeedFormsAdapter(private val list: List<SqlResponseFromMyNeedForms>) : R
                         }
 
                         override fun onResponse(call: Call<FormResponse>, response: Response<FormResponse>) {
+                            for (date in request.schedule)
+                                NotificationAlarmManager.initAlarm(context, date, request.user_id, PreferencesManager(context).getId())
                             Toast.makeText(context, "successfully approved", Toast.LENGTH_LONG).show()
-
                         }
 
                     })

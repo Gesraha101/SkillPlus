@@ -104,7 +104,6 @@ class NotificationService : JobIntentService() {
                 .setContentIntent(intent)
         val notificationId: Int = if (body == "You have new notifications. Tab to view") {
             builder.setSmallIcon(R.drawable.alert)
-                    .setOngoing(true)
             Ids.PUSH_NOTIFICATION.ordinal
         } else {
             builder.setSmallIcon(R.drawable.ic_today_notification)
