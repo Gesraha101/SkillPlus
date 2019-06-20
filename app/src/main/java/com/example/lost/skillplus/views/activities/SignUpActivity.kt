@@ -148,7 +148,7 @@ class SignUpActivity : AppCompatActivity() {
                             }).addOnCompleteListener { task ->
                                 if (task.isSuccessful) {
                                     downloadUri = task.result
-                                    Toast.makeText(this@SignUpActivity, "Uri is   ...   " + downloadUri.toString(), Toast.LENGTH_LONG).show()
+                                    Toast.makeText(this@SignUpActivity, "Added picture successfully", Toast.LENGTH_LONG).show()
 
                                     val user = User(name = NameEditText?.text.toString(),
                                             email = mailEditText?.text.toString(),
