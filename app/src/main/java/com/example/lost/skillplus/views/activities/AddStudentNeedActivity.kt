@@ -1,6 +1,8 @@
 package com.example.lost.skillplus.views.activities
 
 import RetrofitManager
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -42,6 +44,8 @@ class AddStudentNeedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_student_need)
+        var progressOverlay : View = findViewById(R.id.progress_overlay)
+
         category = intent.getSerializableExtra(Keys.CATEGORY.key) as Category
 
         btn_add_image_need.setOnClickListener{
@@ -87,6 +91,9 @@ class AddStudentNeedActivity : AppCompatActivity() {
                             user_id = PreferencesManager(this@AddStudentNeedActivity).getId())
                 }
             }
+            progressOverlay.visibility = View.VISIBLE
+                    animateView(progressOverlay, View.VISIBLE, 0.4f, 200)
+
 
             val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
             val call: Call<AddNeedResponse>? = service?.addNeed(addneed)
@@ -98,9 +105,10 @@ class AddStudentNeedActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<AddNeedResponse>, response: Response<AddNeedResponse>) {
 
                     val i = Intent(this@AddStudentNeedActivity, HomeActivity::class.java)
-                    i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    Snackbar.make(it, "Added Successfully !", Snackbar.LENGTH_INDEFINITE).show()
                     Handler().postDelayed({
+                        animateView(progressOverlay, View.GONE, 0f, 200)
+                        i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        i.putExtra("isComingAfterSubmition",true)
                         startActivity(i)
                         finish()
                     }, 2500)
@@ -131,5 +139,20 @@ class AddStudentNeedActivity : AppCompatActivity() {
         } else {
             super.onActivityResult(requestCode, resultCode, data)
         }
+    }
+    fun animateView(view: View, toVisibility: Int, toAlpha: Float, duration: Int) {
+        val show = toVisibility == View.VISIBLE
+        if (show) {
+            view.alpha = 0f
+        }
+        view.visibility = View.VISIBLE
+        view.animate()
+                .setDuration(duration.toLong())
+                .alpha(if (show) toAlpha else 0f)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        view.visibility = toVisibility
+                    }
+                })
     }
 }
