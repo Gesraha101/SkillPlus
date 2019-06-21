@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.example.lost.skillplus">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
+    <application
+            android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:networkSecurityConfig="@xml/network_security_config"
+        android:roundIcon="@mipmap/ic_launcher_round"
+            android:supportsRtl="true"
+            android:theme="@style/AppTheme">
+        <activity android:name=".views.activities.AddStudentNeedActivity"
+                  android:screenOrientation="portrait"
+                  android:configChanges="orientation|keyboardHidden"/>
+        <activity
+                android:name=".views.activities.AddFormActivity"
+                android:label="@string/title_activity_add_need"
+                android:theme="@style/AppTheme.NoActionBar"
+                android:screenOrientation="portrait"
+                android:configChanges="orientation|keyboardHidden"/>
+        <activity
+                android:name=".views.activities.ScheduleActivity"
+                android:theme="@style/AppTheme.NoActionBar"
+                android:screenOrientation="portrait"
+                android:configChanges="orientation|keyboardHidden"/>
+        <activity
+                android:name=".views.activities.AddTeacherSkillActivity"
+                android:label="@string/title_activity_add_teacher_skill"
+                android:theme="@style/AppTheme.NoActionBar"
+                android:screenOrientation="portrait"
+                android:configChanges="orientation|keyboardHidden"/>
+        <activity
+                android:name=".views.activities.NavigationDrawerActivity"
+                android:label="@string/title_activity_navigation_drawer"
+                android:theme="@style/AppTheme.NoActionBar"
+                android:screenOrientation="portrait"
+                android:configChanges="orientation|keyboardHidden"/>
+        <activity
+                android:name=".views.activities.SplashActivity"
+                android:theme="@style/AppTheme.NoActionBar"
+                android:screenOrientation="portrait"
+                android:configChanges="orientation|keyboardHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+                android:name=".views.activities.HomeActivity"
+                android:label="@string/title_activity_home"
+                android:theme="@style/AppTheme.NoActionBar"
+                android:screenOrientation="portrait"
+                android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".views.activities.SignUpActivity"
+                  android:screenOrientation="portrait"
+                  android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".views.activities.LoginActivity"
+                  android:screenOrientation="portrait"
+                  android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".views.activities.SessionActivity"
+                  android:theme="@style/AppTheme.NoActionBar"
+                  android:screenOrientation="portrait"
+                  android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".views.activities.PaymentActivity"
+                  android:screenOrientation="portrait"
+                  android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".views.activities.ChooseSchaduleActivity"
+                  android:screenOrientation="portrait"
+                  android:configChanges="orientation|keyboardHidden"/>
+        <activity
+                android:name=".views.activities.CategoryContentActivity"
+                android:label="@string/title_activity_category_content"
+                android:theme="@style/AppTheme.NoActionBar"
+                android:screenOrientation="portrait"
+                android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".views.activities.NotificationActivity"
+                  android:screenOrientation="portrait"
+                  android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".views.activities.NotificationAlarmActivity"
+                  android:launchMode="singleInstance"
+                  android:taskAffinity=""
+                  android:excludeFromRecents="true"
+                  android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"
+                  android:screenOrientation="portrait"
+                  android:configChanges="orientation|keyboardHidden"/>
+        <receiver
+                android:name="com.example.lost.skillplus.helpers.receivers.AlarmReceiver"
+                android:enabled="true"
+                android:exported="true"/>
+
+        <service
+                android:name="com.example.lost.skillplus.helpers.services.NotificationScheduler"
+                android:enabled="true"
+                android:exported="true"
+                android:permission="android.permission.BIND_JOB_SERVICE">
+
+        </service>
+
+        <service
+                android:name="com.example.lost.skillplus.helpers.services.NotificationService"
+                android:enabled="true"
+                android:exported="true"
+                android:permission="android.permission.BIND_JOB_SERVICE"/>
+    </application>
+
+</manifest>

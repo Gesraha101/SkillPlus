@@ -1,0 +1,292 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             tools:context="com.example.lost.skillplus.views.fragments.SkillDetailsFragment">
+
+    <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            card_view:cardCornerRadius="8dp"
+            card_view:cardElevation="8dp"
+            card_view:cardBackgroundColor="@color/colorCardBackground">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp">
+
+                <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/post_image"
+                        android:src="@drawable/logo" card_view:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="8dp" android:layout_marginTop="8dp"
+                        card_view:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/skill_name"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                    android:textSize="20sp"
+                    android:textColor="@color/colorHeader"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintTop_toBottomOf="@+id/post_image"
+                    android:layout_marginTop="8dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/profile_info"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintTop_toBottomOf="@+id/skill_name"
+                    android:weightSum="10"
+                    android:layout_marginTop="8dp">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_marginRight="10dp"
+                        android:id="@+id/poster_profile_image"
+                        android:src="@mipmap/ic_launcher"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="10dp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:id="@+id/poster_name"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_weight="8"/>
+
+                    <Button
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:id="@+id/is_favorite"
+                        android:background="@drawable/heart"/>
+
+                </LinearLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/description"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintTop_toBottomOf="@+id/profile_info"
+                    android:layout_marginTop="8dp">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/description_title"
+                            android:text="@string/description_title"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                            android:textSize="22sp"
+                            android:textColor="@color/colorHeader"
+                            card_view:layout_constraintStart_toStartOf="parent" android:layout_marginTop="8dp"
+                            card_view:layout_constraintTop_toTopOf="parent"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/description_value"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                        card_view:layout_constraintStart_toStartOf="parent"
+                        card_view:layout_constraintTop_toBottomOf="@+id/description_title"
+                        android:textSize="18sp"
+                        android:layout_marginTop="8dp"/>
+
+                </android.support.constraint.ConstraintLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sessions_count"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintTop_toBottomOf="@+id/description"
+                    android:layout_marginTop="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/sessions_count_title"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                        android:textSize="18sp"
+                        card_view:layout_constraintStart_toStartOf="parent"
+                        android:text="@string/sessions_count"
+                        android:textColor="@color/colorHeader"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/sessions_count_value"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                        android:textSize="18sp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/session_duration"
+                    android:layout_marginTop="8dp"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintTop_toBottomOf="@+id/sessions_count">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/session_duration_title"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                        android:textSize="18sp"
+                        card_view:layout_constraintStart_toStartOf="parent"
+                        android:text="@string/session_duration"
+                        android:textColor="@color/colorHeader" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/session_duration_value"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                        android:textSize="18sp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp" />
+
+                </LinearLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/schedule"
+                    android:layout_marginTop="8dp"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintTop_toBottomOf="@+id/session_duration">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/schedule_title"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                            android:textSize="18sp"
+                            card_view:layout_constraintStart_toStartOf="parent"
+                            android:text="@string/schedule"
+                            android:textColor="@color/colorHeader" android:layout_marginTop="8dp"
+                            card_view:layout_constraintTop_toTopOf="parent"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/schedule_values"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                        card_view:layout_constraintStart_toStartOf="parent"
+                        card_view:layout_constraintTop_toBottomOf="@+id/schedule_title"
+                        android:textSize="18sp"
+                        android:layout_marginTop="8dp"/>
+
+                </android.support.constraint.ConstraintLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/extra_session"
+                    android:layout_marginTop="8dp"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintTop_toBottomOf="@+id/schedule">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/extra_session_title"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                        android:textSize="18sp"
+                        card_view:layout_constraintStart_toStartOf="parent"
+                        android:text="@string/extra_sessions_title"
+                        android:textColor="@color/colorHeader"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/extra_session_value"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                        android:textSize="18sp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp" />
+
+                </LinearLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/skill_related"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintTop_toBottomOf="@+id/extra_session">
+
+                    <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                            android:id="@+id/poster_rate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            card_view:srb_borderColor="@color/colorPrimary"
+                            card_view:srb_fillColor="@color/colorPrimary"
+                            card_view:srb_numberOfStars="5"
+                            card_view:srb_starBorderWidth="2"
+                            card_view:srb_starCornerRadius="20"
+                            card_view:srb_isIndicator="true"
+                            card_view:srb_starSize="30dp"
+                            card_view:srb_stepSize="0.1" android:layout_marginTop="8dp"
+                            card_view:layout_constraintTop_toTopOf="parent"
+                            card_view:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"/>
+
+                    <TextView
+                            android:id="@+id/skill_price"
+                            android:layout_width="130dp"
+                            android:layout_marginStart="21dp"
+                            card_view:layout_constraintStart_toEndOf="@+id/poster_rate"
+                            card_view:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp"
+                            android:layout_marginEnd="2dp" card_view:layout_constraintEnd_toEndOf="parent"
+                            card_view:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="3dp"
+                            android:layout_height="wrap_content"/>
+                    "
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginLeft="24dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                        android:textSize="18sp"
+                        card_view:layout_constraintBottom_toBottomOf="parent"
+                        card_view:layout_constraintStart_toEndOf="@id/poster_rate"
+                        card_view:layout_constraintTop_toTopOf="parent" />
+
+                </android.support.constraint.ConstraintLayout>
+
+                <Button
+                        android:id="@+id/btn_apply"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="38dp"
+                        android:background="@drawable/button_layout"
+                        android:text="@string/btn_apply"
+                        android:textColor="@color/colorText"
+                        android:textSize="18sp"
+                        card_view:layout_constraintEnd_toEndOf="parent"
+                        card_view:layout_constraintStart_toStartOf="parent"
+                        card_view:layout_constraintTop_toBottomOf="@+id/skill_related" android:layout_marginBottom="50dp"
+                        card_view:layout_constraintBottom_toBottomOf="parent"/>
+            </android.support.constraint.ConstraintLayout>
+        </ScrollView>
+
+    </android.support.v7.widget.CardView>
+
+
+</FrameLayout>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item
+                android:id="@+id/nav_skills"
+                android:title="@string/skills"/>
+        <item
+                android:id="@+id/nav_needs"
+                android:title="@string/needs"/>
+        <item
+                android:id="@+id/current_need"
+                android:title="Current Need"/>
+        <item
+                android:id="@+id/current_skill"
+                android:title="Current Skill"/>
+    </group>
+
+    <item android:title="Help">
+        <menu>
+
+            <item
+                    android:id="@+id/nav_about_us"
+                    android:title="@string/about_us"/>
+            <item
+                    android:id="@+id/nav_log_out"
+                    android:title="Log Out"/>
+        </menu>
+    </item>
+
+</menu>

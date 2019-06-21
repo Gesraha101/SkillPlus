@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:background="@color/colorBackground"
+                                             android:layout_height="match_parent" android:id="@+id/relativeLayout">
+
+    <TextView
+            android:text="Payment By Fawry"
+            android:textColor="@color/colorHeader"
+            android:textSize="25dp"
+            android:layout_width="258dp"
+            android:layout_height="38dp"
+            android:id="@+id/textView6"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="72dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="59dp" app:layout_constraintHorizontal_bias="1.0"
+            tools:layout_editor_absoluteY="251dp" tools:ignore="MissingConstraints"/>
+    <EditText
+            android:layout_width="271dp"
+            android:layout_height="57dp"
+            android:inputType="textPersonName"
+            android:background="@drawable/email"
+            android:ems="10"
+            android:id="@+id/emailPaymentEditText" android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView6"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="80dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="80dp" android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/phonePaymentEditText"/>
+    <EditText
+            android:background="@drawable/password"
+            android:layout_width="275dp"
+            android:layout_height="57dp"
+            android:inputType="textPersonName"
+            android:textSize="18sp"
+            android:id="@+id/phonePaymentEditText"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="80dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/emailPaymentEditText"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="80dp"
+            app:layout_constraintHorizontal_bias="0.416" android:layout_marginBottom="26dp"
+            app:layout_constraintBottom_toTopOf="@+id/payButton"/>
+    <Button
+            android:text="pay"
+            android:textColor="@color/colorAccent"
+            android:background="@drawable/button_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/payButton"
+            tools:ignore="MissingConstraints"
+
+            android:layout_marginTop="26dp" app:layout_constraintTop_toBottomOf="@+id/phonePaymentEditText"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="69dp"
+            android:layout_marginStart="69dp"
+    />
+    <Button
+            android:text="cancle"
+            android:textColor="@color/colorAccent"
+            android:background="@drawable/button_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cancleButton" tools:ignore="MissingConstraints"
+            android:layout_marginTop="26dp" app:layout_constraintTop_toBottomOf="@+id/phonePaymentEditText"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="87dp"
+            android:layout_marginRight="87dp"
+            android:layout_marginLeft="80dp" android:layout_marginStart="80dp"/>
+
+</android.support.constraint.ConstraintLayout>

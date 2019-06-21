@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            card_view:cardCornerRadius="8dp"
+            card_view:cardElevation="8dp"
+            card_view:cardBackgroundColor="@color/colorCardBackground">
+
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp">
+
+            <ImageView
+                    android:src="@drawable/profile"
+                    android:layout_width="166dp"
+                    android:layout_height="112dp"
+                    android:id="@+id/skill_user_image"
+                    card_view:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="16dp" card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintEnd_toStartOf="@+id/form_user_name" android:layout_marginEnd="11dp"
+                    card_view:layout_constraintBottom_toBottomOf="parent"
+                    card_view:layout_constraintVertical_bias="0.177"/>
+
+            <TextView
+                    android:layout_width="123dp"
+                    android:layout_height="33dp"
+                    android:id="@+id/skill_user_name"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    card_view:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="16dp"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="16dp" card_view:layout_constraintStart_toEndOf="@+id/skill_user_image"
+                    android:layout_marginStart="21dp" card_view:layout_constraintHorizontal_bias="1.0"/>
+
+            <android.support.v7.widget.RecyclerView
+                    android:layout_width="142dp"
+                    android:layout_height="85dp"
+                    android:id="@+id/rv_my_skills_learner"
+                    card_view:layout_constraintTop_toBottomOf="@+id/skill_user_name" android:layout_marginEnd="17dp"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    card_view:layout_constraintStart_toEndOf="@+id/skill_user_image"
+                    card_view:layout_constraintHorizontal_bias="0.0"/>
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

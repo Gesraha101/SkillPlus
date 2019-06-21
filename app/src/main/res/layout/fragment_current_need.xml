@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".views.fragments.CurrentNeedFragment">
+
+    <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rv_current_needs"
+            tools:ignore="MissingConstraints">
+
+    </android.support.v7.widget.RecyclerView>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                  android:layout_marginTop="8dp"
+                  android:layout_marginBottom="8dp"
+                  android:orientation="vertical"
+                  android:gravity="center"
+                  android:visibility="gone"
+                  android:id="@+id/current_need_placeholder"
+
+                 android:layout_marginStart="8dp" android:layout_marginEnd="8dp">
+        <ImageView
+
+                android:background="@drawable/need_icon"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+               android:layout_marginBottom="8dp"
+               />
+        <TextView
+                android:text="There are no current needs"
+                android:layout_width="wrap_content"
+                android:textSize="25dp"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:layout_height="97dp"
+                android:id="@+id/textView"
+                android:layout_marginEnd="8dp" />
+    </LinearLayout>
+
+</FrameLayout>
