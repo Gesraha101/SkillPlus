@@ -12,10 +12,10 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.managers.BackendServiceManager
-import com.example.lost.skillplus.models.managers.UtilityManager
-import com.example.lost.skillplus.models.podos.raw.User
-import com.example.lost.skillplus.models.podos.responses.UserResponse
+import com.example.lost.skillplus.helpers.managers.BackendServiceManager
+import com.example.lost.skillplus.helpers.managers.UtilityManager
+import com.example.lost.skillplus.helpers.podos.raw.User
+import com.example.lost.skillplus.helpers.podos.responses.UserResponse
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.storage.FirebaseStorage
@@ -198,7 +198,8 @@ class SignUpActivity : AppCompatActivity() {
                                         val i = Intent(this@SignUpActivity, LoginActivity::class.java)
                                         startActivity(i)
                                         finish()
-                                    } else if(response.body()!!.message.equals("email is exist")) {Toast.makeText(this@SignUpActivity, "Email already exists!", Toast.LENGTH_LONG).show()
+                                    } else if (response.body()!!.message.equals("email is exist")) {
+                                        Toast.makeText(this@SignUpActivity, "Email already exists!", Toast.LENGTH_LONG).show()
                                     }
                                 } else {
                                     Toast.makeText(this@SignUpActivity, "Failed to add item one", Toast.LENGTH_SHORT).show()

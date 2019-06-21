@@ -11,11 +11,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.adapters.ScheduleStringAdapter
-import com.example.lost.skillplus.models.enums.Keys
-import com.example.lost.skillplus.models.managers.BackendServiceManager
-import com.example.lost.skillplus.models.podos.raw.MyId
-import com.example.lost.skillplus.models.podos.responses.MyCurrentNeedFormsResponse
+import com.example.lost.skillplus.helpers.adapters.ScheduleStringAdapter
+import com.example.lost.skillplus.helpers.enums.Keys
+import com.example.lost.skillplus.helpers.managers.BackendServiceManager
+import com.example.lost.skillplus.helpers.podos.raw.MyId
+import com.example.lost.skillplus.helpers.podos.responses.MyCurrentNeedFormsResponse
 import kotlinx.android.synthetic.main.fragment_mentored_needs.*
 import retrofit2.Call
 import retrofit2.Callback

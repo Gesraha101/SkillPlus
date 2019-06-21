@@ -1,27 +1,15 @@
 package com.example.lost.skillplus.views.fragments
 
-import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.managers.BackendServiceManager
-import com.example.lost.skillplus.models.managers.PreferencesManager
-import com.example.lost.skillplus.models.podos.raw.FavouriteUpdate
-import com.example.lost.skillplus.models.podos.raw.Request
-import com.example.lost.skillplus.models.podos.responses.FavouriteResponse
+import com.example.lost.skillplus.helpers.podos.raw.Request
 import com.example.lost.skillplus.views.activities.AddFormActivity
 import kotlinx.android.synthetic.main.fragment_request_details.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -51,8 +39,8 @@ class RequestDetailsFragment : Fragment() {
         poster_name.append("Created by: " + request!!.user_name)
         description_value.text = request!!.need_desc
         btn_apply.setOnClickListener {
-            var intent = Intent(this@RequestDetailsFragment.context,AddFormActivity::class.java)
-            intent.putExtra("need_id",request!!.need_id)
+            var intent = Intent(this@RequestDetailsFragment.context, AddFormActivity::class.java)
+            intent.putExtra("need_id", request!!.need_id)
             startActivity(intent)
         }
 

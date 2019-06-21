@@ -10,12 +10,12 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.Toast
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.adapters.MyRequestsAdapter
-import com.example.lost.skillplus.models.managers.BackendServiceManager
-import com.example.lost.skillplus.models.managers.FragmentsManager
-import com.example.lost.skillplus.models.managers.PreferencesManager
-import com.example.lost.skillplus.models.podos.raw.MyId
-import com.example.lost.skillplus.models.podos.responses.MyNeedResponse
+import com.example.lost.skillplus.helpers.adapters.MyRequestsAdapter
+import com.example.lost.skillplus.helpers.managers.BackendServiceManager
+import com.example.lost.skillplus.helpers.managers.FragmentsManager
+import com.example.lost.skillplus.helpers.managers.PreferencesManager
+import com.example.lost.skillplus.helpers.podos.raw.MyId
+import com.example.lost.skillplus.helpers.podos.responses.MyNeedResponse
 import kotlinx.android.synthetic.main.fragment_my_needs.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -75,9 +75,8 @@ class MyNeedsFragment : Fragment() {
                                 // fragmentManager?.beginTransaction()?.replace(R.id.sec_my_need, needFormFragment)?.commit()
                                 FragmentsManager.replaceFragment(this@MyNeedsFragment.fragmentManager!!, needFormFragment, R.id.sec_my_need, "need_form_fragment", true)
                             }
-                        }
-                        else
-                            place_holder_layout.visibility=View.VISIBLE
+                        } else
+                            place_holder_layout.visibility = View.VISIBLE
                     }
                 } else {
                     Toast.makeText(activity, "Error: " + response.body(), Toast.LENGTH_LONG).show()

@@ -10,11 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.adapters.MyNeedFormsAdapter
-import com.example.lost.skillplus.models.enums.Keys
-import com.example.lost.skillplus.models.managers.BackendServiceManager
-import com.example.lost.skillplus.models.podos.raw.MyId
-import com.example.lost.skillplus.models.podos.responses.MyNeedFormsResponse
+import com.example.lost.skillplus.helpers.adapters.MyNeedFormsAdapter
+import com.example.lost.skillplus.helpers.enums.Keys
+import com.example.lost.skillplus.helpers.managers.BackendServiceManager
+import com.example.lost.skillplus.helpers.podos.raw.MyId
+import com.example.lost.skillplus.helpers.podos.responses.MyNeedFormsResponse
 import kotlinx.android.synthetic.main.fragment_need_form.*
 import retrofit2.Call
 import retrofit2.Callback

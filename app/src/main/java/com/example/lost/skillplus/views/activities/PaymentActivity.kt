@@ -10,15 +10,15 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.adapters.CustomAdapter
-import com.example.lost.skillplus.models.enums.Keys
-import com.example.lost.skillplus.models.managers.BackendServiceManager
-import com.example.lost.skillplus.models.managers.NotificationAlarmManager
-import com.example.lost.skillplus.models.managers.PreferencesManager
-import com.example.lost.skillplus.models.podos.raw.ApplySkill
-import com.example.lost.skillplus.models.podos.raw.Schedule
-import com.example.lost.skillplus.models.podos.raw.Skill
-import com.example.lost.skillplus.models.podos.responses.ApplySkillResponse
+import com.example.lost.skillplus.helpers.adapters.CustomAdapter
+import com.example.lost.skillplus.helpers.enums.Keys
+import com.example.lost.skillplus.helpers.managers.BackendServiceManager
+import com.example.lost.skillplus.helpers.managers.NotificationAlarmManager
+import com.example.lost.skillplus.helpers.managers.PreferencesManager
+import com.example.lost.skillplus.helpers.podos.raw.ApplySkill
+import com.example.lost.skillplus.helpers.podos.raw.Schedule
+import com.example.lost.skillplus.helpers.podos.raw.Skill
+import com.example.lost.skillplus.helpers.podos.responses.ApplySkillResponse
 import kotlinx.android.synthetic.main.activity_payment.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -52,7 +52,7 @@ class PaymentActivity : AppCompatActivity() {
 
             Log.d("SchaduleActivity", "learner  " + appliedRequest.learner.toString())
             Log.d("SchaduleActivity", "skill  " + appliedRequest.skill.toString())
-            Log.d("SchaduleActivity" , "SchaduleActivity # "+ appliedRequest.schedule?.get(0))
+            Log.d("SchaduleActivity", "SchaduleActivity # " + appliedRequest.schedule?.get(0))
             val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
 
             val call: Call<ApplySkillResponse>? = service?.applySkill(appliedRequest)
@@ -68,6 +68,7 @@ class PaymentActivity : AppCompatActivity() {
                         startActivity(Intent(this@PaymentActivity, HomeActivity::class.java).addFlags(FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK))
                     }
                 }
+
                 override fun onFailure(call: Call<ApplySkillResponse>, t: Throwable) {
                     Toast.makeText(this@PaymentActivity, "error ${t.cause}", Toast.LENGTH_SHORT).show()
                 }

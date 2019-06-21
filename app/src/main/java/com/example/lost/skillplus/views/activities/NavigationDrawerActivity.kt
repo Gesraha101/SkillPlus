@@ -14,9 +14,9 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.enums.Tags
-import com.example.lost.skillplus.models.managers.PreferencesManager
-import com.example.lost.skillplus.models.podos.raw.User
+import com.example.lost.skillplus.helpers.enums.Tags
+import com.example.lost.skillplus.helpers.managers.PreferencesManager
+import com.example.lost.skillplus.helpers.podos.raw.User
 import com.example.lost.skillplus.views.fragments.CurrentNeedFragment
 import com.example.lost.skillplus.views.fragments.CurrentSkillFragment
 import com.example.lost.skillplus.views.fragments.MyNeedsFragment
@@ -66,11 +66,10 @@ open class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavi
                 findViewById<FrameLayout>(R.id.fragment_container).visibility = View.VISIBLE
                 supportFragmentManager.beginTransaction().replace(
                         R.id.fragment_container,
-                        MySkillsFragment(), Tags.MY_SKILLS.tag).
-                        commit()
+                        MySkillsFragment(), Tags.MY_SKILLS.tag).commit()
                 nav_view.setCheckedItem(R.id.nav_skills)
-                supportActionBar!!.title="My Skills"
-                bottom_nav.menu.getItem(0).isChecked=true
+                supportActionBar!!.title = "My Skills"
+                bottom_nav.menu.getItem(0).isChecked = true
 
             }
             R.id.nav_needs -> {
@@ -79,8 +78,8 @@ open class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavi
                         R.id.fragment_container,
                         MyNeedsFragment(), Tags.MY_NEEDS.tag).commit()
                 nav_view.setCheckedItem(R.id.nav_needs)
-                supportActionBar!!.title="My Needs"
-                bottom_nav.menu.getItem(0).isChecked=true
+                supportActionBar!!.title = "My Needs"
+                bottom_nav.menu.getItem(0).isChecked = true
             }
             R.id.current_skill -> {
                 findViewById<FrameLayout>(R.id.fragment_container).visibility = View.VISIBLE
@@ -88,21 +87,21 @@ open class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavi
                         R.id.fragment_container,
                         CurrentSkillFragment(), Tags.CURRENT_SKILLS.tag).commit()
                 nav_view.setCheckedItem(R.id.nav_needs)
-                supportActionBar!!.title="My current skills"
-                bottom_nav.menu.getItem(0).isChecked=true
+                supportActionBar!!.title = "My current skills"
+                bottom_nav.menu.getItem(0).isChecked = true
 
             }
             R.id.current_need -> {
                 supportFragmentManager.beginTransaction().replace(
                         R.id.fragment_container,
-                        CurrentNeedFragment(),Tags.CURRENT_NEEDS.tag).commit()
-                supportActionBar!!.title="My current needs"
-                bottom_nav.menu.getItem(0).isChecked=true
+                        CurrentNeedFragment(), Tags.CURRENT_NEEDS.tag).commit()
+                supportActionBar!!.title = "My current needs"
+                bottom_nav.menu.getItem(0).isChecked = true
             }
             R.id.nav_about_us -> {
                 Toast.makeText(this@NavigationDrawerActivity, "About Ua", Toast.LENGTH_LONG).show()
 
-                bottom_nav.menu.getItem(0).isChecked=true
+                bottom_nav.menu.getItem(0).isChecked = true
             }
             R.id.nav_log_out -> {
                 PreferencesManager(this@NavigationDrawerActivity).setFlag(false)

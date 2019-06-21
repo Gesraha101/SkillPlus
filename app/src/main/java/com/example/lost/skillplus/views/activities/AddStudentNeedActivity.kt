@@ -9,20 +9,16 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.provider.MediaStore
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
 import android.widget.Toast
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.enums.Keys
-import com.example.lost.skillplus.models.managers.BackendServiceManager
-import com.example.lost.skillplus.models.managers.PreferencesManager
-import com.example.lost.skillplus.models.podos.raw.AddNeed
-import com.example.lost.skillplus.models.podos.raw.Category
-import com.example.lost.skillplus.models.podos.responses.AddNeedResponse
+import com.example.lost.skillplus.helpers.enums.Keys
+import com.example.lost.skillplus.helpers.managers.BackendServiceManager
+import com.example.lost.skillplus.helpers.managers.PreferencesManager
+import com.example.lost.skillplus.helpers.podos.raw.AddNeed
+import com.example.lost.skillplus.helpers.podos.raw.Category
+import com.example.lost.skillplus.helpers.podos.responses.AddNeedResponse
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.storage.FirebaseStorage
@@ -44,11 +40,11 @@ class AddStudentNeedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_student_need)
-        var progressOverlay : View = findViewById(R.id.progress_overlay)
+        var progressOverlay: View = findViewById(R.id.progress_overlay)
 
         category = intent.getSerializableExtra(Keys.CATEGORY.key) as Category
 
-        btn_add_image_need.setOnClickListener{
+        btn_add_image_need.setOnClickListener {
             pickPhotoFromGallery()
         }
 
@@ -86,13 +82,13 @@ class AddStudentNeedActivity : AppCompatActivity() {
                 if (category!!.cat_id != 0) {
                     addneed = AddNeed(need_name = titleEditText.text.toString(),
                             need_desc = descEditText.text.toString(),
-                            need_photo =category!!.cat_photo,
+                            need_photo = category!!.cat_photo,
                             cat_id = category!!.cat_id,
                             user_id = PreferencesManager(this@AddStudentNeedActivity).getId())
                 }
             }
             progressOverlay.visibility = View.VISIBLE
-                    animateView(progressOverlay, View.VISIBLE, 0.4f, 200)
+            animateView(progressOverlay, View.VISIBLE, 0.4f, 200)
 
 
             val service = RetrofitManager.getInstance()?.create(BackendServiceManager::class.java)
@@ -108,7 +104,7 @@ class AddStudentNeedActivity : AppCompatActivity() {
                     Handler().postDelayed({
                         animateView(progressOverlay, View.GONE, 0f, 200)
                         i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        i.putExtra("isComingAfterSubmition",true)
+                        i.putExtra("isComingAfterSubmition", true)
                         startActivity(i)
                         finish()
                     }, 2500)
@@ -140,6 +136,7 @@ class AddStudentNeedActivity : AppCompatActivity() {
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
+
     fun animateView(view: View, toVisibility: Int, toAlpha: Float, duration: Int) {
         val show = toVisibility == View.VISIBLE
         if (show) {

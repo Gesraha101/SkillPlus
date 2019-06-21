@@ -10,11 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.adapters.MySkillLearnerAdapter
-import com.example.lost.skillplus.models.enums.Keys
-import com.example.lost.skillplus.models.managers.BackendServiceManager
-import com.example.lost.skillplus.models.podos.raw.MyId
-import com.example.lost.skillplus.models.podos.responses.MySkillLearnersResponse
+import com.example.lost.skillplus.helpers.adapters.MySkillLearnerAdapter
+import com.example.lost.skillplus.helpers.enums.Keys
+import com.example.lost.skillplus.helpers.managers.BackendServiceManager
+import com.example.lost.skillplus.helpers.podos.raw.MyId
+import com.example.lost.skillplus.helpers.podos.responses.MySkillLearnersResponse
 import kotlinx.android.synthetic.main.fragment_skill_learners_fragments.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -42,6 +42,7 @@ class SkillLearnersFragment : Fragment() {
         }
         return view
     }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 

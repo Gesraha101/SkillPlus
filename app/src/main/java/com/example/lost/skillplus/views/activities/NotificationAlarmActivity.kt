@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.enums.Keys
-import com.example.lost.skillplus.models.managers.PreferencesManager
-import com.example.lost.skillplus.models.podos.raw.Schedule
+import com.example.lost.skillplus.helpers.enums.Keys
+import com.example.lost.skillplus.helpers.managers.PreferencesManager
+import com.example.lost.skillplus.helpers.podos.raw.Schedule
 
 class NotificationAlarmActivity : AppCompatActivity() {
 

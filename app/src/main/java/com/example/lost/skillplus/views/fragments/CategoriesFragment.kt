@@ -10,10 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.adapters.CategoriesAdapter
-import com.example.lost.skillplus.models.enums.Keys
-import com.example.lost.skillplus.models.managers.BackendServiceManager
-import com.example.lost.skillplus.models.podos.responses.CategoriesResponse
+import com.example.lost.skillplus.helpers.adapters.CategoriesAdapter
+import com.example.lost.skillplus.helpers.enums.Keys
+import com.example.lost.skillplus.helpers.managers.BackendServiceManager
+import com.example.lost.skillplus.helpers.podos.responses.CategoriesResponse
 import com.example.lost.skillplus.views.activities.CategoryContentActivity
 import kotlinx.android.synthetic.main.fragment_categories.*
 import retrofit2.Call
@@ -54,6 +54,7 @@ class CategoriesFragment : Fragment() {
                     }
                 }
             }
+
             override fun onFailure(call: Call<CategoriesResponse>, t: Throwable) {
                 Toast.makeText(activity, "Failed  cause is " + t.cause + " message is " + t.message, Toast.LENGTH_LONG).show()
             }

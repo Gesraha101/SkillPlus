@@ -14,13 +14,13 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.*
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.adapters.ScheduleAdapter
-import com.example.lost.skillplus.models.enums.Keys
-import com.example.lost.skillplus.models.managers.BackendServiceManager
-import com.example.lost.skillplus.models.managers.NotificationAlarmManager
-import com.example.lost.skillplus.models.podos.raw.DayTime
-import com.example.lost.skillplus.models.podos.raw.Skill
-import com.example.lost.skillplus.models.podos.responses.SkillsResponse
+import com.example.lost.skillplus.helpers.adapters.ScheduleAdapter
+import com.example.lost.skillplus.helpers.enums.Keys
+import com.example.lost.skillplus.helpers.managers.BackendServiceManager
+import com.example.lost.skillplus.helpers.managers.NotificationAlarmManager
+import com.example.lost.skillplus.helpers.podos.raw.DayTime
+import com.example.lost.skillplus.helpers.podos.raw.Skill
+import com.example.lost.skillplus.helpers.podos.responses.SkillsResponse
 import kotlinx.android.synthetic.main.activity_schedule.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,8 +35,8 @@ class ScheduleActivity : AppCompatActivity() {
     var hourPicked: Int? = null
     var minutePicked: Int? = null
     var isEmpty: Boolean? = true
-    var dayTimeList :ArrayList<DayTime> = arrayListOf()
-    var dayTimeArray= arrayListOf<Array<Int?>>()
+    var dayTimeList: ArrayList<DayTime> = arrayListOf()
+    var dayTimeArray = arrayListOf<Array<Int?>>()
     private lateinit var skillRequest: Skill
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,10 +45,10 @@ class ScheduleActivity : AppCompatActivity() {
         setSupportActionBar(toolbar_schedule)
 
 
-        var progressOverlay : View = findViewById(R.id.progress_overlay)
+        var progressOverlay: View = findViewById(R.id.progress_overlay)
 
         skillRequest = intent.getSerializableExtra(Keys.SKILL.key) as Skill
-    tF_Title.text=skillRequest.skill_name
+        tF_Title.text = skillRequest.skill_name
 
         rV_Schedule.apply {
             layoutManager = LinearLayoutManager(this@ScheduleActivity)
@@ -74,14 +74,14 @@ class ScheduleActivity : AppCompatActivity() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            if(position>0)
-                dayPicked = position
-            else
-                dayPicked = null
+                if (position > 0)
+                    dayPicked = position
+                else
+                    dayPicked = null
             }
         }
         val hours = findViewById<TextView>(R.id.eT_Hours)
-        hours.text="Tap to set time"
+        hours.text = "Tap to set time"
         hours.setOnClickListener {
             val c = Calendar.getInstance()
             val hour = c.get(Calendar.HOUR)
@@ -90,19 +90,17 @@ class ScheduleActivity : AppCompatActivity() {
             val tpd = TimePickerDialog(this@ScheduleActivity, R.style.TimePickerTheme,
                     TimePickerDialog.OnTimeSetListener(function = { _, h, m ->
                         hours.text = "$h:" + if (m < 10) "0$m" else "$m"
-                        hourPicked=h
-                        minutePicked=m
+                        hourPicked = h
+                        minutePicked = m
                     }), hour, minute, true)
             var date = Calendar.getInstance()
-            tpd.updateTime(date.time.hours,date.time.minutes)
+            tpd.updateTime(date.time.hours, date.time.minutes)
             tpd.show()
         }
         btn_add_to_schedule.setOnClickListener {
-            if (dayPicked == null || hourPicked == null || minutePicked == null)
-            {
+            if (dayPicked == null || hourPicked == null || minutePicked == null) {
                 Toast.makeText(this, "Please set a date first!", Toast.LENGTH_LONG).show()
-            }
-            else if(!isEmpty!!) {
+            } else if (!isEmpty!!) {
                 if (NotificationAlarmManager.isValidDate(dayTimeArray, arrayOf(dayPicked, hourPicked, minutePicked), skillRequest.duration)) {
                     dayTimeList.add(DayTime(spinner.selectedItem.toString(), hourPicked, minutePicked))
                     mAdapter.notifyDataSetChanged()
@@ -116,14 +114,10 @@ class ScheduleActivity : AppCompatActivity() {
                     spinner.setSelection(0)
                     dayPicked = null
 
-                }
-                else
-                {
+                } else {
                     Toast.makeText(this, "Please make enough time after and before sessions", Toast.LENGTH_LONG).show()
                 }
-            }
-            else
-            {  //Adding first time
+            } else {  //Adding first time
                 dayTimeList.add(DayTime(spinner.selectedItem.toString(), hourPicked, minutePicked))
                 mAdapter.notifyDataSetChanged()
                 dayTimeArray.add(arrayOf(dayPicked, hourPicked, minutePicked))
@@ -157,18 +151,17 @@ class ScheduleActivity : AppCompatActivity() {
                             Handler().postDelayed({
                                 animateView(progressOverlay, View.GONE, 0f, 200)
                                 i.flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
-                                i.putExtra("isComingAfterSubmition",true)
+                                i.putExtra("isComingAfterSubmition", true)
                                 startActivity(i)
                                 finish()
                             }, 2500)
 
-                        }
-                        else{
-                            Toast.makeText(this@ScheduleActivity,"Failed",Toast.LENGTH_LONG).show()
+                        } else {
+                            Toast.makeText(this@ScheduleActivity, "Failed", Toast.LENGTH_LONG).show()
 
                         }
                     } else {
-                        Toast.makeText(this@ScheduleActivity,"Failed",Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@ScheduleActivity, "Failed", Toast.LENGTH_LONG).show()
 
                         //Received response but not "OK" response i.e error in the request sent (Server can't handle this request)
                     }

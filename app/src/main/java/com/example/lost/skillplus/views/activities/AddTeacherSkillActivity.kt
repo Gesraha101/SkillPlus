@@ -11,10 +11,10 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.enums.Keys
-import com.example.lost.skillplus.models.managers.PreferencesManager
-import com.example.lost.skillplus.models.podos.raw.Category
-import com.example.lost.skillplus.models.podos.raw.Skill
+import com.example.lost.skillplus.helpers.enums.Keys
+import com.example.lost.skillplus.helpers.managers.PreferencesManager
+import com.example.lost.skillplus.helpers.podos.raw.Category
+import com.example.lost.skillplus.helpers.podos.raw.Skill
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.storage.FirebaseStorage
@@ -39,98 +39,98 @@ class AddTeacherSkillActivity : AppCompatActivity() {
         activatedCategory = intent.getSerializableExtra(Keys.CATEGORY.key) as Category
 
         val shake = AnimationUtils.loadAnimation(this, R.anim.animation) as Animation
-        var badEntry:Boolean
+        var badEntry: Boolean
 
         btn_add_image.setOnClickListener {
             pickPhotoFromGallery()
         }
         btn_proceed.setOnClickListener {
-                    badEntry=false
-                if (eT_NumberOfSessions.text.toString().toIntOrNull() == null||eT_NumberOfSessions.text.toString().toIntOrNull() ==0) {
-                    eT_NumberOfSessions.error = "A postive number is required"
-                    eT_NumberOfSessions.startAnimation(shake)
-                    eT_NumberOfSessions.requestFocus()
-                    badEntry=true
-                }
-                if (eT_SessionDuration.text.toString().toIntOrNull() == null||eT_SessionDuration.text.toString().toIntOrNull() ==0) {
-                    eT_SessionDuration.error = "A postive number is required"
-                    eT_SessionDuration.startAnimation(shake)
-                    eT_SessionDuration.requestFocus()
-                    badEntry=true
-                }
-                if (eT_Price.text.toString().toFloatOrNull() == null||eT_Price.text.toString().toIntOrNull() ==0) {
-                    eT_Price.error = "A postive number is required"
-                    eT_Price.startAnimation(shake)
-                    eT_Price.requestFocus()
-                    badEntry=true
-                }
-                if (eT_ExtraFees.text.toString().toFloatOrNull() == null) {
-                    eT_ExtraFees.error = "A number is required"
-                    eT_ExtraFees.startAnimation(shake)
-                    eT_ExtraFees.requestFocus()
-                    badEntry=true
-                }
-                if(!badEntry) {
-                    if (isPic) {
-                        pic_spinner_add_skill.visibility = View.VISIBLE
-                        val file = filePath
-                        val mStorageRef: StorageReference = FirebaseStorage.getInstance().reference
-                        val riversRef = mStorageRef.child("images/" + UUID.randomUUID().toString())
-                        if (file != null) {
-                            val uploadTask = riversRef.putFile(file)
+            badEntry = false
+            if (eT_NumberOfSessions.text.toString().toIntOrNull() == null || eT_NumberOfSessions.text.toString().toIntOrNull() == 0) {
+                eT_NumberOfSessions.error = "A postive number is required"
+                eT_NumberOfSessions.startAnimation(shake)
+                eT_NumberOfSessions.requestFocus()
+                badEntry = true
+            }
+            if (eT_SessionDuration.text.toString().toIntOrNull() == null || eT_SessionDuration.text.toString().toIntOrNull() == 0) {
+                eT_SessionDuration.error = "A postive number is required"
+                eT_SessionDuration.startAnimation(shake)
+                eT_SessionDuration.requestFocus()
+                badEntry = true
+            }
+            if (eT_Price.text.toString().toFloatOrNull() == null || eT_Price.text.toString().toIntOrNull() == 0) {
+                eT_Price.error = "A postive number is required"
+                eT_Price.startAnimation(shake)
+                eT_Price.requestFocus()
+                badEntry = true
+            }
+            if (eT_ExtraFees.text.toString().toFloatOrNull() == null) {
+                eT_ExtraFees.error = "A number is required"
+                eT_ExtraFees.startAnimation(shake)
+                eT_ExtraFees.requestFocus()
+                badEntry = true
+            }
+            if (!badEntry) {
+                if (isPic) {
+                    pic_spinner_add_skill.visibility = View.VISIBLE
+                    val file = filePath
+                    val mStorageRef: StorageReference = FirebaseStorage.getInstance().reference
+                    val riversRef = mStorageRef.child("images/" + UUID.randomUUID().toString())
+                    if (file != null) {
+                        val uploadTask = riversRef.putFile(file)
 
-                            uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
-                                if (!task.isSuccessful) {
-                                    task.exception?.let {
-                                        throw it
-                                    }
-                                }
-                                return@Continuation riversRef.downloadUrl
-                            }).addOnCompleteListener { task ->
-                                if (task.isSuccessful) {
-                                    downloadUri = task.result
-
-                                    var skill = Skill(
-                                            null,
-                                            eT_Title?.text.toString(),
-                                            eT_Description?.text.toString(),
-                                            eT_NumberOfSessions.text.toString().toInt(),
-                                            eT_Price?.text.toString().toFloat(),
-                                            eT_SessionDuration?.text.toString().toFloat(),
-                                            eT_ExtraFees?.text.toString().toFloat(),
-                                            downloadUri.toString(),
-                                            PreferencesManager(this@AddTeacherSkillActivity).getId(),
-                                            activatedCategory.cat_id,
-                                            null,
-                                            null,
-                                            null,
-                                            arrayListOf(), false)
-                                    val intent = Intent(this@AddTeacherSkillActivity, ScheduleActivity::class.java).putExtra(Keys.SKILL.key, skill)
-                                    startActivity(intent)
+                        uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
+                            if (!task.isSuccessful) {
+                                task.exception?.let {
+                                    throw it
                                 }
                             }
-                        }
-                    } else {
-                        var skill = Skill(
-                                null,
-                                eT_Title?.text.toString(),
-                                eT_Description?.text.toString(),
-                                eT_NumberOfSessions.text.toString().toInt(),
-                                eT_Price?.text.toString().toFloat(),
-                                eT_SessionDuration?.text.toString().toFloat(),
-                                eT_ExtraFees?.text.toString().toFloat(),
-                                activatedCategory.cat_photo,
-                                PreferencesManager(this@AddTeacherSkillActivity).getId(),
-                                activatedCategory.cat_id,
-                                null,
-                                null,
-                                null,
-                                arrayListOf(), false)
-                        val intent = Intent(this@AddTeacherSkillActivity, ScheduleActivity::class.java).putExtra(Keys.SKILL.key, skill)
-                        startActivity(intent)
-                    }
+                            return@Continuation riversRef.downloadUrl
+                        }).addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                downloadUri = task.result
 
+                                var skill = Skill(
+                                        null,
+                                        eT_Title?.text.toString(),
+                                        eT_Description?.text.toString(),
+                                        eT_NumberOfSessions.text.toString().toInt(),
+                                        eT_Price?.text.toString().toFloat(),
+                                        eT_SessionDuration?.text.toString().toFloat(),
+                                        eT_ExtraFees?.text.toString().toFloat(),
+                                        downloadUri.toString(),
+                                        PreferencesManager(this@AddTeacherSkillActivity).getId(),
+                                        activatedCategory.cat_id,
+                                        null,
+                                        null,
+                                        null,
+                                        arrayListOf(), false)
+                                val intent = Intent(this@AddTeacherSkillActivity, ScheduleActivity::class.java).putExtra(Keys.SKILL.key, skill)
+                                startActivity(intent)
+                            }
+                        }
+                    }
+                } else {
+                    var skill = Skill(
+                            null,
+                            eT_Title?.text.toString(),
+                            eT_Description?.text.toString(),
+                            eT_NumberOfSessions.text.toString().toInt(),
+                            eT_Price?.text.toString().toFloat(),
+                            eT_SessionDuration?.text.toString().toFloat(),
+                            eT_ExtraFees?.text.toString().toFloat(),
+                            activatedCategory.cat_photo,
+                            PreferencesManager(this@AddTeacherSkillActivity).getId(),
+                            activatedCategory.cat_id,
+                            null,
+                            null,
+                            null,
+                            arrayListOf(), false)
+                    val intent = Intent(this@AddTeacherSkillActivity, ScheduleActivity::class.java).putExtra(Keys.SKILL.key, skill)
+                    startActivity(intent)
                 }
+
+            }
         }
     }
 
@@ -155,7 +155,7 @@ class AddTeacherSkillActivity : AppCompatActivity() {
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
-    }
+}
 
 
 

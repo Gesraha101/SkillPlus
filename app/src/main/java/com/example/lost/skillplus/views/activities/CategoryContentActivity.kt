@@ -2,7 +2,6 @@ package com.example.lost.skillplus.views.activities
 
 import RetrofitManager
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.design.widget.TabLayout
@@ -16,15 +15,15 @@ import android.view.*
 import android.widget.LinearLayout
 import android.widget.Toast
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.adapters.RequestsAdapter
-import com.example.lost.skillplus.models.adapters.SkillsAdapter
-import com.example.lost.skillplus.models.enums.Keys
-import com.example.lost.skillplus.models.managers.BackendServiceManager
-import com.example.lost.skillplus.models.managers.FragmentsManager
-import com.example.lost.skillplus.models.managers.PreferencesManager
-import com.example.lost.skillplus.models.podos.raw.*
-import com.example.lost.skillplus.models.podos.responses.FavouriteResponse
-import com.example.lost.skillplus.models.podos.responses.PostsResponse
+import com.example.lost.skillplus.helpers.adapters.RequestsAdapter
+import com.example.lost.skillplus.helpers.adapters.SkillsAdapter
+import com.example.lost.skillplus.helpers.enums.Keys
+import com.example.lost.skillplus.helpers.managers.BackendServiceManager
+import com.example.lost.skillplus.helpers.managers.FragmentsManager
+import com.example.lost.skillplus.helpers.managers.PreferencesManager
+import com.example.lost.skillplus.helpers.podos.raw.*
+import com.example.lost.skillplus.helpers.podos.responses.FavouriteResponse
+import com.example.lost.skillplus.helpers.podos.responses.PostsResponse
 import com.example.lost.skillplus.views.fragments.RequestDetailsFragment
 import com.example.lost.skillplus.views.fragments.SkillDetailsFragment
 import kotlinx.android.synthetic.main.activity_category_content.*
@@ -37,14 +36,14 @@ import java.io.Serializable
 
 class CategoryContentActivity : AppCompatActivity() {
     companion object {
-        lateinit var skillPlaceholder : LinearLayout //Memory leak , But i can't find another way
+        lateinit var skillPlaceholder: LinearLayout //Memory leak , But i can't find another way
     }
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
     private var frag: Fragment? = null
     private var activatedCategory: Category? = null
     fun loadFragment(isSkill: Boolean?, paramPassed: Serializable) {
-        val fragment : Fragment = if (isSkill!!) {
+        val fragment: Fragment = if (isSkill!!) {
             SkillDetailsFragment.newInstance(paramPassed as Skill)
         } else {
             RequestDetailsFragment.newInstance(paramPassed as Request)
@@ -75,20 +74,20 @@ class CategoryContentActivity : AppCompatActivity() {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
 
             }
+
             override fun onPageSelected(position: Int) {
-                if(position==0) {
+                if (position == 0) {
                     if (PostsListFragment.skills.isEmpty())
                         skill_placeholder.visibility = View.VISIBLE
 
                     need_placeholder.visibility = View.GONE
 
-                }
-                else{
-                    if(PostsListFragment.needs.isEmpty())
-                        need_placeholder.visibility=View.VISIBLE
+                } else {
+                    if (PostsListFragment.needs.isEmpty())
+                        need_placeholder.visibility = View.VISIBLE
 
-                    skill_placeholder.visibility=View.GONE
-                    }
+                    skill_placeholder.visibility = View.GONE
+                }
 
             }
 
@@ -186,17 +185,17 @@ class CategoryContentActivity : AppCompatActivity() {
                                 // RecyclerView behavior
                                 layoutManager = LinearLayoutManager(activity)
 
-                                CategoryContentActivity.skillPlaceholder.visibility=View.VISIBLE  //make skill placeholder appear by default because skills are automatically selected
+                                CategoryContentActivity.skillPlaceholder.visibility = View.VISIBLE  //make skill placeholder appear by default because skills are automatically selected
                                 if (isSkill!! && response.body()?.skillsAndNeeds?.skills!!.isNotEmpty()) {
-                                    CategoryContentActivity.skillPlaceholder.visibility=View.GONE  //disable its placeholder if there are actual data to display
+                                    CategoryContentActivity.skillPlaceholder.visibility = View.GONE  //disable its placeholder if there are actual data to display
 
-                                    skills= (response.body()?.skillsAndNeeds?.skills as ArrayList<Skill>?)!!
+                                    skills = (response.body()?.skillsAndNeeds?.skills as ArrayList<Skill>?)!!
                                     adapter = SkillsAdapter(response.body()!!.skillsAndNeeds.skills)
                                     (adapter as SkillsAdapter).onItemClick = { post ->
                                         (activity as CategoryContentActivity).loadFragment(isSkill, post)
                                     }
-                                    (adapter as SkillsAdapter).onFavouriteClick= {post ->
-                                        var favouriteUpdate= FavouriteUpdate(
+                                    (adapter as SkillsAdapter).onFavouriteClick = { post ->
+                                        var favouriteUpdate = FavouriteUpdate(
                                                 PreferencesManager(this@PostsListFragment.context!!).getId(),
                                                 post.skill_id!!
                                         )
@@ -207,13 +206,12 @@ class CategoryContentActivity : AppCompatActivity() {
                                             override fun onResponse(call: Call<FavouriteResponse>, response: Response<FavouriteResponse>) {
                                                 if (response.isSuccessful) {
                                                     if (response.body()?.status == true) {
-                                                        if(response.body()?.message==" package added to favorite") {
+                                                        if (response.body()?.message == " package added to favorite") {
                                                             Snackbar.make(view, "Added to your favourites !", Snackbar.LENGTH_SHORT).show()
-                                                            post.is_favorite=true
-                                                        }
-                                                        else {
+                                                            post.is_favorite = true
+                                                        } else {
                                                             Snackbar.make(view, "Removed from your favourites !", Snackbar.LENGTH_SHORT).show()
-                                                            post.is_favorite=false
+                                                            post.is_favorite = false
                                                         }
                                                     } else {
                                                         Toast.makeText(this@PostsListFragment.context!!, "Failed1", Toast.LENGTH_LONG).show()
@@ -234,25 +232,27 @@ class CategoryContentActivity : AppCompatActivity() {
                                         })
                                     }
 
-                                } else if (!isSkill!! && response.body()?.skillsAndNeeds?.needs!!.isNotEmpty()){
-                                    needs= (response.body()?.skillsAndNeeds?.needs as ArrayList<Request>?)!!
+                                } else if (!isSkill!! && response.body()?.skillsAndNeeds?.needs!!.isNotEmpty()) {
+                                    needs = (response.body()?.skillsAndNeeds?.needs as ArrayList<Request>?)!!
                                     adapter = RequestsAdapter(response.body()!!.skillsAndNeeds.needs)
                                     (adapter as RequestsAdapter).onItemClick = { post ->
                                         (activity as CategoryContentActivity).loadFragment(isSkill, post)
                                     }
                                 } else
-                                    isSkill=null
+                                    isSkill = null
                             }
                         } else {
                             Toast.makeText(activity, "Error: " + response.body(), Toast.LENGTH_LONG).show()
                         }
                     }
                 }
+
                 override fun onFailure(call: Call<PostsResponse>, t: Throwable) {
                     Toast.makeText(activity, "Failed  cause is " + t.cause, Toast.LENGTH_LONG).show()
                 }
             })
         }
+
         companion object {
             lateinit var skills: ArrayList<Skill>
             lateinit var needs: ArrayList<Request>
@@ -270,7 +270,7 @@ class CategoryContentActivity : AppCompatActivity() {
             }
         }
 
-        }
     }
+}
 
 

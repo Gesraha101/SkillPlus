@@ -16,13 +16,13 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.*
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.adapters.ScheduleAdapter
-import com.example.lost.skillplus.models.managers.BackendServiceManager
-import com.example.lost.skillplus.models.managers.NotificationAlarmManager
-import com.example.lost.skillplus.models.managers.PreferencesManager
-import com.example.lost.skillplus.models.podos.raw.DayTime
-import com.example.lost.skillplus.models.podos.raw.Form
-import com.example.lost.skillplus.models.podos.responses.FormResponse
+import com.example.lost.skillplus.helpers.adapters.ScheduleAdapter
+import com.example.lost.skillplus.helpers.managers.BackendServiceManager
+import com.example.lost.skillplus.helpers.managers.NotificationAlarmManager
+import com.example.lost.skillplus.helpers.managers.PreferencesManager
+import com.example.lost.skillplus.helpers.podos.raw.DayTime
+import com.example.lost.skillplus.helpers.podos.raw.Form
+import com.example.lost.skillplus.helpers.podos.responses.FormResponse
 import kotlinx.android.synthetic.main.activity_add_form.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -144,19 +144,19 @@ class AddFormActivity : AppCompatActivity() {
 
         btn_add_need.setOnClickListener {
             badEntry = false
-            if (eT_NumberOfSessions.text.toString().toIntOrNull() == null||eT_NumberOfSessions.text.toString().toIntOrNull() == 0) {
+            if (eT_NumberOfSessions.text.toString().toIntOrNull() == null || eT_NumberOfSessions.text.toString().toIntOrNull() == 0) {
                 eT_NumberOfSessions.error = "A postive number is required"
                 eT_NumberOfSessions.startAnimation(shake)
                 eT_NumberOfSessions.requestFocus()
                 badEntry = true
             }
-            if (eT_SessionDuration.text.toString().toIntOrNull() == null||eT_SessionDuration.text.toString().toIntOrNull() == 0) {
+            if (eT_SessionDuration.text.toString().toIntOrNull() == null || eT_SessionDuration.text.toString().toIntOrNull() == 0) {
                 eT_SessionDuration.error = "A postive number is required"
                 eT_SessionDuration.startAnimation(shake)
                 eT_SessionDuration.requestFocus()
                 badEntry = true
             }
-            if (eT_Price.text.toString().toFloatOrNull() == null||eT_Price.text.toString().toIntOrNull() == 0) {
+            if (eT_Price.text.toString().toFloatOrNull() == null || eT_Price.text.toString().toIntOrNull() == 0) {
                 eT_Price.error = "A postive number is required"
                 eT_Price.startAnimation(shake)
                 eT_Price.requestFocus()

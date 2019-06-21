@@ -9,11 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.adapters.CurrentSkillAdapter
-import com.example.lost.skillplus.models.managers.BackendServiceManager
-import com.example.lost.skillplus.models.managers.PreferencesManager
-import com.example.lost.skillplus.models.podos.raw.MyId
-import com.example.lost.skillplus.models.podos.responses.CurrentSkillResponse
+import com.example.lost.skillplus.helpers.adapters.CurrentSkillAdapter
+import com.example.lost.skillplus.helpers.managers.BackendServiceManager
+import com.example.lost.skillplus.helpers.managers.PreferencesManager
+import com.example.lost.skillplus.helpers.podos.raw.MyId
+import com.example.lost.skillplus.helpers.podos.responses.CurrentSkillResponse
 import kotlinx.android.synthetic.main.fragment_current_skill.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -79,9 +79,8 @@ class CurrentSkillFragment : Fragment() {
 //                                FragmentsManager.replaceFragment(this@CurrentSkillFragment.fragmentManager!!, skillLearnersFragments, R.id.fragment_container, "skill_learner_fragment", true)
 //                                //   fragmentManager?.beginTransaction()?.replace(R.id.fragment_container, skillLearnersFragments)?.commit()
 //                            }
-                        }
-                        else
-                            current_skill_placeholder.visibility=View.VISIBLE
+                        } else
+                            current_skill_placeholder.visibility = View.VISIBLE
                     }
                 } else {
                     Toast.makeText(activity, "Error: " + response.body(), Toast.LENGTH_LONG).show()

@@ -10,13 +10,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.adapters.NotificationsAdapter
-import com.example.lost.skillplus.models.enums.Keys
-import com.example.lost.skillplus.models.managers.BackendServiceManager
-import com.example.lost.skillplus.models.managers.PreferencesManager
-import com.example.lost.skillplus.models.podos.raw.Notification
-import com.example.lost.skillplus.models.podos.raw.NotificationsRequest
-import com.example.lost.skillplus.models.podos.responses.NotificationsResponse
+import com.example.lost.skillplus.helpers.adapters.NotificationsAdapter
+import com.example.lost.skillplus.helpers.enums.Keys
+import com.example.lost.skillplus.helpers.managers.BackendServiceManager
+import com.example.lost.skillplus.helpers.managers.PreferencesManager
+import com.example.lost.skillplus.helpers.podos.raw.Notification
+import com.example.lost.skillplus.helpers.podos.raw.NotificationsRequest
+import com.example.lost.skillplus.helpers.podos.responses.NotificationsResponse
 import com.example.lost.skillplus.views.activities.HomeActivity
 import kotlinx.android.synthetic.main.fragment_notifications.*
 import retrofit2.Call
@@ -56,9 +56,8 @@ class NotificationsFragment : Fragment() {
                         if (response.body()?.notifications!!.size != 0) {
                             notifications = response.body()?.notifications!!
                             fillRecyclerView()
-                        }
-                        else
-                            place_holder_layout.visibility=View.VISIBLE
+                        } else
+                            place_holder_layout.visibility = View.VISIBLE
                     }
                 }
 
@@ -90,10 +89,10 @@ class NotificationsFragment : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance(notifications: ArrayList<Notification>?) =
-            NotificationsFragment().apply {
-                arguments = Bundle().apply {
-                    putSerializable(Keys.NOTIFICATIONS.key, notifications)
+                NotificationsFragment().apply {
+                    arguments = Bundle().apply {
+                        putSerializable(Keys.NOTIFICATIONS.key, notifications)
+                    }
                 }
-            }
     }
 }

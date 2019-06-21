@@ -10,13 +10,13 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.Toast
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.adapters.MySkillAdapter
-import com.example.lost.skillplus.models.enums.Tags
-import com.example.lost.skillplus.models.managers.BackendServiceManager
-import com.example.lost.skillplus.models.managers.FragmentsManager
-import com.example.lost.skillplus.models.managers.PreferencesManager
-import com.example.lost.skillplus.models.podos.raw.MyId
-import com.example.lost.skillplus.models.podos.responses.MySkillResponse
+import com.example.lost.skillplus.helpers.adapters.MySkillAdapter
+import com.example.lost.skillplus.helpers.enums.Tags
+import com.example.lost.skillplus.helpers.managers.BackendServiceManager
+import com.example.lost.skillplus.helpers.managers.FragmentsManager
+import com.example.lost.skillplus.helpers.managers.PreferencesManager
+import com.example.lost.skillplus.helpers.podos.raw.MyId
+import com.example.lost.skillplus.helpers.podos.responses.MySkillResponse
 import kotlinx.android.synthetic.main.fragment_my_skills.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -57,6 +57,7 @@ class MySkillsFragment : Fragment() {
         call?.enqueue(object : Callback<MySkillResponse> {
             override fun onFailure(call: Call<MySkillResponse>, t: Throwable) =
                     Toast.makeText(activity, "Failed  cause is " + t.cause, Toast.LENGTH_LONG).show()
+
             override fun onResponse(call: Call<MySkillResponse>, response: Response<MySkillResponse>) {
                 if (response.body()?.status == true) {
                     rv_my_skills.apply {
@@ -73,9 +74,8 @@ class MySkillsFragment : Fragment() {
                                 FragmentsManager.replaceFragment(this@MySkillsFragment.fragmentManager!!, skillLearnersFragments, R.id.sec_my_skill, Tags.LEARNER_FRAGMENT.tag, true)
                                 //   fragmentManager?.beginTransaction()?.replace(R.id.fragment_container, skillLearnersFragments)?.commit()
                             }
-                        }
-                        else
-                            place_holder_layout.visibility=View.VISIBLE
+                        } else
+                            place_holder_layout.visibility = View.VISIBLE
                     }
                 } else {
                     Toast.makeText(activity, "Error: " + response.body(), Toast.LENGTH_LONG).show()

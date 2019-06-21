@@ -12,11 +12,11 @@ import android.view.animation.AnimationUtils
 import android.widget.CheckBox
 import android.widget.Toast
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.managers.BackendServiceManager
-import com.example.lost.skillplus.models.managers.PreferencesManager
-import com.example.lost.skillplus.models.managers.UtilityManager
-import com.example.lost.skillplus.models.podos.raw.User
-import com.example.lost.skillplus.models.podos.responses.UserResponse
+import com.example.lost.skillplus.helpers.managers.BackendServiceManager
+import com.example.lost.skillplus.helpers.managers.PreferencesManager
+import com.example.lost.skillplus.helpers.managers.UtilityManager
+import com.example.lost.skillplus.helpers.podos.raw.User
+import com.example.lost.skillplus.helpers.podos.responses.UserResponse
 import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -39,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
         }
         btn_sign_in.setOnClickListener {
             UtilityManager.hideKeyboard(emailEditText)
-            mProgressBar.visibility= View.VISIBLE
+            mProgressBar.visibility = View.VISIBLE
             val logUser = User(email = emailEditText?.text.toString(),
                     password = passEditText?.text.toString())
 
@@ -61,7 +61,7 @@ class LoginActivity : AppCompatActivity() {
                 call?.enqueue(object : Callback<UserResponse> {
 
                     override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
-                        mProgressBar.visibility= View.GONE
+                        mProgressBar.visibility = View.GONE
                         if (response.isSuccessful) {
                             if (response.body()?.status == true) {
                                 if (response.body()?.userlogined?.id != null) {
@@ -97,7 +97,7 @@ class LoginActivity : AppCompatActivity() {
                     }
 
                     override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                        mProgressBar.visibility= View.GONE
+                        mProgressBar.visibility = View.GONE
                         Toast.makeText(this@LoginActivity, "Failed to connect to server " + t.localizedMessage, Toast.LENGTH_LONG).show()
                     }
                 })

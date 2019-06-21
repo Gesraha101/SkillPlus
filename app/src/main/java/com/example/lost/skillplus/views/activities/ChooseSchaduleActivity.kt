@@ -7,10 +7,10 @@ import android.widget.Button
 import android.widget.ListView
 import android.widget.Toast
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.adapters.CustomAdapter
-import com.example.lost.skillplus.models.enums.Keys
-import com.example.lost.skillplus.models.podos.raw.Schadule
-import com.example.lost.skillplus.models.podos.raw.Skill
+import com.example.lost.skillplus.helpers.adapters.CustomAdapter
+import com.example.lost.skillplus.helpers.enums.Keys
+import com.example.lost.skillplus.helpers.podos.raw.Schadule
+import com.example.lost.skillplus.helpers.podos.raw.Skill
 import java.util.*
 
 class ChooseSchaduleActivity : AppCompatActivity() {
@@ -18,8 +18,8 @@ class ChooseSchaduleActivity : AppCompatActivity() {
     private var modelArrayList: ArrayList<Schadule>? = null
     private var customAdapter: CustomAdapter? = null
     private var btnnext: Button? = null
-    private var skillFromDetailsFragment : Skill? = null
-    private lateinit var schadualDatail : List<Long>
+    private var skillFromDetailsFragment: Skill? = null
+    private lateinit var schadualDatail: List<Long>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,9 +45,8 @@ class ChooseSchaduleActivity : AppCompatActivity() {
                     intent.putExtra(Keys.SKILL.key, skillFromDetailsFragment)
                     startActivity(intent)
                 }
-            }
-            else
-                Toast.makeText(this@ChooseSchaduleActivity.applicationContext,"Please select at least one",Toast.LENGTH_SHORT).show()
+            } else
+                Toast.makeText(this@ChooseSchaduleActivity.applicationContext, "Please select at least one", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -62,12 +61,10 @@ class ChooseSchaduleActivity : AppCompatActivity() {
         return list
     }
 
-    private fun isAnySelected(arr:ArrayList<Schadule>) : Boolean
-    {
+    private fun isAnySelected(arr: ArrayList<Schadule>): Boolean {
 
-        for(i in arr)
-        {
-            if(i.isSelected)
+        for (i in arr) {
+            if (i.isSelected)
                 return true
         }
         return false

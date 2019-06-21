@@ -11,13 +11,13 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.FrameLayout
 import com.example.lost.skillplus.R
-import com.example.lost.skillplus.models.enums.Ids
-import com.example.lost.skillplus.models.enums.Keys
-import com.example.lost.skillplus.models.enums.Tags
-import com.example.lost.skillplus.models.managers.FragmentsManager
-import com.example.lost.skillplus.models.managers.PreferencesManager
-import com.example.lost.skillplus.models.podos.raw.Notification
-import com.example.lost.skillplus.models.services.NotificationScheduler
+import com.example.lost.skillplus.helpers.enums.Ids
+import com.example.lost.skillplus.helpers.enums.Keys
+import com.example.lost.skillplus.helpers.enums.Tags
+import com.example.lost.skillplus.helpers.managers.FragmentsManager
+import com.example.lost.skillplus.helpers.managers.PreferencesManager
+import com.example.lost.skillplus.helpers.podos.raw.Notification
+import com.example.lost.skillplus.helpers.services.NotificationScheduler
 import com.example.lost.skillplus.views.fragments.*
 import kotlinx.android.synthetic.main.activity_home.*
 
@@ -32,32 +32,32 @@ class HomeActivity : NavigationDrawerActivity() {
 
     private var doubleBackToExitPressedOnce = false
     private var notifications: ArrayList<Notification>? = null
-    private lateinit var navigation_view : NavigationView
-    private lateinit var navigation_container : FrameLayout
+    private lateinit var navigation_view: NavigationView
+    private lateinit var navigation_container: FrameLayout
     override fun onBackPressed() {
 
-        if (supportFragmentManager.backStackEntryCount==0) {//Check if there are no fragments at backstack
+        if (supportFragmentManager.backStackEntryCount == 0) {//Check if there are no fragments at backstack
             for (tag in Tags.values()) {
                 val frag = supportFragmentManager.findFragmentByTag(tag.tag)
                 if (frag != null) {
                     if (frag.isVisible) {
                         when (frag.tag) {
-                            Tags.CATEGORIES_CONTAINER.tag ->{
+                            Tags.CATEGORIES_CONTAINER.tag -> {
                                 if (doubleBackToExitPressedOnce)
                                     super.onBackPressed()
 
                                 promptDoubleTabToGoBack()
                             }
 
-                            Tags.CATEGORIES_CONTAINER_NEW.tag ->{
+                            Tags.CATEGORIES_CONTAINER_NEW.tag -> {
                                 if (doubleBackToExitPressedOnce)
                                     super.onBackPressed()
 
                                 promptDoubleTabToGoBack()
                             }
 
-                            else ->{
-                                bottom_nav.selectedItemId=R.id.navigation_categories
+                            else -> {
+                                bottom_nav.selectedItemId = R.id.navigation_categories
                             }
 
                         }
@@ -67,14 +67,13 @@ class HomeActivity : NavigationDrawerActivity() {
 
             }
 
-        }
-        else {
+        } else {
             for (tag in Tags.values()) {
                 val frag = supportFragmentManager.findFragmentByTag(tag.tag)
                 if (frag != null) {
                     if (frag.isVisible) {
                         when (frag.tag) {
-                            Tags.CATEGORIES_CONTAINER_NEW.tag ->{
+                            Tags.CATEGORIES_CONTAINER_NEW.tag -> {
                                 if (doubleBackToExitPressedOnce) {
                                     supportFragmentManager.popBackStack()
                                     super.onBackPressed()
@@ -82,11 +81,11 @@ class HomeActivity : NavigationDrawerActivity() {
 
                                 promptDoubleTabToGoBack()
                             }
-                            Tags.FAVOURITES_CONTAINER.tag ->{
-                                bottom_nav.selectedItemId=R.id.navigation_categories
+                            Tags.FAVOURITES_CONTAINER.tag -> {
+                                bottom_nav.selectedItemId = R.id.navigation_categories
                             }
-                            Tags.NOTIFICATIONS_CONTAINER.tag ->{
-                                bottom_nav.selectedItemId=R.id.navigation_categories
+                            Tags.NOTIFICATIONS_CONTAINER.tag -> {
+                                bottom_nav.selectedItemId = R.id.navigation_categories
                             }
                             Tags.LEARNER_FRAGMENT.tag -> {
                                 main_my_skill.visibility = View.VISIBLE
@@ -129,15 +128,15 @@ class HomeActivity : NavigationDrawerActivity() {
         val tag = item.itemId.toString()
         val fragment = supportFragmentManager.findFragmentByTag(tag) ?: when (item.itemId) {
             R.id.navigation_categories -> {
-                supportActionBar!!.title="Categories"
+                supportActionBar!!.title = "Categories"
                 CategoriesFragment.newInstance()
             }
             R.id.navigation_favorites -> {
-                supportActionBar!!.title="My Favourites"
+                supportActionBar!!.title = "My Favourites"
                 FavoritesFragment.newInstance()
             }
             R.id.navigation_notifications -> {
-                supportActionBar!!.title="My Notifications"
+                supportActionBar!!.title = "My Notifications"
                 NotificationsFragment.newInstance(notifications)
             }
             else -> {
@@ -161,8 +160,8 @@ class HomeActivity : NavigationDrawerActivity() {
         setContentView(R.layout.activity_home)
         super.onCreate(savedInstanceState)
 
-         navigation_container = findViewById<FrameLayout>(R.id.fragment_container)
-         navigation_view = findViewById<NavigationView>(R.id.nav_view)
+        navigation_container = findViewById<FrameLayout>(R.id.fragment_container)
+        navigation_view = findViewById<NavigationView>(R.id.nav_view)
         bottom_nav.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
         when {

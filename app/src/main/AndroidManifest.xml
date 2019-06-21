@@ -96,23 +96,23 @@
                   android:screenOrientation="portrait"
                   android:configChanges="orientation|keyboardHidden"/>
         <receiver
-            android:name=".models.receivers.AlarmReceiver"
-            android:enabled="true"
-            android:exported="true"/>
+                android:name="com.example.lost.skillplus.helpers.receivers.AlarmReceiver"
+                android:enabled="true"
+                android:exported="true"/>
 
         <service
-            android:name=".models.services.NotificationScheduler"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE">
+                android:name="com.example.lost.skillplus.helpers.services.NotificationScheduler"
+                android:enabled="true"
+                android:exported="true"
+                android:permission="android.permission.BIND_JOB_SERVICE">
 
         </service>
 
         <service
-            android:name=".models.services.NotificationService"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
+                android:name="com.example.lost.skillplus.helpers.services.NotificationService"
+                android:enabled="true"
+                android:exported="true"
+                android:permission="android.permission.BIND_JOB_SERVICE"/>
     </application>
 
 </manifest>
